@@ -26,4 +26,12 @@ public class Room {
     public int getNumberOfSurfaces() {
         return surfaceList.size();
     }
+
+    void switchSelectionStatus (double x, double y) {
+        for (Surface item: this.surfaceList) {
+            if (item.contains(x, y)) {
+                item.switchSelectionStatus();
+            }
+        }
+    }
 }
