@@ -49,7 +49,6 @@ public class MainWindow extends JFrame {
         zoomOutButton = new JButton("-");
 
         measurementUnitComboBox = new javax.swing.JComboBox();
-
         drawingPanel = new DrawingPanel(this);
         mainScrollPane = new JScrollPane();
         splitPane = new JSplitPane();
