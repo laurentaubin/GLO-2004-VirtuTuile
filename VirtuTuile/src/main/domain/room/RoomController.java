@@ -14,10 +14,11 @@ public class RoomController {
         room = new Room();
     }
 
-    public void addRectangularSurface(Point mousePoint) {
+    public void addRectangularSurface() {
+
     }
 
-    public void addIrregularSurface(Point mousePoint) {
+    public void addIrregularSurface(){
 
     }
 
@@ -27,6 +28,10 @@ public class RoomController {
 
     public int getNumberOfSurfaces() {
         return room.getNumberOfSurfaces();
+    }
+
+    public void switchSelectionStatus(double x, double y) {
+        room.switchSelectionStatus(x, y);
     }
 
 }

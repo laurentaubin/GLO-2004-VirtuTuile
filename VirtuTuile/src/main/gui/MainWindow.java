@@ -4,11 +4,29 @@ import domain.room.RoomController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 
 
 public class MainWindow extends JFrame {
 
     public RoomController controller;
+
+    private ApplicationMode actualMode;
+    private MeasurementUnitMode actualMeasurementUnit;
+
+    public Point actualMousePoint = new Point();
+    public Point delta = new Point();
+
+
+    public enum ApplicationMode {
+        SELECT, ADD
+    }
+
+    public enum MeasurementUnitMode {
+        METRIC, IMPERIAL
+    }
 
 
     public MainWindow(){
@@ -16,16 +34,25 @@ public class MainWindow extends JFrame {
         initComponents();
     }
 
+    public void setMode (ApplicationMode newMode) {
+        this.actualMode = newMode;
+    }
+
     private void initComponents() {
         mainPanel = new JPanel();
 
-        topMenuButton = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        rectangularSurface = new JButton("Ajouter une surface rectangulaire");
-        irregularSurface = new JButton("Ajouter surface irrégulière");
+        topButtonBar = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        selectButton = new JToggleButton("Sélection");
+        rectangularSurfaceButton = new JButton("Ajouter une surface rectangulaire");
+        irregularSurfaceButton = new JButton("Ajouter surface irrégulière");
+        zoomInButton = new JButton("+");
+        zoomOutButton = new JButton("-");
 
+        measurementUnitComboBox = new javax.swing.JComboBox();
         drawingPanel = new DrawingPanel(this);
         mainScrollPane = new JScrollPane();
-        jSplitPane1 = new JSplitPane();
+        splitPane = new JSplitPane();
+
         permanentRightPanel = new JTabbedPane();
         surfaceTabPanel = new JPanel();
         patternTabPanel = new JPanel();
@@ -66,19 +93,61 @@ public class MainWindow extends JFrame {
 
         mainPanel.setLayout(new BorderLayout());
 
-        topMenuButton.setPreferredSize(new Dimension(400, 35));
-        topMenuButton.add(rectangularSurface);
-        topMenuButton.add(irregularSurface);
+        topButtonBar.setPreferredSize(new Dimension(400, 35));
 
-        mainPanel.add(topMenuButton, BorderLayout.NORTH);
+        selectButton.setSelected(false);
+        selectButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                selectButtonActionPerformed(actionEvent);
+            }
+        });
 
-        jSplitPane1.setMinimumSize(new Dimension(0, 202));
-        jSplitPane1.setPreferredSize(new Dimension((int)(Toolkit.getDefaultToolkit().getScreenSize().width*0.85), (int)(Toolkit.getDefaultToolkit().getScreenSize().height*0.5)));
+        zoomInButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                drawingPanel.zoomInActionPerformed();
+            }
+        });
 
-        mainScrollPane.setMinimumSize(new Dimension(0, 0));
+        zoomOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                drawingPanel.zoomOutActionPerformed();
+            }
+        });
+
+        measurementUnitComboBox.setModel(new DefaultComboBoxModel(new String[] { "MÉTRIQUE", "IMPÉRIALE" }));
+        measurementUnitComboBox.setPreferredSize(new Dimension(120, 23));
+
+        zoomOutButton.setPreferredSize(new Dimension(30, 23));
+        zoomInButton.setPreferredSize(new Dimension(30, 23));
+
+        topButtonBar.add(selectButton);
+        topButtonBar.add(rectangularSurfaceButton);
+        topButtonBar.add(irregularSurfaceButton);
+        topButtonBar.add(zoomInButton);
+        topButtonBar.add(zoomOutButton);
+        topButtonBar.add(measurementUnitComboBox);
+
+        mainPanel.add(topButtonBar, BorderLayout.NORTH);
+
+        splitPane.setMinimumSize(new Dimension(0, 202));
+        splitPane.setPreferredSize(new Dimension((int)(Toolkit.getDefaultToolkit().getScreenSize().width*0.85), (int)(Toolkit.getDefaultToolkit().getScreenSize().height*0.5)));
+
+        //Change la grandeur du panel de gauche min
+        mainScrollPane.setMinimumSize(new Dimension(0, 202));
         mainScrollPane.setPreferredSize(new Dimension((int)(Toolkit.getDefaultToolkit().getScreenSize().width*0.85), (int)(Toolkit.getDefaultToolkit().getScreenSize().height*0.5)));
 
         drawingPanel.setPreferredSize(new Dimension(0, 540));
+        drawingPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                drawingPanelMousePressed(evt);
+            }
+        });
+
+
+        //le layout à l'intérieur du drawing panel est en GroupLayout
         GroupLayout drawingPanelLayout = new GroupLayout(drawingPanel);
         drawingPanel.setLayout(drawingPanelLayout);
         drawingPanelLayout.setHorizontalGroup(
@@ -92,7 +161,7 @@ public class MainWindow extends JFrame {
 
         mainScrollPane.setViewportView(drawingPanel);
 
-        jSplitPane1.setLeftComponent(mainScrollPane);
+        splitPane.setLeftComponent(mainScrollPane);
 
         permanentRightPanel.setPreferredSize(new Dimension(0, 0));
 
@@ -115,11 +184,11 @@ public class MainWindow extends JFrame {
         permanentRightPanel.addTab("Coulis", null, groutTabPanel, "");
 
 
-        jSplitPane1.setRightComponent(permanentRightPanel);
+        splitPane.setRightComponent(permanentRightPanel);
 
-        jSplitPane1.setResizeWeight(0.8);
+        splitPane.setResizeWeight(0.8);
 
-        mainPanel.add(jSplitPane1, BorderLayout.CENTER);
+        mainPanel.add(splitPane, BorderLayout.CENTER);
 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -189,13 +258,35 @@ public class MainWindow extends JFrame {
         pack();
     }
 
+    private void selectButtonActionPerformed(ActionEvent actionEvent){
+        this.setMode(ApplicationMode.SELECT);
+    }
+
+    private void drawingPanelMousePressed(MouseEvent mouseEvent){
+        Point mousePoint = mouseEvent.getPoint();
+        this.actualMousePoint = mousePoint;
+
+        if (this.actualMode == ApplicationMode.SELECT && SwingUtilities.isLeftMouseButton(mouseEvent)) {
+            //TODO Ajouter a conversion des unités de mesure ici!
+
+            System.out.println(mousePoint);
+
+        }
+
+    }
+
     private JPanel mainPanel;
-    private JPanel topMenuButton;
-    private JButton rectangularSurface;
-    private JButton irregularSurface;
+    private JPanel topButtonBar;
+    private JToggleButton selectButton;
+    private JButton rectangularSurfaceButton;
+    private JButton irregularSurfaceButton;
+    private JButton zoomOutButton;
+    private JButton zoomInButton;
+    private JComboBox measurementUnitComboBox;
     private DrawingPanel drawingPanel;
     private JScrollPane mainScrollPane;
-    private JSplitPane jSplitPane1;
+    private JSplitPane splitPane;
+
     private JTabbedPane permanentRightPanel;
     private JPanel surfaceTabPanel;
     private JPanel patternTabPanel;
@@ -231,5 +322,7 @@ public class MainWindow extends JFrame {
     private JMenu windowMenu;
     private JMenuItem minimizeMenuItem;
     private JMenuItem zoomMenuItem;
+
+
 
 }

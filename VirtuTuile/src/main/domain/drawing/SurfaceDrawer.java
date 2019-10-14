@@ -3,6 +3,8 @@ package domain.drawing;
 import domain.room.RoomController;
 import domain.room.Surface;
 import java.awt.*;
+import java.util.List;
+
 
 public class SurfaceDrawer {
     private final RoomController controller;
@@ -14,15 +16,27 @@ public class SurfaceDrawer {
     }
 
     public void draw(Graphics g) {
-        drawSurfaces(g);
+        drawSurface(g);
     }
 
-    private void drawSurfaces(Graphics g) {
+
+    public void drawSurface(Graphics g){
+        int width = (int) initialDimension.getWidth();
+        int height = (int) initialDimension.getHeight();
+
+        g.setColor(new Color(140, 98, 57));
+        g.fillRect(10,10,10,10);
+
+
         /*
         List<Surface> items = controller.getSurfaceList();
-        for (Surface item: items) {
+        for (Surface item : items) {
+            List<Point> sommetsSurface = item.getPoints();
+            if (item.getType() == "rectangular") {
 
+            }
         }
-        */
+
+         */
     }
 }
