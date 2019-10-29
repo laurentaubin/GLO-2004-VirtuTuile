@@ -22,26 +22,41 @@ public class Tile {
         return color;
     }
 
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
     public int getWidth() {
         return width;
     }
 
-    public int getHeight() {
-        return length;
-    }
-
-    public Point getDimensions() {
-        return new Point(this.getWidth(), this.getHeight());
+    public void setWidth(int width) {
+        this.width = width;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public int getNbrTilesPerBox() {
         return nbrTilesPerBox;
     }
 
+    public void setNbrTilesPerBox(int nbrTilesPerBox) {
+        this.nbrTilesPerBox = nbrTilesPerBox;
+    }
 }
 
 
