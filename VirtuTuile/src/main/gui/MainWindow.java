@@ -1,16 +1,14 @@
 package gui;
 
 import domain.room.RoomController;
-import javafx.util.Pair;
-import util.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
-import java.util.ArrayList;
+
+import static gui.MainWindow.ApplicationMode.ADD_IRREGULAR;
 
 
 public class MainWindow extends JFrame {
@@ -102,6 +100,7 @@ public class MainWindow extends JFrame {
         topButtonBar.setPreferredSize(new Dimension(400, 35));
 
         selectButton.setSelected(true);
+        this.setMode(ApplicationMode.SELECT);
         selectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -112,14 +111,14 @@ public class MainWindow extends JFrame {
         rectangularSurfaceButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                addRectangularButtonActionPerformed(actionEvent);
+                rectangularSurfaceButtonPerformed(actionEvent);
             }
         });
 
         irregularSurfaceButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                addIrregularButtonActionPerformed(actionEvent);
+                irregularSurfaceButtonPerformed(actionEvent);
             }
         });
 
@@ -170,6 +169,16 @@ public class MainWindow extends JFrame {
         drawingPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 drawingPanelMousePressed(evt);
+            }
+        });
+        drawingPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                drawingPanelMouseReleased(evt);
+            }
+        });
+        drawingPanel.addMouseMotionListener(new java.awt.event.MouseAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                drawingPanelMouseDragged(evt);
             }
         });
 
@@ -283,34 +292,71 @@ public class MainWindow extends JFrame {
         pack();
     }
 
-    private void selectButtonActionPerformed(ActionEvent actionEvent){
-        this.setMode(ApplicationMode.SELECT);
-    }
+    private void selectButtonActionPerformed(ActionEvent actionEvent){this.setMode(ApplicationMode.SELECT);}
 
-    private void addRectangularButtonActionPerformed(ActionEvent actionEvent) {
-        this.setMode(ApplicationMode.ADD_RECTANGULAR);
-    }
+    private void rectangularSurfaceButtonPerformed(ActionEvent actionEvent){this.setMode(ApplicationMode.ADD_RECTANGULAR);}
 
-    private void addIrregularButtonActionPerformed(ActionEvent actionEvent) {
-        this.setMode(ApplicationMode.ADD_IRREGULAR);
-    }
+    private void irregularSurfaceButtonPerformed(ActionEvent actionEvent){this.setMode(ADD_IRREGULAR);}
 
     private void drawingPanelMousePressed(MouseEvent mouseEvent){
-        Point2D mousePoint = new Point2D.Double(mouseEvent.getX() / METER_RATIO, mouseEvent.getY() / METER_RATIO);
+        Point mousePoint = mouseEvent.getPoint();
+        this.actualMousePoint = mousePoint;
 
         if (this.actualMode == ApplicationMode.SELECT && SwingUtilities.isLeftMouseButton(mouseEvent)) {
-            String measurementUnitType = (String)this.measurementUnitComboBox.getSelectedItem();
-            if (measurementUnitType.equals("IMPÉRIALE")){
-                mousePoint.setLocation(mousePoint.getX() * IMPERIAL_RATIO, mousePoint.getY() * IMPERIAL_RATIO);
-            }
-            System.out.println("x: " + mousePoint.getX() + ", y: " + mousePoint.getY());
+            //TODO Ajouter la conversion des unités de mesure ici!
+
+            System.out.println(mousePoint);
+
+
         }
 
-        else if (this.actualMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)){}
+        if (this.actualMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
+            //TODO Ajouter la conversion des unités de mesure ici!
+
+            System.out.println(mousePoint);
+
+
+        }
+
+        if (this.actualMode == ApplicationMode.ADD_IRREGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
+            //TODO Ajouter la conversion des unités de mesure ici!
+
+            System.out.println(mousePoint);
+
+
+        }
+
     }
 
-    final float METER_RATIO = 120f;
-    final float IMPERIAL_RATIO = 3.281f;
+    private void drawingPanelMouseReleased(MouseEvent mouseEvent){
+        Point mousePoint = mouseEvent.getPoint();
+
+        if (this.actualMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
+            //TODO Ajouter la conversion des unités de mesure ici!
+
+            int width = Math.abs(this.actualMousePoint.x - mousePoint.x);
+            int height = Math.abs(this.actualMousePoint.y - mousePoint.y);
+            // Attendre avant addRectangularSurface... on va hériter de polygone avant
+            // this.controller.addRectangularSurface()
+
+        }
+
+        drawingPanel.repaint();
+
+    }
+
+    private void drawingPanelMouseDragged(MouseEvent mouseEvent){
+        Point mousePoint = mouseEvent.getPoint();
+        this.actualMousePoint = mousePoint;
+
+        if (this.actualMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
+            //TODO Ajouter la conversion des unités de mesure ici!
+
+            //System.out.println(mousePoint);
+
+        }
+
+    }
 
     private ButtonGroup buttonGroup;
 
@@ -361,4 +407,7 @@ public class MainWindow extends JFrame {
     private JMenu windowMenu;
     private JMenuItem minimizeMenuItem;
     private JMenuItem zoomMenuItem;
+
+
+
 }
