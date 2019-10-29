@@ -3,7 +3,7 @@ package domain.room;
 import java.awt.*;
 import java.util.List;
 
-public class Surface {
+public class Surface extends Polygon {
     private String type;
     private List<Point> points;
     private int width;
@@ -12,6 +12,8 @@ public class Surface {
     private double zoom = 1d;
     private boolean selectionStatus;
 
+
+    //Constructeur surface rectangulaire
     public Surface(String type, List<Point> points, boolean hole){
         this.type = type;
         this.points = points;
@@ -19,6 +21,7 @@ public class Surface {
         this.selectionStatus = false;
     }
 
+    //Constructeur surface irrégulière
     public Surface(String type, int width, int height, List<Point> points, boolean hole){
         this.type = type;
         this.points = points;
@@ -48,6 +51,7 @@ public class Surface {
         return this.height;
     }
 
+    /*
     boolean contains(double x, double y){
         return (xIsInsideSurfaceWidth(x) && yIsInsideSurfaceHeight(y));
     }
@@ -71,6 +75,7 @@ public class Surface {
         }
         return yIsInside;
     }
+     */
 
     void switchSelectionStatus() {
         this.selectionStatus =  !this.selectionStatus;

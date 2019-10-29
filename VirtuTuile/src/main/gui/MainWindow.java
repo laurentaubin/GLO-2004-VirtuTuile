@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
+import static gui.MainWindow.ApplicationMode.ADD_IRREGULAR;
+
 
 public class MainWindow extends JFrame {
 
@@ -21,7 +23,7 @@ public class MainWindow extends JFrame {
 
 
     public enum ApplicationMode {
-        SELECT, ADD
+        SELECT, ADD_RECTANGULAR, ADD_IRREGULAR
     }
 
     public enum MeasurementUnitMode {
@@ -41,10 +43,12 @@ public class MainWindow extends JFrame {
     private void initComponents() {
         mainPanel = new JPanel();
 
+        buttonGroup = new ButtonGroup();
+
         topButtonBar = new JPanel(new FlowLayout(FlowLayout.LEFT));
         selectButton = new JToggleButton("Sélection");
-        rectangularSurfaceButton = new JButton("Ajouter une surface rectangulaire");
-        irregularSurfaceButton = new JButton("Ajouter surface irrégulière");
+        rectangularSurfaceButton = new JToggleButton("Ajouter une surface rectangulaire");
+        irregularSurfaceButton = new JToggleButton("Ajouter surface irrégulière");
         zoomInButton = new JButton("+");
         zoomOutButton = new JButton("-");
 
@@ -53,11 +57,8 @@ public class MainWindow extends JFrame {
         mainScrollPane = new JScrollPane();
         splitPane = new JSplitPane();
 
-        permanentRightPanel = new JTabbedPane();
-        surfaceTabPanel = new JPanel();
-        patternTabPanel = new JPanel();
-        tileTabPanel = new JPanel();
-        groutTabPanel = new JPanel();
+        rightPanel = new RightPanel(this);
+
 
         menuBar = new JMenuBar();
         fileMenu = new JMenu();
@@ -95,11 +96,26 @@ public class MainWindow extends JFrame {
 
         topButtonBar.setPreferredSize(new Dimension(400, 35));
 
-        selectButton.setSelected(false);
+        selectButton.setSelected(true);
+        this.setMode(ApplicationMode.SELECT);
         selectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 selectButtonActionPerformed(actionEvent);
+            }
+        });
+
+        rectangularSurfaceButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                rectangularSurfaceButtonPerformed(actionEvent);
+            }
+        });
+
+        irregularSurfaceButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                irregularSurfaceButtonPerformed(actionEvent);
             }
         });
 
@@ -123,6 +139,10 @@ public class MainWindow extends JFrame {
         zoomOutButton.setPreferredSize(new Dimension(30, 23));
         zoomInButton.setPreferredSize(new Dimension(30, 23));
 
+        buttonGroup.add(selectButton);
+        buttonGroup.add(rectangularSurfaceButton);
+        buttonGroup.add(irregularSurfaceButton);
+
         topButtonBar.add(selectButton);
         topButtonBar.add(rectangularSurfaceButton);
         topButtonBar.add(irregularSurfaceButton);
@@ -139,15 +159,26 @@ public class MainWindow extends JFrame {
         mainScrollPane.setMinimumSize(new Dimension(0, 202));
         mainScrollPane.setPreferredSize(new Dimension((int)(Toolkit.getDefaultToolkit().getScreenSize().width*0.85), (int)(Toolkit.getDefaultToolkit().getScreenSize().height*0.5)));
 
+
+
+
         drawingPanel.setPreferredSize(new Dimension(0, 540));
         drawingPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 drawingPanelMousePressed(evt);
             }
         });
+        drawingPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                drawingPanelMouseReleased(evt);
+            }
+        });
+        drawingPanel.addMouseMotionListener(new java.awt.event.MouseAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                drawingPanelMouseDragged(evt);
+            }
+        });
 
-
-        //le layout à l'intérieur du drawing panel est en GroupLayout
         GroupLayout drawingPanelLayout = new GroupLayout(drawingPanel);
         drawingPanel.setLayout(drawingPanelLayout);
         drawingPanelLayout.setHorizontalGroup(
@@ -163,28 +194,7 @@ public class MainWindow extends JFrame {
 
         splitPane.setLeftComponent(mainScrollPane);
 
-        permanentRightPanel.setPreferredSize(new Dimension(0, 0));
-
-        surfaceTabPanel.setPreferredSize(new Dimension((int)(Toolkit.getDefaultToolkit().getScreenSize().width*0.15), (int)(Toolkit.getDefaultToolkit().getScreenSize().height*0.75)));
-
-        GroupLayout jPanel1Layout = new GroupLayout(surfaceTabPanel);
-        surfaceTabPanel.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-                jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 975, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-                jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 512, Short.MAX_VALUE)
-        );
-
-        permanentRightPanel.addTab("Surface", null, surfaceTabPanel, "");
-        permanentRightPanel.addTab("Motif", null, patternTabPanel, "");
-        permanentRightPanel.addTab("Tuile", null, tileTabPanel, "" );
-        permanentRightPanel.addTab("Coulis", null, groutTabPanel, "");
-
-
-        splitPane.setRightComponent(permanentRightPanel);
+        splitPane.setRightComponent(rightPanel);
 
         splitPane.setResizeWeight(0.8);
 
@@ -258,28 +268,79 @@ public class MainWindow extends JFrame {
         pack();
     }
 
-    private void selectButtonActionPerformed(ActionEvent actionEvent){
-        this.setMode(ApplicationMode.SELECT);
-    }
+    private void selectButtonActionPerformed(ActionEvent actionEvent){this.setMode(ApplicationMode.SELECT);}
+
+    private void rectangularSurfaceButtonPerformed(ActionEvent actionEvent){this.setMode(ApplicationMode.ADD_RECTANGULAR);}
+
+    private void irregularSurfaceButtonPerformed(ActionEvent actionEvent){this.setMode(ADD_IRREGULAR);}
 
     private void drawingPanelMousePressed(MouseEvent mouseEvent){
         Point mousePoint = mouseEvent.getPoint();
         this.actualMousePoint = mousePoint;
 
         if (this.actualMode == ApplicationMode.SELECT && SwingUtilities.isLeftMouseButton(mouseEvent)) {
-            //TODO Ajouter a conversion des unités de mesure ici!
+            //TODO Ajouter la conversion des unités de mesure ici!
 
             System.out.println(mousePoint);
+
+
+        }
+
+        if (this.actualMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
+            //TODO Ajouter la conversion des unités de mesure ici!
+
+            System.out.println(mousePoint);
+
+
+        }
+
+        if (this.actualMode == ApplicationMode.ADD_IRREGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
+            //TODO Ajouter la conversion des unités de mesure ici!
+
+            System.out.println(mousePoint);
+
 
         }
 
     }
 
+    private void drawingPanelMouseReleased(MouseEvent mouseEvent){
+        Point mousePoint = mouseEvent.getPoint();
+
+        if (this.actualMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
+            //TODO Ajouter la conversion des unités de mesure ici!
+
+            int width = Math.abs(this.actualMousePoint.x - mousePoint.x);
+            int height = Math.abs(this.actualMousePoint.y - mousePoint.y);
+            // Attendre avant addRectangularSurface... on va hériter de polygone avant
+            // this.controller.addRectangularSurface()
+
+        }
+
+        drawingPanel.repaint();
+
+    }
+
+    private void drawingPanelMouseDragged(MouseEvent mouseEvent){
+        Point mousePoint = mouseEvent.getPoint();
+        this.actualMousePoint = mousePoint;
+
+        if (this.actualMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
+            //TODO Ajouter la conversion des unités de mesure ici!
+
+            //System.out.println(mousePoint);
+
+        }
+
+    }
+
+    private ButtonGroup buttonGroup;
+
     private JPanel mainPanel;
     private JPanel topButtonBar;
     private JToggleButton selectButton;
-    private JButton rectangularSurfaceButton;
-    private JButton irregularSurfaceButton;
+    private JToggleButton rectangularSurfaceButton;
+    private JToggleButton irregularSurfaceButton;
     private JButton zoomOutButton;
     private JButton zoomInButton;
     private JComboBox measurementUnitComboBox;
@@ -287,11 +348,8 @@ public class MainWindow extends JFrame {
     private JScrollPane mainScrollPane;
     private JSplitPane splitPane;
 
-    private JTabbedPane permanentRightPanel;
-    private JPanel surfaceTabPanel;
-    private JPanel patternTabPanel;
-    private JPanel tileTabPanel;
-    private JPanel groutTabPanel;
+    private RightPanel rightPanel;
+
 
     private JMenuBar menuBar;
 
