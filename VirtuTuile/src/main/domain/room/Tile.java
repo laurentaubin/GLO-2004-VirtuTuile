@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class Tile {
     private Color color;
-    private int length;
+    private int height;
     private int width;
     private String name;
     private int nbrTilesPerBox;
@@ -12,8 +12,7 @@ public class Tile {
     public Tile(Color color, int width, int height, String name, int nbrTilesPerBox) {
         this.color = color;
         this.width = width;
-        this.length = height;
-        this.width = width;
+        this.height = height;
         this.name = name;
         this.nbrTilesPerBox = nbrTilesPerBox;
     }
@@ -26,12 +25,12 @@ public class Tile {
         this.color = color;
     }
 
-    public int getLength() {
-        return length;
+    public int getHeight() {
+        return height;
     }
 
-    public void setLength(int length) {
-        this.length = length;
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     public int getWidth() {
@@ -40,6 +39,10 @@ public class Tile {
 
     public void setWidth(int width) {
         this.width = width;
+    }
+
+    public Point getDimensions() {
+        return new Point(this.getWidth(), this.getHeight());
     }
 
     public String getName() {
