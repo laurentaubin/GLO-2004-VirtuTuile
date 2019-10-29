@@ -41,10 +41,12 @@ public class MainWindow extends JFrame {
     private void initComponents() {
         mainPanel = new JPanel();
 
+        buttonGroup = new ButtonGroup();
+
         topButtonBar = new JPanel(new FlowLayout(FlowLayout.LEFT));
         selectButton = new JToggleButton("Sélection");
-        rectangularSurfaceButton = new JButton("Ajouter une surface rectangulaire");
-        irregularSurfaceButton = new JButton("Ajouter surface irrégulière");
+        rectangularSurfaceButton = new JToggleButton("Ajouter une surface rectangulaire");
+        irregularSurfaceButton = new JToggleButton("Ajouter surface irrégulière");
         zoomInButton = new JButton("+");
         zoomOutButton = new JButton("-");
 
@@ -95,7 +97,7 @@ public class MainWindow extends JFrame {
 
         topButtonBar.setPreferredSize(new Dimension(400, 35));
 
-        selectButton.setSelected(false);
+        selectButton.setSelected(true);
         selectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -123,6 +125,10 @@ public class MainWindow extends JFrame {
         zoomOutButton.setPreferredSize(new Dimension(30, 23));
         zoomInButton.setPreferredSize(new Dimension(30, 23));
 
+        buttonGroup.add(selectButton);
+        buttonGroup.add(rectangularSurfaceButton);
+        buttonGroup.add(irregularSurfaceButton);
+
         topButtonBar.add(selectButton);
         topButtonBar.add(rectangularSurfaceButton);
         topButtonBar.add(irregularSurfaceButton);
@@ -139,6 +145,9 @@ public class MainWindow extends JFrame {
         mainScrollPane.setMinimumSize(new Dimension(0, 202));
         mainScrollPane.setPreferredSize(new Dimension((int)(Toolkit.getDefaultToolkit().getScreenSize().width*0.85), (int)(Toolkit.getDefaultToolkit().getScreenSize().height*0.5)));
 
+
+
+
         drawingPanel.setPreferredSize(new Dimension(0, 540));
         drawingPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -146,8 +155,6 @@ public class MainWindow extends JFrame {
             }
         });
 
-
-        //le layout à l'intérieur du drawing panel est en GroupLayout
         GroupLayout drawingPanelLayout = new GroupLayout(drawingPanel);
         drawingPanel.setLayout(drawingPanelLayout);
         drawingPanelLayout.setHorizontalGroup(
@@ -275,11 +282,13 @@ public class MainWindow extends JFrame {
 
     }
 
+    private ButtonGroup buttonGroup;
+
     private JPanel mainPanel;
     private JPanel topButtonBar;
     private JToggleButton selectButton;
-    private JButton rectangularSurfaceButton;
-    private JButton irregularSurfaceButton;
+    private JToggleButton rectangularSurfaceButton;
+    private JToggleButton irregularSurfaceButton;
     private JButton zoomOutButton;
     private JButton zoomInButton;
     private JComboBox measurementUnitComboBox;

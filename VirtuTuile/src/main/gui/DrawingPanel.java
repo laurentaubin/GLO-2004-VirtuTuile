@@ -24,7 +24,7 @@ public class DrawingPanel extends JPanel implements Serializable {
         setPreferredSize(new Dimension(width, 1));
         setVisible(true);
         int height = (int)(width*0.5);
-        initialDimension = new Dimension(width, height);
+        initialDimension = new Dimension(800, 600);
     }
 
     @Override
@@ -71,11 +71,19 @@ public class DrawingPanel extends JPanel implements Serializable {
         this.mainWindow = mainWindow;
     }
 
-    public void zoomInActionPerformed() {
-        zoom -= 0.1d;
+    public void zoomInActionPerformed(){
+        zoom += 0.1d;
+        System.out.println(zoom);
     }
 
     public void zoomOutActionPerformed() {
-        zoom += 0.1d;
+        if (zoom > 0) {
+            if (zoom - 0.1d < 0) {
+                zoom = 0;
+            } else {
+                zoom -= 0.1d;
+            }
+        }
+        System.out.println(zoom);
     }
 }
