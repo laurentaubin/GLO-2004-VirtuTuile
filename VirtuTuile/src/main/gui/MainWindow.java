@@ -1,12 +1,16 @@
 package gui;
 
 import domain.room.RoomController;
+import javafx.util.Pair;
+import util.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
 
 public class MainWindow extends JFrame {
@@ -21,7 +25,7 @@ public class MainWindow extends JFrame {
 
 
     public enum ApplicationMode {
-        SELECT, ADD
+        SELECT, ADD_RECTANGULAR, ADD_IRREGULAR
     }
 
     public enum MeasurementUnitMode {
@@ -102,6 +106,20 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 selectButtonActionPerformed(actionEvent);
+            }
+        });
+
+        rectangularSurfaceButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                addRectangularButtonActionPerformed(actionEvent);
+            }
+        });
+
+        irregularSurfaceButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                addIrregularButtonActionPerformed(actionEvent);
             }
         });
 
@@ -269,18 +287,30 @@ public class MainWindow extends JFrame {
         this.setMode(ApplicationMode.SELECT);
     }
 
+    private void addRectangularButtonActionPerformed(ActionEvent actionEvent) {
+        this.setMode(ApplicationMode.ADD_RECTANGULAR);
+    }
+
+    private void addIrregularButtonActionPerformed(ActionEvent actionEvent) {
+        this.setMode(ApplicationMode.ADD_IRREGULAR);
+    }
+
     private void drawingPanelMousePressed(MouseEvent mouseEvent){
-        Point mousePoint = mouseEvent.getPoint();
-        this.actualMousePoint = mousePoint;
+        Point2D mousePoint = new Point2D.Double(mouseEvent.getX() / METER_RATIO, mouseEvent.getY() / METER_RATIO);
 
         if (this.actualMode == ApplicationMode.SELECT && SwingUtilities.isLeftMouseButton(mouseEvent)) {
-            //TODO Ajouter a conversion des unités de mesure ici!
-
-            System.out.println(mousePoint);
-
+            String measurementUnitType = (String)this.measurementUnitComboBox.getSelectedItem();
+            if (measurementUnitType.equals("IMPÉRIALE")){
+                mousePoint.setLocation(mousePoint.getX() * IMPERIAL_RATIO, mousePoint.getY() * IMPERIAL_RATIO);
+            }
+            System.out.println("x: " + mousePoint.getX() + ", y: " + mousePoint.getY());
         }
 
+        else if (this.actualMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)){}
     }
+
+    final float METER_RATIO = 120f;
+    final float IMPERIAL_RATIO = 3.281f;
 
     private ButtonGroup buttonGroup;
 
@@ -331,7 +361,4 @@ public class MainWindow extends JFrame {
     private JMenu windowMenu;
     private JMenuItem minimizeMenuItem;
     private JMenuItem zoomMenuItem;
-
-
-
 }

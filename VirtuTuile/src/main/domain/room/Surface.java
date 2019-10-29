@@ -1,6 +1,7 @@
 package domain.room;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Surface extends Polygon {
@@ -12,7 +13,13 @@ public class Surface extends Polygon {
     private double zoom = 1d;
     private boolean selectionStatus;
 
+    public Surface(){}
 
+    public Surface(int[] x, int[] y, int number_of_summit){
+        super(x, y, number_of_summit);
+    }
+
+    /*
     //Constructeur surface rectangulaire
     public Surface(String type, List<Point> points, boolean hole){
         this.type = type;
@@ -30,6 +37,7 @@ public class Surface extends Polygon {
         this.selectionStatus = false;
         this.hole = hole;
     }
+     */
 
     public String getType() {
         return type;

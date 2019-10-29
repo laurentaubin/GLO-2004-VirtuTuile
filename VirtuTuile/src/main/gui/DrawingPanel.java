@@ -24,6 +24,7 @@ public class DrawingPanel extends JPanel implements Serializable {
         setPreferredSize(new Dimension(width, 1));
         setVisible(true);
         int height = (int)(width*0.5);
+        setBackground(Color.BLACK);
         initialDimension = new Dimension(800, 600);
     }
 
@@ -31,25 +32,12 @@ public class DrawingPanel extends JPanel implements Serializable {
     protected void paintComponent(Graphics g){
         if (mainWindow != null){
             super.paintComponent(g);
-            Graphics2D g2d = (Graphics2D) g.create();
+            Graphics2D g2d = (Graphics2D) g;
+            AffineTransform at = new AffineTransform();
+            at.scale(zoom, zoom);
+
 
             SurfaceDrawer mainDrawer = new SurfaceDrawer(mainWindow.controller, initialDimension);
-
-            double width = getWidth();
-            double height = getHeight();
-
-            double zoomWidth = width * zoom;
-            double zoomHeight = height * zoom;
-
-            double anchorx = (width - zoomWidth) / 2;
-            double anchory = (height - zoomHeight) / 2;
-
-            AffineTransform at = new AffineTransform();
-            at.translate(anchorx, anchory);
-            at.scale(zoom, zoom);
-            at.translate(-100, -100);
-
-            g2d.setTransform(at);
 
             mainDrawer.draw(g);
         }
