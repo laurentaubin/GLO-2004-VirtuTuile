@@ -57,11 +57,8 @@ public class MainWindow extends JFrame {
         mainScrollPane = new JScrollPane();
         splitPane = new JSplitPane();
 
-        permanentRightPanel = new JTabbedPane();
-        surfaceTabPanel = new JPanel();
-        patternTabPanel = new JPanel();
-        tileTabPanel = new JPanel();
-        groutTabPanel = new JPanel();
+        rightPanel = new RightPanel(this);
+
 
         menuBar = new JMenuBar();
         fileMenu = new JMenu();
@@ -197,28 +194,7 @@ public class MainWindow extends JFrame {
 
         splitPane.setLeftComponent(mainScrollPane);
 
-        permanentRightPanel.setPreferredSize(new Dimension(0, 0));
-
-        surfaceTabPanel.setPreferredSize(new Dimension((int)(Toolkit.getDefaultToolkit().getScreenSize().width*0.15), (int)(Toolkit.getDefaultToolkit().getScreenSize().height*0.75)));
-
-        GroupLayout jPanel1Layout = new GroupLayout(surfaceTabPanel);
-        surfaceTabPanel.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-                jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 975, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-                jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 512, Short.MAX_VALUE)
-        );
-
-        permanentRightPanel.addTab("Surface", null, surfaceTabPanel, "");
-        permanentRightPanel.addTab("Motif", null, patternTabPanel, "");
-        permanentRightPanel.addTab("Tuile", null, tileTabPanel, "" );
-        permanentRightPanel.addTab("Coulis", null, groutTabPanel, "");
-
-
-        splitPane.setRightComponent(permanentRightPanel);
+        splitPane.setRightComponent(rightPanel);
 
         splitPane.setResizeWeight(0.8);
 
@@ -372,11 +348,8 @@ public class MainWindow extends JFrame {
     private JScrollPane mainScrollPane;
     private JSplitPane splitPane;
 
-    private JTabbedPane permanentRightPanel;
-    private JPanel surfaceTabPanel;
-    private JPanel patternTabPanel;
-    private JPanel tileTabPanel;
-    private JPanel groutTabPanel;
+    private RightPanel rightPanel;
+
 
     private JMenuBar menuBar;
 
