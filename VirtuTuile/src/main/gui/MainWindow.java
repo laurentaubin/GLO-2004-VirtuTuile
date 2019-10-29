@@ -21,7 +21,7 @@ public class MainWindow extends JFrame {
 
 
     public enum ApplicationMode {
-        SELECT, ADD
+        SELECT, ADDRECTANGULAR, ADDIRREGULAR
     }
 
     public enum MeasurementUnitMode {
@@ -98,10 +98,25 @@ public class MainWindow extends JFrame {
         topButtonBar.setPreferredSize(new Dimension(400, 35));
 
         selectButton.setSelected(true);
+        this.setMode(ApplicationMode.SELECT);
         selectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 selectButtonActionPerformed(actionEvent);
+            }
+        });
+
+        rectangularSurfaceButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                rectangularSurfaceButtonPerformed(actionEvent);
+            }
+        });
+
+        irregularSurfaceButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                irregularSurfaceButtonPerformed(actionEvent);
             }
         });
 
@@ -265,16 +280,32 @@ public class MainWindow extends JFrame {
         pack();
     }
 
-    private void selectButtonActionPerformed(ActionEvent actionEvent){
-        this.setMode(ApplicationMode.SELECT);
-    }
+    private void selectButtonActionPerformed(ActionEvent actionEvent){this.setMode(ApplicationMode.SELECT);}
+
+    private void rectangularSurfaceButtonPerformed(ActionEvent actionEvent){this.setMode(ApplicationMode.ADDRECTANGULAR);}
+
+    private void irregularSurfaceButtonPerformed(ActionEvent actionEvent){this.setMode(ApplicationMode.ADDIRREGULAR);}
 
     private void drawingPanelMousePressed(MouseEvent mouseEvent){
         Point mousePoint = mouseEvent.getPoint();
         this.actualMousePoint = mousePoint;
 
         if (this.actualMode == ApplicationMode.SELECT && SwingUtilities.isLeftMouseButton(mouseEvent)) {
-            //TODO Ajouter a conversion des unités de mesure ici!
+            //TODO Ajouter la conversion des unités de mesure ici!
+
+            System.out.println(mousePoint);
+
+        }
+
+        if (this.actualMode == ApplicationMode.ADDRECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
+            //TODO Ajouter la conversion des unités de mesure ici!
+
+            System.out.println(mousePoint);
+
+        }
+
+        if (this.actualMode == ApplicationMode.ADDIRREGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
+            //TODO Ajouter la conversion des unités de mesure ici!
 
             System.out.println(mousePoint);
 
