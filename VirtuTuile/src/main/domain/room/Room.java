@@ -41,10 +41,10 @@ public class Room {
         }
     }
 
-    void updateSelectedSurfacesPositions(Point delta) {
+    void updateSelectedSurfacesPositions(double deltaX, double deltaY) {
         for (Surface surface : this.surfaceList){
             if (surface.isSelected()){
-                surface.translate((int)delta.getX(), (int)delta.getY());
+                surface.translate((int)deltaX, (int)deltaY);
             }
         }
     }

@@ -4,10 +4,7 @@ import domain.room.RoomController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 import static gui.MainWindow.ApplicationMode.ADD_IRREGULAR;
 
@@ -21,7 +18,7 @@ public class MainWindow extends JFrame {
 
     public Point actualMousePoint = new Point();
     public Point initMousePoint = new Point();
-    public Point delta;
+
 
 
     public enum ApplicationMode {
@@ -91,6 +88,8 @@ public class MainWindow extends JFrame {
         minimizeMenuItem = new JMenuItem();
         zoomMenuItem = new JMenuItem();
 
+        this.setVisible(true);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("VirtuTuile");
 
@@ -121,7 +120,7 @@ public class MainWindow extends JFrame {
             }
         });
 
-        zoomInButton.addActionListener(new ActionListener() {
+        /*zoomInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 drawingPanel.zoomInActionPerformed();
@@ -133,7 +132,29 @@ public class MainWindow extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 drawingPanel.zoomOutActionPerformed();
             }
+        });*/
+
+        /*drawingPanel.addMouseWheelListener(new java.awt.event.MouseAdapter() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                int wheel = evt.getWheelRotation();
+                if (wheel < 0) {
+                    drawingPanel.zoomInActionPerformed(evt.getScrollAmount());
+                } else {
+                    drawingPanel.zoomOutActionPerformed(evt.getScrollAmount());
+                }
+            }
+        });*/
+
+        drawingPanel.addMouseWheelListener(new java.awt.event.MouseAdapter() {
+            public void mouseWheelMoved(MouseWheelEvent evt){
+                drawingPanel.zoomActionPerformed(evt.getWheelRotation(), evt.getX(), evt.getY());
+
+            }
+
         });
+
+
+
 
         measurementUnitComboBox.setModel(new DefaultComboBoxModel(new String[] { "MÉTRIQUE", "IMPÉRIALE" }));
         measurementUnitComboBox.setPreferredSize(new Dimension(120, 23));
@@ -332,9 +353,8 @@ public class MainWindow extends JFrame {
     private void drawingPanelMouseDragged(MouseEvent mouseEvent){
         if (SwingUtilities.isRightMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
-            delta.setLocation((mouseEvent.getX() - this.actualMousePoint.getX()), (mouseEvent.getY() - this.actualMousePoint.getY()));
-            System.out.println("Hello");
-            this.controller.updateSelectedSurfacesPositions(delta);
+
+            this.controller.updateSelectedSurfacesPositions(mouseEvent.getX() - this.actualMousePoint.getX(), mouseEvent.getY() - this.actualMousePoint.getY());
             this.actualMousePoint = mouseEvent.getPoint();
             drawingPanel.repaint();
 

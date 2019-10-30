@@ -15,6 +15,9 @@ public class DrawingPanel extends JPanel implements Serializable {
     private MainWindow mainWindow;
 
     private double zoom = 1d;
+    private double translateX = 0d;
+    private double translateY = 0d;
+
 
     public DrawingPanel(){}
 
@@ -32,8 +35,12 @@ public class DrawingPanel extends JPanel implements Serializable {
     protected void paintComponent(Graphics g){
         if (mainWindow != null){
             super.paintComponent(g);
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.scale(zoom, zoom);
+            g2d.translate(translateX, translateY);
             SurfaceDrawer mainDrawer = new SurfaceDrawer(mainWindow.controller, initialDimension);
-            mainDrawer.draw(g);
+
+            mainDrawer.draw(g2d);
         }
     }
 
@@ -49,23 +56,17 @@ public class DrawingPanel extends JPanel implements Serializable {
         return initialDimension;
     }
 
-    public void setInitialDimension(){
-        this.mainWindow = mainWindow;
+    public void zoomActionPerformed(int wheelAmount, int mouseX, int mouseY){
+        zoom -= zoom / ((double)wheelAmount*4.0);
+        System.out.println(zoom);
+        translateX +=  zoom  * (mouseX * 2) * wheelAmount; //Proportion à travailler
+        translateY += zoom * (mouseY * 2) * wheelAmount;    //Proportion à travailler
+        this.repaint();
+
     }
 
-    public void zoomInActionPerformed(){
-        zoom += 0.1d;
-        System.out.println(zoom);
-    }
-
-    public void zoomOutActionPerformed() {
-        if (zoom > 0) {
-            if (zoom - 0.1d < 0) {
-                zoom = 0;
-            } else {
-                zoom -= 0.1d;
-            }
-        }
-        System.out.println(zoom);
-    }
+    /*public void zoomOutActionPerformed(int wheelAmount) {
+        zoom = zoom * wheelAmount;
+        this.repaint();
+    }*/
 }

@@ -31,8 +31,8 @@ public class RoomController {
         room.switchSelectionStatus(x, y, isShiftDown);
     }
 
-    public void updateSelectedSurfacesPositions(Point delta) {
-        room.updateSelectedSurfacesPositions(delta);
+    public void updateSelectedSurfacesPositions(double deltaX, double deltaY) {
+        room.updateSelectedSurfacesPositions(deltaX, deltaY);
     }
 
 }

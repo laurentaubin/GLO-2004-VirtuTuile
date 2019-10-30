@@ -8,8 +8,8 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import gui.MainWindow.MeasurementUnitMode;
-import javafx.beans.binding.DoubleExpression;
-import javafx.util.Pair;
+/*import javafx.beans.binding.DoubleExpression;
+import javafx.util.Pair;*/
 
 public class UnitConverter {
 
