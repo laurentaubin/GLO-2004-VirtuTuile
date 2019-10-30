@@ -94,6 +94,10 @@ public class Surface extends Polygon {
         return this.selectionStatus;
     }
 
+    public void deseleted() {
+        this.selectionStatus= false;
+    }
+
 
 }
 

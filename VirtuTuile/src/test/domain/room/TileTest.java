@@ -1,4 +1,5 @@
-package domain.room;
+
+/*package domain.room;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,3 +24,5 @@ public class TileTest {
         assertEquals(new Point(10, 25), tester.getDimensions());
     }
 }
+
+ */

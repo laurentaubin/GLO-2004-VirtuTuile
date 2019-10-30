@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import static gui.MainWindow.ApplicationMode.ADD_IRREGULAR;
@@ -19,7 +20,8 @@ public class MainWindow extends JFrame {
     private MeasurementUnitMode actualMeasurementUnit;
 
     public Point actualMousePoint = new Point();
-    public Point delta = new Point();
+    public Point initMousePoint = new Point();
+    public Point delta;
 
 
     public enum ApplicationMode {
@@ -163,6 +165,7 @@ public class MainWindow extends JFrame {
 
 
         drawingPanel.setPreferredSize(new Dimension(0, 540));
+        
         drawingPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 drawingPanelMousePressed(evt);
@@ -277,58 +280,63 @@ public class MainWindow extends JFrame {
     private void drawingPanelMousePressed(MouseEvent mouseEvent){
         Point mousePoint = mouseEvent.getPoint();
         this.actualMousePoint = mousePoint;
+        boolean isShiftDown = false;
 
         if (this.actualMode == ApplicationMode.SELECT && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
-
+            if (mouseEvent.isShiftDown()){
+                isShiftDown = true;
+            }
+            this.controller.switchSelectionStatus(mousePoint.getX(), mousePoint.getY(), isShiftDown);
+            drawingPanel.repaint();
             System.out.println(mousePoint);
-
-
         }
 
         if (this.actualMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
-
-            System.out.println(mousePoint);
-
-
+            this.initMousePoint = mousePoint;
         }
 
         if (this.actualMode == ApplicationMode.ADD_IRREGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
-
             System.out.println(mousePoint);
-
-
         }
 
     }
 
     private void drawingPanelMouseReleased(MouseEvent mouseEvent){
-        Point mousePoint = mouseEvent.getPoint();
+        Point mousePointReleased = mouseEvent.getPoint();
 
         if (this.actualMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
+            int[] xPoints = new int[4];
+            int[] yPoints = new int[4];
 
-            int width = Math.abs(this.actualMousePoint.x - mousePoint.x);
-            int height = Math.abs(this.actualMousePoint.y - mousePoint.y);
-            // Attendre avant addRectangularSurface... on va hériter de polygone avant
-            // this.controller.addRectangularSurface()
+            xPoints[0] = (int)this.initMousePoint.x;
+            xPoints[1] = (int)mousePointReleased.getX();
+            xPoints[2] = (int)mousePointReleased.getX();
+            xPoints[3] = (int)initMousePoint.getX();
 
+            yPoints[0] = (int)initMousePoint.getY();
+            yPoints[1] = (int)initMousePoint.getY();
+            yPoints[2] = (int)mousePointReleased.getY();
+            yPoints[3] = (int)mousePointReleased.getY();
+
+            int n  = 4;
+
+            controller.addSurface(xPoints, yPoints, n);
         }
-
         drawingPanel.repaint();
-
     }
 
     private void drawingPanelMouseDragged(MouseEvent mouseEvent){
-        Point mousePoint = mouseEvent.getPoint();
-        this.actualMousePoint = mousePoint;
-
-        if (this.actualMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
+        if (SwingUtilities.isRightMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
-
-            //System.out.println(mousePoint);
+            delta.setLocation((mouseEvent.getX() - this.actualMousePoint.getX()), (mouseEvent.getY() - this.actualMousePoint.getY()));
+            System.out.println("Hello");
+            this.controller.updateSelectedSurfacesPositions(delta);
+            this.actualMousePoint = mouseEvent.getPoint();
+            drawingPanel.repaint();
 
         }
 

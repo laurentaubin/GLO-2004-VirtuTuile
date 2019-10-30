@@ -1,6 +1,7 @@
 package gui;
 
 import domain.drawing.SurfaceDrawer;
+import domain.room.Surface;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -24,7 +25,6 @@ public class DrawingPanel extends JPanel implements Serializable {
         setPreferredSize(new Dimension(width, 1));
         setVisible(true);
         int height = (int)(width*0.5);
-        setBackground(Color.BLACK);
         initialDimension = new Dimension(800, 600);
     }
 
@@ -32,13 +32,7 @@ public class DrawingPanel extends JPanel implements Serializable {
     protected void paintComponent(Graphics g){
         if (mainWindow != null){
             super.paintComponent(g);
-            Graphics2D g2d = (Graphics2D) g;
-            AffineTransform at = new AffineTransform();
-            at.scale(zoom, zoom);
-
-
             SurfaceDrawer mainDrawer = new SurfaceDrawer(mainWindow.controller, initialDimension);
-
             mainDrawer.draw(g);
         }
     }

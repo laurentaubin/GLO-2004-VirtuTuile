@@ -1,25 +1,29 @@
 package domain.room;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Room {
 
-    private List<Surface> surfaceList;
+    private ArrayList<Surface> surfaceList;
 
     public Room() {
-        surfaceList = new LinkedList<Surface>();
+        surfaceList = new ArrayList<Surface>();
     }
 
-    public void addSurface(Surface surface){
+    public void addSurface(int[] xPoints, int[] yPoints, int number_of_summits) {
+        Surface surface = new Surface(xPoints, yPoints, number_of_summits);
         surfaceList.add(surface);
+
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return surfaceList.isEmpty();
     }
 
-    public List<Surface> getSurfaceList(){
+    public ArrayList<Surface> getSurfaceList() {
         return surfaceList;
     }
 
@@ -27,10 +31,20 @@ public class Room {
         return surfaceList.size();
     }
 
-    void switchSelectionStatus (double x, double y) {
-        for (Surface item: this.surfaceList) {
+    void switchSelectionStatus(double x, double y, boolean isShiftDown) {
+        for (Surface item : this.surfaceList) {
             if (item.contains(x, y)) {
                 item.switchSelectionStatus();
+            } else if (isShiftDown == false){
+                item.deseleted();
+            }
+        }
+    }
+
+    void updateSelectedSurfacesPositions(Point delta) {
+        for (Surface surface : this.surfaceList){
+            if (surface.isSelected()){
+                surface.translate((int)delta.getX(), (int)delta.getY());
             }
         }
     }

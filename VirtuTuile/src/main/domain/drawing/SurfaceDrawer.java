@@ -3,6 +3,7 @@ package domain.drawing;
 import domain.room.RoomController;
 import domain.room.Surface;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,11 +22,16 @@ public class SurfaceDrawer {
 
 
     public void drawSurface(Graphics g){
-        int width = (int) initialDimension.getWidth();
-        int height = (int) initialDimension.getHeight();
-
-        g.setColor(new Color(140, 98, 57));
-        g.fillRect(10,10,10,10);
+        Graphics2D g2d = (Graphics2D) g;
+        ArrayList<Surface> surfaces = controller.getSurfaceList();
+        for (Surface current_surface: surfaces) {
+            if (current_surface.isSelected()){
+                System.out.println("Hekrgwnje");
+                g2d.setColor(Color.BLACK);
+                g2d.fill(current_surface);
+            }
+            g2d.draw(current_surface);
+        }
 
 
         /*

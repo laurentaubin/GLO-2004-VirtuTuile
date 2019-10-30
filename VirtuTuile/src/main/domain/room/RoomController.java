@@ -1,6 +1,7 @@
 package domain.room;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RoomController {
@@ -14,17 +15,11 @@ public class RoomController {
         room = new Room();
     }
 
-    public void addRectangularSurface(String type, int width, int height, List<Point> points, boolean hole) {
-        Surface newRectangularSurface = new Surface(type, width, height, points, hole);
-        room.addSurface(newRectangularSurface);
+    public void addSurface(int[] xPoints, int[] yPoints, int number_of_summits) {
+        room.addSurface(xPoints, yPoints, number_of_summits);
     }
 
-    public void addIrregularSurface(String type, List<Point> points, boolean hole){
-        Surface newIrregularSurface = new Surface(type, points, hole);
-        room.addSurface(newIrregularSurface);
-    }
-
-    public List<Surface> getSurfaceList() {
+    public ArrayList<Surface> getSurfaceList() {
         return room.getSurfaceList();
     }
 
@@ -32,8 +27,12 @@ public class RoomController {
         return room.getNumberOfSurfaces();
     }
 
-    public void switchSelectionStatus(double x, double y) {
-        room.switchSelectionStatus(x, y);
+    public void switchSelectionStatus(double x, double y, boolean isShiftDown) {
+        room.switchSelectionStatus(x, y, isShiftDown);
+    }
+
+    public void updateSelectedSurfacesPositions(Point delta) {
+        room.updateSelectedSurfacesPositions(delta);
     }
 
 }
