@@ -357,9 +357,7 @@ public class MainWindow extends JFrame {
             this.controller.updateSelectedSurfacesPositions(mouseEvent.getX() - this.actualMousePoint.getX(), mouseEvent.getY() - this.actualMousePoint.getY());
             this.actualMousePoint = mouseEvent.getPoint();
             drawingPanel.repaint();
-
         }
-
     }
 
     private ButtonGroup buttonGroup;

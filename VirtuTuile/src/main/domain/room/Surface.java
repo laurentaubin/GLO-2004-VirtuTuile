@@ -11,7 +11,7 @@ public class Surface extends Polygon {
     private int height;
     private boolean hole;
     private double zoom = 1d;
-    private boolean selectionStatus;
+    private boolean selectionStatus = false;
     private Cover cover;
 
     public Surface(){}
