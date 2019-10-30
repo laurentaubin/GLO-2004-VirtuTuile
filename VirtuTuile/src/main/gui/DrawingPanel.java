@@ -23,7 +23,7 @@ public class DrawingPanel extends JPanel implements Serializable {
 
     public DrawingPanel(MainWindow mainWindow){
         this.mainWindow = mainWindow;
-        setBorder(new BevelBorder(BevelBorder.LOWERED));
+
         int width = (int)(Toolkit.getDefaultToolkit().getScreenSize().width);
         setPreferredSize(new Dimension(width, 1));
         setVisible(true);
@@ -57,10 +57,15 @@ public class DrawingPanel extends JPanel implements Serializable {
     }
 
     public void zoomActionPerformed(int wheelAmount, int mouseX, int mouseY){
-        zoom -= zoom / ((double)wheelAmount*4.0);
-        System.out.println(zoom);
-        translateX +=  zoom  * (mouseX * 2) * wheelAmount; //Proportion à travailler
-        translateY += zoom * (mouseY * 2) * wheelAmount;    //Proportion à travailler
+        if (wheelAmount == 1){
+            zoom = zoom * 1.1;
+        }
+        else{
+            zoom = zoom / 1.1;
+        }
+        System.out.println(wheelAmount + ", " + mouseX + ", " + mouseY);
+        translateX -= 0.5 * wheelAmount * (mouseX - (this.getHeight()/2));//Proportion à travailler
+        translateY -= 0.5 * wheelAmount * (mouseY - (this.getWidth()/2));    //Proportion à travailler
         this.repaint();
 
     }
