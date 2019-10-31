@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Surface extends Polygon {
+    private String type;
     private boolean hole;
     private double zoom = 1d;
     private boolean selectionStatus = false;
@@ -14,8 +15,11 @@ public class Surface extends Polygon {
 
     public Surface(){}
 
-    public Surface(int[] x, int[] y, int number_of_summit){
+    public Surface(int[] x, int[] y, int number_of_summit, String type){
         super(x, y, number_of_summit);
+        this.type = type;
+
+        System.out.println("Type de la surface créée: " + this.type);
     }
 
     public boolean isHole() {

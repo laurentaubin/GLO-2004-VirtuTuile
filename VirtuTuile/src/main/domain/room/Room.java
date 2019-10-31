@@ -13,8 +13,8 @@ public class Room {
         surfaceList = new ArrayList<Surface>();
     }
 
-    public void addRectangularSurface(int[] xPoints, int[] yPoints, int number_of_summits) {
-        RectangularSurface surface = new RectangularSurface(xPoints, yPoints, number_of_summits);
+    public void addRectangularSurface(int[] xPoints, int[] yPoints, int number_of_summits, String surfaceType) {
+        RectangularSurface surface = new RectangularSurface(xPoints, yPoints, number_of_summits, surfaceType);
         surfaceList.add(surface);
     }
 

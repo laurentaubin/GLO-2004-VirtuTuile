@@ -4,8 +4,8 @@ public class RectangularSurface extends Surface{
     private float width;
     private float height;
 
-    public RectangularSurface(int[] xPoints, int[] yPoints, int number_of_edge) {
-        super(xPoints, yPoints, number_of_edge);
+    public RectangularSurface(int[] xPoints, int[] yPoints, int number_of_edge, String surfaceType) {
+        super(xPoints, yPoints, number_of_edge, surfaceType);
         this.width = Math.abs(xPoints[1] - xPoints[0]);
         this.height = Math.abs(yPoints[0] - yPoints[3]);
 

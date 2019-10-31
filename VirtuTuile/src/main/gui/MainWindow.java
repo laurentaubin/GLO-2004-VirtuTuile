@@ -345,7 +345,9 @@ public class MainWindow extends JFrame {
 
             int n  = 4;
 
-            controller.addRectangularSurface(xPoints, yPoints, n);
+            String surfaceType = "RECTANGULAR";
+
+            controller.addSurface(xPoints, yPoints, n, surfaceType);
         }
 
         else if (this.actualMode == ADD_IRREGULAR && SwingUtilities.isLeftMouseButton((mouseEvent))){
@@ -379,8 +381,7 @@ public class MainWindow extends JFrame {
     private JSplitPane splitPane;
 
     private RightPanel rightPanel;
-
-
+    
     private JMenuBar menuBar;
 
     private JMenu fileMenu;

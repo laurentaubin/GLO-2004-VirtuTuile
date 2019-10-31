@@ -15,8 +15,17 @@ public class RoomController {
         room = new Room();
     }
 
-    public void addRectangularSurface(int[] xPoints, int[] yPoints, int number_of_summits) {
-        room.addRectangularSurface(xPoints, yPoints, number_of_summits);
+    public void addSurface(int[] xPoints, int[] yPoints, int number_of_edges, String type) {
+        if (type.equals("RECTANGULAR")){
+            room.addRectangularSurface(xPoints, yPoints, number_of_edges, type);
+        }
+        else if (type.equals("IRREGULAR")){
+            //TODO Code pour ajouter une surface irrégulière
+        }
+    }
+
+    public void addIrregularSurface(int[] xPoints, int[] yPoints, int number_of_edges, String type){
+
     }
 
     public ArrayList<Surface> getSurfaceList() {
