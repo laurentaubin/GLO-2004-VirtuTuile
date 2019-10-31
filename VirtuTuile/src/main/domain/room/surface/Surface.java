@@ -22,21 +22,24 @@ public abstract class Surface extends Polygon {
         super(x, y, number_of_summit);
         this.type = type;
         this.numOfSummit = number_of_summit;
-        xCoord = x;
-        yCoord = y;
-        System.out.println("Type de la surface créée: " + this.type);
+        this.xCoord = x;
+        this.yCoord = y;
+    }
+    
+    public int[] getxCoord(){
+        return this.xpoints;
     }
 
-
-    public int[] getxCoord(){return this.xCoord;}
-    public int[] getyCoord(){return this.yCoord;}
+    public int[] getyCoord(){
+        return this.ypoints;
+    }
 
     public void setxCoord(int x, int index){
-        this.xCoord[index] = x;
+        this.xpoints[index] = x;
     }
 
     public void setyCoord(int y, int index){
-        this.yCoord[index] = y;
+        this.ypoints[index] = y;
     }
 
     public void updateSurface(){
@@ -63,7 +66,7 @@ public abstract class Surface extends Polygon {
     }
 
     public void setSelectionStatus(boolean selectionStatus) {
-        this. selectionStatus = selectionStatus;
+        this.selectionStatus = selectionStatus;
     }
 
     public String getType() {
