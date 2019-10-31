@@ -26,25 +26,24 @@ public class RightPanel extends JTabbedPane implements Serializable {
         tileTabPanel = new TileTabPanel(this);
         groutTabPanel = new GroutTabPanel(this);
 
-
-
-
         //this.setPreferredSize(new Dimension(10, 10));
 
-            this.addTab("Surface", null, surfaceTabPanel, "");
-
-            this.addTab("Motif", null, patternTabPanel, "");
-            this.addTab("Tuile", null, tileTabPanel, "" );
-            this.addTab("Coulis", null, groutTabPanel, "");
-            this.setSelectedIndex(0);
-
+        this.addTab("Surface", null, surfaceTabPanel, "");
+        this.addTab("Motif", null, patternTabPanel, "");
+        this.addTab("Tuile", null, tileTabPanel, "" );
+        this.addTab("Coulis", null, groutTabPanel, "");
+        this.setSelectedIndex(0);
     }
 
+    public void updateInformations(float width){
+        surfaceTabPanel.updateInformations(width);
+    }
 
+    public MainWindow getMainWindow() {
+        return this.mainWindow;
+    }
 
-
-
-    private JPanel surfaceTabPanel;
+    private SurfaceTabPanel surfaceTabPanel;
     private JPanel patternTabPanel;
     private JPanel tileTabPanel;
     private JPanel groutTabPanel;

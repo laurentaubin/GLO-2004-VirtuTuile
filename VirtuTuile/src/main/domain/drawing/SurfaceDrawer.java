@@ -1,10 +1,9 @@
 package domain.drawing;
 
 import domain.room.RoomController;
-import domain.room.Surface;
+import domain.room.surface.Surface;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class SurfaceDrawer {
@@ -26,9 +25,13 @@ public class SurfaceDrawer {
         ArrayList<Surface> surfaces = controller.getSurfaceList();
         for (Surface current_surface: surfaces) {
             if (current_surface.isSelected()){
-                System.out.println("Hekrgwnje");
+                Color selectedColor = new Color(189, 227, 255);
+                g2d.setColor(selectedColor);
+                g2d.setStroke(new BasicStroke(2));
+            }
+            else {
                 g2d.setColor(Color.BLACK);
-                g2d.fill(current_surface);
+                g2d.setStroke(new BasicStroke(1));
             }
             g2d.draw(current_surface);
         }

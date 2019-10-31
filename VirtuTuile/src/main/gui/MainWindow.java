@@ -1,7 +1,7 @@
 package gui;
 
 import domain.room.RoomController;
-import domain.room.Surface;
+import domain.room.surface.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -154,9 +154,6 @@ public class MainWindow extends JFrame {
 
         });
 
-
-
-
         measurementUnitComboBox.setModel(new DefaultComboBoxModel(new String[] { "MÉTRIQUE", "IMPÉRIALE" }));
         measurementUnitComboBox.setPreferredSize(new Dimension(120, 23));
 
@@ -182,9 +179,6 @@ public class MainWindow extends JFrame {
         //Change la grandeur du panel de gauche min
         mainScrollPane.setMinimumSize(new Dimension(0, 202));
         mainScrollPane.setPreferredSize(new Dimension((int)(Toolkit.getDefaultToolkit().getScreenSize().width*0.85), (int)(Toolkit.getDefaultToolkit().getScreenSize().height*0.5)));
-
-
-
 
         drawingPanel.setPreferredSize(new Dimension(0, 540));
         
@@ -221,7 +215,7 @@ public class MainWindow extends JFrame {
 
         splitPane.setRightComponent(rightPanel);
 
-        splitPane.setResizeWeight(0.8);
+        splitPane.setResizeWeight(1);
 
         mainPanel.add(splitPane, BorderLayout.CENTER);
 
@@ -311,6 +305,7 @@ public class MainWindow extends JFrame {
             }
             this.controller.switchSelectionStatus(mousePoint.getX(), mousePoint.getY(), isShiftDown);
             drawingPanel.repaint();
+            rightPanel.updateInformations(this.controller.getSelectedRectangularSurfaceWidth());
             System.out.println(mousePoint);
         }
 
@@ -346,8 +341,13 @@ public class MainWindow extends JFrame {
 
             int n  = 4;
 
-            Surface surface = new Surface(xPoints, yPoints, n);
-            controller.addSurface(surface);
+            String surfaceType = "RECTANGULAR";
+
+            controller.addSurface(xPoints, yPoints, n, surfaceType);
+        }
+
+        else if (this.actualMode == ADD_IRREGULAR && SwingUtilities.isLeftMouseButton((mouseEvent))){
+            //TODO Code pour surface irrégulière
         }
         drawingPanel.repaint();
     }
@@ -359,9 +359,7 @@ public class MainWindow extends JFrame {
             this.controller.updateSelectedSurfacesPositions(mouseEvent.getX() - this.actualMousePoint.getX(), mouseEvent.getY() - this.actualMousePoint.getY());
             this.actualMousePoint = mouseEvent.getPoint();
             drawingPanel.repaint();
-
         }
-
     }
 
     private ButtonGroup buttonGroup;
@@ -379,7 +377,6 @@ public class MainWindow extends JFrame {
     private JSplitPane splitPane;
 
     private RightPanel rightPanel;
-
 
     private JMenuBar menuBar;
 

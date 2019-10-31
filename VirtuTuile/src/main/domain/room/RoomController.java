@@ -1,8 +1,8 @@
 package domain.room;
 
-import java.awt.Point;
+import domain.room.surface.Surface;
+
 import java.util.ArrayList;
-import java.util.List;
 
 public class RoomController {
     private final Room room;
@@ -15,8 +15,13 @@ public class RoomController {
         room = new Room();
     }
 
-    public void addSurface(Surface surface) {
-        room.addSurface(surface);
+    public void addSurface(int[] xPoints, int[] yPoints, int number_of_edges, String type) {
+        if (type.equals("RECTANGULAR")){
+            room.addRectangularSurface(xPoints, yPoints, number_of_edges);
+        }
+        else if (type.equals("IRREGULAR")){
+            room.addIrregularSurface(xPoints, yPoints, number_of_edges);
+        }
     }
 
     public ArrayList<Surface> getSurfaceList() {
@@ -39,4 +44,7 @@ public class RoomController {
         room.addPatternToSelectedSurfaces(pattern);
     }
 
+    public float getSelectedRectangularSurfaceWidth(){
+        return room.getSelectedRectangularSurfaceWidth();
+    }
 }
