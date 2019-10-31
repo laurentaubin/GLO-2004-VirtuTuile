@@ -13,8 +13,9 @@ public class Room {
         surfaceList = new ArrayList<Surface>();
     }
 
-    public void addRectangularSurface(int[] xPoints, int[] yPoints, int number_of_summits) {
-        RectangularSurface surface = new RectangularSurface(xPoints, yPoints, number_of_summits, "RECTANGULAR");
+    public void addRectangularSurface(int[] xPoints, int[] yPoints, int number_of_summits, String type) {
+        RectangularSurface surface = new RectangularSurface(xPoints, yPoints, number_of_summits, type);
+
         surfaceList.add(surface);
     }
 
@@ -46,12 +47,14 @@ public class Room {
 
     void updateSelectedSurfacesPositions(double deltaX, double deltaY) {
         for (Surface surface : this.surfaceList) {
-            int[] x = surface.getxCoord();
-            int[] y = surface.getyCoord();
+            if(surface.isSelected()) {
+                int[] x = surface.getxCoord();
+                int[] y = surface.getyCoord();
 
-            for (int i = 0; i < x.length; i++) {
-                surface.setxCoord((int) (x[i] + deltaX), i);
-                surface.setyCoord((int) (y[i] + deltaY), i);
+                for (int i = 0; i < x.length; i++) {
+                    surface.setxCoord((int) (x[i] + deltaX), i);
+                    surface.setyCoord((int) (y[i] + deltaY), i);
+                }
             }
             surface.updateSurface();
         }
