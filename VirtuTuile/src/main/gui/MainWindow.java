@@ -345,7 +345,11 @@ public class MainWindow extends JFrame {
 
             int n  = 4;
 
-            controller.addSurface(xPoints, yPoints, n);
+            controller.addRectangularSurface(xPoints, yPoints, n);
+        }
+
+        else if (this.actualMode == ADD_IRREGULAR && SwingUtilities.isLeftMouseButton((mouseEvent))){
+            //TODO Code pour surface irrégulière
         }
         drawingPanel.repaint();
     }

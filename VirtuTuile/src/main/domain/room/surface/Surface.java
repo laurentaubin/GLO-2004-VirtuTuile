@@ -1,14 +1,12 @@
-package domain.room;
+package domain.room.surface;
+
+import domain.room.Cover;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Surface extends Polygon {
-    private String type;
-    private List<Point> points;
-    private int width;
-    private int height;
     private boolean hole;
     private double zoom = 1d;
     private boolean selectionStatus = false;
@@ -20,27 +18,11 @@ public class Surface extends Polygon {
         super(x, y, number_of_summit);
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public List<Point> getPoints(){
-        return points;
-    }
-
     public boolean isHole() {
         return hole;
     }
 
-    public int getWidth() {
-        return this.width;
-    }
-
-    public int getHeight() {
-        return this.height;
-    }
-
-    void switchSelectionStatus() {
+    public void switchSelectionStatus() {
         this.selectionStatus =  !this.selectionStatus;
     }
 

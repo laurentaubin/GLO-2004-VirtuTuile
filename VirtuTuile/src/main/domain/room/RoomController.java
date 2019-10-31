@@ -1,8 +1,8 @@
 package domain.room;
 
-import java.awt.Point;
+import domain.room.surface.Surface;
+
 import java.util.ArrayList;
-import java.util.List;
 
 public class RoomController {
     private final Room room;
@@ -15,8 +15,8 @@ public class RoomController {
         room = new Room();
     }
 
-    public void addSurface(int[] xPoints, int[] yPoints, int number_of_summits) {
-        room.addSurface(xPoints, yPoints, number_of_summits);
+    public void addRectangularSurface(int[] xPoints, int[] yPoints, int number_of_summits) {
+        room.addRectangularSurface(xPoints, yPoints, number_of_summits);
     }
 
     public ArrayList<Surface> getSurfaceList() {

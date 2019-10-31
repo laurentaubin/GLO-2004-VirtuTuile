@@ -1,10 +1,9 @@
 package domain.drawing;
 
 import domain.room.RoomController;
-import domain.room.Surface;
+import domain.room.surface.Surface;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class SurfaceDrawer {

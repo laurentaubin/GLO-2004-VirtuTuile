@@ -1,13 +1,10 @@
 package gui;
 
 import domain.drawing.SurfaceDrawer;
-import domain.room.Surface;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.io.Serializable;
 import javax.swing.JPanel;
-import javax.swing.border.BevelBorder;
 
 public class DrawingPanel extends JPanel implements Serializable {
 

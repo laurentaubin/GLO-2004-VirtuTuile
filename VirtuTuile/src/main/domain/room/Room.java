@@ -1,9 +1,9 @@
 package domain.room;
 
-import java.awt.*;
+import domain.room.surface.RectangularSurface;
+import domain.room.surface.Surface;
+
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 public class Room {
 
@@ -13,10 +13,9 @@ public class Room {
         surfaceList = new ArrayList<Surface>();
     }
 
-    public void addSurface(int[] xPoints, int[] yPoints, int number_of_summits) {
-        Surface surface = new Surface(xPoints, yPoints, number_of_summits);
+    public void addRectangularSurface(int[] xPoints, int[] yPoints, int number_of_summits) {
+        RectangularSurface surface = new RectangularSurface(xPoints, yPoints, number_of_summits);
         surfaceList.add(surface);
-
     }
 
     public boolean isEmpty() {
