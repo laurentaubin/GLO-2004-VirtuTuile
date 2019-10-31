@@ -18,7 +18,7 @@ public class RoomController {
 
     public void addSurface(int[] xPoints, int[] yPoints, int number_of_edges, String type) {
         if (type.equals("RECTANGULAR")){
-            room.addRectangularSurface(xPoints, yPoints, number_of_edges);
+            room.addRectangularSurface(xPoints, yPoints, number_of_edges, type);
         }
         else if (type.equals("IRREGULAR")){
             room.addIrregularSurface(xPoints, yPoints, number_of_edges);
@@ -45,7 +45,7 @@ public class RoomController {
         room.addPatternToSelectedSurfaces(pattern);
     }
 
-    public float getSelectedRectangularSurfaceWidth(){
-        return room.getSelectedRectangularSurfaceWidth();
+    public float[] getSelectedRectangularSurfaceDimensions(){
+        return room.getSelectedRectangularSurfaceDimensions();
     }
 }

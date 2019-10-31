@@ -76,15 +76,15 @@ public class Room {
         }
     }
 
-    public float getSelectedRectangularSurfaceWidth() {
-        float width = 0f;
+    public float[] getSelectedRectangularSurfaceDimensions() {
+        float[] dimensionList = new float[2];
         for (Surface surface : this.surfaceList){
             if (surface.isSelected() && surface.getType() == "RECTANGULAR"){
-                width =  surface.getWidth();
+                dimensionList[0] = surface.getWidth();
+                dimensionList[1] = surface.getHeight();
             }
         }
-        System.out.println("width de la surface sélectionnée: " + width);
-        return width;
+        return dimensionList;
     }
 
 }

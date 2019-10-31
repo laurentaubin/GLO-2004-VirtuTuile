@@ -8,9 +8,6 @@ public class RectangularSurface extends Surface{
         super(xPoints, yPoints, number_of_edge, surfaceType);
         this.width = Math.abs(xPoints[1] - xPoints[0]);
         this.height = Math.abs(yPoints[0] - yPoints[3]);
-
-        System.out.println("width: " + this.width);
-        System.out.println("height: " + this.height);
     }
 
     public float getWidth(){

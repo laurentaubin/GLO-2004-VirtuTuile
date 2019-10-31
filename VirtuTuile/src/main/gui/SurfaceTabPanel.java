@@ -50,19 +50,20 @@ public class SurfaceTabPanel extends JPanel{
         this.add(surfaceDimensionPanel, BorderLayout.NORTH);
     }
 
-    private void setWidthValue(float width){
-        System.out.println("DANS setVALUE");
-        this.widthValue = width;
-        this.updateUI();
+    private void setDimensionsValue(float[] dimensions){
+        widthField.setValue(dimensions[0]);
+        heightField.setValue(dimensions[1]);
+        repaint();
     }
 
-    public void updateInformations(float width){
-        setWidthValue(width);
+    public void updateInformations(float[] dimensions){
+        setDimensionsValue(dimensions);
     }
 
     private RightPanel rightPanel;
 
     private JPanel surfaceDimensionPanel;
+    private JPanel modifyAndErasePanel;
 
     private float width;
     private float height;
@@ -77,9 +78,12 @@ public class SurfaceTabPanel extends JPanel{
     private JFormattedTextField heightField;
 
     private float widthValue = 0f;
-    private float heightValue = 0f;
+    private float heightValue;
 
     private NumberFormat widthFormat;
     private NumberFormat heightFormat;
+
+    private JButton modifyButton;
+    private JButton EraseButton;
 }
 

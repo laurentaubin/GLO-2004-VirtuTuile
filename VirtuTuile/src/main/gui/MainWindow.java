@@ -305,8 +305,8 @@ public class MainWindow extends JFrame {
             }
             this.controller.switchSelectionStatus(mousePoint.getX(), mousePoint.getY(), isShiftDown);
             drawingPanel.repaint();
-            rightPanel.updateInformations(this.controller.getSelectedRectangularSurfaceWidth());
-            System.out.println(mousePoint);
+
+            rightPanel.updateInformations(this.controller.getSelectedRectangularSurfaceDimensions());
         }
 
         if (this.actualMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
