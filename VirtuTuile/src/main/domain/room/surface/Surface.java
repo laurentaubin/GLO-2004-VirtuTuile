@@ -85,5 +85,9 @@ public abstract class Surface extends Polygon {
     public void setCover(Cover cover) {
         this.cover = cover;
     }
+
+    public void setDimensions(float[] dimensions){
+
+    }
 }
 

@@ -40,6 +40,10 @@ public class MainWindow extends JFrame {
         this.actualMode = newMode;
     }
 
+    public DrawingPanel getDrawingPanel(){
+        return this.drawingPanel;
+    }
+
     private void initComponents() {
         mainPanel = new JPanel();
 
@@ -361,6 +365,7 @@ public class MainWindow extends JFrame {
             drawingPanel.repaint();
         }
     }
+
 
     private ButtonGroup buttonGroup;
 

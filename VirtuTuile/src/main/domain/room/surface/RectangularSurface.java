@@ -25,4 +25,16 @@ public class RectangularSurface extends Surface{
     public void setHeight(float height) {
         this.height = height;
     }
+
+    public void setDimensions(float[] dimensions) {
+        float deltaW = dimensions[0] - this.width;
+        float deltaH = dimensions[1] - this.height;
+        this.width = dimensions[0];
+        this.height = dimensions[1];
+
+        this.xpoints[1] += deltaW;
+        this.xpoints[2] += deltaW;
+        this.ypoints[2] += deltaH;
+        this.ypoints[3] += deltaH;
+    }
 }

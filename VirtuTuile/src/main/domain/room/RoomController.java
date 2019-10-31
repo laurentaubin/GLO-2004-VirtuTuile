@@ -48,4 +48,8 @@ public class RoomController {
     public float[] getSelectedRectangularSurfaceDimensions(){
         return room.getSelectedRectangularSurfaceDimensions();
     }
+
+    public void setSelectedRectangularSurfaceDimensions(float[] dimensions){
+        room.setSelectedRectangularSurfaceDimensions(dimensions);
+    }
 }

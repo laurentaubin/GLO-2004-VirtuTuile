@@ -87,4 +87,12 @@ public class Room {
         return dimensionList;
     }
 
+    public void setSelectedRectangularSurfaceDimensions(float[] dimensions) {
+        for (Surface surface: this.surfaceList) {
+            if (surface.isSelected() && surface.getType() == "RECTANGULAR"){
+                surface.setDimensions(dimensions);
+            }
+        }
+    }
+
 }
