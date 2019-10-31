@@ -1,45 +1,68 @@
 package gui;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.text.NumberFormat;
-
-/*
-Code inspiré de: Java Tutorials Code Sample – FormattedTextFieldDemo.java
- */
+import java.util.concurrent.Flow;
 
 public class SurfaceTabPanel extends JPanel{
 
-    public SurfaceTabPanel(){
-        super(new BorderLayout());
+    public SurfaceTabPanel(RightPanel rightPanel){
+        this.rightPanel = rightPanel;
+        initComponent();
+    }
 
+    public void initComponent(){
         widthLabel = new JLabel(widthString);
         heightLabel = new JLabel(heightString);
 
         widthField = new JFormattedTextField(widthFormat);
         widthField.setColumns(10);
-        widthField.setValue(100d);
+        widthField.setValue(this.widthValue);
 
-        heightField = new JFormattedTextField(widthFormat);
-        heightField.setValue(100d);
-        widthField.setColumns(10);
+        heightField = new JFormattedTextField(heightFormat);
+        heightField.setColumns(10);
+        heightField.setValue(this.heightValue);
 
         widthLabel.setLabelFor(widthField);
         heightLabel.setLabelFor(heightField);
 
-        JPanel labelPane = new JPanel(new GridLayout(0,1));
-        labelPane.add(widthLabel);
-        labelPane.add(heightLabel);
+        JPanel surfaceDimensionPanel = new JPanel();
+        JPanel widthPanel = new JPanel(new FlowLayout());
+        JPanel heightPanel = new JPanel(new FlowLayout());
 
-        JPanel fieldPane = new JPanel(new GridLayout(0, 1));
-        fieldPane.add(widthField);
-        fieldPane.add(heightField);
+        surfaceDimensionPanel.setBorder(BorderFactory.createTitledBorder("Dimensions"));
 
-        setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        add(labelPane, BorderLayout.CENTER);
-        add(fieldPane, BorderLayout.LINE_END);
+        BorderLayout layout = new BorderLayout();
+        surfaceDimensionPanel.setLayout(layout);
+
+        widthPanel.add(widthLabel);
+        widthPanel.add(widthField);
+
+        heightPanel.add(heightLabel);
+        heightPanel.add(heightField);
+
+        surfaceDimensionPanel.add(widthPanel, BorderLayout.WEST);
+        surfaceDimensionPanel.add(heightPanel, BorderLayout.CENTER);
+
+        this.add(surfaceDimensionPanel, BorderLayout.NORTH);
     }
+
+    private void setWidthValue(float width){
+        System.out.println("DANS setVALUE");
+        this.widthValue = width;
+        this.updateUI();
+    }
+
+    public void updateInformations(float width){
+        setWidthValue(width);
+    }
+
+    private RightPanel rightPanel;
+
+    private JPanel surfaceDimensionPanel;
 
     private float width;
     private float height;
@@ -52,6 +75,9 @@ public class SurfaceTabPanel extends JPanel{
 
     private JFormattedTextField widthField;
     private JFormattedTextField heightField;
+
+    private float widthValue = 0f;
+    private float heightValue = 0f;
 
     private NumberFormat widthFormat;
     private NumberFormat heightFormat;

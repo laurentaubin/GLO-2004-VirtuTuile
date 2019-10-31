@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Surface extends Polygon {
+public abstract class Surface extends Polygon {
     private String type;
     private boolean hole;
     private double zoom = 1d;
@@ -38,6 +38,12 @@ public class Surface extends Polygon {
         this.selectionStatus= false;
     }
 
+    public String getType() {
+        return this.type;
+    }
 
+    public float getWidth() {
+        return 0f;
+    }
 }
 

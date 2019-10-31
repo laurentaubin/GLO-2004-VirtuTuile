@@ -47,4 +47,15 @@ public class Room {
             }
         }
     }
+
+    public float getSelectedRectangularSurfaceWidth() {
+        float width = 0f;
+        for (Surface surface : this.surfaceList){
+            if (surface.isSelected() && surface.getType() == "RECTANGULAR"){
+                width =  surface.getWidth();
+            }
+        }
+        System.out.println("width de la surface sélectionnée: " + width);
+        return width;
+    }
 }

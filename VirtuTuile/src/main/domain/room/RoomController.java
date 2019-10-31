@@ -44,4 +44,8 @@ public class RoomController {
         room.updateSelectedSurfacesPositions(deltaX, deltaY);
     }
 
+    public float getSelectedRectangularSurfaceWidth(){
+        return room.getSelectedRectangularSurfaceWidth();
+    }
+
 }
