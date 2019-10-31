@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PatternTabPanel extends JPanel {
-    public PatternTabPanel(RightPanel rightPanel){
+    public PatternTabPanel(){
         iconL = new ImageIcon(new ImageIcon("src/image/L.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT));
         dispositionL = new JButton("L", iconL);
 

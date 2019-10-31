@@ -153,9 +153,6 @@ public class MainWindow extends JFrame {
 
         });
 
-
-
-
         measurementUnitComboBox.setModel(new DefaultComboBoxModel(new String[] { "MÉTRIQUE", "IMPÉRIALE" }));
         measurementUnitComboBox.setPreferredSize(new Dimension(120, 23));
 
@@ -181,9 +178,6 @@ public class MainWindow extends JFrame {
         //Change la grandeur du panel de gauche min
         mainScrollPane.setMinimumSize(new Dimension(0, 202));
         mainScrollPane.setPreferredSize(new Dimension((int)(Toolkit.getDefaultToolkit().getScreenSize().width*0.85), (int)(Toolkit.getDefaultToolkit().getScreenSize().height*0.5)));
-
-
-
 
         drawingPanel.setPreferredSize(new Dimension(0, 540));
         
@@ -220,7 +214,7 @@ public class MainWindow extends JFrame {
 
         splitPane.setRightComponent(rightPanel);
 
-        splitPane.setResizeWeight(0.8);
+        splitPane.setResizeWeight(1);
 
         mainPanel.add(splitPane, BorderLayout.CENTER);
 
@@ -381,7 +375,7 @@ public class MainWindow extends JFrame {
     private JSplitPane splitPane;
 
     private RightPanel rightPanel;
-    
+
     private JMenuBar menuBar;
 
     private JMenu fileMenu;
