@@ -45,10 +45,15 @@ public class Room {
     }
 
     void updateSelectedSurfacesPositions(double deltaX, double deltaY) {
-        for (Surface surface : this.surfaceList){
-            if (surface.isSelected()){
-                surface.translate((int)deltaX, (int)deltaY);
+        for (Surface surface : this.surfaceList) {
+            int[] x = surface.getxCoord();
+            int[] y = surface.getyCoord();
+
+            for (int i = 0; i < x.length; i++) {
+                surface.setxCoord((int) (x[i] + deltaX), i);
+                surface.setyCoord((int) (y[i] + deltaY), i);
             }
+            surface.updateSurface();
         }
     }
 

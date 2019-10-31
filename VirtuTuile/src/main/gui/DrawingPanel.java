@@ -66,9 +66,17 @@ public class DrawingPanel extends JPanel implements Serializable {
                 int[] y = surface.getyCoord();
                 int deltaX = (int)(x[0]*zoom - x[0]);
                 int deltaY = (int)(y[0]*zoom - y[0]);
-                for(int i = 0; i < x.length; i++) {
-                    surface.setxCoord((int) ((x[i] * zoom) - deltaX), i);
-                    surface.setyCoord((int) ((y[i] * zoom) - deltaY), i);
+                if(deltaX > 5 && deltaY > 5 && zoom > 1) {
+                    for (int i = 0; i < x.length; i++) {
+                        surface.setxCoord((int) ((x[i] * zoom) - deltaX), i);
+                        surface.setyCoord((int) ((y[i] * zoom) - deltaY), i);
+                    }
+                }
+                else if(deltaX < -5 && deltaY < -5 && zoom < 1){
+                    for (int i = 0; i < x.length; i++) {
+                        surface.setxCoord((int) ((x[i] * zoom) - deltaX), i);
+                        surface.setyCoord((int) ((y[i] * zoom) - deltaY), i);
+                    }
                 }
             }else {
                 //TODO après surface irregulière
