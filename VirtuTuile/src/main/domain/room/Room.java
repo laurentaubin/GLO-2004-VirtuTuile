@@ -13,8 +13,7 @@ public class Room {
         surfaceList = new ArrayList<Surface>();
     }
 
-    public void addSurface(int[] xPoints, int[] yPoints, int number_of_summits) {
-        Surface surface = new Surface(xPoints, yPoints, number_of_summits);
+    public void addSurface(Surface surface) {
         surfaceList.add(surface);
 
     }
@@ -35,8 +34,8 @@ public class Room {
         for (Surface item : this.surfaceList) {
             if (item.contains(x, y)) {
                 item.switchSelectionStatus();
-            } else if (isShiftDown == false){
-                item.deseleted();
+            } else if (!isShiftDown){
+                item.unselect();
             }
         }
     }
@@ -45,6 +44,22 @@ public class Room {
         for (Surface surface : this.surfaceList){
             if (surface.isSelected()){
                 surface.translate((int)deltaX, (int)deltaY);
+            }
+        }
+    }
+
+    void addPatternToSelectedSurfaces(Cover.Pattern pattern) {
+        for (Surface surface : this.surfaceList) {
+            if (surface.isSelected()) {
+                surface.getCover().setPattern(pattern);
+            }
+        }
+    }
+
+    void addCoverToSelectedSurfaces(Cover cover) {
+        for (Surface surface : this.surfaceList) {
+            if (surface.isSelected()) {
+                surface.setCover(cover);
             }
         }
     }

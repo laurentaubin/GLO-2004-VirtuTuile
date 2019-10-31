@@ -18,6 +18,7 @@ public class Surface extends Polygon {
 
     public Surface(int[] x, int[] y, int number_of_summit){
         super(x, y, number_of_summit);
+        this.cover = Cover.createCoverWithDefaultParameters();
     }
 
     /*
@@ -94,10 +95,20 @@ public class Surface extends Polygon {
         return this.selectionStatus;
     }
 
-    public void deseleted() {
-        this.selectionStatus= false;
+    public void setSelectionStatus(boolean selectionStatus) {
+        this.selectionStatus = selectionStatus;
     }
 
+    public void unselect() {
+        this.selectionStatus = false;
+    }
 
+    public Cover getCover() {
+        return cover;
+    }
+
+    public void setCover(Cover cover) {
+        this.cover = cover;
+    }
 }
 

@@ -1,6 +1,7 @@
 package gui;
 
 import domain.room.RoomController;
+import domain.room.Surface;
 
 import javax.swing.*;
 import java.awt.*;
@@ -345,7 +346,8 @@ public class MainWindow extends JFrame {
 
             int n  = 4;
 
-            controller.addSurface(xPoints, yPoints, n);
+            Surface surface = new Surface(xPoints, yPoints, n);
+            controller.addSurface(surface);
         }
         drawingPanel.repaint();
     }

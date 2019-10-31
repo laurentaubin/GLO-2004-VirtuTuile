@@ -15,8 +15,8 @@ public class RoomController {
         room = new Room();
     }
 
-    public void addSurface(int[] xPoints, int[] yPoints, int number_of_summits) {
-        room.addSurface(xPoints, yPoints, number_of_summits);
+    public void addSurface(Surface surface) {
+        room.addSurface(surface);
     }
 
     public ArrayList<Surface> getSurfaceList() {
@@ -33,6 +33,10 @@ public class RoomController {
 
     public void updateSelectedSurfacesPositions(double deltaX, double deltaY) {
         room.updateSelectedSurfacesPositions(deltaX, deltaY);
+    }
+
+    public void addPatternToSelectedSurfaces(Cover.Pattern pattern) {
+        room.addPatternToSelectedSurfaces(pattern);
     }
 
 }
