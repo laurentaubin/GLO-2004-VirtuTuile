@@ -1,6 +1,8 @@
 package gui;
 
 import domain.drawing.SurfaceDrawer;
+import domain.room.RoomController;
+import domain.room.surface.Surface;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -12,8 +14,7 @@ public class DrawingPanel extends JPanel implements Serializable {
     private MainWindow mainWindow;
 
     private double zoom = 1d;
-    private double translateX = 0d;
-    private double translateY = 0d;
+
 
 
     public DrawingPanel(){}
@@ -33,8 +34,7 @@ public class DrawingPanel extends JPanel implements Serializable {
         if (mainWindow != null){
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
-            g2d.scale(zoom, zoom);
-            g2d.translate(translateX, translateY);
+
             SurfaceDrawer mainDrawer = new SurfaceDrawer(mainWindow.controller, initialDimension);
 
             mainDrawer.draw(g2d);
@@ -55,20 +55,27 @@ public class DrawingPanel extends JPanel implements Serializable {
 
     public void zoomActionPerformed(int wheelAmount, int mouseX, int mouseY){
         if (wheelAmount == 1){
-            zoom = zoom * 1.1;
+            zoom = 1.1;
         }
         else{
-            zoom = zoom / 1.1;
+            zoom = .9;
         }
-        System.out.println(wheelAmount + ", " + mouseX + ", " + mouseY);
-        translateX -= 0.5 * wheelAmount * (mouseX - (this.getHeight()/2));//Proportion à travailler
-        translateY -= 0.5 * wheelAmount * (mouseY - (this.getWidth()/2));    //Proportion à travailler
-        this.repaint();
-
+        for(Surface surface: RoomController.getSurfaceList()){
+            if(surface.getType() == "RECTANGULAR"){
+                int[] x = surface.getxCoord();
+                int[] y = surface.getyCoord();
+                int deltaX = (int)(x[0]*zoom - x[0]);
+                int deltaY = (int)(y[0]*zoom - y[0]);
+                for(int i = 0; i < x.length; i++) {
+                    surface.setxCoord((int) ((x[i] * zoom) - deltaX), i);
+                    surface.setyCoord((int) ((y[i] * zoom) - deltaY), i);
+                }
+            }else {
+                //TODO après surface irregulière
+            }
+            surface.updateSurface();
+            this.repaint();
+        }
     }
-
-    /*public void zoomOutActionPerformed(int wheelAmount) {
-        zoom = zoom * wheelAmount;
-        this.repaint();
-    }*/
 }
+

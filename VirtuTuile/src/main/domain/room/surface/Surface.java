@@ -12,14 +12,38 @@ public abstract class Surface extends Polygon {
     private double zoom = 1d;
     private boolean selectionStatus = false;
     private Cover cover;
+    private int[] xCoord;
+    private int[] yCoord;
+    private int numOfSummit;
 
     public Surface(){}
 
     public Surface(int[] x, int[] y, int number_of_summit, String type){
         super(x, y, number_of_summit);
         this.type = type;
-
+        this.numOfSummit = number_of_summit;
+        xCoord = x;
+        yCoord = y;
         System.out.println("Type de la surface créée: " + this.type);
+    }
+
+
+    public int[] getxCoord(){return this.xCoord;}
+    public int[] getyCoord(){return this.yCoord;}
+
+    public void setxCoord(int x, int index){
+        this.xCoord[index] = x;
+    }
+
+    public void setyCoord(int y, int index){
+        this.yCoord[index] = y;
+    }
+
+    public void updateSurface(){
+        this.reset();
+        for(int i = 0; i < this.getxCoord().length; i++){
+            this.addPoint(this.getxCoord()[i], this.getyCoord()[i]);
+        }
     }
 
     public boolean isHole() {

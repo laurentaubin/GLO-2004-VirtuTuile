@@ -5,7 +5,8 @@ import domain.room.surface.Surface;
 import java.util.ArrayList;
 
 public class RoomController {
-    private final Room room;
+    private static Room room;
+    //private final Room room;
 
     public RoomController(Room room) {
         this.room = room;
@@ -24,7 +25,7 @@ public class RoomController {
         }
     }
 
-    public ArrayList<Surface> getSurfaceList() {
+    public static ArrayList<Surface> getSurfaceList() {
         return room.getSurfaceList();
     }
 
