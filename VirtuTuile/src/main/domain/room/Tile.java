@@ -17,6 +17,10 @@ public class Tile {
         this.nbrTilesPerBox = nbrTilesPerBox;
     }
 
+    static Tile createTileWithDefaultParameters() {
+        return new Tile(Color.WHITE, 10, 10, "Default", 100);
+    }
+
     public Color getColor() {
         return color;
     }

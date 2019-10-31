@@ -1,7 +1,10 @@
 package domain.room;
 
+import java.awt.*;
+
 public class Cover {
     public enum Pattern {
+        DEFAULT,
         L,
         ANGLE,
         BRIQUE,
@@ -22,12 +25,16 @@ public class Cover {
         this.shiftX = shiftX;
         this.shiftY = shiftY;
         this.pattern = pattern;
+        this.tile = tile;
         this.grout = grout;
         this.startsWithFullTile = startsWithFullTile;
     }
 
-    static Cover createCoverWithDefaultParameters(Pattern pattern, Tile tile, Grout grout)
+    static Cover createCoverWithDefaultParameters()
     {
+        Pattern pattern = Pattern.DEFAULT;
+        Tile tile = Tile.createTileWithDefaultParameters();
+        Grout grout = Grout.createGroutWithDefaultParameters();
         return new Cover(0, 0, pattern, tile, grout, true);
     }
 

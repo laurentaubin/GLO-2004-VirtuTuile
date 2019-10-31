@@ -2,51 +2,13 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 
 public class PatternTabPanel extends JPanel {
-    public PatternTabPanel(RightPanel rightPanel){
-        iconL = new ImageIcon(new ImageIcon("src/image/L.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT));
-        dispositionL = new JButton("L", iconL);
+    private Dimension dimensionButton;
 
-        iconAngle = new ImageIcon(new ImageIcon("src/image/Angle.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT));
-        dispositionAngle = new JButton("L", iconAngle);
-
-        iconBrique = new ImageIcon(new ImageIcon("src/image/Brique.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT));
-        dispositionBrique = new JButton("L", iconBrique);
-
-        iconChevron = new ImageIcon(new ImageIcon("src/image/Chevron.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT));
-        dispositionChevron = new JButton("L", iconChevron);
-
-        iconDroit = new ImageIcon(new ImageIcon("src/image/Droit.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT));
-        dispositionDroit = new JButton("L", iconDroit);
-
-        iconPaquet = new ImageIcon(new ImageIcon("src/image/Paquet.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT));
-        dispositionPaquet = new JButton("L", iconPaquet);
-
-        dispositions = new JPanel(new GridLayout(2,3,20,20));
-
-
-        dimentionButton = new Dimension(100,100);
-
-        dispositionL.setPreferredSize(dimentionButton);
-        dispositionAngle.setPreferredSize(dimentionButton);
-        dispositionBrique.setPreferredSize(dimentionButton);
-        dispositionChevron.setPreferredSize(dimentionButton);
-        dispositionDroit.setPreferredSize(dimentionButton);
-        dispositionPaquet.setPreferredSize(dimentionButton);
-
-
-        dispositions.add(dispositionBrique);
-        dispositions.add(dispositionChevron);
-        dispositions.add(dispositionDroit);
-        dispositions.add(dispositionPaquet);
-        dispositions.add(dispositionL);
-        dispositions.add(dispositionAngle);
-
-        this.add(dispositions);
-
-    }
-    private Dimension dimentionButton;
     private ImageIcon iconL;
     private JButton dispositionL;
 
@@ -67,6 +29,87 @@ public class PatternTabPanel extends JPanel {
 
     private JPanel dispositions;
 
+    public PatternTabPanel(RightPanel rightPanel){
+        this.iconL = new ImageIcon(new ImageIcon("src/image/L.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT));
+        this.dispositionL = new JButton("L", iconL);
+
+        this.iconAngle = new ImageIcon(new ImageIcon("src/image/Angle.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT));
+        this.dispositionAngle = new JButton("L", iconAngle);
+
+        this.iconBrique = new ImageIcon(new ImageIcon("src/image/Brique.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT));
+        this.dispositionBrique = new JButton("L", iconBrique);
+
+        this.iconChevron = new ImageIcon(new ImageIcon("src/image/Chevron.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT));
+        this.dispositionChevron = new JButton("L", iconChevron);
+
+        this.iconDroit = new ImageIcon(new ImageIcon("src/image/Droit.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT));
+        this.dispositionDroit = new JButton("L", iconDroit);
+
+        this.iconPaquet = new ImageIcon(new ImageIcon("src/image/Paquet.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT));
+        this.dispositionPaquet = new JButton("L", iconPaquet);
+
+        this.dispositions = new JPanel(new GridLayout(2,3,20,20));
+
+
+        this.dimensionButton = new Dimension(100,100);
+
+        this.dispositionL.setPreferredSize(dimensionButton);
+        this.dispositionAngle.setPreferredSize(dimensionButton);
+        this.dispositionBrique.setPreferredSize(dimensionButton);
+        this.dispositionChevron.setPreferredSize(dimensionButton);
+        this.dispositionDroit.setPreferredSize(dimensionButton);
+        this.dispositionPaquet.setPreferredSize(dimensionButton);
+
+
+        this.dispositions.add(dispositionBrique);
+        this.dispositions.add(dispositionChevron);
+        this.dispositions.add(dispositionDroit);
+        this.dispositions.add(dispositionPaquet);
+        this.dispositions.add(dispositionL);
+        this.dispositions.add(dispositionAngle);
+
+        this.add(dispositions);
+
+        dispositionBrique.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                //TODO controller.addPatternToSelectedSurfaces(Cover.Pattern.BRIQUE);
+            }
+        });
+
+        dispositionChevron.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                //TODO controller.addPatternToSelectedSurfaces(Cover.Pattern.CHEVRON);
+            }
+        });
+
+        dispositionDroit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                //TODO controller.addPatternToSelectedSurfaces(Cover.Pattern.DROIT);
+            }
+        });
+
+        dispositionPaquet.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                //TODO controller.addPatternToSelectedSurfaces(Cover.Pattern.PAQUET);
+            }
+        });
+
+        dispositionL.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                //TODO controller.addPatternToSelectedSurfaces(Cover.Pattern.L);
+            }
+        });
+
+        dispositionAngle.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                //TODO controller.addPatternToSelectedSurfaces(Cover.Pattern.ANGLE);
+            }
+        });
+    }
 }
-
-

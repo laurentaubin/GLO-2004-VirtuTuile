@@ -6,6 +6,16 @@ public class Grout {
     private Color color;
     private float width;
 
+    public Grout(Color color, float width)
+    {
+        this.color = color;
+        this.width = width;
+    }
+
+    static Grout createGroutWithDefaultParameters() {
+        return new Grout(Color.WHITE, 1);
+    }
+
     public Color getColor() {
         return color;
     }

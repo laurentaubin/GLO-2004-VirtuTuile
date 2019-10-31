@@ -1,5 +1,4 @@
-
-/*package domain.room;
+package domain.room;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,7 @@ public class TileTest {
     @BeforeEach
     void setUp() {
         color = new Color(255,255,255);
-        tester = new Tile(color, 10, 25, "tester", 100);
+        tester = Tile.createTileWithDefaultParameters();
     }
 
     @Test
@@ -24,5 +23,3 @@ public class TileTest {
         assertEquals(new Point(10, 25), tester.getDimensions());
     }
 }
-
- */
