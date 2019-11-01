@@ -52,7 +52,7 @@ public class Room {
         }
     }
 
-    void addPatternToSelectedSurfaces(Cover.Pattern pattern) {
+    void setPatternToSelectedSurfaces(Cover.Pattern pattern) {
         for (Surface surface : this.surfaceList) {
             if (surface.isSelected()) {
                 surface.getCover().setPattern(pattern);
@@ -70,13 +70,26 @@ public class Room {
 
     public float getSelectedRectangularSurfaceWidth() {
         float width = 0f;
+        // Ca fuck toute si ya plus que 1 surface sélectionnée
+        // tant qu'a ca fait return this.surfacelist.get(0).getWidth()
         for (Surface surface : this.surfaceList){
-            if (surface.isSelected() && surface.getType() == "RECTANGULAR"){
-                width =  surface.getWidth();
+            if (surface.isSelected() && surface.getType().equals("RECTANGULAR")){
+                width = surface.getWidth();
             }
         }
         System.out.println("width de la surface sélectionnée: " + width);
         return width;
     }
 
+    public void setGroutToSelectedSurfaces(Grout grout) {
+        for (Surface surface : this.surfaceList) {
+            surface.getCover().setGrout(grout);
+        }
+    }
+
+    public void setTileToSelectedSufaces(Tile tile) {
+        for (Surface surface : this.surfaceList) {
+            surface.getCover().setTile(tile);
+        }
+    }
 }

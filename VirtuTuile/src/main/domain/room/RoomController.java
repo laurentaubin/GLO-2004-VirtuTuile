@@ -40,11 +40,20 @@ public class RoomController {
         room.updateSelectedSurfacesPositions(deltaX, deltaY);
     }
 
-    public void addPatternToSelectedSurfaces(Cover.Pattern pattern) {
-        room.addPatternToSelectedSurfaces(pattern);
+    public void setPatternToSelectedSurfaces(Cover.Pattern pattern) {
+        room.setPatternToSelectedSurfaces(pattern);
     }
 
-    public float getSelectedRectangularSurfaceWidth(){
+    public void setGroutToSelectedSurfaces(Grout grout) {
+        room.setGroutToSelectedSurfaces(grout);
+    }
+
+    public void setTileToSelectedSurfaces(Tile tile) {
+        room.setTileToSelectedSufaces(tile);
+    }
+
+    // Pourquoi on ferait deux méthode séparées pour rectangulaire ou irréguliaire ?
+    public float getSelectedRectangularSurfaceWidth() {
         return room.getSelectedRectangularSurfaceWidth();
     }
 }

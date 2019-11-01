@@ -13,9 +13,10 @@ public abstract class Surface extends Polygon {
     private boolean selectionStatus = false;
     private Cover cover;
 
-    public Surface(){}
+    public Surface() {
+    }
 
-    public Surface(int[] x, int[] y, int number_of_summit, String type){
+    public Surface(int[] x, int[] y, int number_of_summit, String type) {
         super(x, y, number_of_summit);
         this.type = type;
 
@@ -27,7 +28,7 @@ public abstract class Surface extends Polygon {
     }
 
     public void switchSelectionStatus() {
-        this.selectionStatus =  !this.selectionStatus;
+        this.selectionStatus = !this.selectionStatus;
     }
 
     public boolean isSelected() {
@@ -39,7 +40,7 @@ public abstract class Surface extends Polygon {
     }
 
     public void setSelectionStatus(boolean selectionStatus) {
-        this. selectionStatus = selectionStatus;
+        this.selectionStatus = selectionStatus;
     }
 
     public String getType() {

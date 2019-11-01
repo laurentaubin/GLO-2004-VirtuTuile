@@ -1,11 +1,12 @@
 package domain.room;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 public class Tile {
     private Color color;
-    private int height;
-    private int width;
+    private float height;
+    private float width;
     private String name;
     private int nbrTilesPerBox;
 
@@ -29,24 +30,24 @@ public class Tile {
         this.color = color;
     }
 
-    public int getHeight() {
+    public float getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(float height) {
         this.height = height;
     }
 
-    public int getWidth() {
+    public float getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
+    public void setWidth(float width) {
         this.width = width;
     }
 
-    public Point getDimensions() {
-        return new Point(this.getWidth(), this.getHeight());
+    public Point2D getDimensions() {
+        return new Point2D.Float(this.getWidth(), this.getHeight());
     }
 
     public String getName() {

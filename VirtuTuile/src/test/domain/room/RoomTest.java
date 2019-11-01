@@ -37,7 +37,7 @@ class RoomTest {
         Cover cover = Cover.createCoverWithDefaultParameters();
         surface.setCover(cover);
         surface.setSelectionStatus(true);
-        tester.addPatternToSelectedSurfaces(Cover.Pattern.ANGLE);
+        tester.setPatternToSelectedSurfaces(Cover.Pattern.ANGLE);
 
         assertEquals(Cover.Pattern.ANGLE, surface.getCover().getPattern());
     }
