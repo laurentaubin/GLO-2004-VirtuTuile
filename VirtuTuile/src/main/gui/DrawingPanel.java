@@ -6,6 +6,7 @@ import domain.room.surface.Surface;
 
 import java.awt.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 
 public class DrawingPanel extends JPanel implements Serializable {
@@ -85,5 +86,6 @@ public class DrawingPanel extends JPanel implements Serializable {
             this.repaint();
         }
     }
+
 }
 
