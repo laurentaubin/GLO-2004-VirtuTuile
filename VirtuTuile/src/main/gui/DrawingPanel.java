@@ -42,7 +42,7 @@ public class DrawingPanel extends JPanel implements Serializable {
         }
     }
 
-    public MainWindow getMainWindow(){
+    public MainWindow getMainWindow() {
         return mainWindow;
     }
 
@@ -54,13 +54,13 @@ public class DrawingPanel extends JPanel implements Serializable {
         return initialDimension;
     }
     public void zoomActionPerformed(int wheelAmount, int mouseX, int mouseY){
-        /*
         if (wheelAmount == 1){
             zoom = 1.1;
         }
         else{
             zoom = .9;
         }
+        /*
         for(Surface surface: RoomController.getSurfaceList()){
             if(surface.getType() == "RECTANGULAR"){
                 int[] x = surface.getxCoord();

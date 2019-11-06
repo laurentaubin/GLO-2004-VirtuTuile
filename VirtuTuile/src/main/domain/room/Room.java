@@ -39,7 +39,7 @@ public class Room {
         return surfaceList.isEmpty();
     }
 
-    public ArrayList<Surface> getSurfaceList() {return surfaceList;}
+    public ArrayList<Surface> getSurfaceList() { return surfaceList; }
 
     public int getNumberOfSurfaces() {
         return surfaceList.size();
@@ -74,9 +74,22 @@ public class Room {
 
      */
 
+
+    public boolean surfaceSelecte(){
+        boolean auMoinsUne = false;
+        for(Surface surface: surfaceList){
+            if(surface.isSelected()){
+                auMoinsUne = true;
+            }
+        }
+        return auMoinsUne;
+    }
+
+
     void setPatternToSelectedSurfaces(Cover.Pattern pattern) {
         for (Surface surface : this.surfaceList) {
             if (surface.isSelected()) {
+                System.out.println(pattern);
                 surface.getCover().setPattern(pattern);
             }
         }
@@ -105,6 +118,15 @@ public class Room {
         for (Surface surface: this.surfaceList) {
             if (surface.isSelected()){
                 surface.setDimensions(dimensions);
+            }
+        }
+    }
+
+
+    public void deleteSurface(){
+        for(int i = this.surfaceList.size() - 1; i >= 0; i--){
+            if(this.surfaceList.get(i).isSelected()){
+                surfaceList.remove(i);
             }
         }
     }

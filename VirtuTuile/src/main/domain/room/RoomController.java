@@ -30,9 +30,14 @@ public class RoomController {
         return room.getSurfaceList();
     }
 
+    public static void deleteSurface(){ room.deleteSurface(); }
+
+
     public int getNumberOfSurfaces() {
         return room.getNumberOfSurfaces();
     }
+
+    public static boolean surfaceSelecte(){ return room.surfaceSelecte(); }
 
     public void switchSelectionStatus(double x, double y, boolean isShiftDown) {
         room.switchSelectionStatus(x, y, isShiftDown);

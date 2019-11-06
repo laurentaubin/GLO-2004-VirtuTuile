@@ -13,8 +13,11 @@ public abstract class Surface {
     private boolean selectionStatus = false;
     private Cover cover;
 
+
+
     public Surface (Point point) {
         this.position = point;
+        this.cover = Cover.createCoverWithDefaultParameters();
     }
 
     public abstract boolean contains(Point2D.Double point);
