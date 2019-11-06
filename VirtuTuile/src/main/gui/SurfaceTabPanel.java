@@ -17,7 +17,7 @@ public class SurfaceTabPanel extends JPanel{
     }
 
     public void initComponent(){
-        modifyButton = new JButton("Modifier le dimensions");
+        modifyButton = new JButton("Modifier les dimensions");
 
         modifyButton.addActionListener(new ActionListener() {
             @Override
