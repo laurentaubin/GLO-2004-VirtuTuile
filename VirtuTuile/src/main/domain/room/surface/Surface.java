@@ -12,8 +12,6 @@ public abstract class Surface extends Polygon {
     private double zoom = 1d;
     private boolean selectionStatus = false;
     private Cover cover;
-    private int[] xCoord;
-    private int[] yCoord;
     private int numOfSummit;
 
     public Surface(){}
@@ -22,8 +20,7 @@ public abstract class Surface extends Polygon {
         super(x, y, number_of_summit);
         this.type = type;
         this.numOfSummit = number_of_summit;
-        this.xCoord = x;
-        this.yCoord = y;
+
     }
     
     public int[] getxCoord(){
