@@ -12,15 +12,20 @@ public abstract class Surface extends Polygon {
     private double zoom = 1d;
     private boolean selectionStatus = false;
     private Cover cover;
+    private int[] xCoord;
+    private int[] yCoord;
     private int numOfSummit;
 
-    public Surface(){}
+    public Surface() {
+    }
 
-    public Surface(int[] x, int[] y, int number_of_summit, String type){
+    public Surface(int[] x, int[] y, int number_of_summit, String type) {
         super(x, y, number_of_summit);
         this.type = type;
         this.numOfSummit = number_of_summit;
-
+        this.xCoord = x;
+        this.yCoord = y;
+        this.cover = Cover.createCoverWithDefaultParameters();
     }
     
     public int[] getxCoord(){
@@ -50,8 +55,12 @@ public abstract class Surface extends Polygon {
         return hole;
     }
 
+    public void setHole(boolean hole) {
+        this.hole = hole;
+    }
+
     public void switchSelectionStatus() {
-        this.selectionStatus =  !this.selectionStatus;
+        this.selectionStatus = !this.selectionStatus;
     }
 
     public boolean isSelected() {

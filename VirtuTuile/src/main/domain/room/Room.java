@@ -14,14 +14,17 @@ public class Room {
         surfaceList = new ArrayList<Surface>(); surfaceProjectionList = new ArrayList<Surface>();}
 
 
-    public void addRectangularSurface(int[] xPoints, int[] yPoints, int number_of_summits, String type, boolean isMouseReleased) {
-        RectangularSurface surface = new RectangularSurface(xPoints, yPoints, number_of_summits, type);
+    public void addSurfaceToList(Surface surface) {
+        this.surfaceList.add(surface);
+    }
 
-        if(isMouseReleased) {
-            surfaceProjectionList.clear(); // Prevents the projection display in Selection mode
-            surfaceList.add(surface);
-        }
-        else surfaceProjectionList.add(surface);
+    public void addRectangularSurface(int[] xPoints, int[] yPoints, int number_of_summits, boolean isMouseReleased) {
+        RectangularSurface surface = new RectangularSurface(xPoints, yPoints, number_of_summits, "RECTANGULAR");
+
+        if (isMouseReleased) {
+            surfaceProjectionList.clear();
+            addSurfaceToList(surface);
+        } else surfaceProjectionList.add(surface);
     }
 
     public void addIrregularSurface(int[] xPoints, int[] yPoints, int number_of_edges, boolean isMouseReleased) {
@@ -65,6 +68,7 @@ public class Room {
         }
     }
 
+
     public boolean surfaceSelecte(){
         boolean auMoinsUne = false;
         for(Surface surface: surfaceList){
@@ -75,9 +79,11 @@ public class Room {
         return auMoinsUne;
     }
 
-    void addPatternToSelectedSurfaces(Cover.Pattern pattern) {
+
+    void setPatternToSelectedSurfaces(Cover.Pattern pattern) {
         for (Surface surface : this.surfaceList) {
             if (surface.isSelected()) {
+                System.out.println(pattern);
                 surface.getCover().setPattern(pattern);
             }
         }
@@ -94,7 +100,7 @@ public class Room {
     public float[] getSelectedRectangularSurfaceDimensions() {
         float[] dimensionList = new float[2];
         for (Surface surface : this.surfaceList){
-            if (surface.isSelected() && surface.getType() == "RECTANGULAR"){
+            if (surface.isSelected() && surface.getType().equals("RECTANGULAR")){
                 dimensionList[0] = surface.getWidth();
                 dimensionList[1] = surface.getHeight();
             }
@@ -104,17 +110,30 @@ public class Room {
 
     public void setSelectedRectangularSurfaceDimensions(float[] dimensions) {
         for (Surface surface: this.surfaceList) {
-            if (surface.isSelected() && surface.getType() == "RECTANGULAR"){
+            if (surface.isSelected() && surface.getType().equals("RECTANGULAR")){
                 surface.setDimensions(dimensions);
             }
         }
     }
+
 
     public void deleteSurface(){
         for(int i = this.surfaceList.size() - 1; i >= 0; i--){
             if(this.surfaceList.get(i).isSelected()){
                 surfaceList.remove(i);
             }
+        }
+    }
+
+    public void setGroutToSelectedSurfaces(Grout grout) {
+        for (Surface surface : this.surfaceList) {
+            surface.getCover().setGrout(grout);
+        }
+    }
+
+    public void setTileToSelectedSufaces(Tile tile) {
+        for (Surface surface : this.surfaceList) {
+            surface.getCover().setTile(tile);
         }
     }
 }

@@ -19,7 +19,7 @@ public class RoomController {
 
     public void addSurface(int[] xPoints, int[] yPoints, int number_of_edges, String type, boolean isMouseReleased) {
         if (type.equals("RECTANGULAR")){
-            room.addRectangularSurface(xPoints, yPoints, number_of_edges, type, isMouseReleased);
+            room.addRectangularSurface(xPoints, yPoints, number_of_edges, isMouseReleased);
         }
         else if (type.equals("IRREGULAR")){
             room.addIrregularSurface(xPoints, yPoints, number_of_edges, isMouseReleased);
@@ -48,8 +48,16 @@ public class RoomController {
         room.updateSelectedSurfacesPositions(deltaX, deltaY);
     }
 
-    public void addPatternToSelectedSurfaces(Cover.Pattern pattern) {
-        room.addPatternToSelectedSurfaces(pattern);
+    public void setPatternToSelectedSurfaces(Cover.Pattern pattern) {
+        room.setPatternToSelectedSurfaces(pattern);
+    }
+
+    public void setGroutToSelectedSurfaces(Grout grout) {
+        room.setGroutToSelectedSurfaces(grout);
+    }
+
+    public void setTileToSelectedSurfaces(Tile tile) {
+        room.setTileToSelectedSufaces(tile);
     }
 
     public float[] getSelectedRectangularSurfaceDimensions(){

@@ -30,7 +30,7 @@ public class Cover {
         this.startsWithFullTile = startsWithFullTile;
     }
 
-    static Cover createCoverWithDefaultParameters()
+    public static Cover createCoverWithDefaultParameters()
     {
         Pattern pattern = Pattern.DEFAULT;
         Tile tile = Tile.createTileWithDefaultParameters();
