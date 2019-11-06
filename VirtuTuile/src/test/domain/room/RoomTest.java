@@ -18,7 +18,8 @@ class RoomTest {
         xPoints = new int[]{0, 10, 10, 0};
         yPoints = new int[]{0, 0, 10, 10};
         tester = new Room();
-        tester.addRectangularSurface(xPoints, yPoints, 4);
+
+        tester.addRectangularSurface(xPoints, yPoints, 4, );
         surface = tester.getSurfaceList().get(0);
 
     }

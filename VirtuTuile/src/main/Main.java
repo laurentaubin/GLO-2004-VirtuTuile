@@ -9,5 +9,7 @@ public class Main {
         MainWindow mainWindow = new MainWindow();
         mainWindow.setExtendedState(mainWindow.getExtendedState() | JFrame.MAXIMIZED_BOTH);
         mainWindow.setVisible(true);
+
+
     }
 }

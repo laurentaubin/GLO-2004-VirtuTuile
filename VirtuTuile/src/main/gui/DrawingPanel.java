@@ -17,22 +17,22 @@ public class DrawingPanel extends JPanel implements Serializable {
     private double zoom = 1d;
 
 
+    public DrawingPanel() {
+    }
 
-    public DrawingPanel(){}
-
-    public DrawingPanel(MainWindow mainWindow){
+    public DrawingPanel(MainWindow mainWindow) {
         this.mainWindow = mainWindow;
 
-        int width = (int)(Toolkit.getDefaultToolkit().getScreenSize().width);
+        int width = (int) (Toolkit.getDefaultToolkit().getScreenSize().width);
         setPreferredSize(new Dimension(width, 1));
         setVisible(true);
-        int height = (int)(width*0.5);
+        int height = (int) (width * 0.5);
         initialDimension = new Dimension(800, 600);
     }
 
     @Override
-    protected void paintComponent(Graphics g){
-        if (mainWindow != null){
+    protected void paintComponent(Graphics g) {
+        if (mainWindow != null) {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
 
@@ -42,25 +42,29 @@ public class DrawingPanel extends JPanel implements Serializable {
         }
     }
 
-    public MainWindow getMainWindow(){
+    public MainWindow getMainWindow() {
         return mainWindow;
     }
 
-    public void setMainWindow(MainWindow mainWindow){
+    public void setMainWindow(MainWindow mainWindow) {
         this.mainWindow = mainWindow;
     }
 
-    public Dimension getInitialDimension(){
+    public Dimension getInitialDimension() {
         return initialDimension;
     }
 
-    public void zoomActionPerformed(int wheelAmount, int mouseX, int mouseY){
-        if (wheelAmount == 1){
+    public void zoomActionPerformed(int wheelAmount, int mouseX, int mouseY) {
+        if (wheelAmount == 1) {
             zoom = 1.1;
-        }
-        else{
+        } else {
             zoom = .9;
         }
+
+    }
+
+}
+    /*
         for(Surface surface: RoomController.getSurfaceList()){
             if(surface.getType() == "RECTANGULAR"){
                 int[] x = surface.getxCoord();
@@ -85,7 +89,4 @@ public class DrawingPanel extends JPanel implements Serializable {
             surface.updateSurface();
             this.repaint();
         }
-    }
-
-}
-
+    }*/
