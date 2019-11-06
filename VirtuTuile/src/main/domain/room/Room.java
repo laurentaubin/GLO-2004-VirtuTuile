@@ -71,6 +71,7 @@ public class Room {
     void setPatternToSelectedSurfaces(Cover.Pattern pattern) {
         for (Surface surface : this.surfaceList) {
             if (surface.isSelected()) {
+                System.out.println(pattern);
                 surface.getCover().setPattern(pattern);
             }
         }

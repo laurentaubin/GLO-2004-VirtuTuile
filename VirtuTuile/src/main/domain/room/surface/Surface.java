@@ -25,6 +25,7 @@ public abstract class Surface extends Polygon {
         this.numOfSummit = number_of_summit;
         this.xCoord = x;
         this.yCoord = y;
+        this.cover = Cover.createCoverWithDefaultParameters();
     }
     
     public int[] getxCoord(){
