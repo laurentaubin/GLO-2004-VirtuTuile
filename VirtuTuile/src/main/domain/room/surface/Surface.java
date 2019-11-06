@@ -3,59 +3,32 @@ package domain.room.surface;
 import domain.room.Cover;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Surface extends Polygon {
-    private String type;
-    private boolean hole;
-    private double zoom = 1d;
+public abstract class Surface {
+    private Point position;
+    private Color color;
     private boolean selectionStatus = false;
     private Cover cover;
-    private int[] xCoord;
-    private int[] yCoord;
-    private int numOfSummit;
 
-    public Surface() {
+    public Surface (Point point) {
+        this.position = point;
     }
 
-    public Surface(int[] x, int[] y, int number_of_summit, String type) {
-        super(x, y, number_of_summit);
-        this.type = type;
-        this.numOfSummit = number_of_summit;
-        this.xCoord = x;
-        this.yCoord = y;
-    }
-    
-    public int[] getxCoord(){
-        return this.xpoints;
-    }
+    public abstract boolean contains(Point2D.Double point);
+    public abstract double getWidth();
+    public abstract double getHeight();
+    public abstract void setDimensions(double[] dimensions);
+    public abstract int[] getxCoord();
+    public abstract int[] getyCoord();
+    public abstract void setxCoord(int x, int index);
+    public abstract void setyCoord(int y, int index);
+    public abstract Polygon getPolygon();
 
-    public int[] getyCoord(){
-        return this.ypoints;
-    }
-
-    public void setxCoord(int x, int index){
-        this.xpoints[index] = x;
-    }
-
-    public void setyCoord(int y, int index){
-        this.ypoints[index] = y;
-    }
-
-    public void updateSurface(){
-        this.reset();
-        for(int i = 0; i < this.getxCoord().length; i++){
-            this.addPoint(this.getxCoord()[i], this.getyCoord()[i]);
-        }
-    }
-
-    public boolean isHole() {
-        return hole;
-    }
-
-    public void setHole(boolean hole) {
-        this.hole = hole;
+    public void setColor (Color color) {
+        this.color = color;
     }
 
     public void switchSelectionStatus() {
@@ -74,28 +47,13 @@ public abstract class Surface extends Polygon {
         this.selectionStatus = selectionStatus;
     }
 
-    public String getType() {
-        return this.type;
-    }
-
-    public float getWidth() {
-        return 0f;
-    }
-
-    public float getHeight() {
-        return 0f;
-    }
-
     public Cover getCover() {
-        return cover;
+        return this.cover;
     }
 
-    public void setCover(Cover cover) {
+    public void setCover(Cover cover){
         this.cover = cover;
     }
 
-    public void setDimensions(float[] dimensions){
-
-    }
 }
 

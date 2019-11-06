@@ -3,31 +3,35 @@ package domain.room;
 import domain.room.surface.RectangularSurface;
 import domain.room.surface.Surface;
 
+import java.awt.*;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class Room {
 
     private ArrayList<Surface> surfaceList;
-    private ArrayList<Surface> surfaceProjectionList;
 
     public Room() {
-        surfaceList = new ArrayList<Surface>(); surfaceProjectionList = new ArrayList<Surface>();}
+        surfaceList = new ArrayList<Surface>();
+    }
 
 
     public void addSurfaceToList(Surface surface) {
         this.surfaceList.add(surface);
     }
 
-    public void addRectangularSurface(int[] xPoints, int[] yPoints, int number_of_summits, boolean isMouseReleased) {
-        RectangularSurface surface = new RectangularSurface(xPoints, yPoints, number_of_summits, "RECTANGULAR");
+    public void addRectangularSurface(Point point, int[] xPoints, int[] yPoints, int number_of_summits) {
+        RectangularSurface surface = new RectangularSurface(point, xPoints, yPoints, number_of_summits);
+        this.addSurfaceToList(surface);
 
-        if (isMouseReleased) {
-            surfaceProjectionList.clear();
-            addSurfaceToList(surface);
-        } else surfaceProjectionList.add(surface);
     }
 
-    public void addIrregularSurface(int[] xPoints, int[] yPoints, int number_of_edges, boolean isMouseReleased) {
+    public void addRectangularSurface(Point point, int width, int height) {
+        RectangularSurface surface = new RectangularSurface(point, width, height);
+        this.addSurfaceToList(surface);
+    }
+
+    public void addIrregularSurface(Point point, int[] xPoints, int[] yPoints, int number_of_edges) {
         //TODO Code pour ajouter une surface irrégulière
     }
 
@@ -37,15 +41,14 @@ public class Room {
 
     public ArrayList<Surface> getSurfaceList() {return surfaceList;}
 
-    public ArrayList<Surface> getSurfaceProjectionList() {return surfaceProjectionList;}
-
     public int getNumberOfSurfaces() {
         return surfaceList.size();
     }
 
     void switchSelectionStatus(double x, double y, boolean isShiftDown) {
         for (Surface item : this.surfaceList) {
-            if (item.contains(x, y)) {
+            Point2D.Double point = new Point2D.Double(x, y);
+            if (item.contains(point)) {
                 item.switchSelectionStatus();
             } else if (!isShiftDown){
                 item.unselect();
@@ -53,6 +56,7 @@ public class Room {
         }
     }
 
+    /*
     void updateSelectedSurfacesPositions(double deltaX, double deltaY) {
         for (Surface surface : this.surfaceList) {
             if(surface.isSelected()) {
@@ -67,6 +71,8 @@ public class Room {
             surface.updateSurface();
         }
     }
+
+     */
 
     void setPatternToSelectedSurfaces(Cover.Pattern pattern) {
         for (Surface surface : this.surfaceList) {
@@ -84,10 +90,10 @@ public class Room {
         }
     }
 
-    public float[] getSelectedRectangularSurfaceDimensions() {
-        float[] dimensionList = new float[2];
+    public double[] getSelectedRectangularSurfaceDimensions() {
+        double[] dimensionList = new double[2];
         for (Surface surface : this.surfaceList){
-            if (surface.isSelected() && surface.getType().equals("RECTANGULAR")){
+            if (surface.isSelected()){
                 dimensionList[0] = surface.getWidth();
                 dimensionList[1] = surface.getHeight();
             }
@@ -95,9 +101,9 @@ public class Room {
         return dimensionList;
     }
 
-    public void setSelectedRectangularSurfaceDimensions(float[] dimensions) {
+    public void setSelectedRectangularSurfaceDimensions(double[] dimensions) {
         for (Surface surface: this.surfaceList) {
-            if (surface.isSelected() && surface.getType().equals("RECTANGULAR")){
+            if (surface.isSelected()){
                 surface.setDimensions(dimensions);
             }
         }

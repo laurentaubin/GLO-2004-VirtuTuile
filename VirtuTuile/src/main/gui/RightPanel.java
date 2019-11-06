@@ -35,7 +35,7 @@ public class RightPanel extends JTabbedPane implements Serializable {
         this.setSelectedIndex(0);
     }
 
-    public void updateInformations(float[] dimensions){
+    public void updateInformations(double[] dimensions){
         surfaceTabPanel.updateInformations(dimensions);
     }
 

@@ -3,6 +3,7 @@ package domain.room;
 import domain.room.surface.RectangularSurface;
 import domain.room.surface.Surface;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class RoomController {
@@ -17,20 +18,17 @@ public class RoomController {
         room = new Room();
     }
 
-    public void addSurface(int[] xPoints, int[] yPoints, int number_of_edges, String type, boolean isMouseReleased) {
-        if (type.equals("RECTANGULAR")){
-            room.addRectangularSurface(xPoints, yPoints, number_of_edges, isMouseReleased);
-        }
-        else if (type.equals("IRREGULAR")){
-            room.addIrregularSurface(xPoints, yPoints, number_of_edges, isMouseReleased);
-        }
+    public void addRectangularSurface(Point position, int width, int height){
+        room.addRectangularSurface(position, width, height);
+    }
+
+    public void addSurface(Point point, int[] xPoints, int[] yPoints, int number_of_edges) {
+        room.addRectangularSurface(point, xPoints, yPoints, number_of_edges);
     }
 
     public static ArrayList<Surface> getSurfaceList() {
         return room.getSurfaceList();
     }
-
-    public static ArrayList<Surface> getSurfaceProjectionList() {return room.getSurfaceProjectionList();}
 
     public int getNumberOfSurfaces() {
         return room.getNumberOfSurfaces();
@@ -40,9 +38,12 @@ public class RoomController {
         room.switchSelectionStatus(x, y, isShiftDown);
     }
 
+    /*
     public void updateSelectedSurfacesPositions(double deltaX, double deltaY) {
         room.updateSelectedSurfacesPositions(deltaX, deltaY);
     }
+
+     */
 
     public void setPatternToSelectedSurfaces(Cover.Pattern pattern) {
         room.setPatternToSelectedSurfaces(pattern);
@@ -56,11 +57,11 @@ public class RoomController {
         room.setTileToSelectedSufaces(tile);
     }
 
-    public float[] getSelectedRectangularSurfaceDimensions(){
+    public double[] getSelectedRectangularSurfaceDimensions(){
         return room.getSelectedRectangularSurfaceDimensions();
     }
 
-    public void setSelectedRectangularSurfaceDimensions(float[] dimensions){
+    public void setSelectedRectangularSurfaceDimensions(double[] dimensions){
         room.setSelectedRectangularSurfaceDimensions(dimensions);
     }
 }

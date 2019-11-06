@@ -304,6 +304,8 @@ public class MainWindow extends JFrame {
 
         if (this.actualMode == ApplicationMode.SELECT && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
+
+
             if (mouseEvent.isShiftDown()){
                 isShiftDown = true;
             }
@@ -330,10 +332,12 @@ public class MainWindow extends JFrame {
 
         if (this.actualMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
+
+            Point position = this.initMousePoint.getLocation();
             int[] xPoints = new int[4];
             int[] yPoints = new int[4];
 
-            xPoints[0] = (int)this.initMousePoint.x;
+            xPoints[0] = (int)this.initMousePoint.getX();
             xPoints[1] = (int)mousePointReleased.getX();
             xPoints[2] = (int)mousePointReleased.getX();
             xPoints[3] = (int)initMousePoint.getX();
@@ -343,13 +347,13 @@ public class MainWindow extends JFrame {
             yPoints[2] = (int)mousePointReleased.getY();
             yPoints[3] = (int)mousePointReleased.getY();
 
+            if (xPoints[0] - xPoints[1] > 0){
+                position = mousePointReleased.getLocation();
+            }
+
             int n  = 4;
 
-            String surfaceType = "RECTANGULAR";
-
-            boolean isMouseReleased = true;
-
-            controller.addSurface(xPoints, yPoints, n, surfaceType, isMouseReleased);
+            controller.addSurface(position ,xPoints, yPoints, n);
         }
 
         else if (this.actualMode == ADD_IRREGULAR && SwingUtilities.isLeftMouseButton((mouseEvent))){
@@ -364,31 +368,12 @@ public class MainWindow extends JFrame {
         if (SwingUtilities.isRightMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
 
+            /*
             this.controller.updateSelectedSurfacesPositions(mouseEvent.getX() - this.actualMousePoint.getX(), mouseEvent.getY() - this.actualMousePoint.getY());
             this.actualMousePoint = mouseEvent.getPoint();
+             */
         }
         else if (this.actualMode == ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
-
-            int[] xDrawPoints = new int[4];
-            int[] yDrawPoints = new int[4];
-
-            xDrawPoints[0] = (int)this.initMousePoint.x;
-            xDrawPoints[1] = (int)mousePoint.getX();
-            xDrawPoints[2] = (int)mousePoint.getX();
-            xDrawPoints[3] = (int)initMousePoint.getX();
-
-            yDrawPoints[0] = (int)initMousePoint.getY();
-            yDrawPoints[1] = (int)initMousePoint.getY();
-            yDrawPoints[2] = (int)mousePoint.getY();
-            yDrawPoints[3] = (int)mousePoint.getY();
-
-            int n  = 4;
-
-            String surfaceType = "RECTANGULAR";
-
-            boolean isMouseReleased = false;
-
-            controller.addSurface(xDrawPoints, yDrawPoints, n, surfaceType, isMouseReleased);
         }
         drawingPanel.repaint();
     }

@@ -26,9 +26,9 @@ public class SurfaceDrawer {
 
     public void drawSurface(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
-        ArrayList<Surface> surfaces = controller.getSurfaceList();
-        ArrayList<Surface> surfaceProjectionList = controller.getSurfaceProjectionList();
+        ArrayList<Surface> surfaces = RoomController.getSurfaceList();
         for (Surface current_surface: surfaces) {
+            Polygon polygon = current_surface.getPolygon();
             if (current_surface.isSelected()){
                 Color selectedColor = new Color(189, 227, 255);
                 g2d.setColor(selectedColor);
@@ -38,15 +38,8 @@ public class SurfaceDrawer {
                 g2d.setColor(Color.BLACK);
                 g2d.setStroke(new BasicStroke(1));
             }
-            g2d.draw(current_surface);
+            g2d.draw(polygon);
         }
-
-        if (!surfaceProjectionList.isEmpty()) {
-            Surface projectionSurface = surfaceProjectionList.get(surfaceProjectionList.size() - 1);
-            g2d.draw(projectionSurface);
-        }
-
-
 
         /*
         List<Surface> items = controller.getSurfaceList();

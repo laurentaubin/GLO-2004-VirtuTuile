@@ -53,8 +53,8 @@ public class DrawingPanel extends JPanel implements Serializable {
     public Dimension getInitialDimension(){
         return initialDimension;
     }
-
     public void zoomActionPerformed(int wheelAmount, int mouseX, int mouseY){
+        /*
         if (wheelAmount == 1){
             zoom = 1.1;
         }
@@ -85,6 +85,7 @@ public class DrawingPanel extends JPanel implements Serializable {
             surface.updateSurface();
             this.repaint();
         }
+        */
     }
 
 }
