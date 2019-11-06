@@ -10,9 +10,6 @@ public class RectangularSurface extends Surface{
         super(xPoints, yPoints, number_of_edge, surfaceType);
         this.width = Math.abs(xPoints[1] - xPoints[0]);
         this.height = Math.abs(yPoints[0] - yPoints[3]);
-
-        System.out.println("width: " + this.width);
-        System.out.println("height: " + this.height);
     }
 
     public float getWidth(){
@@ -37,5 +34,17 @@ public class RectangularSurface extends Surface{
 
     public int getTilesDown() {
         return (int) Math.ceil(this.height / this.getCover().getTile().getHeight());
+    }
+
+    public void setDimensions(float[] dimensions) {
+        float deltaW = dimensions[0] - this.width;
+        float deltaH = dimensions[1] - this.height;
+        this.width = dimensions[0];
+        this.height = dimensions[1];
+
+        this.xpoints[1] += deltaW;
+        this.xpoints[2] += deltaW;
+        this.ypoints[2] += deltaH;
+        this.ypoints[3] += deltaH;
     }
 }

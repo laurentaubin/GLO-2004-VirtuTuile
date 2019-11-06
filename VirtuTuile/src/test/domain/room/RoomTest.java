@@ -1,4 +1,4 @@
-package domain.room;
+/*package domain.room;
 
 import domain.room.surface.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,4 +42,4 @@ class RoomTest {
         assertEquals(Cover.Pattern.ANGLE, surface.getCover().getPattern());
     }
 
-}
+}*/

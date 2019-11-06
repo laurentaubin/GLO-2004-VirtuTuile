@@ -1,11 +1,13 @@
 package domain.room;
 
+import domain.room.surface.RectangularSurface;
 import domain.room.surface.Surface;
 
 import java.util.ArrayList;
 
 public class RoomController {
-    private final Room room;
+    private static Room room;
+    //private final Room room;
 
     public RoomController(Room room) {
         this.room = room;
@@ -15,18 +17,20 @@ public class RoomController {
         room = new Room();
     }
 
-    public void addSurface(int[] xPoints, int[] yPoints, int number_of_edges, String type) {
+    public void addSurface(int[] xPoints, int[] yPoints, int number_of_edges, String type, boolean isMouseReleased) {
         if (type.equals("RECTANGULAR")){
-            room.addRectangularSurface(xPoints, yPoints, number_of_edges);
+            room.addRectangularSurface(xPoints, yPoints, number_of_edges, isMouseReleased);
         }
         else if (type.equals("IRREGULAR")){
-            room.addIrregularSurface(xPoints, yPoints, number_of_edges);
+            room.addIrregularSurface(xPoints, yPoints, number_of_edges, isMouseReleased);
         }
     }
 
-    public ArrayList<Surface> getSurfaceList() {
+    public static ArrayList<Surface> getSurfaceList() {
         return room.getSurfaceList();
     }
+
+    public static ArrayList<Surface> getSurfaceProjectionList() {return room.getSurfaceProjectionList();}
 
     public int getNumberOfSurfaces() {
         return room.getNumberOfSurfaces();
@@ -52,8 +56,11 @@ public class RoomController {
         room.setTileToSelectedSufaces(tile);
     }
 
-    // Pourquoi on ferait deux méthode séparées pour rectangulaire ou irréguliaire ?
-    public float getSelectedRectangularSurfaceWidth() {
-        return room.getSelectedRectangularSurfaceWidth();
+    public float[] getSelectedRectangularSurfaceDimensions(){
+        return room.getSelectedRectangularSurfaceDimensions();
+    }
+
+    public void setSelectedRectangularSurfaceDimensions(float[] dimensions){
+        room.setSelectedRectangularSurfaceDimensions(dimensions);
     }
 }

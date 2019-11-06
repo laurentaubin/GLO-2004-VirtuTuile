@@ -8,21 +8,26 @@ import java.util.ArrayList;
 public class Room {
 
     private ArrayList<Surface> surfaceList;
+    private ArrayList<Surface> surfaceProjectionList;
 
     public Room() {
-        surfaceList = new ArrayList<Surface>();
-    }
+        surfaceList = new ArrayList<Surface>(); surfaceProjectionList = new ArrayList<Surface>();}
+
 
     public void addSurfaceToList(Surface surface) {
         this.surfaceList.add(surface);
     }
 
-    public void addRectangularSurface(int[] xPoints, int[] yPoints, int number_of_summits) {
+    public void addRectangularSurface(int[] xPoints, int[] yPoints, int number_of_summits, boolean isMouseReleased) {
         RectangularSurface surface = new RectangularSurface(xPoints, yPoints, number_of_summits, "RECTANGULAR");
-        addSurfaceToList(surface);
+
+        if (isMouseReleased) {
+            surfaceProjectionList.clear();
+            addSurfaceToList(surface);
+        } else surfaceProjectionList.add(surface);
     }
 
-    public void addIrregularSurface(int[] xPoints, int[] yPoints, int number_of_edges) {
+    public void addIrregularSurface(int[] xPoints, int[] yPoints, int number_of_edges, boolean isMouseReleased) {
         //TODO Code pour ajouter une surface irrégulière
     }
 
@@ -30,9 +35,9 @@ public class Room {
         return surfaceList.isEmpty();
     }
 
-    public ArrayList<Surface> getSurfaceList() {
-        return surfaceList;
-    }
+    public ArrayList<Surface> getSurfaceList() {return surfaceList;}
+
+    public ArrayList<Surface> getSurfaceProjectionList() {return surfaceProjectionList;}
 
     public int getNumberOfSurfaces() {
         return surfaceList.size();
@@ -49,10 +54,17 @@ public class Room {
     }
 
     void updateSelectedSurfacesPositions(double deltaX, double deltaY) {
-        for (Surface surface : this.surfaceList){
-            if (surface.isSelected()){
-                surface.translate((int)deltaX, (int)deltaY);
+        for (Surface surface : this.surfaceList) {
+            if(surface.isSelected()) {
+                int[] x = surface.getxCoord();
+                int[] y = surface.getyCoord();
+
+                for (int i = 0; i < x.length; i++) {
+                    surface.setxCoord((int) (x[i] + deltaX), i);
+                    surface.setyCoord((int) (y[i] + deltaY), i);
+                }
             }
+            surface.updateSurface();
         }
     }
 
@@ -72,17 +84,23 @@ public class Room {
         }
     }
 
-    public float getSelectedRectangularSurfaceWidth() {
-        float width = 0f;
-        // Ca fuck toute si ya plus que 1 surface sélectionnée
-        // tant qu'a ca fait return this.surfacelist.get(0).getWidth()
+    public float[] getSelectedRectangularSurfaceDimensions() {
+        float[] dimensionList = new float[2];
         for (Surface surface : this.surfaceList){
             if (surface.isSelected() && surface.getType().equals("RECTANGULAR")){
-                width = surface.getWidth();
+                dimensionList[0] = surface.getWidth();
+                dimensionList[1] = surface.getHeight();
             }
         }
-        System.out.println("width de la surface sélectionnée: " + width);
-        return width;
+        return dimensionList;
+    }
+
+    public void setSelectedRectangularSurfaceDimensions(float[] dimensions) {
+        for (Surface surface: this.surfaceList) {
+            if (surface.isSelected() && surface.getType().equals("RECTANGULAR")){
+                surface.setDimensions(dimensions);
+            }
+        }
     }
 
     public void setGroutToSelectedSurfaces(Grout grout) {

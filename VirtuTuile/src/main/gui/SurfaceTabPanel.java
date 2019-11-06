@@ -3,6 +3,8 @@ package gui;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.text.NumberFormat;
 import java.util.concurrent.Flow;
@@ -15,6 +17,15 @@ public class SurfaceTabPanel extends JPanel{
     }
 
     public void initComponent(){
+        modifyButton = new JButton("Modifier le dimensions");
+
+        modifyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                modifyButtonPressed(actionEvent);
+            }
+        });
+
         widthLabel = new JLabel(widthString);
         heightLabel = new JLabel(heightString);
 
@@ -48,21 +59,35 @@ public class SurfaceTabPanel extends JPanel{
         surfaceDimensionPanel.add(heightPanel, BorderLayout.CENTER);
 
         this.add(surfaceDimensionPanel, BorderLayout.NORTH);
+        this.add(modifyButton, BorderLayout.EAST);
     }
 
-    private void setWidthValue(float width){
-        System.out.println("DANS setVALUE");
-        this.widthValue = width;
-        this.updateUI();
+    private void setDimensionsValue(float[] dimensions){
+        widthField.setValue(dimensions[0]);
+        heightField.setValue(dimensions[1]);
+        repaint();
     }
 
-    public void updateInformations(float width){
-        setWidthValue(width);
+    public void updateInformations(float[] dimensions){
+        setDimensionsValue(dimensions);
+    }
+
+    private void modifyButtonPressed(ActionEvent evt) {
+        float modify_width = (float)widthField.getValue();
+        float modify_height = (float)heightField.getValue();
+
+        float[] dimensionsList = new float[2];
+        dimensionsList[0] = modify_width;
+        dimensionsList[1] = modify_height;
+
+        this.rightPanel.getMainWindow().controller.setSelectedRectangularSurfaceDimensions(dimensionsList);
+        this.rightPanel.getMainWindow().getDrawingPanel().repaint();
     }
 
     private RightPanel rightPanel;
 
     private JPanel surfaceDimensionPanel;
+    private JPanel modifyAndErasePanel;
 
     private float width;
     private float height;
@@ -77,9 +102,12 @@ public class SurfaceTabPanel extends JPanel{
     private JFormattedTextField heightField;
 
     private float widthValue = 0f;
-    private float heightValue = 0f;
+    private float heightValue;
 
     private NumberFormat widthFormat;
     private NumberFormat heightFormat;
+
+    private JButton modifyButton;
+    private JButton EraseButton;
 }
 
