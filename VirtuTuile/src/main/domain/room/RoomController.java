@@ -1,5 +1,6 @@
 package domain.room;
 
+import domain.room.surface.RectangularSurface;
 import domain.room.surface.Surface;
 
 import java.util.ArrayList;
@@ -16,18 +17,20 @@ public class RoomController {
         room = new Room();
     }
 
-    public void addSurface(int[] xPoints, int[] yPoints, int number_of_edges, String type) {
+    public void addSurface(int[] xPoints, int[] yPoints, int number_of_edges, String type, boolean isMouseReleased) {
         if (type.equals("RECTANGULAR")){
-            room.addRectangularSurface(xPoints, yPoints, number_of_edges, type);
+            room.addRectangularSurface(xPoints, yPoints, number_of_edges, type, isMouseReleased);
         }
         else if (type.equals("IRREGULAR")){
-            room.addIrregularSurface(xPoints, yPoints, number_of_edges);
+            room.addIrregularSurface(xPoints, yPoints, number_of_edges, isMouseReleased);
         }
     }
 
     public static ArrayList<Surface> getSurfaceList() {
         return room.getSurfaceList();
     }
+
+    public static ArrayList<Surface> getSurfaceProjectionList() {return room.getSurfaceProjectionList();}
 
     public int getNumberOfSurfaces() {
         return room.getNumberOfSurfaces();

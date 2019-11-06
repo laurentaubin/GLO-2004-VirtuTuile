@@ -8,18 +8,23 @@ import java.util.ArrayList;
 public class Room {
 
     private ArrayList<Surface> surfaceList;
+    private ArrayList<Surface> surfaceProjectionList;
 
     public Room() {
-        surfaceList = new ArrayList<Surface>();
-    }
+        surfaceList = new ArrayList<Surface>(); surfaceProjectionList = new ArrayList<Surface>();}
 
-    public void addRectangularSurface(int[] xPoints, int[] yPoints, int number_of_summits, String type) {
+
+    public void addRectangularSurface(int[] xPoints, int[] yPoints, int number_of_summits, String type, boolean isMouseReleased) {
         RectangularSurface surface = new RectangularSurface(xPoints, yPoints, number_of_summits, type);
 
-        surfaceList.add(surface);
+        if(isMouseReleased) {
+            surfaceProjectionList.clear(); // Prevents the projection display in Selection mode
+            surfaceList.add(surface);
+        }
+        else surfaceProjectionList.add(surface);
     }
 
-    public void addIrregularSurface(int[] xPoints, int[] yPoints, int number_of_edges) {
+    public void addIrregularSurface(int[] xPoints, int[] yPoints, int number_of_edges, boolean isMouseReleased) {
         //TODO Code pour ajouter une surface irrégulière
     }
 
@@ -27,9 +32,9 @@ public class Room {
         return surfaceList.isEmpty();
     }
 
-    public ArrayList<Surface> getSurfaceList() {
-        return surfaceList;
-    }
+    public ArrayList<Surface> getSurfaceList() {return surfaceList;}
+
+    public ArrayList<Surface> getSurfaceProjectionList() {return surfaceProjectionList;}
 
     public int getNumberOfSurfaces() {
         return surfaceList.size();

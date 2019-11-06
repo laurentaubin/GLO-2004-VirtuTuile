@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import static gui.MainWindow.ApplicationMode.ADD_IRREGULAR;
+import static gui.MainWindow.ApplicationMode.ADD_RECTANGULAR;
 
 
 public class MainWindow extends JFrame {
@@ -19,8 +20,6 @@ public class MainWindow extends JFrame {
 
     public Point actualMousePoint = new Point();
     public Point initMousePoint = new Point();
-
-
 
     public enum ApplicationMode {
         SELECT, ADD_RECTANGULAR, ADD_IRREGULAR
@@ -43,6 +42,7 @@ public class MainWindow extends JFrame {
     public DrawingPanel getDrawingPanel(){
         return this.drawingPanel;
     }
+
 
     private void initComponents() {
         mainPanel = new JPanel();
@@ -347,7 +347,9 @@ public class MainWindow extends JFrame {
 
             String surfaceType = "RECTANGULAR";
 
-            controller.addSurface(xPoints, yPoints, n, surfaceType);
+            boolean isMouseReleased = true;
+
+            controller.addSurface(xPoints, yPoints, n, surfaceType, isMouseReleased);
         }
 
         else if (this.actualMode == ADD_IRREGULAR && SwingUtilities.isLeftMouseButton((mouseEvent))){
@@ -357,13 +359,38 @@ public class MainWindow extends JFrame {
     }
 
     private void drawingPanelMouseDragged(MouseEvent mouseEvent){
+        Point mousePoint = mouseEvent.getPoint();
+
         if (SwingUtilities.isRightMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
 
             this.controller.updateSelectedSurfacesPositions(mouseEvent.getX() - this.actualMousePoint.getX(), mouseEvent.getY() - this.actualMousePoint.getY());
             this.actualMousePoint = mouseEvent.getPoint();
-            drawingPanel.repaint();
         }
+        else if (this.actualMode == ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
+
+            int[] xDrawPoints = new int[4];
+            int[] yDrawPoints = new int[4];
+
+            xDrawPoints[0] = (int)this.initMousePoint.x;
+            xDrawPoints[1] = (int)mousePoint.getX();
+            xDrawPoints[2] = (int)mousePoint.getX();
+            xDrawPoints[3] = (int)initMousePoint.getX();
+
+            yDrawPoints[0] = (int)initMousePoint.getY();
+            yDrawPoints[1] = (int)initMousePoint.getY();
+            yDrawPoints[2] = (int)mousePoint.getY();
+            yDrawPoints[3] = (int)mousePoint.getY();
+
+            int n  = 4;
+
+            String surfaceType = "RECTANGULAR";
+
+            boolean isMouseReleased = false;
+
+            controller.addSurface(xDrawPoints, yDrawPoints, n, surfaceType, isMouseReleased);
+        }
+        drawingPanel.repaint();
     }
 
 

@@ -1,7 +1,11 @@
 package domain.drawing;
 
 import domain.room.RoomController;
+import domain.room.surface.RectangularSurface;
 import domain.room.surface.Surface;
+import gui.MainWindow;
+import org.w3c.dom.css.Rect;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -23,6 +27,7 @@ public class SurfaceDrawer {
     public void drawSurface(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
         ArrayList<Surface> surfaces = controller.getSurfaceList();
+        ArrayList<Surface> surfaceProjectionList = controller.getSurfaceProjectionList();
         for (Surface current_surface: surfaces) {
             if (current_surface.isSelected()){
                 Color selectedColor = new Color(189, 227, 255);
@@ -35,6 +40,12 @@ public class SurfaceDrawer {
             }
             g2d.draw(current_surface);
         }
+
+        if (!surfaceProjectionList.isEmpty()) {
+            Surface projectionSurface = surfaceProjectionList.get(surfaceProjectionList.size() - 1);
+            g2d.draw(projectionSurface);
+        }
+
 
 
         /*
