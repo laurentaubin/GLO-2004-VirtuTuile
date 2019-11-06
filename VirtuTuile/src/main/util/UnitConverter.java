@@ -13,25 +13,29 @@ public class UnitConverter {
 
     public ArrayList<Double> pixelToInch(double xCoord, double yCoord) {
         ArrayList<Double> list = new ArrayList<>();
-            list.add(xCoord * PIXEL_TO_INCH);
-            list.add(yCoord * PIXEL_TO_INCH);
+        list.add(xCoord * PIXEL_TO_INCH);
+        list.add(yCoord * PIXEL_TO_INCH);
+        return list;
     }
 
     public ArrayList<Double> pixelToMeter(double xCoord, double yCoord) {
         ArrayList<Double> list = new ArrayList<>();
         list.add(xCoord * PIXEL_TO_METER);
         list.add(yCoord * PIXEL_TO_METER);
+        return list;
     }
 
     public ArrayList<Double> meterToInch(double xCoord, double yCoord) {
         ArrayList<Double> list = new ArrayList<>();
         list.add(xCoord * METER_TO_INCH);
-        list.add(yCoord * METER_TO_INCH)
+        list.add(yCoord * METER_TO_INCH);
+        return list;
     }
 
     public ArrayList<Double> inchToMeter(double xCoord, double yCoord) {
         ArrayList<Double> list = new ArrayList<>();
         list.add(xCoord * INCH_TO_METER);
         list.add(yCoord * INCH_TO_METER);
+        return list;
     }
 }

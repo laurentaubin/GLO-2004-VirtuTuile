@@ -54,6 +54,10 @@ public abstract class Surface extends Polygon {
         return hole;
     }
 
+    public void setHole(boolean hole) {
+        this.hole = hole;
+    }
+
     public void switchSelectionStatus() {
         this.selectionStatus = !this.selectionStatus;
     }
