@@ -13,9 +13,13 @@ public class Room {
         surfaceList = new ArrayList<Surface>();
     }
 
+    public void addSurfaceToList(Surface surface) {
+        this.surfaceList.add(surface);
+    }
+
     public void addRectangularSurface(int[] xPoints, int[] yPoints, int number_of_summits) {
         RectangularSurface surface = new RectangularSurface(xPoints, yPoints, number_of_summits, "RECTANGULAR");
-        surfaceList.add(surface);
+        addSurfaceToList(surface);
     }
 
     public void addIrregularSurface(int[] xPoints, int[] yPoints, int number_of_edges) {
