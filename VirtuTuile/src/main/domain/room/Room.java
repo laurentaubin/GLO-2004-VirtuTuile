@@ -10,14 +10,20 @@ import java.util.ArrayList;
 public class Room {
 
     private ArrayList<Surface> surfaceList;
+    private ArrayList<Surface> surfaceProjectionList;
 
     public Room() {
         surfaceList = new ArrayList<Surface>();
+        surfaceProjectionList = new ArrayList<Surface>();
     }
-
 
     public void addSurfaceToList(Surface surface) {
         this.surfaceList.add(surface);
+    }
+
+    public void addRectangularProjection(Point point, int[] xPoints,int[] yPoints, int number_of_summits) {
+        RectangularSurface surfaceProjection = new RectangularSurface(point, xPoints, yPoints, number_of_summits);
+        surfaceProjectionList.add(surfaceProjection);
     }
 
     public void addRectangularSurface(Point point, int[] xPoints, int[] yPoints, int number_of_summits) {
@@ -40,6 +46,10 @@ public class Room {
     }
 
     public ArrayList<Surface> getSurfaceList() { return surfaceList; }
+
+    public ArrayList<Surface> getSurfaceProjectionList() {return surfaceProjectionList;}
+
+    public void clearSurfaceProjectionList() {this.surfaceProjectionList.clear();}
 
     public int getNumberOfSurfaces() {
         return surfaceList.size();

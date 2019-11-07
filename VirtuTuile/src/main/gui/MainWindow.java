@@ -420,6 +420,7 @@ public class MainWindow extends JFrame {
 
             int n  = 4;
 
+            controller.clearSurfaceProjectionList();
             controller.addSurface(position ,xPoints, yPoints, n);
         }
 
@@ -431,7 +432,7 @@ public class MainWindow extends JFrame {
 
     private void drawingPanelMouseDragged(MouseEvent mouseEvent){
         // Point2D mousePoint = UnitConverter.convertPointToSelectedMode(mouseEvent.getPoint(), this.currentMeasurementMode);
-        Point2D mousePoint = mouseEvent.getPoint();
+        currentMousePoint = mouseEvent.getPoint();
         if (SwingUtilities.isRightMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
 
@@ -441,28 +442,31 @@ public class MainWindow extends JFrame {
              */
         }
         else if (this.currentApplicationMode == ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
-            /*
+
             int[] xDrawPoints = new int[4];
             int[] yDrawPoints = new int[4];
 
             xDrawPoints[0] = (int)this.initMousePoint.getX();
-            xDrawPoints[1] = (int)mousePoint.getX();
-            xDrawPoints[2] = (int)mousePoint.getX();
+            xDrawPoints[1] = (int)currentMousePoint.getX();
+            xDrawPoints[2] = (int)currentMousePoint.getX();
             xDrawPoints[3] = (int)initMousePoint.getX();
 
             yDrawPoints[0] = (int)initMousePoint.getY();
             yDrawPoints[1] = (int)initMousePoint.getY();
-            yDrawPoints[2] = (int)mousePoint.getY();
-            yDrawPoints[3] = (int)mousePoint.getY();
+            yDrawPoints[2] = (int)currentMousePoint.getY();
+            yDrawPoints[3] = (int)currentMousePoint.getY();
 
             int n  = 4;
 
+            /*
             String surfaceType = "RECTANGULAR";
 
             boolean isMouseReleased = false;
 
             controller.addSurface(xDrawPoints, yDrawPoints, n, surfaceType, isMouseReleased);
-        */
+            */
+
+            controller.addRectangularProjection(initMousePoint, xDrawPoints, yDrawPoints, n);
         }
 
         drawingPanel.repaint();

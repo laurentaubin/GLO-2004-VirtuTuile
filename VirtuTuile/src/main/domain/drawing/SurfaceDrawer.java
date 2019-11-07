@@ -41,6 +41,11 @@ public class SurfaceDrawer {
             g2d.draw(polygon);
         }
 
+        ArrayList<Surface> surfaceProjectionList = controller.getSurfaceProjectionList();
+        if(!surfaceProjectionList.isEmpty()) {
+            Surface rectangularProjection = surfaceProjectionList.get(surfaceProjectionList.size() - 1);
+            g2d.draw(rectangularProjection.getPolygon());
+        }
         /*
         List<Surface> items = controller.getSurfaceList();
         for (Surface item : items) {

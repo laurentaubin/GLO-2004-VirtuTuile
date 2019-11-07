@@ -18,6 +18,10 @@ public class RoomController {
         room = new Room();
     }
 
+    public void addRectangularProjection(Point point, int[] xPoints, int[] yPoints, int number_of_edges) {
+        room.addRectangularProjection(point, xPoints, yPoints, number_of_edges);
+    }
+
     public void addRectangularSurface(Point position, int width, int height){
         room.addRectangularSurface(position, width, height);
     }
@@ -29,6 +33,10 @@ public class RoomController {
     public static ArrayList<Surface> getSurfaceList() {
         return room.getSurfaceList();
     }
+
+    public static ArrayList<Surface> getSurfaceProjectionList() {return room.getSurfaceProjectionList();}
+
+    public static void clearSurfaceProjectionList() {room.clearSurfaceProjectionList();}
 
     public static void deleteSurface(){ room.deleteSurface(); }
 
@@ -69,4 +77,5 @@ public class RoomController {
     public void setSelectedRectangularSurfaceDimensions(double[] dimensions){
         room.setSelectedRectangularSurfaceDimensions(dimensions);
     }
+
 }
