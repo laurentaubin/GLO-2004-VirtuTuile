@@ -120,16 +120,15 @@ public class Room {
             int[] y = surface.getPolygon().ypoints;
 
             for (int i = 0; i < x.length; i++) {
-                surface.getPolygon().xpoints[i] = (int) (x[i] + deltaX);
+                surface.getPolygon().xpoints[i] = (int)(x[i] + deltaX);
                 surface.getPolygon().ypoints[i] = (int)(y[i] + deltaY);
             }
 
             for (ElementarySurface elementarySurface : surface.getWholeSurfaces()) {
                 int[] xPoints = elementarySurface.xpoints;
-                int[] yPoints = elementarySurface.ypoints;
 
                 for (int i = 0; i < xPoints.length; i++) {
-                    elementarySurface.xpoints[i] = (int) (x[i] + deltaX);
+                    elementarySurface.xpoints[i] = (int)(x[i] + deltaX);
                     elementarySurface.ypoints[i] = (int)(y[i] + deltaY);
                 }
                 elementarySurface.updateElementarySurface();

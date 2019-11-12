@@ -19,6 +19,7 @@ public class MainWindow extends JFrame {
 
     public Point currentMousePoint = new Point();
     public Point initMousePoint = new Point();
+    public Point prevMousePoint = new Point();
 
     public enum ApplicationMode {
         SELECT, ADD_RECTANGULAR, ADD_IRREGULAR
@@ -358,8 +359,9 @@ public class MainWindow extends JFrame {
         // System.out.println("Clicked");
         // System.out.println(mousePoint.getX());
         // System.out.println(mousePoint.getY());
-        Point mousePoint = mouseEvent.getPoint();
-        this.currentMousePoint = mousePoint;
+        this.prevMousePoint = mouseEvent.getPoint();
+        this.initMousePoint = mouseEvent.getPoint();
+        this.currentMousePoint = this.initMousePoint;
         this.requestFocus();
         boolean isShiftDown = false;
 
@@ -369,7 +371,7 @@ public class MainWindow extends JFrame {
             if (mouseEvent.isShiftDown()){
                 isShiftDown = true;
             }
-            this.controller.switchSelectionStatus(mousePoint.getX(), mousePoint.getY(), mouseEvent.isShiftDown());
+            this.controller.switchSelectionStatus(this.initMousePoint.getX(), this.initMousePoint.getY(), mouseEvent.isShiftDown());
             drawingPanel.repaint();
 
            // rightPanel.updateInformations(this.controller.getSelectedRectangularSurfaceDimensions());
@@ -377,12 +379,11 @@ public class MainWindow extends JFrame {
 
         if (this.currentApplicationMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
-            this.initMousePoint = mousePoint;
         }
 
         if (this.currentApplicationMode == ApplicationMode.ADD_IRREGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
-            System.out.println(mousePoint);
+            System.out.println(this.initMousePoint);
         }
 
     }
@@ -423,28 +424,22 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
-    private void drawingPanelMouseDragged(MouseEvent mouseEvent) {
+    private void drawingPanelMouseDragged(MouseEvent mouseEvent){
+        // TODO ça marche pas pcq le init mouse point est pas updaté a bonne palce faique le delta est pas bon
         // Point2D mousePoint = UnitConverter.convertPointToSelectedMode(mouseEvent.getPoint(), this.currentMeasurementMode);
-        this.currentMousePoint = mouseEvent.getPoint();
-
         if (SwingUtilities.isRightMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
             this.controller.updateSelectedSurfacesPositions(mouseEvent.getX() - this.currentMousePoint.getX(), mouseEvent.getY() - this.currentMousePoint.getY());
             this.currentMousePoint = mouseEvent.getPoint();
-        }
-        else if (this.currentApplicationMode == ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
-            double deltaX = mouseEvent.getX() - this.currentMousePoint.getX();
-            double deltaY = mouseEvent.getY() - this.currentMousePoint.getY();
-            this.controller.updateSelectedSurfacesPositions(deltaX, deltaY);
-            drawingPanel.repaint();
+
         }
 
         else if (this.currentApplicationMode == ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
+            this.currentMousePoint = mouseEvent.getPoint();
             int[] xDrawPoints = getXDrawPoints();
             int[] yDrawPoints = getYDrawPoints();
 
             controller.addRectangularProjection(initMousePoint, xDrawPoints, yDrawPoints);
-            drawingPanel.repaint();
         }
         drawingPanel.repaint();
     }
