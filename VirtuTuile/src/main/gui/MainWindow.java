@@ -400,31 +400,25 @@ public class MainWindow extends JFrame {
             //TODO Ajouter la conversion des unités de mesure ici!
 
             Point position = this.initMousePoint.getLocation();
-            int[] xPoints = new int[4];
-            int[] yPoints = new int[4];
 
-            xPoints[0] = (int)this.initMousePoint.getX();
-            xPoints[1] = (int)mousePointReleased.getX();
-            xPoints[2] = (int)mousePointReleased.getX();
-            xPoints[3] = (int)initMousePoint.getX();
+            int[] xDrawPoints = getXDrawPoints();
+            int[] yDrawPoints = getYDrawPoints();
 
-            yPoints[0] = (int)initMousePoint.getY();
-            yPoints[1] = (int)initMousePoint.getY();
-            yPoints[2] = (int)mousePointReleased.getY();
-            yPoints[3] = (int)mousePointReleased.getY();
-
-            if (xPoints[0] - xPoints[1] > 0){
+            if (xDrawPoints[0] - yDrawPoints[1] > 0){
                 position = mousePointReleased.getLocation();
             }
 
-            controller.addRectangularProjection(position, xPoints, yPoints);
+            // controller.addRectangularProjection(position, xPoints, yPoints);
             drawingPanel.repaint();
-            controller.clearSurfaceProjectionList();
+            RoomController.clearSurfaceProjectionList();
 
-            controller.addSurface(position ,xPoints, yPoints, 4);
+            controller.addSurface(position ,xDrawPoints, yDrawPoints, 4);
         }
 
-        else if (this.currentApplicationMode == ADD_IRREGULAR && SwingUtilities.isLeftMouseButton((mouseEvent))){
+        else {
+            if (this.currentApplicationMode == ADD_IRREGULAR) {
+                SwingUtilities.isLeftMouseButton((mouseEvent));
+            }
             //TODO Code pour surface irrégulière
         }
         drawingPanel.repaint();
@@ -432,34 +426,46 @@ public class MainWindow extends JFrame {
 
     private void drawingPanelMouseDragged(MouseEvent mouseEvent){
         // Point2D mousePoint = UnitConverter.convertPointToSelectedMode(mouseEvent.getPoint(), this.currentMeasurementMode);
+        this.currentMousePoint = mouseEvent.getPoint();
+
         if (SwingUtilities.isRightMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
             double deltaX = mouseEvent.getX() - this.currentMousePoint.getX();
             double deltaY = mouseEvent.getY() - this.currentMousePoint.getY();
             this.controller.updateSelectedSurfacesPositions(deltaX, deltaY);
-            this.currentMousePoint = mouseEvent.getPoint();
             drawingPanel.repaint();
         }
 
         else if (this.currentApplicationMode == ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
-
-            int[] xDrawPoints = new int[4];
-            int[] yDrawPoints = new int[4];
-
-            xDrawPoints[0] = (int)this.initMousePoint.getX();
-            xDrawPoints[1] = (int)currentMousePoint.getX();
-            xDrawPoints[2] = (int)currentMousePoint.getX();
-            xDrawPoints[3] = (int)initMousePoint.getX();
-
-            yDrawPoints[0] = (int)initMousePoint.getY();
-            yDrawPoints[1] = (int)initMousePoint.getY();
-            yDrawPoints[2] = (int)currentMousePoint.getY();
-            yDrawPoints[3] = (int)currentMousePoint.getY();
+            int[] xDrawPoints = getXDrawPoints();
+            int[] yDrawPoints = getYDrawPoints();
 
             controller.addRectangularProjection(initMousePoint, xDrawPoints, yDrawPoints);
             drawingPanel.repaint();
         }
         drawingPanel.repaint();
+    }
+
+    private int[] getXDrawPoints() {
+        int[] drawPoints = new int[4];
+
+        drawPoints[0] = (int)initMousePoint.getX();
+        drawPoints[1] = (int)currentMousePoint.getX();
+        drawPoints[2] = (int)currentMousePoint.getX();
+        drawPoints[3] = (int)initMousePoint.getX();
+
+        return drawPoints;
+    }
+
+    private int[] getYDrawPoints() {
+        int[] drawPoints = new int[4];
+
+        drawPoints[0] = (int)initMousePoint.getY();
+        drawPoints[1] = (int)initMousePoint.getY();
+        drawPoints[2] = (int)currentMousePoint.getY();
+        drawPoints[3] = (int)currentMousePoint.getY();
+
+        return drawPoints;
     }
 
     private void gridMenuItemActionPerformed(ActionEvent actionEvent) {

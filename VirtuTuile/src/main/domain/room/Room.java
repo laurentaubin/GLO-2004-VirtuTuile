@@ -23,12 +23,16 @@ public class Room {
         this.surfaceList.add(surface);
     }
 
+    public void addSurfaceToProjectionList(Surface surface) {
+        this.surfaceProjectionList.add(surface);
+    }
+
     public void addRectangularProjection(Point point, int[] xPoints,int[] yPoints) {
         RectangularSurface rectangularSurfaceProjection = new RectangularSurface(point, xPoints, yPoints);
         Surface surfaceProjection = new Surface();
         surfaceProjection.addElementaryWholeSurface(rectangularSurfaceProjection);
         surfaceProjection.createPolygon();
-        surfaceProjectionList.add(surfaceProjection);
+        this.addSurfaceToProjectionList(surfaceProjection);
     }
 
     public void addRectangularSurface(Point point, int[] xPoints, int[] yPoints) {

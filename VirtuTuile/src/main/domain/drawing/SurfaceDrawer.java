@@ -45,7 +45,7 @@ public class SurfaceDrawer {
             g2d.draw(polygon);
         }
 
-        ArrayList<Surface> surfaceProjectionList = controller.getSurfaceProjectionList();
+        ArrayList<Surface> surfaceProjectionList = RoomController.getSurfaceProjectionList();
         if(!surfaceProjectionList.isEmpty()) {
             Surface rectangularProjection = surfaceProjectionList.get(surfaceProjectionList.size() - 1);
             g2d.draw(rectangularProjection.getPolygon());
