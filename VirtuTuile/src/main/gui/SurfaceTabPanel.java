@@ -62,25 +62,24 @@ public class SurfaceTabPanel extends JPanel{
         this.add(modifyButton, BorderLayout.EAST);
     }
 
-    private void setDimensionsValue(float[] dimensions){
+    private void setDimensionsValue(double[] dimensions){
         widthField.setValue(dimensions[0]);
         heightField.setValue(dimensions[1]);
         repaint();
     }
 
-    public void updateInformations(float[] dimensions){
+    public void updateInformations(double[] dimensions){
         setDimensionsValue(dimensions);
     }
 
     private void modifyButtonPressed(ActionEvent evt) {
-        float modify_width = (float)widthField.getValue();
-        float modify_height = (float)heightField.getValue();
+        double modify_width = (double)widthField.getValue();
+        double modify_height = (double)heightField.getValue();
 
-        float[] dimensionsList = new float[2];
+        double[] dimensionsList = new double[2];
         dimensionsList[0] = modify_width;
         dimensionsList[1] = modify_height;
-
-        this.rightPanel.getMainWindow().controller.setSelectedRectangularSurfaceDimensions(dimensionsList);
+        //this.rightPanel.getMainWindow().controller.setSelectedRectangularSurfaceDimensions(dimensionsList);
         this.rightPanel.getMainWindow().getDrawingPanel().repaint();
     }
 

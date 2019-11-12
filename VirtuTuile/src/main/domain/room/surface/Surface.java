@@ -3,60 +3,68 @@ package domain.room.surface;
 import domain.room.Cover;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Surface extends Polygon {
-    private String type;
-    private boolean hole;
-    private double zoom = 1d;
+public class Surface {
+    private Point position;
+    private Color color;
     private boolean selectionStatus = false;
     private Cover cover;
-    private int[] xCoord;
-    private int[] yCoord;
-    private int numOfSummit;
+    private boolean mergedStatus = false;
+    private boolean haveHole = false;
+    private Polygon polygon;
+    private ArrayList<ElementarySurface> wholeSurfaces;
+    private ArrayList<ElementarySurface> holes;
 
-    public Surface() {
+    public ArrayList<ElementarySurface> getWholeSurfaces() {
+        return wholeSurfaces;
     }
 
-    public Surface(int[] x, int[] y, int number_of_summit, String type) {
-        super(x, y, number_of_summit);
-        this.type = type;
-        this.numOfSummit = number_of_summit;
-        this.xCoord = x;
-        this.yCoord = y;
-        this.cover = Cover.createCoverWithDefaultParameters();
-    }
-    
-    public int[] getxCoord(){
-        return this.xpoints;
+    public ArrayList<ElementarySurface> getHoles() {
+        return holes;
     }
 
-    public int[] getyCoord(){
-        return this.ypoints;
+    public Surface () {
+        wholeSurfaces = new ArrayList<ElementarySurface>();
+        holes = new ArrayList<ElementarySurface>();
     }
 
-    public void setxCoord(int x, int index){
-        this.xpoints[index] = x;
-    }
-
-    public void setyCoord(int y, int index){
-        this.ypoints[index] = y;
-    }
-
-    public void updateSurface(){
-        this.reset();
-        for(int i = 0; i < this.getxCoord().length; i++){
-            this.addPoint(this.getxCoord()[i], this.getyCoord()[i]);
+    public void createPolygon(){
+        if (!mergedStatus) {
+            if (wholeSurfaces.isEmpty()){
+                // C'est un trou
+                this.polygon = this.getHoles().get(0);
+            }
+            else {
+                // C'est une surface pleine
+                this.polygon = this.getWholeSurfaces().get(0);
+            }
+        }
+        else {
+            this.polygon = this.mergePolygon();
         }
     }
 
-    public boolean isHole() {
-        return hole;
+    private Polygon mergePolygon() {
+        //TODO algo pour créer un polygon résultant à partir d'une liste de polygon
+        return new Polygon();
     }
 
-    public void setHole(boolean hole) {
-        this.hole = hole;
+    public void addElementaryWholeSurface(ElementarySurface elementarySurface) {
+        wholeSurfaces.add(elementarySurface);
+    }
+
+    public void addHole(ElementarySurface elementarySurface) {
+        if (!haveHole) {
+            haveHole = true;
+        }
+        holes.add(elementarySurface);
+    }
+
+    public void setColor (Color color) {
+        this.color = color;
     }
 
     public void switchSelectionStatus() {
@@ -75,24 +83,31 @@ public abstract class Surface extends Polygon {
         this.selectionStatus = selectionStatus;
     }
 
-    public String getType() {
-        return this.type;
+    public float getWidth() {
+        return 0f;
     }
 
-    public abstract float getWidth();
-
-    public abstract float getHeight();
-
-    public Cover getCover() {
-        return cover;
+    public float getHeight() {
+        return 0f;
     }
 
-    public void setCover(Cover cover) {
+     public Cover getCover() {
+        return this.cover;
+    }
+
+    public void setCover(Cover cover){
         this.cover = cover;
     }
 
-    public void setDimensions(float[] dimensions){
+    public void updateSurface() {
+        this.polygon.reset();
+        for(int i = 0; i < polygon.xpoints.length; i++){
+            polygon.addPoint(polygon.xpoints[i], polygon.ypoints[i]);
+        }
+    }
 
+    public Polygon getPolygon() {
+        return polygon;
     }
 }
 

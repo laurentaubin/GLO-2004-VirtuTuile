@@ -18,13 +18,30 @@ public class RoomController {
         room = new Room();
     }
 
-    public void addSurface(int[] xPoints, int[] yPoints, int number_of_edges, String type, boolean isMouseReleased) {
-        if (type.equals("RECTANGULAR")){
-            room.addRectangularSurface(xPoints, yPoints, number_of_edges, isMouseReleased);
+    public void addRectangularProjection(Point point, int[] xPoints, int[] yPoints) {
+        room.addRectangularProjection(point, xPoints, yPoints);
+    }
+
+    public void addRectangularSurface(Point point, int[] xPoints, int[] yPoints) {
+        room.addRectangularSurface(point, xPoints, yPoints);
+    }
+
+    public void addRectangularSurface(Point position, int width, int height){
+        room.addRectangularSurface(position, width, height);
+    }
+
+
+    public void addSurface(Point point, int[] xPoints, int[] yPoints, int number_of_edges) {
+        if (number_of_edges == 4) {
+            this.addRectangularSurface(point, xPoints, yPoints);
         }
-        else if (type.equals("IRREGULAR")){
-            room.addIrregularSurface(xPoints, yPoints, number_of_edges, isMouseReleased);
+        else {
+            this.addIrregularSurface(point, xPoints, yPoints, number_of_edges);
         }
+    }
+
+    private void addIrregularSurface(Point point, int[] xPoints, int[] yPoints, int number_of_edges) {
+        room.addIrregularSurface(point, xPoints, yPoints, number_of_edges);
     }
 
     public static ArrayList<Surface> getSurfaceList() {
@@ -33,9 +50,16 @@ public class RoomController {
 
     public static ArrayList<Surface> getSurfaceProjectionList() {return room.getSurfaceProjectionList();}
 
+    public static void clearSurfaceProjectionList() {room.clearSurfaceProjectionList();}
+
+    public static void deleteSurface(){ room.deleteSurface(); }
+
+
     public int getNumberOfSurfaces() {
         return room.getNumberOfSurfaces();
     }
+
+    public static boolean surfaceSelecte(){ return room.surfaceSelecte(); }
 
     public void switchSelectionStatus(double x, double y, boolean isShiftDown) {
         room.switchSelectionStatus(x, y, isShiftDown);
@@ -57,11 +81,14 @@ public class RoomController {
         room.setTileToSelectedSufaces(width, height, color, name, nbrTilesPerBox);
     }
 
-    public float[] getSelectedRectangularSurfaceDimensions(){
+    /*
+    public double[] getSelectedRectangularSurfaceDimensions(){
         return room.getSelectedRectangularSurfaceDimensions();
     }
 
-    public void setSelectedRectangularSurfaceDimensions(float[] dimensions){
+    public void setSelectedRectangularSurfaceDimensions(double[] dimensions){
         room.setSelectedRectangularSurfaceDimensions(dimensions);
     }
+     */
+
 }

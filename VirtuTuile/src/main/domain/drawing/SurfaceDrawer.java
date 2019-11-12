@@ -7,6 +7,7 @@ import gui.MainWindow;
 import org.w3c.dom.css.Rect;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
 
@@ -14,21 +15,24 @@ public class SurfaceDrawer {
     private final RoomController controller;
     private Dimension initialDimension;
 
+
+
     public SurfaceDrawer(RoomController controller, Dimension initialDimension) {
         this.controller = controller;
         this.initialDimension = initialDimension;
     }
 
-    public void draw(Graphics g) {
-        drawSurface(g);
+    public void draw(Graphics g, float zoom, float prevZoom, Point zoomPoint, double xOffset, double yOffset) {
+        drawSurface(g, zoom, prevZoom, zoomPoint, xOffset, yOffset);
     }
 
-
-    public void drawSurface(Graphics g){
+    public void drawSurface(Graphics g, float zoom, float prevZoom, Point zoomPoint, double xOffset, double yOffset){
         Graphics2D g2d = (Graphics2D) g;
-        ArrayList<Surface> surfaces = controller.getSurfaceList();
-        ArrayList<Surface> surfaceProjectionList = controller.getSurfaceProjectionList();
+        ArrayList<Surface> surfaces = RoomController.getSurfaceList();
+        if (zoom != 1) {
+        }
         for (Surface current_surface: surfaces) {
+            Polygon polygon = current_surface.getPolygon();
             if (current_surface.isSelected()){
                 Color selectedColor = new Color(189, 227, 255);
                 g2d.setColor(selectedColor);
@@ -36,18 +40,16 @@ public class SurfaceDrawer {
             }
             else {
                 g2d.setColor(Color.BLACK);
-                g2d.setStroke(new BasicStroke(1));
+                g2d.setStroke(new BasicStroke(3));
             }
-            g2d.draw(current_surface);
+            g2d.draw(polygon);
         }
 
-        if (!surfaceProjectionList.isEmpty()) {
-            Surface projectionSurface = surfaceProjectionList.get(surfaceProjectionList.size() - 1);
-            g2d.draw(projectionSurface);
+        ArrayList<Surface> surfaceProjectionList = RoomController.getSurfaceProjectionList();
+        if(!surfaceProjectionList.isEmpty()) {
+            Surface rectangularProjection = surfaceProjectionList.get(surfaceProjectionList.size() - 1);
+            g2d.draw(rectangularProjection.getPolygon());
         }
-
-
-
         /*
         List<Surface> items = controller.getSurfaceList();
         for (Surface item : items) {
