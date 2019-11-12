@@ -6,7 +6,7 @@ import java.awt.*;
 public class GroutTabPanel extends JPanel {
     public GroutTabPanel(RightPanel rightPanel){
 
-        this.setBackground(Color.BLACK);
+        this.setBackground(Color.PINK);
 
     }
 

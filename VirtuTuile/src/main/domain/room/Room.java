@@ -3,6 +3,7 @@ package domain.room;
 import domain.room.surface.RectangularSurface;
 import domain.room.surface.Surface;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Room {
@@ -110,9 +111,11 @@ public class Room {
         }
     }
 
-    public void setTileToSelectedSufaces(Tile tile) {
+    public void setTileToSelectedSufaces(float width, float height, Color color, String name, int nbrTilesPerBox) {
+        Tile tile = new Tile(color, width, height, name, nbrTilesPerBox);
         for (Surface surface : this.surfaceList) {
             surface.getCover().setTile(tile);
+            System.out.println(surface.getCover().getTile().getName());
         }
     }
 }

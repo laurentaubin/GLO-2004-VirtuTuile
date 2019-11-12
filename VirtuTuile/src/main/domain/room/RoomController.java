@@ -3,6 +3,7 @@ package domain.room;
 import domain.room.surface.RectangularSurface;
 import domain.room.surface.Surface;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class RoomController {
@@ -52,8 +53,8 @@ public class RoomController {
         room.setGroutToSelectedSurfaces(grout);
     }
 
-    public void setTileToSelectedSurfaces(Tile tile) {
-        room.setTileToSelectedSufaces(tile);
+    public void setTileToSelectedSurfaces(float width, float height, Color color, String name, int nbrTilesPerBox) {
+        room.setTileToSelectedSufaces(width, height, color, name, nbrTilesPerBox);
     }
 
     public float[] getSelectedRectangularSurfaceDimensions(){

@@ -95,8 +95,8 @@ public class SurfaceTabPanel extends JPanel{
     private JLabel widthLabel;
     private JLabel heightLabel;
 
-    private static String widthString = "Width: ";
-    private static String heightString = "Height: ";
+    private static String widthString = "Largeur: ";
+    private static String heightString = "Hauteur: ";
 
     private JFormattedTextField widthField;
     private JFormattedTextField heightField;

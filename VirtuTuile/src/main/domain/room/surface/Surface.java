@@ -79,13 +79,9 @@ public abstract class Surface extends Polygon {
         return this.type;
     }
 
-    public float getWidth() {
-        return 0f;
-    }
+    public abstract float getWidth();
 
-    public float getHeight() {
-        return 0f;
-    }
+    public abstract float getHeight();
 
     public Cover getCover() {
         return cover;

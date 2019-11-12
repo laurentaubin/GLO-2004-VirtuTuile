@@ -1,8 +1,6 @@
 package gui;
 
 import domain.room.RoomController;
-import domain.room.surface.*;
-import util.UnitConverter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,6 +32,7 @@ public class MainWindow extends JFrame {
     public MainWindow(){
         controller = new RoomController();
         initComponents();
+        setFocusable(true);
     }
 
     public void setApplicationMode (ApplicationMode newMode) {
@@ -58,7 +57,7 @@ public class MainWindow extends JFrame {
         zoomInButton = new JButton("+");
         zoomOutButton = new JButton("-");
 
-        measurementUnitComboBox = new javax.swing.JComboBox();
+        measurementUnitComboBox = new javax.swing.JComboBox<String>();
         drawingPanel = new DrawingPanel(this);
         mainScrollPane = new JScrollPane();
         splitPane = new JSplitPane();
@@ -160,7 +159,7 @@ public class MainWindow extends JFrame {
 
         });
 
-        measurementUnitComboBox.setModel(new DefaultComboBoxModel(new String[] { "MÉTRIQUE", "IMPÉRIALE" }));
+        measurementUnitComboBox.setModel(new DefaultComboBoxModel<>(new String[] { "MÉTRIQUE", "IMPÉRIALE" }));
         measurementUnitComboBox.setPreferredSize(new Dimension(120, 23));
 
         measurementUnitComboBox.addActionListener(new ActionListener() {
@@ -385,7 +384,7 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
-    private void drawingPanelMouseDragged(MouseEvent mouseEvent){
+    private void drawingPanelMouseDragged(MouseEvent mouseEvent) {
         // Point2D mousePoint = UnitConverter.convertPointToSelectedMode(mouseEvent.getPoint(), this.currentMeasurementMode);
         Point2D mousePoint = mouseEvent.getPoint();
         if (SwingUtilities.isRightMouseButton(mouseEvent)) {
@@ -393,23 +392,22 @@ public class MainWindow extends JFrame {
 
             this.controller.updateSelectedSurfacesPositions(mouseEvent.getX() - this.currentMousePoint.getX(), mouseEvent.getY() - this.currentMousePoint.getY());
             this.currentMousePoint = mouseEvent.getPoint();
-        }
-        else if (this.currentApplicationMode == ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
+        } else if (this.currentApplicationMode == ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
 
             int[] xDrawPoints = new int[4];
             int[] yDrawPoints = new int[4];
 
-            xDrawPoints[0] = (int)this.initMousePoint.getX();
-            xDrawPoints[1] = (int)mousePoint.getX();
-            xDrawPoints[2] = (int)mousePoint.getX();
-            xDrawPoints[3] = (int)initMousePoint.getX();
+            xDrawPoints[0] = (int) this.initMousePoint.getX();
+            xDrawPoints[1] = (int) mousePoint.getX();
+            xDrawPoints[2] = (int) mousePoint.getX();
+            xDrawPoints[3] = (int) initMousePoint.getX();
 
-            yDrawPoints[0] = (int)initMousePoint.getY();
-            yDrawPoints[1] = (int)initMousePoint.getY();
-            yDrawPoints[2] = (int)mousePoint.getY();
-            yDrawPoints[3] = (int)mousePoint.getY();
+            yDrawPoints[0] = (int) initMousePoint.getY();
+            yDrawPoints[1] = (int) initMousePoint.getY();
+            yDrawPoints[2] = (int) mousePoint.getY();
+            yDrawPoints[3] = (int) mousePoint.getY();
 
-            int n  = 4;
+            int n = 4;
 
             String surfaceType = "RECTANGULAR";
 
@@ -420,7 +418,6 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
-
     private ButtonGroup buttonGroup;
 
     private JPanel mainPanel;
@@ -430,7 +427,7 @@ public class MainWindow extends JFrame {
     private JToggleButton irregularSurfaceButton;
     private JButton zoomOutButton;
     private JButton zoomInButton;
-    private JComboBox measurementUnitComboBox;
+    private JComboBox<String> measurementUnitComboBox;
     private DrawingPanel drawingPanel;
     private JScrollPane mainScrollPane;
     private JSplitPane splitPane;

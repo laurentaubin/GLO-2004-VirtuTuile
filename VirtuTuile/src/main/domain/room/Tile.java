@@ -10,7 +10,7 @@ public class Tile {
     private String name;
     private int nbrTilesPerBox;
 
-    public Tile(Color color, int width, int height, String name, int nbrTilesPerBox) {
+    public Tile(Color color, float width, float height, String name, int nbrTilesPerBox) {
         this.color = color;
         this.width = width;
         this.height = height;
