@@ -50,9 +50,7 @@ public class MainWindow extends JFrame {
     private void initComponents() {
 
         mainPanel = new JPanel();
-
         buttonGroup = new ButtonGroup();
-
         topButtonBar = new JPanel(new FlowLayout(FlowLayout.LEFT));
         selectButton = new JToggleButton("Sélection");
         rectangularSurfaceButton = new JToggleButton("Ajouter une surface rectangulaire");
@@ -61,12 +59,11 @@ public class MainWindow extends JFrame {
         zoomOutButton = new JButton("-");
 
         measurementUnitComboBox = new javax.swing.JComboBox();
-        drawingPanel = new DrawingPanel(this);
         mainScrollPane = new JScrollPane();
+        drawingPanel = new DrawingPanel(this);
         splitPane = new JSplitPane();
 
         rightPanel = new RightPanel(this);
-
 
         menuBar = new JMenuBar();
         fileMenu = new JMenu();
@@ -97,7 +94,8 @@ public class MainWindow extends JFrame {
         minimizeMenuItem = new JMenuItem();
         zoomMenuItem = new JMenuItem();
 
-        this.setVisible(true);
+        statusBar = new JLabel(" ");
+        statusBar.setBackground(Color.GRAY);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("VirtuTuile");
@@ -109,7 +107,6 @@ public class MainWindow extends JFrame {
         selectButton.setSelected(true);
 
         this.setApplicationMode(ApplicationMode.SELECT);
-
 
         selectButton.addActionListener(new ActionListener() {
             @Override
@@ -132,21 +129,9 @@ public class MainWindow extends JFrame {
             }
         });
 
-        /*zoomInButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                drawingPanel.zoomInActionPerformed();
-            }
-        });
+        /*
 
-        zoomOutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                drawingPanel.zoomOutActionPerformed();
-            }
-        });*/
-
-        /*drawingPanel.addMouseWheelListener(new java.awt.event.MouseAdapter() {
+        drawingPanel.addMouseWheelListener(new java.awt.event.MouseAdapter() {
             public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
                 int wheel = evt.getWheelRotation();
                 if (wheel < 0) {
@@ -155,15 +140,8 @@ public class MainWindow extends JFrame {
                     drawingPanel.zoomOutActionPerformed(evt.getScrollAmount());
                 }
             }
-        });*/
-
-        drawingPanel.addMouseWheelListener(new java.awt.event.MouseAdapter() {
-            public void mouseWheelMoved(MouseWheelEvent evt){
-                drawingPanel.zoomActionPerformed(evt.getWheelRotation(), evt.getX(), evt.getY());
-
-            }
-
         });
+        */
 
         measurementUnitComboBox.setModel(new DefaultComboBoxModel(new String[] { "MÉTRIQUE", "IMPÉRIALE" }));
         measurementUnitComboBox.setPreferredSize(new Dimension(120, 23));
@@ -185,9 +163,6 @@ public class MainWindow extends JFrame {
 
         });
 
-        zoomOutButton.setPreferredSize(new Dimension(30, 23));
-        zoomInButton.setPreferredSize(new Dimension(30, 23));
-
         buttonGroup.add(selectButton);
         buttonGroup.add(rectangularSurfaceButton);
         buttonGroup.add(irregularSurfaceButton);
@@ -204,7 +179,6 @@ public class MainWindow extends JFrame {
         splitPane.setMinimumSize(new Dimension(0, 202));
         splitPane.setPreferredSize(new Dimension((int)(Toolkit.getDefaultToolkit().getScreenSize().width*0.85), (int)(Toolkit.getDefaultToolkit().getScreenSize().height*0.5)));
 
-        //Change la grandeur du panel de gauche min
         mainScrollPane.setMinimumSize(new Dimension(0, 202));
         mainScrollPane.setPreferredSize(new Dimension((int)(Toolkit.getDefaultToolkit().getScreenSize().width*0.85), (int)(Toolkit.getDefaultToolkit().getScreenSize().height*0.5)));
 
@@ -223,6 +197,17 @@ public class MainWindow extends JFrame {
             }
         });
 
+        drawingPanel.addMouseWheelListener(new java.awt.event.MouseAdapter() {
+            public void mouseWheelMoved(MouseWheelEvent evt){
+                Point point = evt.getPoint();
+                if (evt.getWheelRotation() < 0) {
+                    drawingPanel.zoomInActionPerformed(point);
+                }
+                else {
+                    drawingPanel.zoomOutActionPerformed(point);
+                }
+            }
+        });
 
         drawingPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -234,9 +219,13 @@ public class MainWindow extends JFrame {
                 drawingPanelMouseReleased(evt);
             }
         });
+
         drawingPanel.addMouseMotionListener(new java.awt.event.MouseAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 drawingPanelMouseDragged(evt);
+            }
+            public void mouseMoved(MouseEvent evt) {
+                drawingPanelMouseMoved(evt);
             }
         });
 
@@ -259,7 +248,10 @@ public class MainWindow extends JFrame {
 
         splitPane.setResizeWeight(1);
 
+        statusBar.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
         mainPanel.add(splitPane, BorderLayout.CENTER);
+        mainPanel.add(statusBar, "South");
 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -298,6 +290,13 @@ public class MainWindow extends JFrame {
 
         viewMenu.setText("Affichage");
         gridMenuItem.setText("Grille");
+        gridMenuItem.setSelected(drawingPanel.getGridlines());
+        gridMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                gridMenuItemActionPerformed(actionEvent);
+            }
+        });
         viewMenu.add(gridMenuItem);
         measurementUnitMenuItem.setText("Unité de mesure");
         viewMenu.add(measurementUnitMenuItem);
@@ -374,7 +373,7 @@ public class MainWindow extends JFrame {
             this.controller.switchSelectionStatus(mousePoint.getX(), mousePoint.getY(), mouseEvent.isShiftDown());
             drawingPanel.repaint();
 
-            rightPanel.updateInformations(this.controller.getSelectedRectangularSurfaceDimensions());
+           // rightPanel.updateInformations(this.controller.getSelectedRectangularSurfaceDimensions());
         }
 
         if (this.currentApplicationMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
@@ -418,10 +417,11 @@ public class MainWindow extends JFrame {
                 position = mousePointReleased.getLocation();
             }
 
-            int n  = 4;
-
+            controller.addRectangularProjection(position, xPoints, yPoints);
+            drawingPanel.repaint();
             controller.clearSurfaceProjectionList();
-            controller.addSurface(position ,xPoints, yPoints, n);
+
+            controller.addSurface(position ,xPoints, yPoints, 4);
         }
 
         else if (this.currentApplicationMode == ADD_IRREGULAR && SwingUtilities.isLeftMouseButton((mouseEvent))){
@@ -432,15 +432,15 @@ public class MainWindow extends JFrame {
 
     private void drawingPanelMouseDragged(MouseEvent mouseEvent){
         // Point2D mousePoint = UnitConverter.convertPointToSelectedMode(mouseEvent.getPoint(), this.currentMeasurementMode);
-        currentMousePoint = mouseEvent.getPoint();
         if (SwingUtilities.isRightMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
-
-            /*
-            this.controller.updateSelectedSurfacesPositions(mouseEvent.getX() - this.currentMousePoint.getX(), mouseEvent.getY() - this.currentMousePoint.getY());
+            double deltaX = mouseEvent.getX() - this.currentMousePoint.getX();
+            double deltaY = mouseEvent.getY() - this.currentMousePoint.getY();
+            this.controller.updateSelectedSurfacesPositions(deltaX, deltaY);
             this.currentMousePoint = mouseEvent.getPoint();
-             */
+            drawingPanel.repaint();
         }
+
         else if (this.currentApplicationMode == ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
 
             int[] xDrawPoints = new int[4];
@@ -456,22 +456,40 @@ public class MainWindow extends JFrame {
             yDrawPoints[2] = (int)currentMousePoint.getY();
             yDrawPoints[3] = (int)currentMousePoint.getY();
 
-            int n  = 4;
-
-            /*
-            String surfaceType = "RECTANGULAR";
-
-            boolean isMouseReleased = false;
-
-            controller.addSurface(xDrawPoints, yDrawPoints, n, surfaceType, isMouseReleased);
-            */
-
-            controller.addRectangularProjection(initMousePoint, xDrawPoints, yDrawPoints, n);
+            controller.addRectangularProjection(initMousePoint, xDrawPoints, yDrawPoints);
+            drawingPanel.repaint();
         }
-
         drawingPanel.repaint();
     }
 
+    private void gridMenuItemActionPerformed(ActionEvent actionEvent) {
+        drawingPanel.setGridLines();
+    }
+
+    private void drawingPanelMouseMoved(MouseEvent evt) {
+        //TODO convertir les unités
+        double x = evt.getX() / drawingPanel.getZoom();
+        double y = evt.getY() / drawingPanel.getZoom();
+        String mousePosition = "x= " + x + ", y= " + y;
+        setStatusBarText(mousePosition);
+    }
+
+    public void setStatusBarText(String statusBarText) {
+        statusBar.setText(statusBarText);
+    }
+
+    public Dimension getMainScrollPaneDimension() {
+        return mainScrollPane.getSize();
+    }
+
+    public void setMainScrollPanePosition(Point point) {
+        this.mainScrollPane.getViewport().setViewPosition(point);
+
+    }
+
+    public JScrollPane getMainScrollPane(){
+        return this.mainScrollPane;
+    }
 
     private ButtonGroup buttonGroup;
 
@@ -486,6 +504,7 @@ public class MainWindow extends JFrame {
     private DrawingPanel drawingPanel;
     private JScrollPane mainScrollPane;
     private JSplitPane splitPane;
+    private JLabel statusBar;
 
     private RightPanel rightPanel;
 

@@ -18,16 +18,30 @@ public class RoomController {
         room = new Room();
     }
 
-    public void addRectangularProjection(Point point, int[] xPoints, int[] yPoints, int number_of_edges) {
-        room.addRectangularProjection(point, xPoints, yPoints, number_of_edges);
+    public void addRectangularProjection(Point point, int[] xPoints, int[] yPoints) {
+        room.addRectangularProjection(point, xPoints, yPoints);
+    }
+
+    public void addRectangularSurface(Point point, int[] xPoints, int[] yPoints) {
+        room.addRectangularSurface(point, xPoints, yPoints);
     }
 
     public void addRectangularSurface(Point position, int width, int height){
         room.addRectangularSurface(position, width, height);
     }
 
+
     public void addSurface(Point point, int[] xPoints, int[] yPoints, int number_of_edges) {
-        room.addRectangularSurface(point, xPoints, yPoints, number_of_edges);
+        if (number_of_edges == 4) {
+            this.addRectangularSurface(point, xPoints, yPoints);
+        }
+        else {
+            this.addIrregularSurface(point, xPoints, yPoints, number_of_edges);
+        }
+    }
+
+    private void addIrregularSurface(Point point, int[] xPoints, int[] yPoints, int number_of_edges) {
+        room.addIrregularSurface(point, xPoints, yPoints, number_of_edges);
     }
 
     public static ArrayList<Surface> getSurfaceList() {
@@ -51,12 +65,9 @@ public class RoomController {
         room.switchSelectionStatus(x, y, isShiftDown);
     }
 
-    /*
     public void updateSelectedSurfacesPositions(double deltaX, double deltaY) {
         room.updateSelectedSurfacesPositions(deltaX, deltaY);
     }
-
-     */
 
     public void setPatternToSelectedSurfaces(Cover.Pattern pattern) {
         room.setPatternToSelectedSurfaces(pattern);
@@ -70,6 +81,7 @@ public class RoomController {
         room.setTileToSelectedSufaces(tile);
     }
 
+    /*
     public double[] getSelectedRectangularSurfaceDimensions(){
         return room.getSelectedRectangularSurfaceDimensions();
     }
@@ -77,5 +89,6 @@ public class RoomController {
     public void setSelectedRectangularSurfaceDimensions(double[] dimensions){
         room.setSelectedRectangularSurfaceDimensions(dimensions);
     }
+     */
 
 }

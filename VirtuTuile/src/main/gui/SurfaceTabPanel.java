@@ -79,8 +79,7 @@ public class SurfaceTabPanel extends JPanel{
         double[] dimensionsList = new double[2];
         dimensionsList[0] = modify_width;
         dimensionsList[1] = modify_height;
-
-        this.rightPanel.getMainWindow().controller.setSelectedRectangularSurfaceDimensions(dimensionsList);
+        //this.rightPanel.getMainWindow().controller.setSelectedRectangularSurfaceDimensions(dimensionsList);
         this.rightPanel.getMainWindow().getDrawingPanel().repaint();
     }
 

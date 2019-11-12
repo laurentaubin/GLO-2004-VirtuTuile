@@ -7,28 +7,61 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Surface {
+public class Surface {
     private Point position;
     private Color color;
     private boolean selectionStatus = false;
     private Cover cover;
+    private boolean mergedStatus = false;
+    private boolean haveHole = false;
+    private Polygon polygon;
+    private ArrayList<ElementarySurface> wholeSurfaces;
+    private ArrayList<ElementarySurface> holes;
 
-
-
-    public Surface (Point point) {
-        this.position = point;
-        this.cover = Cover.createCoverWithDefaultParameters();
+    public ArrayList<ElementarySurface> getWholeSurfaces() {
+        return wholeSurfaces;
     }
 
-    public abstract boolean contains(Point2D.Double point);
-    public abstract double getWidth();
-    public abstract double getHeight();
-    public abstract void setDimensions(double[] dimensions);
-    public abstract int[] getxCoord();
-    public abstract int[] getyCoord();
-    public abstract void setxCoord(int x, int index);
-    public abstract void setyCoord(int y, int index);
-    public abstract Polygon getPolygon();
+    public ArrayList<ElementarySurface> getHoles() {
+        return holes;
+    }
+
+    public Surface () {
+        wholeSurfaces = new ArrayList<ElementarySurface>();
+        holes = new ArrayList<ElementarySurface>();
+    }
+
+    public void createPolygon(){
+        if (!mergedStatus) {
+            if (wholeSurfaces.isEmpty()){
+                // C'est un trou
+                this.polygon = this.getHoles().get(0);
+            }
+            else {
+                // C'est une surface pleine
+                this.polygon = this.getWholeSurfaces().get(0);
+            }
+        }
+        else {
+            this.polygon = this.mergePolygon();
+        }
+    }
+
+    private Polygon mergePolygon() {
+        //TODO algo pour créer un polygon résultant à partir d'une liste de polygon
+        return new Polygon();
+    }
+
+    public void addElementaryWholeSurface(ElementarySurface elementarySurface) {
+        wholeSurfaces.add(elementarySurface);
+    }
+
+    public void addHole(ElementarySurface elementarySurface) {
+        if (!haveHole) {
+            haveHole = true;
+        }
+        holes.add(elementarySurface);
+    }
 
     public void setColor (Color color) {
         this.color = color;
@@ -58,5 +91,15 @@ public abstract class Surface {
         this.cover = cover;
     }
 
+    public void updateSurface() {
+        this.polygon.reset();
+        for(int i = 0; i < polygon.xpoints.length; i++){
+            polygon.addPoint(polygon.xpoints[i], polygon.ypoints[i]);
+        }
+    }
+
+    public Polygon getPolygon() {
+        return polygon;
+    }
 }
 

@@ -17,6 +17,7 @@ public class RightPanel extends JTabbedPane implements Serializable {
         setPreferredSize(new Dimension(width, 1));
         setVisible(true);
         int height = (int)(width*0.5);
+        this.setBackground(Color.GRAY);
         initRightPanel();
     }
 

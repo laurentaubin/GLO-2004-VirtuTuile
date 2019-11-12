@@ -4,33 +4,23 @@ import java.awt.*;
 import java.lang.annotation.Retention;
 
 public class RectangularSurface extends ElementarySurface {
+    private Point position;
     private double width;
     private double height;
 
-    public RectangularSurface(Point position, int[] xPoints, int[] yPoints, int number_of_edge) {
-        super(position);
-        Polygon polygon = new Polygon(xPoints, yPoints, number_of_edge);
-        super.setPolygon(polygon);
+    public RectangularSurface(Point position, int[] xPoints, int[] yPoints) {
+        super(xPoints, yPoints, 4);
+        this.position = position;
         this.width = Math.abs(xPoints[1] - xPoints[0]);
         this.height = Math.abs(yPoints[0] - yPoints[3]);
     }
 
     public RectangularSurface(Point point, int width, int height) {
-        super(point);
+        super(  new int[] {(int)point.getX(), (int)point.getX() + width, (int)point.getX(),(int)point.getX() + width},
+                new int[] {(int) point.getY(), (int) point.getY(), (int)point.getY() - height, (int)point.getY() - height},
+                4);
         this.width = width;
         this.height = height;
-
-        int xPosition = (int)point.getX();
-        int yPosition = (int)point.getY();
-        int[] xPoints = new int[] {xPosition, xPosition + width, xPosition, xPosition + width};
-        int[] yPoints = new int[] {yPosition, yPosition, yPosition - height, yPosition - height};
-
-        Polygon polygon = new Polygon(xPoints, yPoints, 4);
-        super.setPolygon(polygon);
-    }
-
-    public Polygon getPolygon(){
-        return this.polygon;
     }
 
     public double getWidth(){
@@ -65,6 +55,8 @@ public class RectangularSurface extends ElementarySurface {
         }
     }
 
+    /*
+
     public int getTilesAcross() {
         return (int) Math.ceil(this.width / this.getCover().getTile().getWidth());
     }
@@ -72,6 +64,7 @@ public class RectangularSurface extends ElementarySurface {
     public int getTilesDown() {
         return (int) Math.ceil(this.height / this.getCover().getTile().getHeight());
     }
+     */
 
     public void setDimensions(double[] dimensions) {
         double deltaW = dimensions[0] - this.width;
@@ -79,25 +72,9 @@ public class RectangularSurface extends ElementarySurface {
         this.width = dimensions[0];
         this.height = dimensions[1];
 
-        this.polygon.xpoints[1] += deltaW;
-        this.polygon.xpoints[2] += deltaW;
-        this.polygon.ypoints[2] += deltaH;
-        this.polygon.ypoints[3] += deltaH;
-    }
-
-    public int[] getxCoord(){
-        return this.polygon.xpoints;
-    }
-
-    public void setxCoord(int x, int index) {
-        this.polygon.xpoints[index] = x;
-    }
-
-    public int[] getyCoord(){
-        return this.polygon.ypoints;
-    }
-
-    public void setyCoord(int y, int index){
-        this.polygon.ypoints[index] = y;
+        this.xpoints[1] += deltaW;
+        this.xpoints[2] += deltaW;
+        this.ypoints[2] += deltaH;
+        this.ypoints[3] += deltaH;
     }
 }

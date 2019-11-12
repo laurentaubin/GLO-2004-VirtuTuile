@@ -7,34 +7,39 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ElementarySurface extends Surface {
+public abstract class ElementarySurface extends Polygon {
     private boolean isHole = false;
-    Polygon polygon;
 
-    public ElementarySurface(Point point) {
-        super(point);
+    public ElementarySurface(int[] xPoints, int[] yPoints, int numberOfEdges) {
+        super(xPoints, yPoints, numberOfEdges);
     }
+
 
     public boolean contains(Point2D.Double point) {
-        return polygon.contains(point);
-    }
-
-    public void setPolygon(Polygon polygon){
-        this.polygon = polygon;
+        return this.contains(point);
     }
 
     public int[] getxCoord(){
-        return this.polygon.xpoints;
+        return this.xpoints;
     }
 
     public int[] getyCoord(){
-        return this.polygon.ypoints;
+        return this.ypoints;
+    }
+
+    public void setxCoord(int x, int index){
+        this.xpoints[index] = x;
+    }
+
+    public void setyCoord(int y, int index){
+        this.ypoints[index] = y;
+
     }
 
     public void updateSurface(){
-        this.polygon.reset();
+        this.reset();
         for(int i = 0; i < this.getxCoord().length; i++){
-            this.polygon.addPoint(this.getxCoord()[i], this.getyCoord()[i]);
+            this.addPoint(this.xpoints[i], this.ypoints[i]);
         }
     }
 
@@ -44,6 +49,13 @@ public abstract class ElementarySurface extends Surface {
 
     public void setHole(boolean hole) {
         this.isHole = hole;
+    }
+
+    public void updateElementarySurface() {
+        this.reset();
+        for(int i = 0; i < this.xpoints.length; i++){
+            this.addPoint(this.xpoints[i], this.ypoints[i]);
+        }
     }
 }
 
