@@ -19,14 +19,15 @@ public class SurfaceDrawer {
         this.initialDimension = initialDimension;
     }
 
-    public void draw(Graphics g, float zoom, float prevZoom, Point zoomPoint, double xOffset, double yOffset) {
+    public void draw(Graphics g, double zoom, float prevZoom, Point zoomPoint, double xOffset, double yOffset) {
         drawSurface(g, zoom, prevZoom, zoomPoint, xOffset, yOffset);
     }
 
-    public void drawSurface(Graphics g, float zoom, float prevZoom, Point zoomPoint, double xOffset, double yOffset){
+    public void drawSurface(Graphics g, double zoom, float prevZoom, Point zoomPoint, double xOffset, double yOffset){
         Graphics2D g2d = (Graphics2D) g;
         ArrayList<Surface> surfaces = RoomController.getSurfaceList();
         if (zoom != 1) {
+
         }
         for (Surface current_surface: surfaces) {
             Polygon polygon = current_surface.getPolygon();

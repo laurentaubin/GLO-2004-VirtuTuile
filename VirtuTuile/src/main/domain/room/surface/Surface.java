@@ -3,9 +3,8 @@ package domain.room.surface;
 import domain.room.Cover;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Surface {
     private Point position;
@@ -15,6 +14,8 @@ public class Surface {
     private boolean mergedStatus = false;
     private boolean haveHole = false;
     private Polygon polygon;
+    private double width;
+    private double height;
     private ArrayList<ElementarySurface> wholeSurfaces;
     private ArrayList<ElementarySurface> holes;
 
@@ -83,12 +84,12 @@ public class Surface {
         this.selectionStatus = selectionStatus;
     }
 
-    public float getWidth() {
-        return 0f;
+    public double getWidth() {
+        return this.getBoundingRectangle().getWidth();
     }
 
-    public float getHeight() {
-        return 0f;
+    public double getHeight() {
+        return this.getBoundingRectangle().getHeight();
     }
 
      public Cover getCover() {
@@ -108,6 +109,10 @@ public class Surface {
 
     public Polygon getPolygon() {
         return polygon;
+    }
+
+    public Rectangle2D getBoundingRectangle() {
+        return this.polygon.getBounds2D();
     }
 }
 

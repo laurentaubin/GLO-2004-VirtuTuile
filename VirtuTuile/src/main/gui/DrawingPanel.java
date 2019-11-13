@@ -6,6 +6,7 @@ import domain.room.surface.Surface;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Dimension2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -16,12 +17,12 @@ public class DrawingPanel extends JPanel implements Serializable {
     private MainWindow mainWindow;
 
     private float prevZoom = 1f;
-    private int zoom = 1;
+    private double zoom = 1d;
     private double xOffset = 0;
     private double yOffset = 0;
     private Point zoomPoint;
 
-    private int gridGap = 10;
+    private double gridGap = 10d;
     private boolean isGridActivated = false;
 
     public DrawingPanel() {
@@ -49,15 +50,14 @@ public class DrawingPanel extends JPanel implements Serializable {
 
             mainDrawer.draw(g2d, zoom, prevZoom, zoomPoint, xOffset, yOffset);
             if (isGridActivated) {
-                g2d.scale(zoom, zoom);
 
                 g2d.setPaint(Color.GRAY);
                 g2d.setStroke(new BasicStroke(0.25f));
-                for (int row = 1; row <= initialDimension.height / this.gridGap; row++) {
-                    g2d.drawLine(0, row * this.gridGap, initialDimension.width, row * this.gridGap);
+                for (int row = 1; row <= this.getHeight() / this.gridGap; row++) {
+                    g2d.drawLine(0, (int)(row * this.gridGap), this.getWidth(), (int)(row * this.gridGap));
                 }
-                for (int col = 1; col <= initialDimension.getWidth() / this.gridGap; col++) {
-                    g2d.drawLine(col * this.gridGap, 0, col * this.gridGap, (int) initialDimension.getHeight());
+                for (int col = 1; col <= this.getWidth() / this.gridGap; col++) {
+                    g2d.drawLine((int)(col * this.gridGap), 0, (int)(col * this.gridGap), this.getHeight());
                 }
             }
         }
@@ -94,23 +94,30 @@ public class DrawingPanel extends JPanel implements Serializable {
     }
 
     public void zoomInActionPerformed(Point point) {
-        zoom += Math.max(zoom += 1, 5);
+        zoom *= 1.1;
         this.zoomPoint = point;
+        zoomActionPerformed();
         repaint();
     }
 
     public void zoomOutActionPerformed(Point point) {
-        zoom = Math.max(1, zoom -= 1);
+        zoom *= 0.9;
         this.zoomPoint = point;
+        zoomActionPerformed();
         repaint();
     }
 
+    public void setDrawingPanelDimensions() {
+        this.setPreferredSize(new Dimension((int)(getWidth() * zoom), (int)(getHeight() * zoom)));
+    }
 
-    public void zoomActionPerformed(int wheelAmount, int mouseX, int mouseY) {
+
+    public void zoomActionPerformed() {
         Point pos = mainWindow.getMainScrollPane().getViewport().getViewPosition();
 
-        Dimension size = new Dimension(this.initialDimension.width * zoom, this.initialDimension.height * zoom);
-        this.setPreferredSize(size);
+        this.gridGap *= zoom;
+        setDrawingPanelDimensions();
+        this.validate();
         //mainWindow.setMainScrollPaneDimension(size);
         //this.setSize(size);
 

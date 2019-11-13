@@ -183,8 +183,7 @@ public class MainWindow extends JFrame {
         mainScrollPane.setMinimumSize(new Dimension(0, 202));
         mainScrollPane.setPreferredSize(new Dimension((int)(Toolkit.getDefaultToolkit().getScreenSize().width*0.85), (int)(Toolkit.getDefaultToolkit().getScreenSize().height*0.5)));
 
-        drawingPanel.setPreferredSize(new Dimension(0, 540));
-
+        System.out.println(mainScrollPane.getWidth());
 
         addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent evt) {
@@ -201,7 +200,7 @@ public class MainWindow extends JFrame {
         drawingPanel.addMouseWheelListener(new java.awt.event.MouseAdapter() {
             public void mouseWheelMoved(MouseWheelEvent evt){
                 Point point = evt.getPoint();
-                if (evt.getWheelRotation() < 0) {
+                if (evt.getPreciseWheelRotation() > 0) {
                     drawingPanel.zoomInActionPerformed(point);
                 }
                 else {

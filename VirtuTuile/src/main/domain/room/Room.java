@@ -119,11 +119,6 @@ public class Room {
             int[] x = surface.getPolygon().xpoints;
             int[] y = surface.getPolygon().ypoints;
 
-            for (int i = 0; i < x.length; i++) {
-                surface.getPolygon().xpoints[i] = (int)(x[i] + deltaX);
-                surface.getPolygon().ypoints[i] = (int)(y[i] + deltaY);
-            }
-
             for (ElementarySurface elementarySurface : surface.getWholeSurfaces()) {
                 int[] xPoints = elementarySurface.xpoints;
 
