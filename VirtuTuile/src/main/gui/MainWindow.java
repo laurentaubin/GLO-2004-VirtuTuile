@@ -129,8 +129,8 @@ public class MainWindow extends JFrame {
             }
         });
 
-        /*
 
+        /*
         drawingPanel.addMouseWheelListener(new java.awt.event.MouseAdapter() {
             public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
                 int wheel = evt.getWheelRotation();
@@ -141,7 +141,8 @@ public class MainWindow extends JFrame {
                 }
             }
         });
-        */
+
+         */
 
         measurementUnitComboBox.setModel(new DefaultComboBoxModel<>(new String[] { "MÉTRIQUE", "IMPÉRIALE" }));
         measurementUnitComboBox.setPreferredSize(new Dimension(120, 23));
@@ -248,7 +249,7 @@ public class MainWindow extends JFrame {
 
         splitPane.setOneTouchExpandable(true);
 
-        splitPane.setResizeWeight(1);
+        splitPane.setResizeWeight(0.90);
 
         statusBar.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 

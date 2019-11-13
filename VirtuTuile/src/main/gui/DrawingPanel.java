@@ -38,9 +38,8 @@ public class DrawingPanel extends JPanel implements Serializable {
     }
 
 
-    /*
-    Le code pour l'implémentation de la grille est inspiré de "https://www.buildingjavaprograms.com/DrawingPanel.java"
-     */
+
+    //Le code pour l'implémentation de la grille est inspiré de "https://www.buildingjavaprograms.com/DrawingPanel.java"
     @Override
     protected void paintComponent(Graphics g) {
         if (mainWindow != null) {

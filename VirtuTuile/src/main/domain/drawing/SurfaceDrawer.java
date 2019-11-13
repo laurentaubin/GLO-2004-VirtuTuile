@@ -1,13 +1,10 @@
 package domain.drawing;
 
 import domain.room.RoomController;
-import domain.room.surface.RectangularSurface;
 import domain.room.surface.Surface;
-import gui.MainWindow;
-import org.w3c.dom.css.Rect;
+//import gui.MainWindow;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
 
