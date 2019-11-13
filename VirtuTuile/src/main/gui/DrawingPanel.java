@@ -89,21 +89,35 @@ public class DrawingPanel extends JPanel implements Serializable {
         return this.zoom;
     }
 
-    public void setZoom(int zoom) {
+    public void setZoom(double zoom) {
         this.zoom = zoom;
     }
 
     public void zoomInActionPerformed(Point point) {
-        zoom *= 1.1;
-        this.zoomPoint = point;
-        zoomActionPerformed();
+        this.setZoom(getZoom() * 1.1d);
+        Point pos = mainWindow.getMainScrollPane().getViewport().getViewPosition();
+
+        int newX = (int)(point.x*(1.1f - 1f) + 1.1f*pos.x);
+        int newY = (int)(point.y*(1.1f - 1f) + 1.1f*pos.y);
+        mainWindow.setMainScrollPanePosition(new Point(newX, newY));
+        setDrawingPanelDimensions();
+
+        validate();
+        revalidate();
         repaint();
     }
 
     public void zoomOutActionPerformed(Point point) {
-        zoom *= 0.9;
-        this.zoomPoint = point;
-        zoomActionPerformed();
+        this.setZoom(getZoom() * 0.9d);
+        Point pos = mainWindow.getMainScrollPane().getViewport().getViewPosition();
+
+        int newX = (int)(point.x*(0.9f - 1f) + 0.9f*pos.x);
+        int newY = (int)(point.y*(0.9f - 1f) + 0.9f*pos.y);
+        mainWindow.setMainScrollPanePosition(new Point(newX, newY));
+        setDrawingPanelDimensions();
+
+        validate();
+        revalidate();
         repaint();
     }
 

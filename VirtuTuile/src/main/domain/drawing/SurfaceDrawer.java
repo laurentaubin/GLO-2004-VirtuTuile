@@ -7,6 +7,8 @@ import domain.room.surface.Surface;
 import java.awt.*;
 import java.util.ArrayList;
 
+//Code pour le zoom inspiré de https://stackoverflow.com/questions/13155382/jscrollpane-zoom-relative-to-mouse-position
+
 
 public class SurfaceDrawer {
     private final RoomController controller;
@@ -28,6 +30,7 @@ public class SurfaceDrawer {
         ArrayList<Surface> surfaces = RoomController.getSurfaceList();
         if (zoom != 1) {
 
+            g2d.scale(zoom, zoom);
         }
         for (Surface current_surface: surfaces) {
             Polygon polygon = current_surface.getPolygon();
