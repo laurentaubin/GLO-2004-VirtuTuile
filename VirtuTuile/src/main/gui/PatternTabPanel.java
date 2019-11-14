@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PatternTabPanel extends JPanel {
+    /*
     private RightPanel rightPanel;
 
     private Dimension dimensionButton;
@@ -58,7 +59,7 @@ public class PatternTabPanel extends JPanel {
             this.iconPaquet = new ImageIcon(new ImageIcon("src/image/Paquet.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT));
             this.dispositionPaquet = new JButton("L", iconPaquet);
 
-            this.dispositions = new JPanel(new GridLayout(2, 3, 20, 20));
+            this.dispositions = new JPanel(new GridLayout(3, 2, 20, 10));
 
 
             this.dimensionButton = new Dimension(100, 100);
@@ -127,5 +128,7 @@ public class PatternTabPanel extends JPanel {
             this.rightPanel.getMainWindow().controller.setPatternToSelectedSurfaces(pattern);
             this.rightPanel.getMainWindow().getDrawingPanel().repaint();
         }
+
+     */
 
     }

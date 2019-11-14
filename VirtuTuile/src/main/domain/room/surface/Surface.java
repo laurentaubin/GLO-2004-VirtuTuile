@@ -5,9 +5,8 @@ import gui.MainWindow;
 import util.UnitConverter;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Surface {
     private Point position;
@@ -17,7 +16,13 @@ public class Surface {
     private boolean mergedStatus = false;
     private boolean haveHole = false;
     private Polygon polygon;
+<<<<<<< HEAD
     private MainWindow.MeasurementUnitMode currentMode = MainWindow.MeasurementUnitMode.METRIC;
+||||||| merged common ancestors
+=======
+    private double width;
+    private double height;
+>>>>>>> 941acb977c1c98e79281b777ceaaed51ca52fc40
     private ArrayList<ElementarySurface> wholeSurfaces;
     private ArrayList<ElementarySurface> holes;
 
@@ -80,12 +85,12 @@ public class Surface {
         this.selectionStatus = selectionStatus;
     }
 
-    public float getWidth() {
-        return 0f;
+    public double getWidth() {
+        return this.getBoundingRectangle().getWidth();
     }
 
-    public float getHeight() {
-        return 0f;
+    public double getHeight() {
+        return this.getBoundingRectangle().getHeight();
     }
 
      public Cover getCover() {
@@ -106,6 +111,7 @@ public class Surface {
     public Polygon getPolygon() {
         return polygon;
     }
+<<<<<<< HEAD
 
     public double getArea() {
         double area = 0d;
@@ -133,5 +139,12 @@ public class Surface {
                 break;
         }
     }
+||||||| merged common ancestors
+=======
+
+    public Rectangle2D getBoundingRectangle() {
+        return this.polygon.getBounds2D();
+    }
+>>>>>>> 941acb977c1c98e79281b777ceaaed51ca52fc40
 }
 

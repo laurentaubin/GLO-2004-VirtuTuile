@@ -1,3 +1,4 @@
+/*
 package gui;
 
 import javax.swing.*;
@@ -11,3 +12,5 @@ public class GroutTabPanel extends JPanel {
     }
 
 }
+
+ */

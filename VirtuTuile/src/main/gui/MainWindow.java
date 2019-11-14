@@ -130,8 +130,18 @@ public class MainWindow extends JFrame {
                 irregularSurfaceButtonPerformed(actionEvent);
             }
         });
+<<<<<<< HEAD
 /*
         // Pas rapport
+||||||| merged common ancestors
+
+        /*
+
+=======
+
+
+        /*
+>>>>>>> 941acb977c1c98e79281b777ceaaed51ca52fc40
         drawingPanel.addMouseWheelListener(new java.awt.event.MouseAdapter() {
             public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
                 int wheel = evt.getWheelRotation();
@@ -142,7 +152,16 @@ public class MainWindow extends JFrame {
                 }
             }
         });
+<<<<<<< HEAD
 */
+||||||| merged common ancestors
+        */
+
+=======
+
+         */
+
+>>>>>>> 941acb977c1c98e79281b777ceaaed51ca52fc40
         measurementUnitComboBox.setModel(new DefaultComboBoxModel<>(new String[] { "MÉTRIQUE", "IMPÉRIALE" }));
         measurementUnitComboBox.setPreferredSize(new Dimension(120, 23));
 
@@ -182,8 +201,7 @@ public class MainWindow extends JFrame {
         mainScrollPane.setMinimumSize(new Dimension(0, 202));
         mainScrollPane.setPreferredSize(new Dimension((int)(Toolkit.getDefaultToolkit().getScreenSize().width*0.85), (int)(Toolkit.getDefaultToolkit().getScreenSize().height*0.5)));
 
-        drawingPanel.setPreferredSize(new Dimension(0, 540));
-
+        System.out.println(mainScrollPane.getWidth());
 
         addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent evt) {
@@ -200,7 +218,7 @@ public class MainWindow extends JFrame {
         drawingPanel.addMouseWheelListener(new java.awt.event.MouseAdapter() {
             public void mouseWheelMoved(MouseWheelEvent evt){
                 Point point = evt.getPoint();
-                if (evt.getWheelRotation() < 0) {
+                if (evt.getPreciseWheelRotation() > 0) {
                     drawingPanel.zoomInActionPerformed(point);
                 }
                 else {
@@ -246,7 +264,9 @@ public class MainWindow extends JFrame {
 
         splitPane.setRightComponent(rightPanel);
 
-        splitPane.setResizeWeight(1);
+        splitPane.setOneTouchExpandable(true);
+
+        splitPane.setResizeWeight(0.90);
 
         statusBar.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 

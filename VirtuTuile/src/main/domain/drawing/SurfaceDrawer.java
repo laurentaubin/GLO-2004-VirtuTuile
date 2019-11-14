@@ -1,16 +1,23 @@
 package domain.drawing;
 
 import domain.room.RoomController;
-import domain.room.surface.RectangularSurface;
 import domain.room.surface.Surface;
+<<<<<<< HEAD
 import gui.MainWindow;
 import org.w3c.dom.css.Rect;
 import util.UnitConverter;
+||||||| merged common ancestors
+import gui.MainWindow;
+import org.w3c.dom.css.Rect;
+=======
+//import gui.MainWindow;
+>>>>>>> 941acb977c1c98e79281b777ceaaed51ca52fc40
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+//Code pour le zoom inspiré de https://stackoverflow.com/questions/13155382/jscrollpane-zoom-relative-to-mouse-position
 
 
 public class SurfaceDrawer {
@@ -26,14 +33,16 @@ public class SurfaceDrawer {
         this.measurementMode = measurementMode;
     }
 
-    public void draw(Graphics g, float zoom, float prevZoom, Point zoomPoint, double xOffset, double yOffset) {
+    public void draw(Graphics g, double zoom, float prevZoom, Point zoomPoint, double xOffset, double yOffset) {
         drawSurface(g, zoom, prevZoom, zoomPoint, xOffset, yOffset);
     }
 
-    public void drawSurface(Graphics g, float zoom, float prevZoom, Point zoomPoint, double xOffset, double yOffset){
+    public void drawSurface(Graphics g, double zoom, float prevZoom, Point zoomPoint, double xOffset, double yOffset){
         Graphics2D g2d = (Graphics2D) g;
         ArrayList<Surface> surfaces = RoomController.getSurfaceList();
         if (zoom != 1) {
+
+            g2d.scale(zoom, zoom);
         }
         for (Surface current_surface : surfaces) {
             Polygon polygon = UnitConverter.convertPolygonToPixel(current_surface.getPolygon(), measurementMode);
