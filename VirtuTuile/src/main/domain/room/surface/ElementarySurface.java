@@ -64,5 +64,12 @@ public abstract class ElementarySurface extends Polygon {
 
         return area / 2;
     }
+
+    public void updatePoints(double deltaX, double deltaY) {
+        for (int i = 0; i < this.npoints; i++) {
+            this.xpoints[i] += deltaX;
+            this.ypoints[i] += deltaY;
+        }
+    }
 }
 

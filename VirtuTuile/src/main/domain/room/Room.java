@@ -90,7 +90,7 @@ public class Room {
     private void switchSelectionStatusIfContains(double x, double y, boolean isShiftDown, Surface surfaceInRoom) {
         Point2D.Double point = new Point2D.Double(x, y);
         if (surfaceInRoom.getPolygon().contains(point)) {
-            System.out.println("T'es dedans");
+            // System.out.println("T'es dedans");
             surfaceInRoom.switchSelectionStatus();
         }
         else if (!isShiftDown){
@@ -101,7 +101,7 @@ public class Room {
     void updateSelectedSurfacesPositions(double deltaX, double deltaY) {
         for (Surface surfaceInRoom : this.surfaceList) {
             if (surfaceInRoom.isSelected()) {
-                updateSurfacePositions(deltaX, deltaY, surfaceInRoom);
+                surfaceInRoom.updateSurfacePositions(deltaX, deltaY);
 
                 /*
                 for (ElementarySurface elementarySurface : surfaceInRoom.getWholeSurfaces()) {
@@ -118,6 +118,7 @@ public class Room {
         }
     }
 
+/*
     private void updateSurfacePositions(double deltaX, double deltaY, Surface surface) {
             int[] x = surface.getPolygon().xpoints;
             int[] y = surface.getPolygon().ypoints;
@@ -133,7 +134,7 @@ public class Room {
             }
             surface.updateSurface();
     }
-
+*/
     public boolean surfaceSelecte(){
         boolean auMoinsUne = false;
         for(Surface surface: surfaceList){
@@ -206,7 +207,7 @@ public class Room {
         Tile tile = new Tile(color, width, height, name, nbrTilesPerBox);
         for (Surface surface : this.surfaceList) {
             surface.getCover().setTile(tile);
-            System.out.println(surface.getCover().getTile().getName());
+            // System.out.println(surface.getCover().getTile().getName());
         }
     }
 

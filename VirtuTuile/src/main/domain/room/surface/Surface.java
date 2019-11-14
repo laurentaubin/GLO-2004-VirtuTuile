@@ -138,5 +138,25 @@ public class Surface {
     public Rectangle2D getBoundingRectangle() {
         return this.polygon.getBounds2D();
     }
+
+    public void updateSurfacePositions(double deltaX, double deltaY) {
+        this.updatePolygonPoints(deltaX, deltaY);
+
+        for (ElementarySurface wholeSurface : this.wholeSurfaces) {
+            wholeSurface.updatePoints(deltaX, deltaY);
+        }
+
+        for (ElementarySurface hole : this.holes) {
+            hole.updatePoints(deltaX, deltaY);
+        }
+    }
+
+    private void updatePolygonPoints(double deltaX, double deltaY) {
+        for (int i = 0; i < this.polygon.npoints; i++) {
+            this.polygon.xpoints[i] += deltaX;
+            this.polygon.ypoints[i] += deltaY;
+        }
+    }
+
 }
 
