@@ -16,13 +16,9 @@ public class Surface {
     private boolean mergedStatus = false;
     private boolean haveHole = false;
     private Polygon polygon;
-<<<<<<< HEAD
     private MainWindow.MeasurementUnitMode currentMode = MainWindow.MeasurementUnitMode.METRIC;
-||||||| merged common ancestors
-=======
     private double width;
     private double height;
->>>>>>> 941acb977c1c98e79281b777ceaaed51ca52fc40
     private ArrayList<ElementarySurface> wholeSurfaces;
     private ArrayList<ElementarySurface> holes;
 
@@ -111,7 +107,6 @@ public class Surface {
     public Polygon getPolygon() {
         return polygon;
     }
-<<<<<<< HEAD
 
     public double getArea() {
         double area = 0d;
@@ -139,12 +134,9 @@ public class Surface {
                 break;
         }
     }
-||||||| merged common ancestors
-=======
 
     public Rectangle2D getBoundingRectangle() {
         return this.polygon.getBounds2D();
     }
->>>>>>> 941acb977c1c98e79281b777ceaaed51ca52fc40
 }
 

@@ -3,13 +3,8 @@ package gui;
 import domain.drawing.SurfaceDrawer;
 
 import java.awt.*;
-<<<<<<< HEAD
-||||||| merged common ancestors
-import java.awt.geom.AffineTransform;
-=======
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Dimension2D;
->>>>>>> 941acb977c1c98e79281b777ceaaed51ca52fc40
 import java.io.Serializable;
 import javax.swing.*;
 

@@ -2,16 +2,10 @@ package domain.drawing;
 
 import domain.room.RoomController;
 import domain.room.surface.Surface;
-<<<<<<< HEAD
-import gui.MainWindow;
-import org.w3c.dom.css.Rect;
 import util.UnitConverter;
-||||||| merged common ancestors
 import gui.MainWindow;
 import org.w3c.dom.css.Rect;
-=======
 //import gui.MainWindow;
->>>>>>> 941acb977c1c98e79281b777ceaaed51ca52fc40
 
 import java.awt.*;
 import java.util.ArrayList;

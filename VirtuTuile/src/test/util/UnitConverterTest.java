@@ -52,13 +52,5 @@ class UnitConverterTest {
         assertEquals(pointInMeters.getX(), convertedPointInMeters.getX(), 0.001);
         assertEquals(pointInMeters.getY(), convertedPointInMeters.getY(), 0.001);
     }
-<<<<<<< HEAD
 }
 */
-||||||| merged common ancestors
-}
-=======
-}
-
- */
->>>>>>> 941acb977c1c98e79281b777ceaaed51ca52fc40

@@ -130,10 +130,8 @@ public class MainWindow extends JFrame {
                 irregularSurfaceButtonPerformed(actionEvent);
             }
         });
-<<<<<<< HEAD
 /*
         // Pas rapport
-||||||| merged common ancestors
 
         /*
 
@@ -154,14 +152,7 @@ public class MainWindow extends JFrame {
         });
 <<<<<<< HEAD
 */
-||||||| merged common ancestors
-        */
 
-=======
-
-         */
-
->>>>>>> 941acb977c1c98e79281b777ceaaed51ca52fc40
         measurementUnitComboBox.setModel(new DefaultComboBoxModel<>(new String[] { "MÉTRIQUE", "IMPÉRIALE" }));
         measurementUnitComboBox.setPreferredSize(new Dimension(120, 23));
 
