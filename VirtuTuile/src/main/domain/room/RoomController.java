@@ -1,7 +1,10 @@
 package domain.room;
 
+import com.sun.tools.javac.Main;
+import domain.room.pattern.Pattern;
 import domain.room.surface.RectangularSurface;
 import domain.room.surface.Surface;
+import gui.MainWindow;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,7 +14,7 @@ public class RoomController {
     //private final Room room;
 
     public RoomController(Room room) {
-        this.room = room;
+        RoomController.room = room;
     }
 
     public RoomController(){
@@ -69,7 +72,7 @@ public class RoomController {
         room.updateSelectedSurfacesPositions(deltaX, deltaY);
     }
 
-    public void setPatternToSelectedSurfaces(Cover.Pattern pattern) {
+    public void setPatternToSelectedSurfaces(Pattern pattern) {
         room.setPatternToSelectedSurfaces(pattern);
     }
 
@@ -79,6 +82,10 @@ public class RoomController {
 
     public void setTileToSelectedSurfaces(float width, float height, Color color, String name, int nbrTilesPerBox) {
         room.setTileToSelectedSufaces(width, height, color, name, nbrTilesPerBox);
+    }
+
+    public void setMeasurementMode(MainWindow.MeasurementUnitMode mode) {
+        room.setMeasurementMode(mode);
     }
 
     /*

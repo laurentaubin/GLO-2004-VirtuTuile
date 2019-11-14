@@ -1,6 +1,7 @@
 package gui;
 
 import domain.room.RoomController;
+import util.UnitConverter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,6 +42,7 @@ public class MainWindow extends JFrame {
         this.currentApplicationMode = newMode;
     }
     public void setMeasurementMode (MeasurementUnitMode newMode) { this.currentMeasurementMode = newMode; }
+    public MeasurementUnitMode getCurrentMeasurementMode() { return this.currentMeasurementMode; }
 
     public DrawingPanel getDrawingPanel(){
         return this.drawingPanel;
@@ -128,9 +130,8 @@ public class MainWindow extends JFrame {
                 irregularSurfaceButtonPerformed(actionEvent);
             }
         });
-
-        /*
-
+/*
+        // Pas rapport
         drawingPanel.addMouseWheelListener(new java.awt.event.MouseAdapter() {
             public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
                 int wheel = evt.getWheelRotation();
@@ -141,8 +142,7 @@ public class MainWindow extends JFrame {
                 }
             }
         });
-        */
-
+*/
         measurementUnitComboBox.setModel(new DefaultComboBoxModel<>(new String[] { "MÉTRIQUE", "IMPÉRIALE" }));
         measurementUnitComboBox.setPreferredSize(new Dimension(120, 23));
 
@@ -334,9 +334,17 @@ public class MainWindow extends JFrame {
 
     private void irregularSurfaceButtonPerformed(ActionEvent actionEvent){this.setApplicationMode(ApplicationMode.ADD_IRREGULAR);}
 
-    private void metricModeSelected(ActionEvent actionEvent) {this.setMeasurementMode(MeasurementUnitMode.METRIC);}
+    private void metricModeSelected(ActionEvent actionEvent) {
+        this.setMeasurementMode(MeasurementUnitMode.METRIC);
+        this.controller.setMeasurementMode(MeasurementUnitMode.METRIC);
+        this.drawingPanel.repaint();
+    }
 
-    private void imperialModeSelected(ActionEvent actionEvent) {this.setMeasurementMode(MeasurementUnitMode.IMPERIAL);}
+    private void imperialModeSelected(ActionEvent actionEvent) {
+        this.setMeasurementMode(MeasurementUnitMode.IMPERIAL);
+        this.controller.setMeasurementMode(MeasurementUnitMode.IMPERIAL);
+        this.drawingPanel.repaint();
+    }
 
 
 
@@ -355,10 +363,6 @@ public class MainWindow extends JFrame {
     }
 
     private void drawingPanelMousePressed(MouseEvent mouseEvent){
-        // Point2D mousePoint = UnitConverter.convertPointToSelectedMode(mouseEvent.getPoint(), this.currentMeasurementMode);
-        // System.out.println("Clicked");
-        // System.out.println(mousePoint.getX());
-        // System.out.println(mousePoint.getY());
         this.prevMousePoint = mouseEvent.getPoint();
         this.initMousePoint = mouseEvent.getPoint();
         this.currentMousePoint = this.initMousePoint;
@@ -368,10 +372,12 @@ public class MainWindow extends JFrame {
 
         if (this.currentApplicationMode == ApplicationMode.SELECT && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
-            if (mouseEvent.isShiftDown()){
-                isShiftDown = true;
-            }
-            this.controller.switchSelectionStatus(this.initMousePoint.getX(), this.initMousePoint.getY(), mouseEvent.isShiftDown());
+
+            double xPos = UnitConverter.convertPixelToSelectedUnit((int) this.initMousePoint.getX(), this.currentMeasurementMode) * 10000;
+            double yPos = UnitConverter.convertPixelToSelectedUnit((int) this.initMousePoint.getY(), this.currentMeasurementMode) * 10000;
+
+            this.controller.switchSelectionStatus(xPos, yPos, mouseEvent.isShiftDown());
+            // this.controller.switchSelectionStatus(this.initMousePoint.getX(), this.initMousePoint.getY(), mouseEvent.isShiftDown());
             drawingPanel.repaint();
 
            // rightPanel.updateInformations(this.controller.getSelectedRectangularSurfaceDimensions());
@@ -383,18 +389,12 @@ public class MainWindow extends JFrame {
 
         if (this.currentApplicationMode == ApplicationMode.ADD_IRREGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
-            System.out.println(this.initMousePoint);
         }
 
     }
 
     private void drawingPanelMouseReleased(MouseEvent mouseEvent){
-        // Point2D mousePointReleased = UnitConverter.convertPointToSelectedMode(mouseEvent.getPoint(), this.currentMeasurementMode);
-        // System.out.println("Released");
-        // System.out.println(mousePointReleased.getX());
-        // System.out.println(mousePointReleased.getY());
         Point mousePointReleased = mouseEvent.getPoint();
-
 
         if (this.currentApplicationMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
@@ -426,7 +426,6 @@ public class MainWindow extends JFrame {
 
     private void drawingPanelMouseDragged(MouseEvent mouseEvent){
         // TODO ça marche pas pcq le init mouse point est pas updaté a bonne palce faique le delta est pas bon
-        // Point2D mousePoint = UnitConverter.convertPointToSelectedMode(mouseEvent.getPoint(), this.currentMeasurementMode);
         if (SwingUtilities.isRightMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
             this.controller.updateSelectedSurfacesPositions(mouseEvent.getX() - this.currentMousePoint.getX(), mouseEvent.getY() - this.currentMousePoint.getY());
@@ -451,7 +450,8 @@ public class MainWindow extends JFrame {
         drawPoints[1] = (int)currentMousePoint.getX();
         drawPoints[2] = (int)currentMousePoint.getX();
         drawPoints[3] = (int)initMousePoint.getX();
-        return drawPoints;
+
+        return UnitConverter.convertPixelListToSelectedUnit(drawPoints, this.currentMeasurementMode);
     }
 
     private int[] getYDrawPoints() {
@@ -462,7 +462,7 @@ public class MainWindow extends JFrame {
         drawPoints[2] = (int)currentMousePoint.getY();
         drawPoints[3] = (int)currentMousePoint.getY();
 
-        return drawPoints;
+        return UnitConverter.convertPixelListToSelectedUnit(drawPoints, this.currentMeasurementMode);
     }
 
     private void gridMenuItemActionPerformed(ActionEvent actionEvent) {

@@ -1,13 +1,9 @@
 package gui;
 
 import domain.drawing.SurfaceDrawer;
-import domain.room.RoomController;
-import domain.room.surface.Surface;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.io.Serializable;
-import java.util.ArrayList;
 import javax.swing.*;
 
 public class DrawingPanel extends JPanel implements Serializable {
@@ -46,7 +42,7 @@ public class DrawingPanel extends JPanel implements Serializable {
         if (mainWindow != null) {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
-            SurfaceDrawer mainDrawer = new SurfaceDrawer(mainWindow.controller, initialDimension);
+            SurfaceDrawer mainDrawer = new SurfaceDrawer(mainWindow.controller, initialDimension, mainWindow.getCurrentMeasurementMode());
 
             mainDrawer.draw(g2d, zoom, prevZoom, zoomPoint, xOffset, yOffset);
             if (isGridActivated) {
