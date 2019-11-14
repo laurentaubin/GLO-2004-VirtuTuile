@@ -439,7 +439,10 @@ public class MainWindow extends JFrame {
         // TODO ça marche pas pcq le init mouse point est pas updaté a bonne palce faique le delta est pas bon
         if (SwingUtilities.isRightMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
-            this.controller.updateSelectedSurfacesPositions(mouseEvent.getX() - this.currentMousePoint.getX(), mouseEvent.getY() - this.currentMousePoint.getY());
+            double deltaX = UnitConverter.convertPixelToSelectedUnit((int) (mouseEvent.getX() - this.currentMousePoint.getX()), this.currentMeasurementMode);
+            double deltaY = UnitConverter.convertPixelToSelectedUnit((int) (mouseEvent.getY() - this.currentMousePoint.getY()), this.currentMeasurementMode);
+            this.controller.updateSelectedSurfacesPositions(deltaX, deltaY);
+            // this.controller.updateSelectedSurfacesPositions(mouseEvent.getX() - this.currentMousePoint.getX(), mouseEvent.getY() - this.currentMousePoint.getY());
             this.currentMousePoint = mouseEvent.getPoint();
 
         }
@@ -482,8 +485,8 @@ public class MainWindow extends JFrame {
 
     private void drawingPanelMouseMoved(MouseEvent evt) {
         //TODO convertir les unités
-        double x = evt.getX() / drawingPanel.getZoom();
-        double y = evt.getY() / drawingPanel.getZoom();
+        int x = (int) (evt.getX() / drawingPanel.getZoom());
+        int y = (int) (evt.getY() / drawingPanel.getZoom());
         String mousePosition = "x= " + x + ", y= " + y;
         setStatusBarText(mousePosition);
     }

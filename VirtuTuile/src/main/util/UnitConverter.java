@@ -89,6 +89,7 @@ public class UnitConverter {
     public static int[] convertPixelListToSelectedUnit(int[] pixelList, MainWindow.MeasurementUnitMode mode) {
         int[] convertedList = new int[pixelList.length];
         for (int i = 0; i < pixelList.length; i++) {
+            // * 10000 pour éviter que ça donne 0 quand on cast le résultat en int
             convertedList[i] = (int) (UnitConverter.convertPixelToSelectedUnit(pixelList[i], mode) * 10000);
         }
         return convertedList;
@@ -99,6 +100,7 @@ public class UnitConverter {
         // TODO checker comment ArrayLyst.toArray() marche
         int[] convertedList = new int[unitList.length];
         for (int i = 0; i < unitList.length; i++) {
+            // / 10000 car on a multiplié par 10000 dans l'autre conversion
             convertedList[i] = (UnitConverter.convertSelectedUnitToPixel(unitList[i], mode) / 10000);
         }
         return convertedList;
