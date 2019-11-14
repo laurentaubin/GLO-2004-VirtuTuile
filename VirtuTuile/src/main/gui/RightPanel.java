@@ -22,7 +22,7 @@ public class RightPanel extends JTabbedPane implements Serializable {
     }
 
     private void initRightPanel(){
-        surfaceTabPanel = new SurfaceTab();
+        surfaceTabPanel = new SurfaceTab(mainWindow);
         patternTabPanel = new PatternTab();
         tileTabPanel = new TileTab();
         //groutTabPanel = new GroutTabPanel(this);
@@ -42,6 +42,10 @@ public class RightPanel extends JTabbedPane implements Serializable {
     }
 
      */
+
+    public void updateSurfaceTabColor(Color color) {
+        this.surfaceTabPanel.setButtonColor(color);
+    }
 
     public MainWindow getMainWindow() {
         return this.mainWindow;

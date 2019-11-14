@@ -45,6 +45,7 @@ public class Room {
         surface.addElementaryWholeSurface(rectangularSurface);
         surface.updatePolygon(rectangularSurface);
         this.addSurfaceToList(surface);
+        System.out.println(Arrays.toString(surface.getPolygon().xpoints));
     }
 
     public void addRectangularSurface(Point point, int width, int height) {
@@ -81,16 +82,12 @@ public class Room {
     void switchSelectionStatus(double x, double y, boolean isShiftDown) {
         for (Surface surfaceInRoom : this.surfaceList) {
             this.switchSelectionStatusIfContains(x, y, isShiftDown, surfaceInRoom);
-            for (ElementarySurface elementarySurface : surfaceInRoom.getHoles()) {
-                this.switchSelectionStatusIfContains(x, y, isShiftDown, surfaceInRoom);
-            }
         }
     }
 
     private void switchSelectionStatusIfContains(double x, double y, boolean isShiftDown, Surface surfaceInRoom) {
         Point2D.Double point = new Point2D.Double(x, y);
         if (surfaceInRoom.getPolygon().contains(point)) {
-            // System.out.println("T'es dedans");
             surfaceInRoom.switchSelectionStatus();
         }
         else if (!isShiftDown){
@@ -98,30 +95,27 @@ public class Room {
         }
     }
 
-    void updateSelectedSurfacesPositions(double deltaX, double deltaY) {
+    public void updateSelectedSurfacesPositions(double deltaX, double deltaY) {
         for (Surface surfaceInRoom : this.surfaceList) {
             if (surfaceInRoom.isSelected()) {
                 surfaceInRoom.updateSurfacePositions(deltaX, deltaY);
 
-                /*
-                for (ElementarySurface elementarySurface : surfaceInRoom.getWholeSurfaces()) {
-                    updateSurfacePositions(deltaX, deltaY, elementarySurface);
-                }
-                for (ElementarySurface elementarySurface : surfaceInRoom.getHoles()) {
-                    updateSurfacePositions(deltaX, deltaY, elementarySurface);
-                }
-
-                 */
-                //Pas encore implémentée
                 surfaceInRoom.updateSurface();
             }
         }
     }
 
+    // Refactored par updateSelectedSurfacesPositions() en haut
+
 /*
     private void updateSurfacePositions(double deltaX, double deltaY, Surface surface) {
             int[] x = surface.getPolygon().xpoints;
             int[] y = surface.getPolygon().ypoints;
+
+            for (int i = 0; i < x.length; i++) {
+                x[i] = (int)(x[i] + deltaX);
+                y[i] = (int)(y[i] + deltaY);
+            }
 
             for (ElementarySurface elementarySurface : surface.getWholeSurfaces()) {
                 int[] xPoints = elementarySurface.xpoints;
@@ -216,5 +210,31 @@ public class Room {
             surface.setMeasurementMode(mode);
             System.out.println(Arrays.toString(surface.getPolygon().xpoints));
         }
+    }
+
+    public void setSelectedSurfaceColor(Color color) {
+        for (Surface surface : this.surfaceList) {
+            if (surface.isSelected()) {
+                surface.setColor(color);
+            }
+        }
+    }
+
+    public Color getSelectedSurfaceColor() {
+        int counter = 0;
+        Color color = Color.WHITE;
+        for (Surface surface: this.surfaceList) {
+            if (surface.isSelected()) {
+                counter += 1;
+            }
+        }
+        if (counter == 1) {
+            for (Surface surface : this.surfaceList) {
+                if (surface.isSelected()) {
+                    color = surface.getColor();
+                }
+            }
+        }
+        return color;
     }
 }

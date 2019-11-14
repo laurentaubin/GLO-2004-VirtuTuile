@@ -16,7 +16,7 @@ public class Surface {
     private boolean mergedStatus = false;
     private boolean haveHole = false;
     private Polygon polygon;
-    private MainWindow.MeasurementUnitMode currentMode = MainWindow.MeasurementUnitMode.METRIC;
+    private MainWindow.MeasurementUnitMode currentMode;
     private double width;
     private double height;
     private ArrayList<ElementarySurface> wholeSurfaces;
@@ -30,20 +30,35 @@ public class Surface {
         return holes;
     }
 
-    public Surface () {
+    public Surface() {
         wholeSurfaces = new ArrayList<ElementarySurface>();
         holes = new ArrayList<ElementarySurface>();
     }
 
-    public void updatePolygon(Polygon polygon){
+    public void updatePolygon(Polygon polygon) {
         if (!mergedStatus) {
+            if (wholeSurfaces.isEmpty()) {
+                // C'est un trou
+                this.polygon = new Polygon(
+                        this.getHoles().get(0).xpoints,
+                        this.getHoles().get(0).ypoints,
+                        this.getHoles().get(0).npoints
+                );
+            } else {
+                // C'est une surface pleine
+                this.polygon = new Polygon(
+                        this.getWholeSurfaces().get(0).xpoints,
+                        this.getWholeSurfaces().get(0).ypoints,
+                        this.getWholeSurfaces().get(0).npoints
+                );
+            }
+            // this.polygon = polygon;
+        } else {
             this.polygon = polygon;
         }
-
-        else {
-            this.polygon = mergePolygon(polygon);
-        }
     }
+
+
 
     private Polygon mergePolygon(Polygon polygon) {
         //TODO algo pour créer un polygon résultant à partir d'une liste de polygon
@@ -63,6 +78,10 @@ public class Surface {
 
     public void setColor (Color color) {
         this.color = color;
+    }
+
+    public Color getColor() {
+        return this.color;
     }
 
     public void switchSelectionStatus() {
@@ -121,6 +140,7 @@ public class Surface {
     }
 
     public void setMeasurementMode(MainWindow.MeasurementUnitMode mode) {
+        if (this.currentMode == null) { this.currentMode = mode; }
         if (this.currentMode == mode) { return; }
 
         switch (mode) {
@@ -158,5 +178,16 @@ public class Surface {
         }
     }
 
+    public Point getPosition() {
+        return this.position;
+    }
+
+    public void setPosition() {
+
+    }
+
+    public boolean isHole() {
+        return this.haveHole;
+    }
 }
 
