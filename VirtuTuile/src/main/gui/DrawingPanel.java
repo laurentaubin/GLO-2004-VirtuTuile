@@ -45,9 +45,12 @@ public class DrawingPanel extends JPanel implements Serializable {
         if (mainWindow != null) {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
-            SurfaceDrawer mainDrawer = new SurfaceDrawer(mainWindow.controller, initialDimension, mainWindow.getCurrentMeasurementMode());
+            mainWindow.draw(g2d);
 
-            mainDrawer.draw(g2d, zoom, prevZoom, zoomPoint, xOffset, yOffset);
+            //SurfaceDrawer mainDrawer = new SurfaceDrawer(mainWindow.controller, initialDimension, mainWindow.getCurrentMeasurementMode());
+
+            //mainDrawer.draw(g2d, zoom, prevZoom, zoomPoint, xOffset, yOffset);
+
             if (isGridActivated) {
 
                 g2d.setPaint(Color.GRAY);

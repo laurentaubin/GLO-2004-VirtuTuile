@@ -81,16 +81,12 @@ public class Room {
     void switchSelectionStatus(double x, double y, boolean isShiftDown) {
         for (Surface surfaceInRoom : this.surfaceList) {
             this.switchSelectionStatusIfContains(x, y, isShiftDown, surfaceInRoom);
-            for (ElementarySurface elementarySurface : surfaceInRoom.getHoles()) {
-                this.switchSelectionStatusIfContains(x, y, isShiftDown, surfaceInRoom);
-            }
         }
     }
 
     private void switchSelectionStatusIfContains(double x, double y, boolean isShiftDown, Surface surfaceInRoom) {
         Point2D.Double point = new Point2D.Double(x, y);
         if (surfaceInRoom.getPolygon().contains(point)) {
-            System.out.println("T'es dedans");
             surfaceInRoom.switchSelectionStatus();
         }
         else if (!isShiftDown){
@@ -221,5 +217,31 @@ public class Room {
             surface.setMeasurementMode(mode);
             System.out.println(Arrays.toString(surface.getPolygon().xpoints));
         }
+    }
+
+    public void setSelectedSurfaceColor(Color color) {
+        for (Surface surface : this.surfaceList) {
+            if (surface.isSelected()) {
+                surface.setColor(color);
+            }
+        }
+    }
+
+    public Color getSelectedSurfaceColor() {
+        int counter = 0;
+        Color color = Color.WHITE;
+        for (Surface surface: this.surfaceList) {
+            if (surface.isSelected()) {
+                counter += 1;
+            }
+        }
+        if (counter == 1) {
+            for (Surface surface : this.surfaceList) {
+                if (surface.isSelected()) {
+                    color = surface.getColor();
+                }
+            }
+        }
+        return color;
     }
 }

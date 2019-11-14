@@ -1,18 +1,44 @@
 package gui;
 
-import domain.room.surface.Surface;
-
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class SurfaceTab extends JPanel{
+    private MainWindow mainWindow;
     private JPanel surfaceTab;
-    private JFormattedTextField formattedTextField1;
-    private JFormattedTextField formattedTextField2;
+    private JFormattedTextField widthField;
+    private JFormattedTextField heightField;
     private JButton modifierLesDimensionsDeButton;
+    private JButton surfaceColorButton;
+    private Color surfaceColor;
 
-    public SurfaceTab() {
+    public SurfaceTab(MainWindow mainWindow) {
+        this.mainWindow = mainWindow;
         this.add(surfaceTab);
-        formattedTextField1.setValue(0d);
-        formattedTextField2.setValue(0d);
+        widthField.setValue(0d);
+        heightField.setValue(0d);
+
+        surfaceColorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                Color color = JColorChooser.showDialog(null, "Choose a color", surfaceColor);
+
+                setButtonColor(color);
+            }
+        });
+    }
+
+    public void setButtonColor(Color color) {
+        this.surfaceColor = color;
+        surfaceColorButton.setBackground(color);
+        surfaceColorButton.setOpaque(true);
+        surfaceColorButton.setBorderPainted(false);
+        mainWindow.controller.setSelectedSurfaceColor(color);
+    }
+
+    private Color getSurfaceColor() {
+        return this.surfaceColor;
     }
 }

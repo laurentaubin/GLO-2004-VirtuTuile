@@ -394,6 +394,7 @@ public class MainWindow extends JFrame {
             drawingPanel.repaint();
 
            // rightPanel.updateInformations(this.controller.getSelectedRectangularSurfaceDimensions());
+            rightPanel.updateSurfaceTabColor(this.controller.getSelectedSurfaceColor());
         }
 
         if (this.currentApplicationMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
@@ -484,9 +485,16 @@ public class MainWindow extends JFrame {
 
     private void drawingPanelMouseMoved(MouseEvent evt) {
         //TODO convertir les unités
-        double x = evt.getX() / drawingPanel.getZoom();
-        double y = evt.getY() / drawingPanel.getZoom();
-        String mousePosition = "x= " + x + ", y= " + y;
+
+        String mousePosition = "";
+        double xPos = UnitConverter.convertPixelToSelectedUnit( evt.getX(), this.currentMeasurementMode);
+        double yPos = UnitConverter.convertPixelToSelectedUnit(evt.getY(), this.currentMeasurementMode);
+        if (this.currentMeasurementMode == MeasurementUnitMode.METRIC) {
+            mousePosition += ("x= " + xPos + "m " + ", y= " + yPos + "m ");
+        }
+        if (this.currentMeasurementMode == MeasurementUnitMode.IMPERIAL) {
+            mousePosition += ("x= " + xPos + "'' " + ", y= " + yPos + "'' ");
+        }
         setStatusBarText(mousePosition);
     }
 
@@ -505,6 +513,10 @@ public class MainWindow extends JFrame {
 
     public JScrollPane getMainScrollPane(){
         return this.mainScrollPane;
+    }
+
+    public void draw(Graphics2D g) {
+        controller.draw(g, getCurrentMeasurementMode());
     }
 
     private ButtonGroup buttonGroup;

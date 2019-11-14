@@ -1,6 +1,7 @@
 package domain.room;
 
 import com.sun.tools.javac.Main;
+import domain.drawing.SurfaceDrawer;
 import domain.room.pattern.Pattern;
 import domain.room.surface.RectangularSurface;
 import domain.room.surface.Surface;
@@ -11,11 +12,13 @@ import java.util.ArrayList;
 
 public class RoomController {
     private static Room room;
+    private SurfaceDrawer surfaceDrawer;
     //private final Room room;
 
     public RoomController(Room room) {
         RoomController.room = room;
     }
+
 
     public RoomController(){
         room = new Room();
@@ -97,5 +100,20 @@ public class RoomController {
         room.setSelectedRectangularSurfaceDimensions(dimensions);
     }
      */
+
+    public void setSelectedSurfaceColor(Color color){
+        room.setSelectedSurfaceColor(color);
+    }
+
+    public Color getSelectedSurfaceColor() {
+        return room.getSelectedSurfaceColor();
+    }
+
+    public void draw(Graphics2D g, MainWindow.MeasurementUnitMode measurementUnitMode) {
+        ArrayList<Surface> surfaceList = getSurfaceList();
+        surfaceDrawer = new SurfaceDrawer(this);
+        surfaceDrawer.setMeasurementUnitMode(measurementUnitMode);
+        surfaceDrawer.draw(g, surfaceList);
+    }
 
 }
