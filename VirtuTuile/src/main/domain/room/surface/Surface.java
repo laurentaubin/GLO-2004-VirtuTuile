@@ -36,11 +36,19 @@ public class Surface {
         if (!mergedStatus) {
             if (wholeSurfaces.isEmpty()){
                 // C'est un trou
-                this.polygon = this.getHoles().get(0);
+                this.polygon = new Polygon(
+                        this.getHoles().get(0).xpoints,
+                        this.getHoles().get(0).ypoints,
+                        this.getHoles().get(0).npoints
+                );
             }
             else {
                 // C'est une surface pleine
-                this.polygon = this.getWholeSurfaces().get(0);
+                this.polygon = new Polygon(
+                        this.getWholeSurfaces().get(0).xpoints,
+                        this.getWholeSurfaces().get(0).ypoints,
+                        this.getWholeSurfaces().get(0).npoints
+                );
             }
         }
         else {
@@ -113,6 +121,18 @@ public class Surface {
 
     public Rectangle2D getBoundingRectangle() {
         return this.polygon.getBounds2D();
+    }
+
+    public Point getPosition() {
+        return this.position;
+    }
+
+    public void setPosition() {
+
+    }
+
+    public boolean isHole() {
+        return this.isHole();
     }
 }
 

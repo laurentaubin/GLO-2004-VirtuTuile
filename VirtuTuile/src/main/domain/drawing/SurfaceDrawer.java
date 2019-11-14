@@ -29,7 +29,6 @@ public class SurfaceDrawer {
         Graphics2D g2d = (Graphics2D) g;
         ArrayList<Surface> surfaces = RoomController.getSurfaceList();
         if (zoom != 1) {
-
             g2d.scale(zoom, zoom);
         }
         for (Surface current_surface: surfaces) {

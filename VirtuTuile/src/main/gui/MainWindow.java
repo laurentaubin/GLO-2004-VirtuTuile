@@ -197,6 +197,7 @@ public class MainWindow extends JFrame {
             }
         });
 
+        /*
         drawingPanel.addMouseWheelListener(new java.awt.event.MouseAdapter() {
             public void mouseWheelMoved(MouseWheelEvent evt){
                 Point point = evt.getPoint();
@@ -208,6 +209,7 @@ public class MainWindow extends JFrame {
                 }
             }
         });
+         */
 
         drawingPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {

@@ -95,7 +95,7 @@ public class Room {
         }
     }
 
-    void updateSelectedSurfacesPositions(double deltaX, double deltaY) {
+    public void updateSelectedSurfacesPositions(double deltaX, double deltaY) {
         for (Surface surfaceInRoom : this.surfaceList) {
             if (surfaceInRoom.isSelected()) {
                 updateSurfacePositions(deltaX, deltaY, surfaceInRoom);
@@ -119,6 +119,11 @@ public class Room {
             int[] x = surface.getPolygon().xpoints;
             int[] y = surface.getPolygon().ypoints;
 
+            for (int i = 0; i < x.length; i++) {
+                x[i] = (int)(x[i] + deltaX);
+                y[i] = (int)(y[i] + deltaY);
+            }
+
             for (ElementarySurface elementarySurface : surface.getWholeSurfaces()) {
                 int[] xPoints = elementarySurface.xpoints;
 
@@ -130,6 +135,7 @@ public class Room {
             }
             surface.updateSurface();
     }
+
 
     public boolean surfaceSelecte(){
         boolean auMoinsUne = false;
