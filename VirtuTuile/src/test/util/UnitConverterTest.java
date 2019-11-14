@@ -53,5 +53,4 @@ class UnitConverterTest {
         assertEquals(pointInMeters.getY(), convertedPointInMeters.getY(), 0.001);
     }
 }
-
- */
+*/

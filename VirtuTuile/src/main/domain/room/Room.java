@@ -1,14 +1,17 @@
 package domain.room;
 
+import domain.room.pattern.Pattern;
 import domain.room.surface.ElementarySurface;
 import domain.room.surface.RectangularSurface;
 import domain.room.surface.Surface;
+import gui.MainWindow;
 
 import java.awt.*;
 import javax.print.ServiceUIFactory;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Room {
 
@@ -32,7 +35,7 @@ public class Room {
         RectangularSurface rectangularSurfaceProjection = new RectangularSurface(point, xPoints, yPoints);
         Surface surfaceProjection = new Surface();
         surfaceProjection.addElementaryWholeSurface(rectangularSurfaceProjection);
-        surfaceProjection.createPolygon();
+        surfaceProjection.updatePolygon(rectangularSurfaceProjection);
         this.addSurfaceToProjectionList(surfaceProjection);
     }
 
@@ -40,7 +43,7 @@ public class Room {
         RectangularSurface rectangularSurface = new RectangularSurface(point, xPoints, yPoints);
         Surface surface = new Surface();
         surface.addElementaryWholeSurface(rectangularSurface);
-        surface.createPolygon();
+        surface.updatePolygon(rectangularSurface);
         this.addSurfaceToList(surface);
     }
 
@@ -149,10 +152,9 @@ public class Room {
     }
 
 
-    void setPatternToSelectedSurfaces(Cover.Pattern pattern) {
+    void setPatternToSelectedSurfaces(Pattern pattern) {
         for (Surface surface : this.surfaceList) {
             if (surface.isSelected()) {
-                System.out.println(pattern);
                 surface.getCover().setPattern(pattern);
             }
         }
@@ -211,6 +213,13 @@ public class Room {
         for (Surface surface : this.surfaceList) {
             surface.getCover().setTile(tile);
             System.out.println(surface.getCover().getTile().getName());
+        }
+    }
+
+    public void setMeasurementMode(MainWindow.MeasurementUnitMode mode) {
+        for (Surface surface : surfaceList) {
+            surface.setMeasurementMode(mode);
+            System.out.println(Arrays.toString(surface.getPolygon().xpoints));
         }
     }
 }

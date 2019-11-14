@@ -5,8 +5,10 @@ package util;
 
 import gui.MainWindow;
 
+import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Arrays;
 /*import javafx.beans.binding.DoubleExpression;
 import javafx.util.Pair;*/
 
@@ -17,13 +19,20 @@ public class UnitConverter {
     private static final float PIXEL_TO_METER = (float) 0.0002645833;
     private static final float PIXEL_TO_INCH = (float) 0.0104166667;
 
-    public static double pixelToInch(double pixel) {
+    private static double pixelToInch(int pixel) {
         return pixel * PIXEL_TO_INCH;
     }
 
-    public static double pixelToMeter(double pixel) {
-        ArrayList<Double> list = new ArrayList<>();
+    private static double pixelToMeter(int pixel) {
         return pixel * PIXEL_TO_METER;
+    }
+
+    private static int inchToPixel(double inch) {
+        return (int) (inch / PIXEL_TO_INCH);
+    }
+
+    private static int meterToPixel(double meter) {
+        return (int) (meter / PIXEL_TO_METER);
     }
 
     public static double meterToInch(double meter) {
@@ -34,20 +43,96 @@ public class UnitConverter {
         return inch * INCH_TO_METER;
     }
 
-    public static double convertUnitToSelectedMode(double unit, MainWindow.MeasurementUnitMode mode) {
+    public static double convertPixelToSelectedUnit(int pixel, MainWindow.MeasurementUnitMode mode) {
         switch (mode) {
             case METRIC:
-                return UnitConverter.pixelToMeter(unit);
+                return UnitConverter.pixelToMeter(pixel);
             case IMPERIAL:
-                return UnitConverter.pixelToInch(unit);
+                return UnitConverter.pixelToInch(pixel);
         }
-        return unit;
+        return pixel;
     }
 
-    public static Point2D convertPointToSelectedMode(Point2D point, MainWindow.MeasurementUnitMode mode) {
-        double xPos = UnitConverter.convertUnitToSelectedMode(point.getX(), mode);
-        double yPos = UnitConverter.convertUnitToSelectedMode(point.getY(), mode);
+    private static int convertSelectedUnitToPixel(double unit, MainWindow.MeasurementUnitMode mode) {
+        switch (mode) {
+            case METRIC:
+                return UnitConverter.meterToPixel(unit);
+            case IMPERIAL:
+                return UnitConverter.inchToPixel(unit);
+        }
+        return (int) unit;
+    }
+
+    private static int[] convertMeterListToInch(int[] meterList) {
+        int[] convertedList = new int[meterList.length];
+        for (int i = 0; i < meterList.length; i++) {
+            convertedList[i] = (int) UnitConverter.meterToInch(meterList[i]);
+        }
+        return convertedList;
+    }
+
+    private static int[] convertInchListToMeter(int[] inchList) {
+        int[] convertedList = new int[inchList.length];
+        for (int i = 0; i < inchList.length; i++) {
+            convertedList[i] = (int) UnitConverter.inchToMeter(inchList[i]);
+        }
+        return convertedList;
+    }
+
+    public static Point2D convertPointToSelectedUnit(Point2D point, MainWindow.MeasurementUnitMode mode) {
+        double xPos = UnitConverter.convertPixelToSelectedUnit((int) point.getX(), mode);
+        double yPos = UnitConverter.convertPixelToSelectedUnit((int) point.getY(), mode);
         return new Point2D.Double(xPos, yPos);
 
+    }
+
+    public static int[] convertPixelListToSelectedUnit(int[] pixelList, MainWindow.MeasurementUnitMode mode) {
+        int[] convertedList = new int[pixelList.length];
+        for (int i = 0; i < pixelList.length; i++) {
+            convertedList[i] = (int) (UnitConverter.convertPixelToSelectedUnit(pixelList[i], mode) * 10000);
+        }
+        return convertedList;
+    }
+
+    public static int[] convertSelectedUnitListToPixel(int[] unitList, MainWindow.MeasurementUnitMode mode) {
+        // TODO trouver comment convertir un nombre indéterminé de points.
+        // TODO checker comment ArrayLyst.toArray() marche
+        int[] convertedList = new int[unitList.length];
+        for (int i = 0; i < unitList.length; i++) {
+            convertedList[i] = (UnitConverter.convertSelectedUnitToPixel(unitList[i], mode) / 10000);
+        }
+        return convertedList;
+    }
+
+    public static Polygon convertPolygonToSelectedUnit(Polygon polygon, MainWindow.MeasurementUnitMode mode) {
+        int[] xpoints = UnitConverter.convertPixelListToSelectedUnit(polygon.xpoints, mode);
+        int[] ypoints = UnitConverter.convertPixelListToSelectedUnit(polygon.ypoints, mode);
+        int npoints = polygon.npoints;
+
+        return new Polygon(xpoints, ypoints, npoints);
+    }
+
+    public static Polygon convertPolygonToPixel(Polygon polygon, MainWindow.MeasurementUnitMode mode) {
+        int[] xpoints = UnitConverter.convertSelectedUnitListToPixel(polygon.xpoints, mode);
+        int[] ypoints = UnitConverter.convertSelectedUnitListToPixel(polygon.ypoints, mode);
+        int npoints = polygon.npoints;
+
+        return new Polygon(xpoints, ypoints, npoints);
+    }
+
+    public static Polygon convertPolygonFromMeterToInch(Polygon polygon) {
+        int[] xpoints = UnitConverter.convertMeterListToInch(polygon.xpoints);
+        int[] ypoints = UnitConverter.convertMeterListToInch(polygon.ypoints);
+        int npoints = polygon.npoints;
+
+        return new Polygon(xpoints, ypoints, npoints);
+    }
+
+    public static Polygon convertPolygonFromInchToMeter(Polygon polygon) {
+        int[] xpoints = UnitConverter.convertInchListToMeter(polygon.xpoints);
+        int[] ypoints = UnitConverter.convertInchListToMeter(polygon.ypoints);
+        int npoints = polygon.npoints;
+
+        return new Polygon(xpoints, ypoints, npoints);
     }
 }

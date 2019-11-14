@@ -52,5 +52,17 @@ public abstract class ElementarySurface extends Polygon {
             this.addPoint(this.xpoints[i], this.ypoints[i]);
         }
     }
+
+    public double getArea() {
+        double area = 0d;
+        int firstX = this.xpoints[0];
+        int firstY = this.ypoints[0];
+
+        for (int i = 1; i < xpoints.length; i++) {
+            area += (xpoints[i] * firstY - ypoints[i] * firstX);
+        }
+
+        return area / 2;
+    }
 }
 

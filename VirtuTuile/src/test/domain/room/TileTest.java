@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,6 +21,6 @@ public class TileTest {
 
     @Test
     void getDimensions() {
-        assertEquals(new Point(10, 25), tester.getDimensions());
+        assertEquals(new Point2D.Float(10f, 10f), tester.getDimensions());
     }
 }

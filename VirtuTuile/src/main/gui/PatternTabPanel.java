@@ -1,6 +1,7 @@
 package gui;
 
 import domain.room.Cover;
+import domain.room.pattern.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -83,47 +84,47 @@ public class PatternTabPanel extends JPanel {
             dispositionBrique.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
-                    updatePattern(Cover.Pattern.BRIQUE);
+                    updatePattern(new BrickPattern());
                 }
             });
 
             dispositionChevron.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
-                    updatePattern(Cover.Pattern.CHEVRON);
+                    updatePattern(new ChevronPattern());
                 }
             });
 
             dispositionDroit.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
-                    updatePattern(Cover.Pattern.DROIT);
+                    updatePattern(new StraightPattern());
                 }
             });
 
             dispositionPaquet.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
-                    updatePattern(Cover.Pattern.PAQUET);
+                    updatePattern(new ParquetPattern());
                 }
             });
 
             dispositionL.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
-                    updatePattern(Cover.Pattern.L);
+                    updatePattern(new LShapePattern());
                 }
             });
 
             dispositionAngle.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
-                    updatePattern(Cover.Pattern.ANGLE);
+                    updatePattern(new AnglePattern());
                 }
             });
         }
 
-        public void updatePattern(Cover.Pattern pattern) {
+        public void updatePattern(Pattern pattern) {
             this.rightPanel.getMainWindow().controller.setPatternToSelectedSurfaces(pattern);
             this.rightPanel.getMainWindow().getDrawingPanel().repaint();
         }

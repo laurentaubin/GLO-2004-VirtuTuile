@@ -2,10 +2,14 @@ package domain.drawing;
 
 import domain.room.RoomController;
 import domain.room.surface.Surface;
+import util.UnitConverter;
+import gui.MainWindow;
+import org.w3c.dom.css.Rect;
 //import gui.MainWindow;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 //Code pour le zoom inspiré de https://stackoverflow.com/questions/13155382/jscrollpane-zoom-relative-to-mouse-position
 
@@ -13,12 +17,14 @@ import java.util.ArrayList;
 public class SurfaceDrawer {
     private final RoomController controller;
     private Dimension initialDimension;
+    private MainWindow.MeasurementUnitMode measurementMode;
 
 
 
-    public SurfaceDrawer(RoomController controller, Dimension initialDimension) {
+    public SurfaceDrawer(RoomController controller, Dimension initialDimension, MainWindow.MeasurementUnitMode measurementMode) {
         this.controller = controller;
         this.initialDimension = initialDimension;
+        this.measurementMode = measurementMode;
     }
 
     public void draw(Graphics g, double zoom, float prevZoom, Point zoomPoint, double xOffset, double yOffset) {
@@ -31,10 +37,10 @@ public class SurfaceDrawer {
         if (zoom != 1) {
             g2d.scale(zoom, zoom);
         }
-        for (Surface current_surface: surfaces) {
-            Polygon polygon = current_surface.getPolygon();
+        for (Surface current_surface : surfaces) {
+            Polygon polygon = UnitConverter.convertPolygonToPixel(current_surface.getPolygon(), measurementMode);
             if (current_surface.isSelected()){
-                Color selectedColor = new Color(189, 227, 255);
+                Color selectedColor = new Color(56, 177, 255);
                 g2d.setColor(selectedColor);
                 g2d.setStroke(new BasicStroke(2));
             }
@@ -48,7 +54,7 @@ public class SurfaceDrawer {
         ArrayList<Surface> surfaceProjectionList = RoomController.getSurfaceProjectionList();
         if(!surfaceProjectionList.isEmpty()) {
             Surface rectangularProjection = surfaceProjectionList.get(surfaceProjectionList.size() - 1);
-            g2d.draw(rectangularProjection.getPolygon());
+            g2d.draw(UnitConverter.convertPolygonToPixel(rectangularProjection.getPolygon(), measurementMode));
         }
         /*
         List<Surface> items = controller.getSurfaceList();

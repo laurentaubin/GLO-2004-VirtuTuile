@@ -1,25 +1,31 @@
-/*package domain.room;
+package domain.room;
 
+import domain.room.pattern.AnglePattern;
 import domain.room.surface.*;
+import gui.MainWindow;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class RoomTest {
 
     private Room tester;
-    private int[] xPoints;
-    private int[] yPoints;
     private Surface surface;
 
     @BeforeEach
     void setUp() {
-        xPoints = new int[]{0, 10, 10, 0};
-        yPoints = new int[]{0, 0, 10, 10};
-        tester = new Room();
-        tester.addRectangularSurface(xPoints, yPoints, 4, true);
-        surface = tester.getSurfaceList().get(0);
+        int[] xPoints = new int[]{0, 10, 10, 0};
+        int[] yPoints = new int[]{0, 0, 10, 10};
+        Point point = new Point(10, 10);
+        RectangularSurface rectangularSurface = new RectangularSurface(point, xPoints, yPoints);
+
+        this.surface = new Surface();
+        this.surface.addElementaryWholeSurface(rectangularSurface);
+        this.tester = new Room();
+        tester.addSurfaceToList(surface);
 
     }
 
@@ -37,8 +43,8 @@ class RoomTest {
         Cover cover = Cover.createCoverWithDefaultParameters();
         surface.setCover(cover);
         surface.setSelectionStatus(true);
-        tester.setPatternToSelectedSurfaces(Cover.Pattern.ANGLE);
+        tester.setPatternToSelectedSurfaces(new AnglePattern());
 
-        assertEquals(Cover.Pattern.ANGLE, surface.getCover().getPattern());
+        assertEquals(new AnglePattern(), surface.getCover().getPattern());
     }
-}*/
+}

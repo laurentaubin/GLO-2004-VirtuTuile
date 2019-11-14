@@ -55,17 +55,6 @@ public class RectangularSurface extends ElementarySurface {
         }
     }
 
-    /*
-
-    public int getTilesAcross() {
-        return (int) Math.ceil(this.width / this.getCover().getTile().getWidth());
-    }
-
-    public int getTilesDown() {
-        return (int) Math.ceil(this.height / this.getCover().getTile().getHeight());
-    }
-     */
-
     public void setDimensions(double[] dimensions) {
         double deltaW = dimensions[0] - this.width;
         double deltaH = dimensions[1] - this.height;
@@ -76,5 +65,10 @@ public class RectangularSurface extends ElementarySurface {
         this.xpoints[2] += deltaW;
         this.ypoints[2] += deltaH;
         this.ypoints[3] += deltaH;
+    }
+
+    @Override
+    public double getArea() {
+        return this.getHeight() * this.getWidth();
     }
 }

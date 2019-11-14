@@ -1,4 +1,8 @@
 package domain.room.pattern;
 
-public class Pattern {
+import domain.room.Tile;
+
+public abstract class Pattern {
+
+    public abstract void showPattern(Tile tile);
 }

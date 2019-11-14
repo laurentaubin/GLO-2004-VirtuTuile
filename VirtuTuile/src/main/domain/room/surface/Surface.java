@@ -1,6 +1,8 @@
 package domain.room.surface;
 
 import domain.room.Cover;
+import gui.MainWindow;
+import util.UnitConverter;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -14,6 +16,7 @@ public class Surface {
     private boolean mergedStatus = false;
     private boolean haveHole = false;
     private Polygon polygon;
+    private MainWindow.MeasurementUnitMode currentMode = MainWindow.MeasurementUnitMode.METRIC;
     private double width;
     private double height;
     private ArrayList<ElementarySurface> wholeSurfaces;
@@ -32,7 +35,7 @@ public class Surface {
         holes = new ArrayList<ElementarySurface>();
     }
 
-    public void createPolygon(){
+    public void updatePolygon(Polygon polygon){
         if (!mergedStatus) {
             if (wholeSurfaces.isEmpty()){
                 // C'est un trou
@@ -51,12 +54,15 @@ public class Surface {
                 );
             }
         }
+            this.polygon = polygon;
+        }
+
         else {
-            this.polygon = this.mergePolygon();
+            this.polygon = mergePolygon(polygon);
         }
     }
 
-    private Polygon mergePolygon() {
+    private Polygon mergePolygon(Polygon polygon) {
         //TODO algo pour créer un polygon résultant à partir d'une liste de polygon
         return new Polygon();
     }
@@ -117,6 +123,33 @@ public class Surface {
 
     public Polygon getPolygon() {
         return polygon;
+    }
+
+    public double getArea() {
+        double area = 0d;
+        for (ElementarySurface wholeSurface : this.wholeSurfaces) {
+            area += wholeSurface.getArea();
+        }
+        for (ElementarySurface hole : this.holes) {
+            area -= hole.getArea();
+        }
+
+        return area;
+    }
+
+    public void setMeasurementMode(MainWindow.MeasurementUnitMode mode) {
+        if (this.currentMode == mode) { return; }
+
+        switch (mode) {
+            case METRIC:
+                this.polygon = UnitConverter.convertPolygonFromInchToMeter(this.polygon);
+                this.currentMode = MainWindow.MeasurementUnitMode.METRIC;
+                break;
+            case IMPERIAL:
+                this.polygon = UnitConverter.convertPolygonFromMeterToInch(this.polygon);
+                this.currentMode = MainWindow.MeasurementUnitMode.IMPERIAL;
+                break;
+        }
     }
 
     public Rectangle2D getBoundingRectangle() {
