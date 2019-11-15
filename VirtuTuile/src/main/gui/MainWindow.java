@@ -393,7 +393,7 @@ public class MainWindow extends JFrame {
             // this.controller.switchSelectionStatus(this.initMousePoint.getX(), this.initMousePoint.getY(), mouseEvent.isShiftDown());
             drawingPanel.repaint();
 
-           // rightPanel.updateInformations(this.controller.getSelectedRectangularSurfaceDimensions());
+            rightPanel.updateSurfaceTabDimensions(this.controller.getSelectedRectangularSurfaceDimensions());
             rightPanel.updateSurfaceTabColor(this.controller.getSelectedSurfaceColor());
         }
 

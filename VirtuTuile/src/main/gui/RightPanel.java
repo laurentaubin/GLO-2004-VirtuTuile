@@ -36,12 +36,12 @@ public class RightPanel extends JTabbedPane implements Serializable {
         this.setSelectedIndex(0);
     }
 
-    /*
-    public void updateInformations(double[] dimensions){
-        surfaceTabPanel.updateInformations(dimensions);
+
+    public void updateSurfaceTabDimensions(double[] dimensions){
+        this.surfaceTabPanel.setDimensionsValue(dimensions);
     }
 
-     */
+
 
     public void updateSurfaceTabColor(Color color) {
         this.surfaceTabPanel.setButtonColor(color);
