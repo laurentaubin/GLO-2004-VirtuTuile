@@ -2,24 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8c246219-cf09-4492-905b-d80bdbddbe18" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/domain/room/TileType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/drawing/SurfaceDrawer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/drawing/SurfaceDrawer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/Cover.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/Cover.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/domain/room/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/Room.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/domain/room/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/RoomController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/AnglePattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/AnglePattern.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/BrickPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/BrickPattern.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/ChevronPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/ChevronPattern.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/DefaultPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/DefaultPattern.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/LShapePattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/LShapePattern.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/ParquetPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/ParquetPattern.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/Pattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/Pattern.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/StraightPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/StraightPattern.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/VerticalPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/VerticalPattern.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/surface/MergedSurface.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/surface/Surface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/surface/Surface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/gui/SurfaceTab.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/SurfaceTab.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/SurfaceTab.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/SurfaceTab.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/util/UnitConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/util/UnitConverter.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -118,6 +104,7 @@
       <workItem from="1573741604128" duration="348000" />
       <workItem from="1573741970285" duration="24988000" />
       <workItem from="1573775463830" duration="1485000" />
+      <workItem from="1573830259246" duration="1488000" />
     </task>
     <servers />
   </component>
