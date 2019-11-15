@@ -1,5 +1,7 @@
 package gui;
 
+import domain.room.RoomController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,7 +26,7 @@ public class SurfaceTab extends JPanel{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 Color color = JColorChooser.showDialog(null, "Choose a color", surfaceColor);
-
+                RoomController.setSelectedSurfaceColor(color);
                 setButtonColor(color);
             }
         });

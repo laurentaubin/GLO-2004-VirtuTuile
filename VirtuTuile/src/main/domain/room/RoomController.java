@@ -101,7 +101,7 @@ public class RoomController {
     }
 
 
-    public void setSelectedSurfaceColor(Color color){
+    public static void setSelectedSurfaceColor(Color color){
         room.setSelectedSurfaceColor(color);
     }
 
