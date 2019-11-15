@@ -1,11 +1,10 @@
 package gui;
 
-import domain.room.RoomController;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import domain.room.RoomController;
 
 public class SurfaceTab extends JPanel{
     private MainWindow mainWindow;

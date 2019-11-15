@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-<<<<<<< HEAD
     <list default="true" id="8c246219-cf09-4492-905b-d80bdbddbe18" name="Default Changelist" comment="Surface dimensions getters/setters fixed">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -11,14 +10,7 @@
       <change beforePath="$PROJECT_DIR$/src/main/gui/RightPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/RightPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/gui/SurfaceTab.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/SurfaceTab.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/gui/SurfaceTab.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/SurfaceTab.java" afterDir="false" />
-=======
-    <list default="true" id="8c246219-cf09-4492-905b-d80bdbddbe18" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/RoomController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/gui/SurfaceTab.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/SurfaceTab.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/util/UnitConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/util/UnitConverter.java" afterDir="false" />
->>>>>>> origin/master
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -116,13 +108,9 @@
       <workItem from="1573741604128" duration="348000" />
       <workItem from="1573741970285" duration="24988000" />
       <workItem from="1573775463830" duration="1485000" />
-<<<<<<< HEAD
       <workItem from="1573788832949" duration="3762000" />
       <workItem from="1573831851721" duration="707000" />
       <workItem from="1573847609713" duration="2811000" />
-=======
-      <workItem from="1573830259246" duration="1488000" />
->>>>>>> origin/master
     </task>
     <servers />
   </component>

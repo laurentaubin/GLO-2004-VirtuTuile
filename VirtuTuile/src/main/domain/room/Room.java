@@ -248,5 +248,4 @@ public class Room {
         }
         return color;
     }
-
 }
