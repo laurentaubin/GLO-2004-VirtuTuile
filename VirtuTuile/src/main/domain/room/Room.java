@@ -7,8 +7,6 @@ import domain.room.surface.Surface;
 import gui.MainWindow;
 
 import java.awt.*;
-import javax.print.ServiceUIFactory;
-import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,10 +15,12 @@ public class Room {
 
     private ArrayList<Surface> surfaceList;
     private ArrayList<Surface> surfaceProjectionList;
+    private ArrayList<TileType> tileTypeList;
 
     public Room() {
         surfaceList = new ArrayList<Surface>();
         surfaceProjectionList = new ArrayList<Surface>();
+        tileTypeList = new ArrayList<TileType>();
     }
 
     public void addSurfaceToList(Surface surface) {
@@ -33,7 +33,7 @@ public class Room {
 
     public void addRectangularProjection(Point point, int[] xPoints,int[] yPoints) {
         RectangularSurface rectangularSurfaceProjection = new RectangularSurface(point, xPoints, yPoints);
-        Surface surfaceProjection = new Surface();
+        Surface surfaceProjection = new Surface(point);
         surfaceProjection.addElementaryWholeSurface(rectangularSurfaceProjection);
         surfaceProjection.updatePolygon(rectangularSurfaceProjection);
         this.addSurfaceToProjectionList(surfaceProjection);
@@ -41,7 +41,7 @@ public class Room {
 
     public void addRectangularSurface(Point point, int[] xPoints, int[] yPoints) {
         RectangularSurface rectangularSurface = new RectangularSurface(point, xPoints, yPoints);
-        Surface surface = new Surface();
+        Surface surface = new Surface(point);
         surface.addElementaryWholeSurface(rectangularSurface);
         surface.updatePolygon(rectangularSurface);
         this.addSurfaceToList(surface);
@@ -49,7 +49,7 @@ public class Room {
 
     public void addRectangularSurface(Point point, int width, int height) {
         RectangularSurface rectangularSurface = new RectangularSurface(point, width, height);
-        Surface surface = new Surface();
+        Surface surface = new Surface(point);
         surface.addElementaryWholeSurface(rectangularSurface);
         this.addSurfaceToList(surface);
     }
@@ -204,11 +204,11 @@ public class Room {
         }
     }
 
-    public void setTileToSelectedSufaces(float width, float height, Color color, String name, int nbrTilesPerBox) {
-        Tile tile = new Tile(color, width, height, name, nbrTilesPerBox);
+    public void setTileToSelectedSufaces(Point point, float width, float height, Color color, String name, int nbrTilesPerBox) {
+        TileType tileType = new TileType(color, width, height, name, nbrTilesPerBox);
         for (Surface surface : this.surfaceList) {
-            surface.getCover().setTile(tile);
-            System.out.println(surface.getCover().getTile().getName());
+            surface.getCover().setTileType(tileType);
+            System.out.println(surface.getCover().getTileType().getName());
         }
     }
 

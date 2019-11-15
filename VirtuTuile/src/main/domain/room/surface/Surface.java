@@ -1,6 +1,10 @@
 package domain.room.surface;
 
 import domain.room.Cover;
+import domain.room.Tile;
+import domain.room.TileType;
+import domain.room.pattern.DefaultPattern;
+import domain.room.pattern.Pattern;
 import gui.MainWindow;
 import util.UnitConverter;
 
@@ -12,7 +16,9 @@ public class Surface {
     private Point position;
     private Color color;
     private boolean selectionStatus = false;
+    private TileType tileType;
     private Cover cover;
+    private Pattern pattern;
     private boolean mergedStatus = false;
     private boolean haveHole = false;
     private Polygon polygon;
@@ -30,9 +36,12 @@ public class Surface {
         return holes;
     }
 
-    public Surface() {
+    public Surface(Point point) {
+        this.position = point;
         wholeSurfaces = new ArrayList<ElementarySurface>();
         holes = new ArrayList<ElementarySurface>();
+        this.tileType = TileType.createTileWithDefaultParameters();
+        this.pattern = new DefaultPattern();
     }
 
     public void updatePolygon(Polygon polygon) {
@@ -168,6 +177,22 @@ public class Surface {
 
     public boolean isHole() {
         return this.isHole();
+    }
+
+    public TileType getTileType(){
+        return this.tileType;
+    }
+
+    public void setTileType(TileType tileType) {
+        this.tileType = tileType;
+    }
+
+    public Pattern getPattern(){
+        return this.pattern;
+    }
+
+    public void setPattern(Pattern pattern) {
+        this.pattern = pattern;
     }
 }
 

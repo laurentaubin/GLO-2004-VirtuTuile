@@ -83,8 +83,8 @@ public class RoomController {
         room.setGroutToSelectedSurfaces(grout);
     }
 
-    public void setTileToSelectedSurfaces(float width, float height, Color color, String name, int nbrTilesPerBox) {
-        room.setTileToSelectedSufaces(width, height, color, name, nbrTilesPerBox);
+    public void setTileToSelectedSurfaces(Point point, float width, float height, Color color, String name, int nbrTilesPerBox) {
+        room.setTileToSelectedSufaces(point, width, height, color, name, nbrTilesPerBox);
     }
 
     public void setMeasurementMode(MainWindow.MeasurementUnitMode mode) {

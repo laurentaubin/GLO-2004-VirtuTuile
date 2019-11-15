@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="8c246219-cf09-4492-905b-d80bdbddbe18" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/domain/room/TileType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/drawing/SurfaceDrawer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/drawing/SurfaceDrawer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/Cover.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/Cover.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/RoomController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/Tile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/AnglePattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/AnglePattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/BrickPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/BrickPattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/ChevronPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/ChevronPattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/DefaultPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/DefaultPattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/LShapePattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/LShapePattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/ParquetPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/ParquetPattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/Pattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/Pattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/StraightPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/StraightPattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/VerticalPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/VerticalPattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/surface/MergedSurface.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/surface/Surface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/surface/Surface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/SurfaceTab.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/SurfaceTab.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/util/UnitConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/util/UnitConverter.java" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1TWtyXiqxwAcKgvnCfOiGOolZE8" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/gui" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/gui" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="VirtuTuile" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8c246219-cf09-4492-905b-d80bdbddbe18" name="Default Changelist" comment="" />
+      <created>1573587933157</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1573587933157</updated>
+      <workItem from="1573587934439" duration="1852000" />
+      <workItem from="1573589809696" duration="115000" />
+      <workItem from="1573589999906" duration="169000" />
+      <workItem from="1573592768766" duration="605000" />
+      <workItem from="1573594164489" duration="11012000" />
+      <workItem from="1573606730089" duration="4828000" />
+      <workItem from="1573619053304" duration="139000" />
+      <workItem from="1573619212681" duration="2696000" />
+      <workItem from="1573654435871" duration="12187000" />
+      <workItem from="1573687321381" duration="26000" />
+      <workItem from="1573738647800" duration="1961000" />
+      <workItem from="1573741484652" duration="103000" />
+      <workItem from="1573741604128" duration="348000" />
+      <workItem from="1573741970285" duration="24988000" />
+      <workItem from="1573775463830" duration="1485000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

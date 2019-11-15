@@ -1,6 +1,7 @@
 package domain.drawing;
 
 import domain.room.RoomController;
+import domain.room.pattern.StraightPattern;
 import domain.room.surface.Surface;
 import util.UnitConverter;
 import gui.MainWindow;
@@ -10,6 +11,7 @@ import org.w3c.dom.css.Rect;
 import java.awt.*;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -30,9 +32,20 @@ public class SurfaceDrawer {
         drawSurface(g2d, surfaceList, measurementMode);
     }
 
-    public void drawSurface(Graphics2D g2d, ArrayList<Surface> surfaceList, MainWindow.MeasurementUnitMode measurementMode){
+    public void drawSurface(Graphics2D g2d, ArrayList<Surface> surfaceList, MainWindow.MeasurementUnitMode measurementMode) {
         for (Surface current_surface : surfaceList) {
-            Color surfaceColor = current_surface.getColor();
+            StraightPattern pattern = new StraightPattern();
+            current_surface.setPattern(pattern);
+
+
+            for (Polygon polygon : current_surface.getPattern().generateTiles((Rectangle) current_surface.getBoundingRectangle(), current_surface.getTileType(), measurementMode)) {
+                g2d.draw(polygon);
+            }
+
+
+            g2d.draw(current_surface.getBoundingRectangle());
+
+            //Color surfaceColor = current_surface.getColor();
             Polygon polygon = UnitConverter.convertPolygonToPixel(current_surface.getPolygon(), measurementMode);
             if (current_surface.isSelected()){
                 Color selectedColor = new Color(56, 177, 255);
@@ -51,6 +64,7 @@ public class SurfaceDrawer {
             Surface rectangularProjection = surfaceProjectionList.get(surfaceProjectionList.size() - 1);
             g2d.draw(UnitConverter.convertPolygonToPixel(rectangularProjection.getPolygon(), measurementMode));
         }
+
         /*
         List<Surface> items = controller.getSurfaceList();
         for (Surface item : items) {
@@ -61,7 +75,7 @@ public class SurfaceDrawer {
         }
 
          */
-    }
+        }
 
     public void setMeasurementUnitMode(MainWindow.MeasurementUnitMode measurementMode) {
         this.measurementMode = measurementMode;

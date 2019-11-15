@@ -53,7 +53,7 @@ public class UnitConverter {
         return pixel;
     }
 
-    private static int convertSelectedUnitToPixel(double unit, MainWindow.MeasurementUnitMode mode) {
+    public static int convertSelectedUnitToPixel(double unit, MainWindow.MeasurementUnitMode mode) {
         switch (mode) {
             case METRIC:
                 return UnitConverter.meterToPixel(unit);
