@@ -286,6 +286,16 @@ public class Room {
         return null;
     }
 
+    public boolean surfaceInTouch(){
+
+        for (int i = 0; i < surfaceList.size() - 1; i++){
+            if(!surfaceList.get(i).getAreaTest().intersects(surfaceList.get(i+1).getBoundingRectangle())){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void combineSelectedSurface() {
         ArrayList<Surface> surfacesToCombine = new ArrayList<Surface>();
         for (Surface surfaceInRoom : surfaceList) {
@@ -298,9 +308,11 @@ public class Room {
 
             surfacesToCombine.remove(0);
             for (Surface surface : surfacesToCombine) {
-                if (baseSurface.getAreaTest().intersects(surface.getBoundingRectangle())) {
+                if (surfaceInTouch()) {
                     baseSurface.merge(surface);
                     surfaceList.remove(surface);
+                }else{
+
                 }
             }
         }

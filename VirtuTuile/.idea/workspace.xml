@@ -3,17 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="8c246219-cf09-4492-905b-d80bdbddbe18" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/drawing/SurfaceDrawer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/drawing/SurfaceDrawer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/domain/room/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/Room.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/domain/room/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/RoomController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/Pattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/Pattern.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/surface/ElementarySurface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/surface/ElementarySurface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/surface/Surface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/surface/Surface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/gui/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/MainWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/gui/RightPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/RightPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/gui/SurfaceTab.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/SurfaceTab.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/util/UnitConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/util/UnitConverter.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -114,7 +106,7 @@
       <workItem from="1573775463830" duration="1596000" />
       <workItem from="1573861064377" duration="754000" />
       <workItem from="1573868171674" duration="15136000" />
-      <workItem from="1573919177064" duration="4207000" />
+      <workItem from="1573919177064" duration="5735000" />
     </task>
     <task id="LOCAL-00001" summary="xml(?)">
       <created>1573883748096</created>
@@ -123,7 +115,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573883748096</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Changer la couleur de des surfaces merge">
+      <created>1573923688028</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1573923688028</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -144,6 +143,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="xml(?)" />
-    <option name="LAST_COMMIT_MESSAGE" value="xml(?)" />
+    <MESSAGE value="Changer la couleur de des surfaces merge" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changer la couleur de des surfaces merge" />
   </component>
 </project>

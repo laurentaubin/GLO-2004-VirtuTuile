@@ -540,7 +540,15 @@ public class MainWindow extends JFrame {
     }
 
     public void combineSelectedSurfaces() {
-        controller.combineSelectedSurfaces();
+        if(RoomController.surfaceInTouch()) {
+            controller.combineSelectedSurfaces();
+        }else{
+            String[] options = {"Ok"};
+            int indexReponse = JOptionPane.showOptionDialog(null, "Les surfaces à combiner doivent être en contact!",
+                    "Attention!",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+        }
+
         drawingPanel.repaint();
     }
 

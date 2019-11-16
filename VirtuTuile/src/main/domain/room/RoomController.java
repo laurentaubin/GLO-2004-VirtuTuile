@@ -110,6 +110,9 @@ public class RoomController {
     }
      */
 
+    public static boolean surfaceInTouch(){
+        return room.surfaceInTouch();
+    }
 
     public static void setSelectedSurfaceColor(Color color){
         room.setSelectedSurfaceColor(color);
