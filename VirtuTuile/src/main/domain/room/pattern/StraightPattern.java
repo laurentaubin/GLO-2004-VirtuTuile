@@ -52,7 +52,7 @@ public class StraightPattern extends Pattern {
                     virtualTileList.add(new Tile(position, xPoints, yPoints, 4));
                     position.setLocation(position.getX() + tileType.getWidth(), position.getY());
             }
-            position.setLocation(boundingRectanglePosition.getX(), boundingRectanglePosition.getY() + tileType.getHeight());
+            position.setLocation(boundingRectanglePosition.getX(), position.getY() + tileType.getHeight());
         }
         return virtualTileList;
     }

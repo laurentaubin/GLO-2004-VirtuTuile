@@ -43,6 +43,10 @@ public class RightPanel extends JTabbedPane implements Serializable {
 
      */
 
+    public void updateSurfaceTabDimensions(Dimension dimension) {
+        this.surfaceTabPanel.setSurfaceDimensionField(dimension);
+    }
+
     public void updateSurfaceTabColor(Color color) {
         this.surfaceTabPanel.setButtonColor(color);
     }

@@ -386,14 +386,17 @@ public class MainWindow extends JFrame {
         if (this.currentApplicationMode == ApplicationMode.SELECT && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
 
-            double xPos = UnitConverter.convertPixelToSelectedUnit((int) this.initMousePoint.getX(), this.currentMeasurementMode) * 10000;
-            double yPos = UnitConverter.convertPixelToSelectedUnit((int) this.initMousePoint.getY(), this.currentMeasurementMode) * 10000;
+            double xPos = mouseEvent.getX();
+            double yPos = mouseEvent.getY();
+            //double xPos = UnitConverter.convertPixelToSelectedUnit((int) this.initMousePoint.getX(), this.currentMeasurementMode) * 10000;
+            //double yPos = UnitConverter.convertPixelToSelectedUnit((int) this.initMousePoint.getY(), this.currentMeasurementMode) * 10000;
 
             this.controller.switchSelectionStatus(xPos, yPos, mouseEvent.isShiftDown());
             // this.controller.switchSelectionStatus(this.initMousePoint.getX(), this.initMousePoint.getY(), mouseEvent.isShiftDown());
             drawingPanel.repaint();
 
            // rightPanel.updateInformations(this.controller.getSelectedRectangularSurfaceDimensions());
+            rightPanel.updateSurfaceTabDimensions(this.controller.getSelectedSurfaceDimensions());
             rightPanel.updateSurfaceTabColor(this.controller.getSelectedSurfaceColor());
         }
 
@@ -444,9 +447,7 @@ public class MainWindow extends JFrame {
             //TODO Ajouter la conversion des unités de mesure ici!
             this.controller.updateSelectedSurfacesPositions(mouseEvent.getX() - this.currentMousePoint.getX(), mouseEvent.getY() - this.currentMousePoint.getY());
             this.currentMousePoint = mouseEvent.getPoint();
-
         }
-
         else if (this.currentApplicationMode == ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             this.currentMousePoint = mouseEvent.getPoint();
             int[] xDrawPoints = getXDrawPoints();
@@ -465,7 +466,9 @@ public class MainWindow extends JFrame {
         drawPoints[2] = (int)currentMousePoint.getX();
         drawPoints[3] = (int)initMousePoint.getX();
 
-        return UnitConverter.convertPixelListToSelectedUnit(drawPoints, this.currentMeasurementMode);
+        return drawPoints;
+
+        //return UnitConverter.convertPixelListToSelectedUnit(drawPoints, this.currentMeasurementMode);
     }
 
     private int[] getYDrawPoints() {
@@ -476,7 +479,8 @@ public class MainWindow extends JFrame {
         drawPoints[2] = (int)currentMousePoint.getY();
         drawPoints[3] = (int)currentMousePoint.getY();
 
-        return UnitConverter.convertPixelListToSelectedUnit(drawPoints, this.currentMeasurementMode);
+        return drawPoints;
+        //return UnitConverter.convertPixelListToSelectedUnit(drawPoints, this.currentMeasurementMode);
     }
 
     private void gridMenuItemActionPerformed(ActionEvent actionEvent) {
@@ -487,8 +491,11 @@ public class MainWindow extends JFrame {
         //TODO convertir les unités
 
         String mousePosition = "";
-        double xPos = UnitConverter.convertPixelToSelectedUnit( evt.getX(), this.currentMeasurementMode);
-        double yPos = UnitConverter.convertPixelToSelectedUnit(evt.getY(), this.currentMeasurementMode);
+
+        double xPos = evt.getX();
+        double yPos = evt.getY();
+        //double xPos = UnitConverter.convertPixelToSelectedUnit( evt.getX(), this.currentMeasurementMode);
+        //double yPos = UnitConverter.convertPixelToSelectedUnit(evt.getY(), this.currentMeasurementMode);
         if (this.currentMeasurementMode == MeasurementUnitMode.METRIC) {
             mousePosition += ("x= " + xPos + "m " + ", y= " + yPos + "m ");
         }
@@ -517,6 +524,21 @@ public class MainWindow extends JFrame {
 
     public void draw(Graphics2D g) {
         controller.draw(g, getCurrentMeasurementMode());
+    }
+
+    public void setSelectedSurfaceWidth(double enteredWidth) {
+        controller.setSelectedSurfaceWidth(enteredWidth);
+        drawingPanel.repaint();
+    }
+
+    public void setSelectedSurfaceHeight(double height) {
+        controller.setSelectedSurfaceHeight(height);
+        drawingPanel.repaint();
+    }
+
+    public void combineSelectedSurfaces() {
+        controller.combineSelectedSurfaces();
+        drawingPanel.repaint();
     }
 
     private ButtonGroup buttonGroup;

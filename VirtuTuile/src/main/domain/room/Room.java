@@ -7,6 +7,7 @@ import domain.room.surface.Surface;
 import gui.MainWindow;
 
 import java.awt.*;
+import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,7 +36,7 @@ public class Room {
         RectangularSurface rectangularSurfaceProjection = new RectangularSurface(point, xPoints, yPoints);
         Surface surfaceProjection = new Surface(point);
         surfaceProjection.addElementaryWholeSurface(rectangularSurfaceProjection);
-        surfaceProjection.updatePolygon(rectangularSurfaceProjection);
+        surfaceProjection.updatePolygon();
         this.addSurfaceToProjectionList(surfaceProjection);
     }
 
@@ -43,7 +44,7 @@ public class Room {
         RectangularSurface rectangularSurface = new RectangularSurface(point, xPoints, yPoints);
         Surface surface = new Surface(point);
         surface.addElementaryWholeSurface(rectangularSurface);
-        surface.updatePolygon(rectangularSurface);
+        surface.updatePolygon();
         this.addSurfaceToList(surface);
     }
 
@@ -86,7 +87,8 @@ public class Room {
 
     private void switchSelectionStatusIfContains(double x, double y, boolean isShiftDown, Surface surfaceInRoom) {
         Point2D.Double point = new Point2D.Double(x, y);
-        if (surfaceInRoom.getPolygon().contains(point)) {
+        //TODO changer le OR pour une meilleure condition
+        if (surfaceInRoom.getPolygon().contains(point) || surfaceInRoom.getAreaTest().contains(point)) {
             surfaceInRoom.switchSelectionStatus();
         }
         else if (!isShiftDown){
@@ -97,44 +99,10 @@ public class Room {
     public void updateSelectedSurfacesPositions(double deltaX, double deltaY) {
         for (Surface surfaceInRoom : this.surfaceList) {
             if (surfaceInRoom.isSelected()) {
-                updateSurfacePositions(deltaX, deltaY, surfaceInRoom);
-
-                /*
-                for (ElementarySurface elementarySurface : surfaceInRoom.getWholeSurfaces()) {
-                    updateSurfacePositions(deltaX, deltaY, elementarySurface);
-                }
-                for (ElementarySurface elementarySurface : surfaceInRoom.getHoles()) {
-                    updateSurfacePositions(deltaX, deltaY, elementarySurface);
-                }
-
-                 */
-                //Pas encore implémentée
-                surfaceInRoom.updateSurface();
+                surfaceInRoom.translate(deltaX, deltaY);
             }
         }
     }
-
-    private void updateSurfacePositions(double deltaX, double deltaY, Surface surface) {
-            int[] x = surface.getPolygon().xpoints;
-            int[] y = surface.getPolygon().ypoints;
-
-            for (int i = 0; i < x.length; i++) {
-                x[i] = (int)(x[i] + deltaX);
-                y[i] = (int)(y[i] + deltaY);
-            }
-
-            for (ElementarySurface elementarySurface : surface.getWholeSurfaces()) {
-                int[] xPoints = elementarySurface.xpoints;
-
-                for (int i = 0; i < xPoints.length; i++) {
-                    elementarySurface.xpoints[i] = (int)(x[i] + deltaX);
-                    elementarySurface.ypoints[i] = (int)(y[i] + deltaY);
-                }
-                elementarySurface.updateElementarySurface();
-            }
-            surface.updateSurface();
-    }
-
 
     public boolean surfaceSelecte(){
         boolean auMoinsUne = false;
@@ -243,5 +211,88 @@ public class Room {
             }
         }
         return color;
+    }
+
+    public void setSelectedSurfaceWidth(double enteredWidth) {
+        int counterOfSelectedSurfaces = 0;
+        for (Surface surfaceInRoom : surfaceList) {
+            if (surfaceInRoom.isSelected()) {
+                counterOfSelectedSurfaces += 1;
+                if (counterOfSelectedSurfaces > 1) {
+                    break;
+                }
+            }
+        }
+        if (counterOfSelectedSurfaces == 1) {
+            for (Surface surfaceInRoom : surfaceList) {
+                if (surfaceInRoom.isSelected()) {
+                    surfaceInRoom.setWidth(enteredWidth);
+                }
+            }
+        }
+    }
+
+    public void setSelectedSurfaceHeight(double height) {
+        int counterOfSelectedSurfaces = 0;
+        for (Surface surfaceInRoom : surfaceList) {
+            if (surfaceInRoom.isSelected()) {
+                counterOfSelectedSurfaces += 1;
+                if (counterOfSelectedSurfaces > 1) {
+                    break;
+                }
+            }
+        }
+        if (counterOfSelectedSurfaces == 1) {
+            for (Surface surfaceInRoom : surfaceList) {
+                if (surfaceInRoom.isSelected()) {
+                    surfaceInRoom.setHeight(height);
+                }
+            }
+        }
+    }
+
+    public Dimension getSelectedSurfaceDimensions() {
+        int counterOfSelectedSurfaces = 0;
+        for (Surface surfaceInRoom : surfaceList) {
+            if (surfaceInRoom.isSelected()) {
+                counterOfSelectedSurfaces += 1;
+                if (counterOfSelectedSurfaces > 1) {
+                    break;
+                }
+            }
+        }
+        if (counterOfSelectedSurfaces == 1) {
+            for (Surface surfaceInRoom : surfaceList) {
+                if (surfaceInRoom.isSelected()) {
+                    return surfaceInRoom.getDimensions();
+                }
+            }
+        }
+        else {
+            Dimension dimension = new Dimension();
+            dimension.setSize(0d, 0d);
+            return dimension;
+        }
+        return null;
+    }
+
+    public void combineSelectedSurface() {
+        ArrayList<Surface> surfacesToCombine = new ArrayList<Surface>();
+        for (Surface surfaceInRoom : surfaceList) {
+            if (surfaceInRoom.isSelected()) {
+                surfacesToCombine.add(surfaceInRoom);
+            }
+        }
+        if (surfacesToCombine.size() > 1) {
+            Surface baseSurface = surfacesToCombine.get(0);
+
+            surfacesToCombine.remove(0);
+            for (Surface surface : surfacesToCombine) {
+                if (baseSurface.getAreaTest().intersects(surface.getBoundingRectangle())) {
+                    baseSurface.merge(surface);
+                    surfaceList.remove(surface);
+                }
+            }
+        }
     }
 }

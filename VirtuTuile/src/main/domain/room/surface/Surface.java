@@ -9,7 +9,7 @@ import gui.MainWindow;
 import util.UnitConverter;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
+import java.awt.geom.*;
 import java.util.ArrayList;
 
 public class Surface {
@@ -22,6 +22,7 @@ public class Surface {
     private boolean mergedStatus = false;
     private boolean haveHole = false;
     private Polygon polygon;
+    private Area area;
     private MainWindow.MeasurementUnitMode currentMode = MainWindow.MeasurementUnitMode.METRIC;
     private double width;
     private double height;
@@ -42,9 +43,10 @@ public class Surface {
         holes = new ArrayList<ElementarySurface>();
         this.tileType = TileType.createTileWithDefaultParameters();
         this.pattern = new DefaultPattern();
+
     }
 
-    public void updatePolygon(Polygon polygon) {
+    public void updatePolygon() {
         if (!mergedStatus) {
             if (wholeSurfaces.isEmpty()) {
                 // C'est un trou
@@ -61,17 +63,39 @@ public class Surface {
                         this.getWholeSurfaces().get(0).npoints
                 );
             }
-            this.polygon = polygon;
-        } else {
-            this.polygon = polygon;
+            area = new Area(this.polygon);
         }
+        else {
+        }
+        //En pixel selon le bounding rectangle
+        this.width = this.polygon.getBounds2D().getWidth();
+        this.height = this.polygon.getBounds2D().getHeight();
     }
 
+    public Area getAreaTest() {
+        return this.area;
+    }
 
+    public boolean isMerged() {
+        return this.mergedStatus;
+    }
 
-    private Polygon mergePolygon(Polygon polygon) {
+    public void merge(Surface surface) {
+        //TODO Tester les ajouts
+        ArrayList<ElementarySurface> wholeSurface = surface.getWholeSurfaces();
+        ArrayList<ElementarySurface> holeSurface = surface.getHoles();
+        //addAll proposé par IDE
+        this.wholeSurfaces.addAll(wholeSurface);
+        this.holes.addAll(holeSurface);
+
+        this.mergedStatus = true;
+        this.area.add(surface.area);
+    }
+
+    private void mergePolygon(Polygon polygon) {
         //TODO algo pour créer un polygon résultant à partir d'une liste de polygon
-        return new Polygon();
+        Area areaToAdd = new Area(polygon);
+        this.area.add(areaToAdd);
     }
 
     public void addElementaryWholeSurface(ElementarySurface elementarySurface) {
@@ -125,15 +149,8 @@ public class Surface {
         this.cover = cover;
     }
 
-    public void updateSurface() {
-        this.polygon.reset();
-        for(int i = 0; i < polygon.xpoints.length; i++){
-            polygon.addPoint(polygon.xpoints[i], polygon.ypoints[i]);
-        }
-    }
-
     public Polygon getPolygon() {
-        return polygon;
+        return this.polygon;
     }
 
     public double getArea() {
@@ -164,6 +181,9 @@ public class Surface {
     }
 
     public Rectangle2D getBoundingRectangle() {
+        if (this.isMerged()) {
+            return this.area.getBounds2D();
+        }
         return this.polygon.getBounds2D();
     }
 
@@ -194,5 +214,51 @@ public class Surface {
     public void setPattern(Pattern pattern) {
         this.pattern = pattern;
     }
+
+    public void translate(double deltaX, double deltaY) {
+        this.polygon.translate((int)deltaX, (int)deltaY);
+
+        for (ElementarySurface wholeSurface : wholeSurfaces) {
+            wholeSurface.translate(deltaX, deltaY);
+        }
+
+        for (ElementarySurface holeSurface : holes) {
+            holeSurface.translate(deltaX, deltaY);
+        }
+
+        AffineTransform at = new AffineTransform(1, 0, 0, 1, deltaX, deltaY);
+        this.area.transform(at);
+    }
+
+    public void setWidth(double enteredWidth) {
+        double deltaX = enteredWidth - this.width;
+        this.width = enteredWidth;
+
+        if (this.polygon.npoints == 4) {
+            this.polygon.xpoints[1] += deltaX;
+            this.polygon.xpoints[2] += deltaX;
+        }
+        //TODO modifier les dimensions des surfaces élémentaires
+        //TODO Faire le code pour les surfaces irrégulières
+    }
+
+    public void setHeight(double height) {
+        double deltaY = height - this.height;
+        this.height = height;
+
+        if (this.polygon.npoints == 4) {
+            this.polygon.ypoints[2] += deltaY;
+            this.polygon.ypoints[3] += deltaY;
+        }
+        //TODO modifier les dimensions des surfaces élémentaires
+        //TODO Faire le code pour les surfaces irrégulières
+    }
+
+    public Dimension getDimensions() {
+        Dimension dimension = new Dimension();
+        dimension.setSize(this.getWidth(), this.getHeight());
+        return dimension;
+    }
+
 }
 

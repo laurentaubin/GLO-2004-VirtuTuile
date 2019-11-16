@@ -8,6 +8,7 @@ import domain.room.surface.Surface;
 import gui.MainWindow;
 
 import java.awt.*;
+import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
 
 public class RoomController {
@@ -22,6 +23,13 @@ public class RoomController {
 
     public RoomController(){
         room = new Room();
+    }
+
+    public void draw(Graphics2D g, MainWindow.MeasurementUnitMode measurementUnitMode) {
+        ArrayList<Surface> surfaceList = getSurfaceList();
+        surfaceDrawer = new SurfaceDrawer(this);
+        surfaceDrawer.setMeasurementUnitMode(measurementUnitMode);
+        surfaceDrawer.draw(g, surfaceList);
     }
 
     public void addRectangularProjection(Point point, int[] xPoints, int[] yPoints) {
@@ -109,11 +117,19 @@ public class RoomController {
         return room.getSelectedSurfaceColor();
     }
 
-    public void draw(Graphics2D g, MainWindow.MeasurementUnitMode measurementUnitMode) {
-        ArrayList<Surface> surfaceList = getSurfaceList();
-        surfaceDrawer = new SurfaceDrawer(this);
-        surfaceDrawer.setMeasurementUnitMode(measurementUnitMode);
-        surfaceDrawer.draw(g, surfaceList);
+    public void setSelectedSurfaceWidth(double enteredWidth) {
+        room.setSelectedSurfaceWidth(enteredWidth);
     }
 
+    public void setSelectedSurfaceHeight(double height) {
+        room.setSelectedSurfaceHeight(height);
+    }
+
+    public Dimension getSelectedSurfaceDimensions() {
+        return room.getSelectedSurfaceDimensions();
+    }
+
+    public void combineSelectedSurfaces() {
+        room.combineSelectedSurface();
+    }
 }
