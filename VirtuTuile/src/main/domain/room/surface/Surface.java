@@ -29,6 +29,7 @@ public class Surface {
     private ArrayList<ElementarySurface> wholeSurfaces;
     private ArrayList<ElementarySurface> holes;
 
+
     public ArrayList<ElementarySurface> getWholeSurfaces() {
         return wholeSurfaces;
     }
@@ -43,6 +44,7 @@ public class Surface {
         holes = new ArrayList<ElementarySurface>();
         this.tileType = TileType.createTileWithDefaultParameters();
         this.pattern = new DefaultPattern();
+        this.color = (Color.WHITE);
 
     }
 
@@ -87,15 +89,24 @@ public class Surface {
         //addAll proposé par IDE
         this.wholeSurfaces.addAll(wholeSurface);
         this.holes.addAll(holeSurface);
-
         this.mergedStatus = true;
         this.area.add(surface.area);
+        this.mergePolygon(surface.getPolygon());
     }
 
     private void mergePolygon(Polygon polygon) {
         //TODO algo pour créer un polygon résultant à partir d'une liste de polygon
+
+        for (int i = 0; i < polygon.xpoints.length; i++){
+            this.polygon.addPoint(polygon.xpoints[(i+2)%4], polygon.ypoints[(i+2)%4]);
+        }
         Area areaToAdd = new Area(polygon);
         this.area.add(areaToAdd);
+    }
+
+    public Shape getShape(){
+        Shape shape = this.area;
+        return shape;
     }
 
     public void addElementaryWholeSurface(ElementarySurface elementarySurface) {

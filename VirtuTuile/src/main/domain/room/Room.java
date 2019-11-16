@@ -5,12 +5,14 @@ import domain.room.surface.ElementarySurface;
 import domain.room.surface.RectangularSurface;
 import domain.room.surface.Surface;
 import gui.MainWindow;
+import util.UnitConverter;
 
 import java.awt.*;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 
 public class Room {
 
@@ -78,6 +80,7 @@ public class Room {
     public int getNumberOfSurfaces() {
         return surfaceList.size();
     }
+
 
     void switchSelectionStatus(double x, double y, boolean isShiftDown) {
         for (Surface surfaceInRoom : this.surfaceList) {
@@ -302,4 +305,5 @@ public class Room {
             }
         }
     }
+
 }

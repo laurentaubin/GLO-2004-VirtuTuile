@@ -5,6 +5,7 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.io.Serializable;
 
+
 public class RightPanel extends JTabbedPane implements Serializable {
 
     public Dimension initialDimension;

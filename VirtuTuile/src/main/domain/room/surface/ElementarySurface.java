@@ -61,5 +61,9 @@ public abstract class ElementarySurface extends Polygon {
 
         return area / 2;
     }
+
+    public void merge(Surface surface){
+
+    }
 }
 

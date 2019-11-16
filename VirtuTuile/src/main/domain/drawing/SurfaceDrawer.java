@@ -35,7 +35,13 @@ public class SurfaceDrawer {
 
     public void drawSurface(Graphics2D g2d, ArrayList<Surface> surfaceList, MainWindow.MeasurementUnitMode measurementMode) {
         for (Surface current_surface : surfaceList) {
-            Shape shape = current_surface.getPolygon();
+
+            Shape shape = current_surface.getShape();
+
+
+            Color fillColor = current_surface.getColor();
+            g2d.setColor(fillColor);
+            g2d.fill(shape);
             if (current_surface.isMerged()) {
                 shape = current_surface.getAreaTest();
             }

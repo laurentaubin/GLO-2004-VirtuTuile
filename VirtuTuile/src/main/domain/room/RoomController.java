@@ -113,10 +113,12 @@ public class RoomController {
 
     public static void setSelectedSurfaceColor(Color color){
         room.setSelectedSurfaceColor(color);
+
     }
 
     public Color getSelectedSurfaceColor() {
         return room.getSelectedSurfaceColor();
+
     }
 
     public void setSelectedSurfaceWidth(double enteredWidth) {

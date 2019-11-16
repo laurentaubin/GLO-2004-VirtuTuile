@@ -398,6 +398,7 @@ public class MainWindow extends JFrame {
            // rightPanel.updateInformations(this.controller.getSelectedRectangularSurfaceDimensions());
             rightPanel.updateSurfaceTabDimensions(this.controller.getSelectedSurfaceDimensions());
             rightPanel.updateSurfaceTabColor(this.controller.getSelectedSurfaceColor());
+
         }
 
         if (this.currentApplicationMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
@@ -445,7 +446,8 @@ public class MainWindow extends JFrame {
         // TODO ça marche pas pcq le init mouse point est pas updaté a bonne palce faique le delta est pas bon
         if (SwingUtilities.isRightMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
-            this.controller.updateSelectedSurfacesPositions(mouseEvent.getX() - this.currentMousePoint.getX(), mouseEvent.getY() - this.currentMousePoint.getY());
+            this.controller.updateSelectedSurfacesPositions(mouseEvent.getX() - this.currentMousePoint.getX(),
+                    mouseEvent.getY() - this.currentMousePoint.getY());
             this.currentMousePoint = mouseEvent.getPoint();
         }
         else if (this.currentApplicationMode == ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
@@ -521,6 +523,7 @@ public class MainWindow extends JFrame {
     public JScrollPane getMainScrollPane(){
         return this.mainScrollPane;
     }
+
 
     public void draw(Graphics2D g) {
         controller.draw(g, getCurrentMeasurementMode());

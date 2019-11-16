@@ -19,11 +19,11 @@ public class UnitConverter {
     private static final float PIXEL_TO_METER = (float) 0.0002645833;
     private static final float PIXEL_TO_INCH = (float) 0.0104166667;
 
-    private static double pixelToInch(int pixel) {
+    private static double pixelToInch(double pixel) {
         return pixel * PIXEL_TO_INCH;
     }
 
-    private static double pixelToMeter(int pixel) {
+    private static double pixelToMeter(double pixel) {
         return pixel * PIXEL_TO_METER;
     }
 
@@ -43,7 +43,7 @@ public class UnitConverter {
         return inch * INCH_TO_METER;
     }
 
-    public static double convertPixelToSelectedUnit(int pixel, MainWindow.MeasurementUnitMode mode) {
+    public static double convertPixelToSelectedUnit(double pixel, MainWindow.MeasurementUnitMode mode) {
         switch (mode) {
             case METRIC:
                 return UnitConverter.pixelToMeter(pixel);

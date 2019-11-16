@@ -16,6 +16,7 @@ public abstract class Pattern {
     public ArrayList<Tile> virtualTileList;
 
     public Pattern()  {
+
         this.virtualTileList = new ArrayList<Tile>();
     }
 

@@ -24,8 +24,9 @@ public class SurfaceTab extends JPanel{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 Color color = JColorChooser.showDialog(null, "Choose a color", surfaceColor);
-
                 setButtonColor(color);
+                setSurfaceColor(color);
+
             }
         });
 
@@ -71,7 +72,13 @@ public class SurfaceTab extends JPanel{
         surfaceColorButton.setBackground(color);
         surfaceColorButton.setOpaque(true);
         surfaceColorButton.setBorderPainted(false);
+
+    }
+
+    public void setSurfaceColor(Color color){
         mainWindow.controller.setSelectedSurfaceColor(color);
+
+
     }
 
     private Color getSurfaceColor() {
