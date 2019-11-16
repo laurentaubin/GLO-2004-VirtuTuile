@@ -132,7 +132,6 @@ public class Room {
         }
     }
 
-    /*
 
     public double[] getSelectedRectangularSurfaceDimensions() {
         double[] dimensionList = new double[2];
@@ -145,18 +144,23 @@ public class Room {
         return dimensionList;
     }
 
-     */
-
-    /*
 
     public void setSelectedRectangularSurfaceDimensions(double[] dimensions) {
         for (Surface surface: this.surfaceList) {
             if (surface.isSelected()){
-                surface.setDimensions(dimensions);
+                double deltaW = dimensions[0] - surface.getWidth();
+                double deltaH = dimensions[1] - surface.getHeight();
+
+                surface.getPolygon().xpoints[1] += deltaW;
+                surface.getPolygon().xpoints[2] += deltaW;
+                surface.getPolygon().ypoints[2] += deltaH;
+                surface.getPolygon().ypoints[3] += deltaH;
+
+                surface.updateSurface();
             }
         }
     }
-     */
+
 
     public void deleteSurface(){
         for(int i = this.surfaceList.size() - 1; i >= 0; i--){

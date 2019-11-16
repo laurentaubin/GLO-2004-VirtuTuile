@@ -99,7 +99,7 @@ public class RoomController {
         room.setMeasurementMode(mode);
     }
 
-    /*
+
     public double[] getSelectedRectangularSurfaceDimensions(){
         return room.getSelectedRectangularSurfaceDimensions();
     }
@@ -107,9 +107,9 @@ public class RoomController {
     public void setSelectedRectangularSurfaceDimensions(double[] dimensions){
         room.setSelectedRectangularSurfaceDimensions(dimensions);
     }
-     */
 
-    public void setSelectedSurfaceColor(Color color){
+
+    public static void setSelectedSurfaceColor(Color color){
         room.setSelectedSurfaceColor(color);
     }
 
