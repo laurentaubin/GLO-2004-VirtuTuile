@@ -517,7 +517,6 @@ public class MainWindow extends JFrame {
 
     public void setMainScrollPanePosition(Point point) {
         this.mainScrollPane.getViewport().setViewPosition(point);
-
     }
 
     public JScrollPane getMainScrollPane(){
@@ -540,20 +539,21 @@ public class MainWindow extends JFrame {
     }
 
     public void combineSelectedSurfaces() {
-        if(RoomController.numberOfSelectedSurfaces() < 2){
+        if(controller.getNumberOfSurfaces() < 2){
             String[] options = {"Ok"};
             int indexReponse = JOptionPane.showOptionDialog(null, "Vous devez sélectionner un minimum de deux surfaces à combiner",
                     "Attention!",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
-        } else if(RoomController.surfaceInTouch()) {
+        }
+        else if(controller.doesSelectedSurfacesIntersect()) {
             controller.combineSelectedSurfaces();
-        }else{
+        }
+        else {
             String[] options = {"Ok"};
             int indexReponse = JOptionPane.showOptionDialog(null, "Les surfaces à combiner doivent être en contact!",
                     "Attention!",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
         }
-
         drawingPanel.repaint();
     }
 

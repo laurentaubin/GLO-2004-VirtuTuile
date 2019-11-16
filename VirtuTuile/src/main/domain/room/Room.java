@@ -285,6 +285,7 @@ public class Room {
         }
         return null;
     }
+
     public int numberOfSelectedSurfaces(){
         int count = 0;
         for(Surface surface:surfaceList){
@@ -296,35 +297,40 @@ public class Room {
     }
 
     public boolean surfaceInTouch(){
+        boolean areIntersect = true;
+        ArrayList<Surface> surfacesToCombine = getSurfaceToCombine();
+        Surface baseSurface = surfacesToCombine.get(0);
+        surfacesToCombine.remove(0);
 
-        for (int i = 0; i < surfaceList.size() - 1; i++){
-            if(!surfaceList.get(i).getAreaTest().intersects(surfaceList.get(i+1).getBoundingRectangle())){
-                return false;
+        for (Surface surface : surfacesToCombine) {
+            if (!baseSurface.intersect(surface.getAreaTest())) {
+                areIntersect = false;
             }
         }
-        return true;
+        return areIntersect;
     }
 
     public void combineSelectedSurface() {
+        ArrayList<Surface> surfacesToCombine = getSurfaceToCombine();
+
+        Surface baseSurface = surfacesToCombine.get(0);
+        surfacesToCombine.remove(0);
+
+        for (Surface surface : surfacesToCombine) {
+            if (baseSurface.intersect(surface.getAreaTest())) {
+                baseSurface.merge(surface);
+                surfaceList.remove(surface);
+            }
+        }
+    }
+
+    private ArrayList<Surface> getSurfaceToCombine() {
         ArrayList<Surface> surfacesToCombine = new ArrayList<Surface>();
         for (Surface surfaceInRoom : surfaceList) {
             if (surfaceInRoom.isSelected()) {
                 surfacesToCombine.add(surfaceInRoom);
             }
         }
-        if (surfacesToCombine.size() > 1) {
-            Surface baseSurface = surfacesToCombine.get(0);
-
-            surfacesToCombine.remove(0);
-            for (Surface surface : surfacesToCombine) {
-                if (surfaceInTouch()) {
-                    baseSurface.merge(surface);
-                    surfaceList.remove(surface);
-                }else{
-
-                }
-            }
-        }
+        return surfacesToCombine;
     }
-
 }

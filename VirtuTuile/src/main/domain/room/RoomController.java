@@ -110,11 +110,11 @@ public class RoomController {
     }
      */
 
-    public static boolean surfaceInTouch(){
+    public boolean doesSelectedSurfacesIntersect(){
         return room.surfaceInTouch();
     }
 
-    public static  int numberOfSelectedSurfaces(){
+    public int numberOfSelectedSurfaces(){
         return room.numberOfSelectedSurfaces();
     }
 
@@ -125,7 +125,6 @@ public class RoomController {
 
     public Color getSelectedSurfaceColor() {
         return room.getSelectedSurfaceColor();
-
     }
 
     public void setSelectedSurfaceWidth(double enteredWidth) {

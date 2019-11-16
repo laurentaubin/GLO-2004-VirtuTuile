@@ -45,7 +45,6 @@ public class Surface {
         this.tileType = TileType.createTileWithDefaultParameters();
         this.pattern = new DefaultPattern();
         this.color = (Color.WHITE);
-
     }
 
     public void updatePolygon() {
@@ -91,13 +90,6 @@ public class Surface {
         this.holes.addAll(holeSurface);
         this.mergedStatus = true;
         this.area.add(surface.area);
-        this.mergePolygon(surface.getPolygon());
-    }
-
-    private void mergePolygon(Polygon polygon) {
-        //TODO algo pour créer un polygon résultant à partir d'une liste de polygon
-        Area areaToAdd = new Area(polygon);
-        this.area.add(areaToAdd);
     }
 
     public Shape getShape(){
@@ -267,5 +259,24 @@ public class Surface {
         return dimension;
     }
 
+    //Inspiré de: https://stackoverflow.com/questions/31209541/convert-from-java-awt-geom-area-to-java-awt-polygon
+    public boolean intersect(Area otherArea) {
+        boolean isIntersect = false;
+        PathIterator pathIterator = otherArea.getPathIterator(null);
+        float[] floats = new float[6];
+        while (!pathIterator.isDone()) {
+            int type = pathIterator.currentSegment(floats);
+            int x = (int) floats[0];
+            int y = (int) floats[1];
+            if (type != PathIterator.SEG_CLOSE) {
+                if (this.area.contains(x, y)) {
+                    isIntersect = true;
+                    break;
+                }
+            }
+            pathIterator.next();
+        }
+        return isIntersect;
+    }
 }
 
