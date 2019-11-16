@@ -114,6 +114,10 @@ public class RoomController {
         return room.surfaceInTouch();
     }
 
+    public static  int numberOfSelectedSurfaces(){
+        return room.numberOfSelectedSurfaces();
+    }
+
     public static void setSelectedSurfaceColor(Color color){
         room.setSelectedSurfaceColor(color);
 

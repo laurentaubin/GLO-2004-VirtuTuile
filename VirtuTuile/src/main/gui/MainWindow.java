@@ -540,7 +540,12 @@ public class MainWindow extends JFrame {
     }
 
     public void combineSelectedSurfaces() {
-        if(RoomController.surfaceInTouch()) {
+        if(RoomController.numberOfSelectedSurfaces() < 2){
+            String[] options = {"Ok"};
+            int indexReponse = JOptionPane.showOptionDialog(null, "Vous devez sélectionner un minimum de deux surfaces à combiner",
+                    "Attention!",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+        } else if(RoomController.surfaceInTouch()) {
             controller.combineSelectedSurfaces();
         }else{
             String[] options = {"Ok"};

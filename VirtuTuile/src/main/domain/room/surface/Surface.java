@@ -96,10 +96,6 @@ public class Surface {
 
     private void mergePolygon(Polygon polygon) {
         //TODO algo pour créer un polygon résultant à partir d'une liste de polygon
-
-        for (int i = 0; i < polygon.xpoints.length; i++){
-            this.polygon.addPoint(polygon.xpoints[(i+2)%4], polygon.ypoints[(i+2)%4]);
-        }
         Area areaToAdd = new Area(polygon);
         this.area.add(areaToAdd);
     }

@@ -285,6 +285,15 @@ public class Room {
         }
         return null;
     }
+    public int numberOfSelectedSurfaces(){
+        int count = 0;
+        for(Surface surface:surfaceList){
+            if(surface.isSelected()){
+                count++;
+            }
+        }
+        return count;
+    }
 
     public boolean surfaceInTouch(){
 
