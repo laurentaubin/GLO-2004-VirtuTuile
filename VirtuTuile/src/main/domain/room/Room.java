@@ -144,6 +144,7 @@ public class Room {
         return dimensionList;
     }
 
+    /*
 
     public void setSelectedRectangularSurfaceDimensions(double[] dimensions) {
         for (Surface surface: this.surfaceList) {
@@ -160,6 +161,8 @@ public class Room {
             }
         }
     }
+
+     */
 
 
     public void deleteSurface(){

@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8c246219-cf09-4492-905b-d80bdbddbe18" name="Default Changelist" comment="" />
+    <list default="true" id="8c246219-cf09-4492-905b-d80bdbddbe18" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/RightPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/RightPanel.java" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +43,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/gui" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
@@ -99,8 +104,16 @@
       <workItem from="1573741970285" duration="24988000" />
       <workItem from="1573775463830" duration="1596000" />
       <workItem from="1573861064377" duration="754000" />
-      <workItem from="1573868171674" duration="14864000" />
+      <workItem from="1573868171674" duration="15136000" />
     </task>
+    <task id="LOCAL-00001" summary="xml(?)">
+      <created>1573883748096</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1573883748096</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -118,5 +131,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="xml(?)" />
+    <option name="LAST_COMMIT_MESSAGE" value="xml(?)" />
   </component>
 </project>

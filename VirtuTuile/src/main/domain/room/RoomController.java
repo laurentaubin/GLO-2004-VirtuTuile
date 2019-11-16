@@ -104,9 +104,11 @@ public class RoomController {
         return room.getSelectedRectangularSurfaceDimensions();
     }
 
+    /*
     public void setSelectedRectangularSurfaceDimensions(double[] dimensions){
         room.setSelectedRectangularSurfaceDimensions(dimensions);
     }
+     */
 
 
     public static void setSelectedSurfaceColor(Color color){
