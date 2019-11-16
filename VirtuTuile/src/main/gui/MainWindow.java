@@ -132,14 +132,6 @@ public class MainWindow extends JFrame {
         });
 /*
         // Pas rapport
-
-        /*
-
-=======
-
-
-        /*
->>>>>>> 941acb977c1c98e79281b777ceaaed51ca52fc40
         drawingPanel.addMouseWheelListener(new java.awt.event.MouseAdapter() {
             public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
                 int wheel = evt.getWheelRotation();
@@ -150,7 +142,6 @@ public class MainWindow extends JFrame {
                 }
             }
         });
-<<<<<<< HEAD
 */
 
         measurementUnitComboBox.setModel(new DefaultComboBoxModel<>(new String[] { "MÉTRIQUE", "IMPÉRIALE" }));
@@ -386,8 +377,8 @@ public class MainWindow extends JFrame {
         if (this.currentApplicationMode == ApplicationMode.SELECT && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
 
-            double xPos = UnitConverter.convertPixelToSelectedUnit((int) this.initMousePoint.getX(), this.currentMeasurementMode) * 10000;
-            double yPos = UnitConverter.convertPixelToSelectedUnit((int) this.initMousePoint.getY(), this.currentMeasurementMode) * 10000;
+            double xPos = UnitConverter.convertPixelToSelectedUnit((int) this.initMousePoint.getX(), this.currentMeasurementMode);
+            double yPos = UnitConverter.convertPixelToSelectedUnit((int) this.initMousePoint.getY(), this.currentMeasurementMode);
 
             this.controller.switchSelectionStatus(xPos, yPos, mouseEvent.isShiftDown());
             // this.controller.switchSelectionStatus(this.initMousePoint.getX(), this.initMousePoint.getY(), mouseEvent.isShiftDown());
@@ -441,13 +432,11 @@ public class MainWindow extends JFrame {
     private void drawingPanelMouseDragged(MouseEvent mouseEvent){
         // TODO ça marche pas pcq le init mouse point est pas updaté a bonne palce faique le delta est pas bon
         if (SwingUtilities.isRightMouseButton(mouseEvent)) {
-            //TODO Ajouter la conversion des unités de mesure ici!
             double deltaX = UnitConverter.convertPixelToSelectedUnit((int) (mouseEvent.getX() - this.currentMousePoint.getX()), this.currentMeasurementMode);
             double deltaY = UnitConverter.convertPixelToSelectedUnit((int) (mouseEvent.getY() - this.currentMousePoint.getY()), this.currentMeasurementMode);
-            this.controller.updateSelectedSurfacesPositions(deltaX, deltaY);
-            // this.controller.updateSelectedSurfacesPositions(mouseEvent.getX() - this.currentMousePoint.getX(), mouseEvent.getY() - this.currentMousePoint.getY());
-            this.currentMousePoint = mouseEvent.getPoint();
 
+            this.controller.updateSelectedSurfacesPositions(deltaX, deltaY);
+            this.currentMousePoint = mouseEvent.getPoint();
         }
 
         else if (this.currentApplicationMode == ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
@@ -488,15 +477,8 @@ public class MainWindow extends JFrame {
 
     private void drawingPanelMouseMoved(MouseEvent evt) {
         //TODO convertir les unités
-<<<<<<< HEAD
         int x = (int) (evt.getX() / drawingPanel.getZoom());
         int y = (int) (evt.getY() / drawingPanel.getZoom());
-        String mousePosition = "x= " + x + ", y= " + y;
-||||||| merged common ancestors
-        double x = evt.getX() / drawingPanel.getZoom();
-        double y = evt.getY() / drawingPanel.getZoom();
-        String mousePosition = "x= " + x + ", y= " + y;
-=======
 
         String mousePosition = "";
         double xPos = UnitConverter.convertPixelToSelectedUnit( evt.getX(), this.currentMeasurementMode);
@@ -507,7 +489,6 @@ public class MainWindow extends JFrame {
         if (this.currentMeasurementMode == MeasurementUnitMode.IMPERIAL) {
             mousePosition += ("x= " + xPos + "'' " + ", y= " + yPos + "'' ");
         }
->>>>>>> 4db28d4c0edc5d1aad0441e43287f8f77b896162
         setStatusBarText(mousePosition);
     }
 

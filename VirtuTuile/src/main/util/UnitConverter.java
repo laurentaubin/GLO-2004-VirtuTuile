@@ -16,8 +16,8 @@ public class UnitConverter {
 
     private static final float INCH_TO_METER = (float) 0.0254;
     private static final float METER_TO_INCH = (float) 39.3701;
-    private static final float PIXEL_TO_METER = (float) 0.0002645833;
-    private static final float PIXEL_TO_INCH = (float) 0.0104166667;
+    private static final float PIXEL_TO_METER = (float) 0.0002645833 * 10000;
+    private static final float PIXEL_TO_INCH = (float) 0.0104166667 * 10000;
 
     private static double pixelToInch(int pixel) {
         return pixel * PIXEL_TO_INCH;
@@ -90,7 +90,7 @@ public class UnitConverter {
         int[] convertedList = new int[pixelList.length];
         for (int i = 0; i < pixelList.length; i++) {
             // * 10000 pour éviter que ça donne 0 quand on cast le résultat en int
-            convertedList[i] = (int) (UnitConverter.convertPixelToSelectedUnit(pixelList[i], mode) * 10000);
+            convertedList[i] = (int) (UnitConverter.convertPixelToSelectedUnit(pixelList[i], mode));
         }
         return convertedList;
     }
@@ -101,7 +101,7 @@ public class UnitConverter {
         int[] convertedList = new int[unitList.length];
         for (int i = 0; i < unitList.length; i++) {
             // / 10000 car on a multiplié par 10000 dans l'autre conversion
-            convertedList[i] = (UnitConverter.convertSelectedUnitToPixel(unitList[i], mode) / 10000);
+            convertedList[i] = (UnitConverter.convertSelectedUnitToPixel(unitList[i], mode));
         }
         return convertedList;
     }
