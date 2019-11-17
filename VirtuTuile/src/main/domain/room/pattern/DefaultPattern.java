@@ -10,6 +10,9 @@ import java.util.ArrayList;
 
 public class DefaultPattern extends Pattern {
 
+    public DefaultPattern(double xOffset, double yOffset, int angle, double groutWidth, Color groutColor) {
+        super(xOffset, yOffset, angle, groutWidth, groutColor);
+    }
 
     public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, MainWindow.MeasurementUnitMode measurementMode) {
         Point2D.Double boudingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());

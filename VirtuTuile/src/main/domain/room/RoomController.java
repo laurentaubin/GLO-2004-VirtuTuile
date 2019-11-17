@@ -142,4 +142,33 @@ public class RoomController {
     public void combineSelectedSurfaces() {
         room.combineSelectedSurface();
     }
+
+    public void createTileFromUserInput(Color color, float width, float height, String name, int nbrTilesPerBox) {
+        room.createTileFromUserInput(color, width, height, name, nbrTilesPerBox);
+    }
+
+    public ArrayList<TileType> getTileList() {
+        return room.getTileList();
+    }
+
+    public void setSelectedTileToSelectedSurface(TileType selectedTileType) {
+        room.setSelectedTileToSelectedSurface(selectedTileType);
+    }
+
+    public void setStraightPatternToSelectedSurface() {
+        room.setStraightPatternToSelectedSurface();
+    }
+
+    public void setHorizontalPatternToSelectedSurface() {
+        room.setHorizontalPatternToSelectedSurface();
+    }
+
+    public void setVerticalPatternToSelectedSurface() {
+        room.setVerticalPatternToSelectedSurface();
+    }
+
+    public void setVerticalBrickPatternToSelectedSurface() {
+        room.setVerticalBrickPatternToSelectedSurface();
+    }
 }
+

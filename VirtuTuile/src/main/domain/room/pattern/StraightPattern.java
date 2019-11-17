@@ -11,18 +11,17 @@ import java.util.ArrayList;
 
 public class StraightPattern extends Pattern {
 
-    public StraightPattern() {
-        super();
+    public StraightPattern(double xOffset, double yOffset, int angle, double groutWidth, Color groutColor) {
+        super(xOffset, yOffset, angle, groutWidth, groutColor);
     }
 
     public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, MainWindow.MeasurementUnitMode measurementMode) {
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
         Point2D.Double position = new Point2D.Double(boundingRectanglePosition.getX(), boundingRectangle.getY());
         //Le width du bounding rectangle devrait être un double
+
         double boundingRectangleWidth = (int)boundingRectangle.getWidth() ;
         double boundingRectangleHeight = (int)boundingRectangle.getHeight();
-
-        System.out.println(boundingRectangleHeight);
 
         double numberColumn = boundingRectangleWidth / tileType.getWidth();
         if (numberColumn / (int)numberColumn != 0) {
@@ -33,7 +32,6 @@ public class StraightPattern extends Pattern {
         if(numberRow / (int)numberRow != 0) {
             numberRow = (int)(numberRow + 1);
         }
-
 
         for (int row = 1; row <= numberRow ; row++) {
             for (int column = 1; column <= numberColumn; column++) {

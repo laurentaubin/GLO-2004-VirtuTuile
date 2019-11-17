@@ -1,6 +1,6 @@
 package domain.room;
 
-import domain.room.pattern.Pattern;
+import domain.room.pattern.*;
 import domain.room.surface.ElementarySurface;
 import domain.room.surface.RectangularSurface;
 import domain.room.surface.Surface;
@@ -332,5 +332,58 @@ public class Room {
             }
         }
         return surfacesToCombine;
+    }
+
+    public void createTileFromUserInput(Color color, float width, float height, String name, int nbrTilesPerBox) {
+        TileType tileType = new TileType(color, width, height, name, nbrTilesPerBox);
+        tileTypeList.add(tileType);
+    }
+
+    public ArrayList<TileType> getTileList() {
+        return tileTypeList;
+    }
+
+    public void setSelectedTileToSelectedSurface(TileType selectedTileType) {
+        for (Surface surfaceInRoom : surfaceList) {
+            if (surfaceInRoom.isSelected()) {
+                surfaceInRoom.setTileType(selectedTileType);
+            }
+        }
+    }
+
+    public void setStraightPatternToSelectedSurface() {
+        StraightPattern straightPattern = new StraightPattern();
+        for (Surface surfaceInRoom : surfaceList) {
+            if (surfaceInRoom.isSelected()) {
+                surfaceInRoom.setPattern(straightPattern);
+            }
+        }
+    }
+
+    public void setHorizontalPatternToSelectedSurface() {
+        BrickPattern brickPattern = new BrickPattern();
+        for (Surface surfaceInRoom : surfaceList) {
+            if (surfaceInRoom.isSelected()) {
+                surfaceInRoom.setPattern(brickPattern);
+            }
+        }
+    }
+
+    public void setVerticalPatternToSelectedSurface() {
+        VerticalPattern verticalPattern = new VerticalPattern();
+        for (Surface surfaceInRoom : surfaceList) {
+            if (surfaceInRoom.isSelected()) {
+                surfaceInRoom.setPattern(verticalPattern);
+            }
+        }
+    }
+
+    public void setVerticalBrickPatternToSelectedSurface() {
+        VerticalBrickPattern verticalBrickPattern = new VerticalBrickPattern();
+        for (Surface surfaceInRoom : surfaceList) {
+            if (surfaceInRoom.isSelected()) {
+                surfaceInRoom.setPattern(verticalBrickPattern);
+            }
+        }
     }
 }

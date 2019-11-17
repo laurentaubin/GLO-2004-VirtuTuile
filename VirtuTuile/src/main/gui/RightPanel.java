@@ -24,8 +24,8 @@ public class RightPanel extends JTabbedPane implements Serializable {
 
     private void initRightPanel(){
         surfaceTabPanel = new SurfaceTab(mainWindow);
-        patternTabPanel = new PatternTab();
-        tileTabPanel = new TileTab();
+        patternTabPanel = new PatternTab(mainWindow);
+        tileTabPanel = new TileTab(mainWindow);
         //groutTabPanel = new GroutTabPanel(this);
 
         //this.setPreferredSize(new Dimension(10, 10));

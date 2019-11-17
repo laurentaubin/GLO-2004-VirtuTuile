@@ -1,6 +1,5 @@
 package domain.room;
 
-import domain.room.pattern.AnglePattern;
 import domain.room.surface.*;
 import gui.MainWindow;
 import org.junit.jupiter.api.BeforeEach;

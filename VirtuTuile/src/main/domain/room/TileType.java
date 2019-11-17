@@ -65,6 +65,11 @@ public class TileType extends Polygon{
     public void setNbrTilesPerBox(int nbrTilesPerBox) {
         this.nbrTilesPerBox = nbrTilesPerBox;
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }
 
 
