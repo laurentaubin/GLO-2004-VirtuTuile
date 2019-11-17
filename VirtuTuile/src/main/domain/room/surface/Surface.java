@@ -94,11 +94,6 @@ public class Surface {
         this.area.add(surface.area);
     }
 
-    public Shape getShape(){
-        Shape shape = this.area;
-        return shape;
-    }
-
     public void addElementaryWholeSurface(ElementarySurface elementarySurface) {
         wholeSurfaces.add(elementarySurface);
     }

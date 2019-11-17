@@ -2,6 +2,10 @@ package domain.drawing;
 
 import domain.room.RoomController;
 import domain.room.pattern.StraightPattern;
+import domain.room.pattern.VerticalBrickPattern;
+import domain.room.pattern.VerticalPattern;
+import domain.room.pattern.BrickPattern;
+import domain.room.pattern.VerticalBrickPattern;
 import domain.room.surface.Surface;
 import util.UnitConverter;
 import gui.MainWindow;
@@ -35,7 +39,7 @@ public class SurfaceDrawer {
 
     public void drawSurface(Graphics2D g2d, ArrayList<Surface> surfaceList, MainWindow.MeasurementUnitMode measurementMode) {
         for (Surface current_surface : surfaceList) {
-            Shape shape = current_surface.getShape();
+            Shape shape = current_surface.getAreaTest();
             Color fillColor = current_surface.getColor();
             g2d.setColor(fillColor);
             g2d.fill(shape);
@@ -44,14 +48,18 @@ public class SurfaceDrawer {
                 shape = current_surface.getAreaTest();
             }
 
-            /*
+
             StraightPattern pattern = new StraightPattern();
+            //VerticalPattern pattern = new VerticalPattern();
+            //BrickPattern pattern = new BrickPattern();
+            //VerticalBrickPattern pattern = new VerticalBrickPattern();
+            g2d.setColor(Color.BLACK);
             current_surface.setPattern(pattern);
             for (Polygon polygon : current_surface.getPattern().generateTiles((Rectangle) current_surface.getBoundingRectangle(), current_surface.getTileType(), measurementMode)) {
                 g2d.draw(polygon);
             }
             g2d.draw(current_surface.getBoundingRectangle());
-             */
+
 
             //Polygon polygon = UnitConverter.convertPolygonToPixel(current_surface.getPolygon(), measurementMode);
             if (current_surface.isSelected()){
