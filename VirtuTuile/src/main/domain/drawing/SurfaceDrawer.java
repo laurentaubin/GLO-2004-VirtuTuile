@@ -49,16 +49,19 @@ public class SurfaceDrawer {
             }
 
 
-            StraightPattern pattern = new StraightPattern();
+            //StraightPattern pattern = new StraightPattern();
             //VerticalPattern pattern = new VerticalPattern();
             //BrickPattern pattern = new BrickPattern();
             //VerticalBrickPattern pattern = new VerticalBrickPattern();
             g2d.setColor(Color.BLACK);
-            current_surface.setPattern(pattern);
+            //current_surface.setPattern(pattern);
+            /*
             for (Polygon polygon : current_surface.getPattern().generateTiles((Rectangle) current_surface.getBoundingRectangle(), current_surface.getTileType(), measurementMode)) {
                 g2d.draw(polygon);
             }
             g2d.draw(current_surface.getBoundingRectangle());
+
+             */
 
 
             //Polygon polygon = UnitConverter.convertPolygonToPixel(current_surface.getPolygon(), measurementMode);

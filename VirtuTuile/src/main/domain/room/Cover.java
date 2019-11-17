@@ -22,6 +22,7 @@ public class Cover {
         this.startsWithFullTile = startsWithFullTile;
     }
 
+    /*
     public static Cover createCoverWithDefaultParameters()
     {
         Pattern pattern = new DefaultPattern();
@@ -29,6 +30,8 @@ public class Cover {
         Grout grout = Grout.createGroutWithDefaultParameters();
         return new Cover(0, 0, pattern, tileType, grout, true);
     }
+
+     */
 
     public int getShiftX() {
         return shiftX;

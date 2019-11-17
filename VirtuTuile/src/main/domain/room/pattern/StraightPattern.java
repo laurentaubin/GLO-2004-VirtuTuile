@@ -11,6 +11,10 @@ import java.util.ArrayList;
 
 public class StraightPattern extends Pattern {
 
+    public StraightPattern() {
+
+    }
+
     public StraightPattern(double xOffset, double yOffset, int angle, double groutWidth, Color groutColor) {
         super(xOffset, yOffset, angle, groutWidth, groutColor);
     }

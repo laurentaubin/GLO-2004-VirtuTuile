@@ -10,6 +10,10 @@ import java.util.ArrayList;
 
 public class VerticalPattern extends Pattern {
 
+    public VerticalPattern(){
+
+    }
+
     public VerticalPattern(double xOffset, double yOffset, int angle, double groutWidth, Color groutColor) {
         super(xOffset, yOffset, angle, groutWidth, groutColor);
     }

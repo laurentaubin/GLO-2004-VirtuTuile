@@ -45,7 +45,7 @@ public class Surface {
         wholeSurfaces = new ArrayList<ElementarySurface>();
         holes = new ArrayList<ElementarySurface>();
         this.tileType = TileType.createTileWithDefaultParameters();
-        this.pattern = new DefaultPattern();
+        //this.pattern = new DefaultPattern();
         this.color = (Color.WHITE);
     }
 

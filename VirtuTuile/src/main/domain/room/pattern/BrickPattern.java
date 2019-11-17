@@ -10,6 +10,10 @@ import java.util.ArrayList;
 
 public class BrickPattern extends Pattern {
 
+    public BrickPattern() {
+
+    }
+
     public BrickPattern(double xOffset, double yOffset, int angle, double groutWidth, Color groutColor) {
         super(xOffset, yOffset, angle, groutWidth, groutColor);
     }

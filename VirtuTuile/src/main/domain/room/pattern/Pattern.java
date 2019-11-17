@@ -15,6 +15,11 @@ public abstract class Pattern {
     private Color groutColor;
     public ArrayList<Tile> virtualTileList;
 
+
+    public Pattern(){
+
+    }
+
     public Pattern(double xOffset, double yOffset, int angle, double groutWidth, Color groutColor)  {
         this.xOffset = xOffset;
         this. yOffset = yOffset;
