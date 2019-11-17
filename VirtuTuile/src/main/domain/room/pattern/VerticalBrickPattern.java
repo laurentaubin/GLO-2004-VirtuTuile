@@ -8,10 +8,10 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
-public class VerticalPattern extends Pattern {
+public class VerticalBrickPattern extends Pattern {
 
 
-    public VerticalPattern() { super(); }
+    public VerticalBrickPattern() { super(); }
 
     public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, MainWindow.MeasurementUnitMode measurementMode) {
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
@@ -57,9 +57,14 @@ public class VerticalPattern extends Pattern {
                 virtualTileList.add(new Tile(position, xPoints, yPoints, 4));
                 position.setLocation(position.getX() + tileType.getHeight(), position.getY());
             }
-            position.setLocation(boundingRectanglePosition.getX(), position.getY() + tileType.getWidth());
+            if(row % 2 == 0) {
+                position.setLocation(boundingRectanglePosition.getX(), position.getY() + tileType.getWidth());
+            }
+            else{
+                position.setLocation(boundingRectanglePosition.getX(), position.getY() + tileType.getWidth());
+                position.setLocation(position.getX() - (tileType.getHeight()/2), position.getY());
+            }
         }
         return virtualTileList;
     }
 }
-
