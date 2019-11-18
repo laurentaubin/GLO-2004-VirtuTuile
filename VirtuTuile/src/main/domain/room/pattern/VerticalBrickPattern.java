@@ -8,13 +8,13 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
-public class VerticalPattern extends Pattern {
+public class VerticalBrickPattern extends Pattern {
 
-    public VerticalPattern(){
+    public VerticalBrickPattern() {
 
     }
 
-    public VerticalPattern(double xOffset, double yOffset, int angle, double groutWidth, Color groutColor) {
+    public VerticalBrickPattern(double xOffset, double yOffset, int angle, double groutWidth, Color groutColor) {
         super(xOffset, yOffset, angle, groutWidth, groutColor);
     }
 
@@ -44,9 +44,6 @@ public class VerticalPattern extends Pattern {
         for (int row = 1; row <= numberRow ; row++) {
             for (int column = 1; column <= numberColumn; column++) {
 
-
-
-
                 int[] xPoints = new int[4];
                 xPoints[0] = (int)(position.getX() + (groutWidth * column));
                 xPoints[1] = (int)(position.getX() + tileType.getHeight() + (groutWidth * column));
@@ -62,9 +59,14 @@ public class VerticalPattern extends Pattern {
                 virtualTileList.add(new Tile(position, xPoints, yPoints, 4));
                 position.setLocation(position.getX() + tileType.getHeight(), position.getY());
             }
-            position.setLocation(boundingRectanglePosition.getX(), position.getY() + tileType.getWidth());
+            if(row % 2 == 0) {
+                position.setLocation(boundingRectanglePosition.getX(), position.getY() + tileType.getWidth());
+            }
+            else{
+                position.setLocation(boundingRectanglePosition.getX(), position.getY() + tileType.getWidth());
+                position.setLocation(position.getX() - (tileType.getHeight()/2), position.getY());
+            }
         }
         return virtualTileList;
     }
 }
-

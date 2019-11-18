@@ -28,13 +28,14 @@ public class Surface {
     private double height;
     private ArrayList<ElementarySurface> wholeSurfaces;
     private ArrayList<ElementarySurface> holes;
+    private int numberSummit;
 
     public Surface(Point point) {
         this.position = point;
         wholeSurfaces = new ArrayList<ElementarySurface>();
         holes = new ArrayList<ElementarySurface>();
         this.tileType = TileType.createTileWithDefaultParameters();
-        this.pattern = new DefaultPattern();
+        //this.pattern = new DefaultPattern();
         this.color = (Color.WHITE);
     }
 
@@ -189,10 +190,7 @@ public class Surface {
     }
 
     public Rectangle2D getBoundingRectangle() {
-        if (this.isMerged()) {
-            return this.area.getBounds2D();
-        }
-        return this.polygon.getBounds2D();
+        return this.area.getBounds2D();
     }
 
     public void updateSurfacePositions(double deltaX, double deltaY) {
@@ -265,15 +263,17 @@ public class Surface {
     private void translateArea(double deltaX, double deltaY) {
         AffineTransform at = new AffineTransform(1, 0, 0, 1, deltaX, deltaY);
         this.area.transform(at);
+        this.position.translate((int)deltaX, (int)deltaY);
     }
 
     public void setWidth(double enteredWidth) {
         double deltaX = enteredWidth - this.width;
         this.width = enteredWidth;
 
-        if (this.polygon.npoints == 4) {
+        if (getNumberOfSummit() == 4) {
             this.polygon.xpoints[1] += deltaX;
             this.polygon.xpoints[2] += deltaX;
+            this.area = new Area(this.polygon);
         }
         //TODO modifier les dimensions des surfaces élémentaires
         //TODO Faire le code pour les surfaces irrégulières
@@ -283,10 +283,12 @@ public class Surface {
         double deltaY = height - this.height;
         this.height = height;
 
-        if (this.polygon.npoints == 4) {
+        if (getNumberOfSummit() == 4) {
             this.polygon.ypoints[2] += deltaY;
             this.polygon.ypoints[3] += deltaY;
+            this.area = new Area(this.polygon);
         }
+
         //TODO modifier les dimensions des surfaces élémentaires
         //TODO Faire le code pour les surfaces irrégulières
     }
@@ -319,6 +321,22 @@ public class Surface {
 
     public void setArea(Area area) {
         this.area = area;
+    }
+
+    public int getNumberOfSummit() {
+        int counter = 0;
+        PathIterator pathIterator = this.area.getPathIterator(null);
+        float[] floats = new float[6];
+        while (!pathIterator.isDone()) {
+            int type = pathIterator.currentSegment(floats);
+            int x = (int) floats[0];
+            int y = (int) floats[1];
+            if (type != PathIterator.SEG_CLOSE) {
+                counter += 1;
+            }
+            pathIterator.next();
+        }
+        return counter;
     }
 }
 

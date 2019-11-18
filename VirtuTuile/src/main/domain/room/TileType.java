@@ -12,8 +12,9 @@ public class TileType extends Polygon{
 
     public TileType(Color color, float width, float height, String name, int nbrTilesPerBox) {
         this.color = color;
-        this.width = width;
-        this.height = height;
+        //TEST
+        this.width = 20/*width*/;
+        this.height = 10 /*height*/;
         this.name = name;
         this.nbrTilesPerBox = nbrTilesPerBox;
     }
@@ -64,6 +65,11 @@ public class TileType extends Polygon{
 
     public void setNbrTilesPerBox(int nbrTilesPerBox) {
         this.nbrTilesPerBox = nbrTilesPerBox;
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 }
 

@@ -7,13 +7,14 @@ import java.awt.event.ActionListener;
 
 public class PatternTab extends JPanel{
 
+    private MainWindow mainWindow;
     private JPanel mainPatternPanel;
     private JToggleButton straightPatternButton;
     private JToggleButton brickPatternButton;
-    private JToggleButton LShapeButton;
+    private JToggleButton verticalBrickShapeButton;
     private JToggleButton whatPatternButton;
     private JToggleButton chevronPatternButton;
-    private JToggleButton anglePatternButton;
+    private JToggleButton verticalPatternButton;
     private ButtonGroup patternButtonGroup;
     private JScrollPane patternScrollPane;
     private JPanel panelInsideScrollPane;
@@ -24,34 +25,35 @@ public class PatternTab extends JPanel{
     private JPanel groutPanel;
     private JLabel groutColorLabel;
     private JButton groutColorButton;
-    private JFormattedTextField formattedTextField1;
+    private JFormattedTextField groutWidthField;
     private JButton modifierLaLargeurDuButton;
     private Color selectedColor;
 
 
-    public PatternTab() {
+    public PatternTab(MainWindow mainWindow) {
+        this.mainWindow = mainWindow;
         this.selectedColor = Color.WHITE;
         patternButtonGroup = new ButtonGroup();
         patternButtonGroup.add(straightPatternButton);
         patternButtonGroup.add(brickPatternButton);
-        patternButtonGroup.add(LShapeButton);
-        patternButtonGroup.add(anglePatternButton);
+        patternButtonGroup.add(verticalBrickShapeButton);
+        patternButtonGroup.add(verticalPatternButton);
         patternButtonGroup.add(chevronPatternButton);
         patternButtonGroup.add(whatPatternButton);
 
         //groutColorButton.setPreferredSize(new Dimension(60, 40));
 
-        straightPatternButton.setIcon(new ImageIcon(new ImageIcon("src/image/Droit.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT)));
+        straightPatternButton.setIcon(new ImageIcon(new ImageIcon("src/image/droite_horizontale.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT)));
         straightPatternButton.setMargin(new Insets(10, 0, 10, 0));
 
-        brickPatternButton.setIcon(new ImageIcon(new ImageIcon("src/image/Brique.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT)));
+        brickPatternButton.setIcon(new ImageIcon(new ImageIcon("src/image/brique_horizontale.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT)));
         brickPatternButton.setMargin(new Insets(10, 0, 10, 0));
 
-        anglePatternButton.setIcon(new ImageIcon(new ImageIcon("src/image/Angle.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT)));
-        anglePatternButton.setMargin(new Insets(10, 0, 10, 0));
+        verticalPatternButton.setIcon(new ImageIcon(new ImageIcon("src/image/droite_verticale.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT)));
+        verticalPatternButton.setMargin(new Insets(10, 0, 10, 0));
 
-        LShapeButton.setIcon(new ImageIcon(new ImageIcon("src/image/L.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT)));
-        LShapeButton.setMargin(new Insets(10, 0, 10, 0));
+        verticalBrickShapeButton.setIcon(new ImageIcon(new ImageIcon("src/image/brique_verticale.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT)));
+        verticalBrickShapeButton.setMargin(new Insets(10, 0, 10, 0));
 
         //Ajouter les autres motifs
 
@@ -61,9 +63,35 @@ public class PatternTab extends JPanel{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 Color color = JColorChooser.showDialog(null, "Choose a color", selectedColor);
-
-                //Set l'attribut de la couleur du coulis
                 setButtonColor(color);
+            }
+        });
+
+        straightPatternButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                straightPatternButtonActionPerformed();
+            }
+        });
+
+        brickPatternButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                horizontalBrickButtonActionPerformed();
+            }
+        });
+
+        verticalPatternButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                verticalPatternButtonActionPerformed();
+            }
+        });
+
+        verticalBrickShapeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                verticalBrickButtonActionPerformed();
             }
         });
     }
@@ -77,5 +105,21 @@ public class PatternTab extends JPanel{
 
     private Color getSelectedColor() {
         return this.selectedColor;
+    }
+
+    private void straightPatternButtonActionPerformed() {
+        mainWindow.setStraightPatternToSelectedSurface();
+    }
+
+    private void horizontalBrickButtonActionPerformed() {
+        mainWindow.setHorizontalPatternToSelectedSurface();
+    }
+
+    private void verticalPatternButtonActionPerformed() {
+        mainWindow.setVerticalPatternToSelectedSurface();
+    }
+
+    private void verticalBrickButtonActionPerformed() {
+        mainWindow.setVerticalBrickPatternToSelectedSurface();
     }
 }

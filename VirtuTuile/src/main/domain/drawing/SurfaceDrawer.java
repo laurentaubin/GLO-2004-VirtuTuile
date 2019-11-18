@@ -2,6 +2,10 @@ package domain.drawing;
 
 import domain.room.RoomController;
 import domain.room.pattern.StraightPattern;
+import domain.room.pattern.VerticalBrickPattern;
+import domain.room.pattern.VerticalPattern;
+import domain.room.pattern.BrickPattern;
+import domain.room.pattern.VerticalBrickPattern;
 import domain.room.surface.Surface;
 import util.UnitConverter;
 import gui.MainWindow;
@@ -55,15 +59,20 @@ public class SurfaceDrawer {
                 shape = current_surface.getAreaTest();
             }
 
+
+            //StraightPattern pattern = new StraightPattern();
+            //VerticalPattern pattern = new VerticalPattern();
+            //BrickPattern pattern = new BrickPattern();
+            //VerticalBrickPattern pattern = new VerticalBrickPattern();
+            g2d.setColor(Color.BLACK);
+            //current_surface.setPattern(pattern);
             /*
-            StraightPattern pattern = new StraightPattern();
-            current_surface.setPattern(pattern);
             for (Polygon polygon : current_surface.getPattern().generateTiles((Rectangle) current_surface.getBoundingRectangle(), current_surface.getTileType(), measurementMode)) {
                 g2d.draw(polygon);
             }
             g2d.draw(current_surface.getBoundingRectangle());
-             */
 
+             */
             if (current_surface.isSelected()) {
                 Color selectedColor = new Color(56, 177, 255);
                 g2d.setColor(selectedColor);

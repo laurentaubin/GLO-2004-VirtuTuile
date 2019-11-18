@@ -1,12 +1,14 @@
 package gui;
 
 import domain.room.RoomController;
+import domain.room.TileType;
 import util.UnitConverter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
 import static gui.MainWindow.ApplicationMode.*;
 
@@ -538,6 +540,34 @@ public class MainWindow extends JFrame {
                     JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
         }
         drawingPanel.repaint();
+    }
+
+    public void createTileFromUserInput(Color color, float width, float height, String name, int nbrTilesPerBox) {
+        controller.createTileFromUserInput(color, width, height, name, nbrTilesPerBox);
+    }
+
+    public ArrayList<TileType> getTileList() {
+        return controller.getTileList();
+    }
+
+    public void setSelectedTileToSelectedSurface(TileType selectedTileType) {
+        controller.setSelectedTileToSelectedSurface(selectedTileType);
+    }
+
+    public void setStraightPatternToSelectedSurface() {
+        controller.setStraightPatternToSelectedSurface();
+    }
+
+    public void setHorizontalPatternToSelectedSurface() {
+        controller.setHorizontalPatternToSelectedSurface();
+    }
+
+    public void setVerticalPatternToSelectedSurface() {
+        controller.setVerticalPatternToSelectedSurface();
+    }
+
+    public void setVerticalBrickPatternToSelectedSurface() {
+        controller.setVerticalBrickPatternToSelectedSurface();
     }
 
     private ButtonGroup buttonGroup;
