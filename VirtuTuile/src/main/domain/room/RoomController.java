@@ -79,8 +79,8 @@ public class RoomController {
         room.switchSelectionStatus(x, y, isShiftDown);
     }
 
-    public void updateSelectedSurfacesPositions(double deltaX, double deltaY) {
-        room.updateSelectedSurfacesPositions(deltaX, deltaY);
+    public void updateSelectedSurfacesPositions(double deltaX, double deltaY, double pixelX, double pixelY) {
+        room.updateSelectedSurfacesPositions(deltaX, deltaY, pixelX, pixelY);
     }
 
     public void setPatternToSelectedSurfaces(Pattern pattern) {

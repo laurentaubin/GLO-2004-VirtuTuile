@@ -428,10 +428,12 @@ public class MainWindow extends JFrame {
     private void drawingPanelMouseDragged(MouseEvent mouseEvent){
         // TODO ça marche pas pcq le init mouse point est pas updaté a bonne palce faique le delta est pas bon
         if (SwingUtilities.isRightMouseButton(mouseEvent)) {
-            double deltaX = UnitConverter.convertPixelToSelectedUnit((int) (mouseEvent.getX() - this.currentMousePoint.getX()), this.currentMeasurementMode);
-            double deltaY = UnitConverter.convertPixelToSelectedUnit((int) (mouseEvent.getY() - this.currentMousePoint.getY()), this.currentMeasurementMode);
+            double pixelX = (int) (mouseEvent.getX() - this.currentMousePoint.getX());
+            double pixelY = (int) (mouseEvent.getY() - this.currentMousePoint.getY());
+            double deltaX = UnitConverter.convertPixelToSelectedUnit(pixelX, this.currentMeasurementMode);
+            double deltaY = UnitConverter.convertPixelToSelectedUnit(pixelY, this.currentMeasurementMode);
 
-            this.controller.updateSelectedSurfacesPositions(deltaX, deltaY);
+            this.controller.updateSelectedSurfacesPositions(deltaX, deltaY, pixelX, pixelY);
             this.currentMousePoint = mouseEvent.getPoint();
         }
         else if (this.currentApplicationMode == ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {

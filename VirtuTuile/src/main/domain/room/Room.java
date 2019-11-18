@@ -98,7 +98,7 @@ public class Room {
         }
     }
 
-    public void updateSelectedSurfacesPositions(double deltaX, double deltaY) {
+    public void updateSelectedSurfacesPositions(double deltaX, double deltaY, double pixelX, double pixelY) {
         for (Surface surfaceInRoom : this.surfaceList) {
             if (surfaceInRoom.isSelected()) {
                // surfaceInRoom.updateSurfacePositions(deltaX, deltaY);
@@ -112,7 +112,7 @@ public class Room {
                 }
 
                  */
-                surfaceInRoom.translate(deltaX, deltaY);
+                surfaceInRoom.translate(deltaX, deltaY, pixelX, pixelY);
             }
         }
     }

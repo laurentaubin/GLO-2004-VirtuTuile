@@ -13,19 +13,19 @@ import java.util.Arrays;
 import javafx.util.Pair;*/
 
 public class UnitConverter {
-/*
+
     private static final float INCH_TO_METER = (float) 0.0254;
     private static final float METER_TO_INCH = (float) 39.3701;
     private static final float PIXEL_TO_METER = (float) 0.0002645833 * 10000;
     private static final float PIXEL_TO_INCH = (float) 0.0104166667 * 10000;
-*/
 
+/*
     private static final float INCH_TO_METER = (float) 1;
     private static final float METER_TO_INCH = (float) 1;
     private static final float PIXEL_TO_METER = (float) 1;
     private static final float PIXEL_TO_INCH = (float) 1;
 
-
+*/
     private static double pixelToInch(double pixel) {
         return pixel * PIXEL_TO_INCH;
     }

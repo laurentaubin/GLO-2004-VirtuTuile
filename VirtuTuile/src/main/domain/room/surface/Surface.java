@@ -242,9 +242,17 @@ public class Surface {
         this.pattern = pattern;
     }
 
-    public void translate(double deltaX, double deltaY) {
-        this.polygon.translate((int)deltaX, (int)deltaY);
+    public void translate(double deltaX, double deltaY, double pixelX, double pixelY) {
+        this.translatePolygon(deltaX, deltaY);
+        this.translateArea(pixelX, pixelY);
+    }
 
+    private void translatePolygon(double deltaX, double deltaY) {
+        this.polygon.translate((int)deltaX, (int)deltaY);
+        translateElementaryPolygons(deltaX, deltaY);
+    }
+
+    private void translateElementaryPolygons(double deltaX, double deltaY) {
         for (ElementarySurface wholeSurface : wholeSurfaces) {
             wholeSurface.translate(deltaX, deltaY);
         }
@@ -252,7 +260,9 @@ public class Surface {
         for (ElementarySurface holeSurface : holes) {
             holeSurface.translate(deltaX, deltaY);
         }
+    }
 
+    private void translateArea(double deltaX, double deltaY) {
         AffineTransform at = new AffineTransform(1, 0, 0, 1, deltaX, deltaY);
         this.area.transform(at);
     }
