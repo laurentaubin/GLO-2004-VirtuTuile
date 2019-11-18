@@ -8,6 +8,7 @@ import domain.room.surface.Surface;
 import gui.MainWindow;
 
 import java.awt.*;
+import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
 
 public class RoomController {
@@ -22,6 +23,13 @@ public class RoomController {
 
     public RoomController(){
         room = new Room();
+    }
+
+    public void draw(Graphics2D g, MainWindow.MeasurementUnitMode measurementUnitMode) {
+        ArrayList<Surface> surfaceList = getSurfaceList();
+        surfaceDrawer = new SurfaceDrawer(this);
+        surfaceDrawer.setMeasurementUnitMode(measurementUnitMode);
+        surfaceDrawer.draw(g, surfaceList);
     }
 
     public void addRectangularProjection(Point point, int[] xPoints, int[] yPoints) {
@@ -83,37 +91,55 @@ public class RoomController {
         room.setGroutToSelectedSurfaces(grout);
     }
 
-    public void setTileToSelectedSurfaces(float width, float height, Color color, String name, int nbrTilesPerBox) {
-        room.setTileToSelectedSufaces(width, height, color, name, nbrTilesPerBox);
+    public void setTileToSelectedSurfaces(Point point, float width, float height, Color color, String name, int nbrTilesPerBox) {
+        room.setTileToSelectedSufaces(point, width, height, color, name, nbrTilesPerBox);
     }
 
     public void setMeasurementMode(MainWindow.MeasurementUnitMode mode) {
         room.setMeasurementMode(mode);
     }
 
-    /*
+
     public double[] getSelectedRectangularSurfaceDimensions(){
         return room.getSelectedRectangularSurfaceDimensions();
     }
 
+    /*
     public void setSelectedRectangularSurfaceDimensions(double[] dimensions){
         room.setSelectedRectangularSurfaceDimensions(dimensions);
     }
      */
 
-    public void setSelectedSurfaceColor(Color color){
+    public boolean doesSelectedSurfacesIntersect(){
+        return room.surfaceInTouch();
+    }
+
+    public int numberOfSelectedSurfaces(){
+        return room.numberOfSelectedSurfaces();
+    }
+
+    public static void setSelectedSurfaceColor(Color color){
         room.setSelectedSurfaceColor(color);
+
     }
 
     public Color getSelectedSurfaceColor() {
         return room.getSelectedSurfaceColor();
     }
 
-    public void draw(Graphics2D g, MainWindow.MeasurementUnitMode measurementUnitMode) {
-        ArrayList<Surface> surfaceList = getSurfaceList();
-        surfaceDrawer = new SurfaceDrawer(this);
-        surfaceDrawer.setMeasurementUnitMode(measurementUnitMode);
-        surfaceDrawer.draw(g, surfaceList);
+    public void setSelectedSurfaceWidth(double enteredWidth) {
+        room.setSelectedSurfaceWidth(enteredWidth);
     }
 
+    public void setSelectedSurfaceHeight(double height) {
+        room.setSelectedSurfaceHeight(height);
+    }
+
+    public Dimension getSelectedSurfaceDimensions() {
+        return room.getSelectedSurfaceDimensions();
+    }
+
+    public void combineSelectedSurfaces() {
+        room.combineSelectedSurface();
+    }
 }

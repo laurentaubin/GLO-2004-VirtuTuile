@@ -1,10 +1,59 @@
 package domain.room.pattern;
 
 import domain.room.Tile;
+import domain.room.TileType;
+import gui.MainWindow;
+import util.UnitConverter;
+
+import java.awt.*;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
 public class StraightPattern extends Pattern {
 
-    public void showPattern(Tile tile) {
+    public StraightPattern() {
+        super();
+    }
 
+    public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, MainWindow.MeasurementUnitMode measurementMode) {
+        Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
+        Point2D.Double position = new Point2D.Double(boundingRectanglePosition.getX(), boundingRectangle.getY());
+        //Le width du bounding rectangle devrait être un double
+        double boundingRectangleWidth = (int)boundingRectangle.getWidth() ;
+        double boundingRectangleHeight = (int)boundingRectangle.getHeight();
+
+        System.out.println(boundingRectangleHeight);
+
+        double numberColumn = boundingRectangleWidth / tileType.getWidth();
+        if (numberColumn / (int)numberColumn != 0) {
+            numberColumn = (int)(numberColumn + 1);
+        }
+
+        double numberRow = boundingRectangleHeight / tileType.getHeight();
+        if(numberRow / (int)numberRow != 0) {
+            numberRow = (int)(numberRow + 1);
+        }
+
+
+        for (int row = 1; row <= numberRow ; row++) {
+            for (int column = 1; column <= numberColumn; column++) {
+                    int[] xPoints = new int[4];
+                    xPoints[0] = (int)position.getX();
+                    xPoints[1] = (int)(position.getX() + tileType.getWidth());
+                    xPoints[2] = (int)(position.getX() + tileType.getWidth());
+                    xPoints[3] = (int)position.getX();
+
+                    int[] yPoints = new int[4];
+                    yPoints[0] = (int)position.getY();
+                    yPoints[1] = (int)position.getY();
+                    yPoints[2] = (int)(position.getY() + tileType.getHeight());
+                    yPoints[3] = (int)(position.getY() + tileType.getHeight());
+
+                    virtualTileList.add(new Tile(position, xPoints, yPoints, 4));
+                    position.setLocation(position.getX() + tileType.getWidth(), position.getY());
+            }
+            position.setLocation(boundingRectanglePosition.getX(), position.getY() + tileType.getHeight());
+        }
+        return virtualTileList;
     }
 }

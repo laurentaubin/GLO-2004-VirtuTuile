@@ -5,6 +5,7 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.io.Serializable;
 
+
 public class RightPanel extends JTabbedPane implements Serializable {
 
     public Dimension initialDimension;
@@ -37,11 +38,18 @@ public class RightPanel extends JTabbedPane implements Serializable {
     }
 
     /*
-    public void updateInformations(double[] dimensions){
-        surfaceTabPanel.updateInformations(dimensions);
+
+    public void updateSurfaceTabDimensions(double[] dimensions){
+        this.surfaceTabPanel.setDimensionsValue(dimensions);
     }
 
      */
+
+
+
+    public void updateSurfaceTabDimensions(Dimension dimension) {
+        this.surfaceTabPanel.setSurfaceDimensionField(dimension);
+    }
 
     public void updateSurfaceTabColor(Color color) {
         this.surfaceTabPanel.setButtonColor(color);

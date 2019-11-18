@@ -10,7 +10,7 @@ public class SurfaceTab extends JPanel{
     private JPanel surfaceTab;
     private JFormattedTextField widthField;
     private JFormattedTextField heightField;
-    private JButton modifierLesDimensionsDeButton;
+    private JButton combineButton;
     private JButton surfaceColorButton;
     private Color surfaceColor;
 
@@ -24,10 +24,47 @@ public class SurfaceTab extends JPanel{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 Color color = JColorChooser.showDialog(null, "Choose a color", surfaceColor);
-
                 setButtonColor(color);
+                setSurfaceColor(color);
+
             }
         });
+
+        widthField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                setEnteredWidthSurfaceDimensions();
+            }
+        });
+
+        heightField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                setEnteredHeightSurfaceDimensions();
+            }
+        });
+
+        combineButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                combineSelectedSurface();
+
+            }
+        });
+    }
+
+    public void setEnteredWidthSurfaceDimensions(){
+        double enteredWidth = (double)widthField.getValue();
+        this.mainWindow.setSelectedSurfaceWidth(enteredWidth);
+    }
+
+    public void setEnteredHeightSurfaceDimensions() {
+        double enteredHeight = (double)heightField.getValue();
+        this.mainWindow.setSelectedSurfaceHeight(enteredHeight);
+    }
+
+    public void combineSelectedSurface() {
+        this.mainWindow.combineSelectedSurfaces();
     }
 
     public void setButtonColor(Color color) {
@@ -35,10 +72,20 @@ public class SurfaceTab extends JPanel{
         surfaceColorButton.setBackground(color);
         surfaceColorButton.setOpaque(true);
         surfaceColorButton.setBorderPainted(false);
+
+    }
+
+    public void setSurfaceColor(Color color){
         mainWindow.controller.setSelectedSurfaceColor(color);
     }
 
     private Color getSurfaceColor() {
         return this.surfaceColor;
     }
+
+    public void setSurfaceDimensionField(Dimension dimension) {
+        this.widthField.setValue(dimension.getWidth());
+        this.heightField.setValue(dimension.getHeight());
+    }
+
 }

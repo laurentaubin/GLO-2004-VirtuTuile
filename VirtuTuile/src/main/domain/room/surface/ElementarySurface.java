@@ -46,11 +46,8 @@ public abstract class ElementarySurface extends Polygon {
         this.isHole = hole;
     }
 
-    public void updateElementarySurface() {
-        this.reset();
-        for(int i = 0; i < this.xpoints.length; i++){
-            this.addPoint(this.xpoints[i], this.ypoints[i]);
-        }
+    public void translate(double deltaX, double deltaY) {
+        this.translate((int)deltaX,(int)deltaY);
     }
 
     public double getArea() {
@@ -70,6 +67,10 @@ public abstract class ElementarySurface extends Polygon {
             this.xpoints[i] += deltaX;
             this.ypoints[i] += deltaY;
         }
+    }
+
+    public void merge(Surface surface){
+
     }
 }
 
