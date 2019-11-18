@@ -115,6 +115,7 @@ public class CreateTileDialog extends JDialog {
         setNumberOfTilePerBox();
         if (validateInputs()) {
             tileTab.createTileFromUserInput(this.color, (float)this.width, (float)this.height, this.name, this.numberOfTilePerBox);
+            dispose();
         }
         else {
             dispose();

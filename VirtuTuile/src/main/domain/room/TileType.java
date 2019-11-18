@@ -12,15 +12,14 @@ public class TileType extends Polygon{
 
     public TileType(Color color, float width, float height, String name, int nbrTilesPerBox) {
         this.color = color;
-        //TEST
-        this.width = 20/*width*/;
-        this.height = 10 /*height*/;
+        this.width = width;
+        this.height = height;
         this.name = name;
         this.nbrTilesPerBox = nbrTilesPerBox;
     }
 
     public static TileType createTileWithDefaultParameters() {
-        return new TileType(Color.WHITE, 100, 100, "Default", 100);
+        return new TileType(Color.WHITE, 50, 20, "Default", 100);
     }
 
     public Color getColor() {

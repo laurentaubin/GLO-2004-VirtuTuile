@@ -98,24 +98,24 @@ public class Room {
         }
     }
 
+    public void updateSelectedSurfacesPositions(double deltaX, double deltaY) {
+        for (Surface surfaceInRoom : this.surfaceList) {
+            if (surfaceInRoom.isSelected()) {
+                surfaceInRoom.translate(deltaX, deltaY);
+            }
+        }
+    }
+
+    /*
     public void updateSelectedSurfacesPositions(double deltaX, double deltaY, double pixelX, double pixelY) {
         for (Surface surfaceInRoom : this.surfaceList) {
             if (surfaceInRoom.isSelected()) {
-               // surfaceInRoom.updateSurfacePositions(deltaX, deltaY);
-
-                /*
-                for (ElementarySurface elementarySurface : surfaceInRoom.getWholeSurfaces()) {
-                    updateSurfacePositions(deltaX, deltaY, elementarySurface);
-                }
-                for (ElementarySurface elementarySurface : surfaceInRoom.getHoles()) {
-                    updateSurfacePositions(deltaX, deltaY, elementarySurface);
-                }
-
-                 */
                 surfaceInRoom.translate(deltaX, deltaY, pixelX, pixelY);
             }
         }
     }
+
+     */
     // Refactored par updateSelectedSurfacesPositions() en haut
 
 /*
@@ -216,11 +216,10 @@ public class Room {
         }
     }
 
-    public void setTileToSelectedSufaces(Point point, float width, float height, Color color, String name, int nbrTilesPerBox) {
+    public void setTileToSelectedSufaces(float width, float height, Color color, String name, int nbrTilesPerBox) {
         TileType tileType = new TileType(color, width, height, name, nbrTilesPerBox);
         for (Surface surface : this.surfaceList) {
-            surface.getCover().setTileType(tileType);
-            System.out.println(surface.getCover().getTileType().getName());
+            surface.setTileType(tileType);
         }
     }
 
@@ -381,40 +380,49 @@ public class Room {
             if (surfaceInRoom.isSelected()) {
                 surfaceInRoom.setTileType(selectedTileType);
             }
+
+            if (surfaceInRoom.isCovered()) {
+                surfaceInRoom.getPattern().generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest());
+            }
         }
     }
 
     public void setStraightPatternToSelectedSurface() {
-        StraightPattern straightPattern = new StraightPattern();
         for (Surface surfaceInRoom : surfaceList) {
             if (surfaceInRoom.isSelected()) {
+                StraightPattern straightPattern = new StraightPattern();
+                straightPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest());
                 surfaceInRoom.setPattern(straightPattern);
             }
         }
     }
 
     public void setHorizontalPatternToSelectedSurface() {
-        BrickPattern brickPattern = new BrickPattern();
         for (Surface surfaceInRoom : surfaceList) {
             if (surfaceInRoom.isSelected()) {
+                BrickPattern brickPattern = new BrickPattern();
+                brickPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest());
                 surfaceInRoom.setPattern(brickPattern);
             }
         }
     }
 
     public void setVerticalPatternToSelectedSurface() {
-        VerticalPattern verticalPattern = new VerticalPattern();
+
         for (Surface surfaceInRoom : surfaceList) {
             if (surfaceInRoom.isSelected()) {
+                VerticalPattern verticalPattern = new VerticalPattern();
+                verticalPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest());
                 surfaceInRoom.setPattern(verticalPattern);
             }
         }
     }
 
     public void setVerticalBrickPatternToSelectedSurface() {
-        VerticalBrickPattern verticalBrickPattern = new VerticalBrickPattern();
         for (Surface surfaceInRoom : surfaceList) {
             if (surfaceInRoom.isSelected()) {
+                VerticalBrickPattern verticalBrickPattern = new VerticalBrickPattern();
+                verticalBrickPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest());
                 surfaceInRoom.setPattern(verticalBrickPattern);
             }
         }

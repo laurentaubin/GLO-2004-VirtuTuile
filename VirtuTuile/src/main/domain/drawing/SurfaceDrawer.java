@@ -1,21 +1,25 @@
 package domain.drawing;
 
 import domain.room.RoomController;
+import domain.room.Tile;
 import domain.room.pattern.StraightPattern;
 import domain.room.pattern.VerticalBrickPattern;
 import domain.room.pattern.VerticalPattern;
 import domain.room.pattern.BrickPattern;
 import domain.room.pattern.VerticalBrickPattern;
 import domain.room.surface.Surface;
+import gui.DrawingPanel;
 import util.UnitConverter;
 import gui.MainWindow;
 import org.w3c.dom.css.Rect;
 //import gui.MainWindow;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,6 +43,8 @@ public class SurfaceDrawer {
     }
 
     public void drawSurface(Graphics2D g2d, ArrayList<Surface> surfaceList) {
+        /*
+    }
         for (Surface current_surface : surfaceList) {
             Shape shape;
             if (current_surface.getShape() == null) {
@@ -51,14 +57,27 @@ public class SurfaceDrawer {
                 shape = current_surface.getShape();
             }
 
+         */
+
+        for (Surface current_surface : surfaceList) {
+            Point point = current_surface.getPosition();
+            Shape shape = current_surface.getShape();
             Color fillColor = current_surface.getColor();
             g2d.setColor(fillColor);
             g2d.fill(shape);
+            g2d.setStroke(new BasicStroke(1));
 
-            if (current_surface.isMerged()) {
-                shape = current_surface.getAreaTest();
+            if (current_surface.isCovered()) {
+                current_surface.getPattern().getVirtualTileList().clear();
+                current_surface.getPattern().generateTiles(current_surface.getBoundingRectangle(), current_surface.getTileType(), current_surface.getAreaTest());
+                    ArrayList<Tile> array = current_surface.getPattern().getVirtualTileList();
+                    for (Tile tile : array) {
+                        g2d.setColor(current_surface.getTileType().getColor());
+                        g2d.fill(tile);
+                        g2d.setColor(Color.BLACK);
+                        g2d.draw(tile);
+                }
             }
-
 
             //StraightPattern pattern = new StraightPattern();
             //VerticalPattern pattern = new VerticalPattern();
@@ -88,7 +107,8 @@ public class SurfaceDrawer {
         if(!surfaceProjectionList.isEmpty()) {
             Surface rectangularProjection = surfaceProjectionList.get(surfaceProjectionList.size() - 1);
            // g2d.draw(rectangularProjection.getPolygon());
-           g2d.draw(UnitConverter.convertPolygonToPixel(rectangularProjection.getPolygon(), this.measurementMode));
+            g2d.draw(rectangularProjection.getPolygon());
+           //g2d.draw(UnitConverter.convertPolygonToPixel(rectangularProjection.getPolygon(), this.measurementMode));
         }
     }
 

@@ -5,6 +5,8 @@ import domain.room.TileType;
 import gui.MainWindow;
 
 import java.awt.*;
+import java.awt.geom.Area;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public abstract class Pattern {
@@ -15,8 +17,8 @@ public abstract class Pattern {
     private Color groutColor;
     public ArrayList<Tile> virtualTileList;
 
-
-    public Pattern(){
+    public Pattern() {
+        this.virtualTileList = new ArrayList<Tile>();
 
     }
 
@@ -49,5 +51,9 @@ public abstract class Pattern {
         return this.groutColor;
     }
 
-    public abstract ArrayList<Tile> generateTiles(Rectangle boudingRectangle, TileType tileType, MainWindow.MeasurementUnitMode measurementUnitMode);
+    public ArrayList<Tile> getVirtualTileList() {
+        return this.virtualTileList;
+    }
+
+    public abstract ArrayList<Tile> generateTiles(Rectangle boudingRectangle, TileType tileType, Area area);
 }

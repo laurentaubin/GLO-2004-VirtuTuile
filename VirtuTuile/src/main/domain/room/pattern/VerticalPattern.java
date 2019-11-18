@@ -5,20 +5,21 @@ import domain.room.TileType;
 import gui.MainWindow;
 
 import java.awt.*;
+import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class VerticalPattern extends Pattern {
 
     public VerticalPattern(){
-
+        super();
     }
 
     public VerticalPattern(double xOffset, double yOffset, int angle, double groutWidth, Color groutColor) {
         super(xOffset, yOffset, angle, groutWidth, groutColor);
     }
 
-    public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, MainWindow.MeasurementUnitMode measurementMode) {
+    public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area) {
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
         Point2D.Double position = new Point2D.Double(boundingRectanglePosition.getX(), boundingRectangle.getY());
         //Le width du bounding rectangle devrait être un double
@@ -27,8 +28,6 @@ public class VerticalPattern extends Pattern {
 
         //Aller chercher la vrai dimension de grout
         int groutWidth = 2;
-
-        System.out.println(boundingRectangleHeight);
 
         double numberColumn = boundingRectangleWidth / (tileType.getHeight() + groutWidth);
         if (numberColumn / (int)numberColumn != 0) {
@@ -39,13 +38,9 @@ public class VerticalPattern extends Pattern {
         if(numberRow / (int)numberRow != 0) {
             numberRow = (int)(numberRow + 1);
         }
-
-
+        
         for (int row = 1; row <= numberRow ; row++) {
             for (int column = 1; column <= numberColumn; column++) {
-
-
-
 
                 int[] xPoints = new int[4];
                 xPoints[0] = (int)(position.getX() + (groutWidth * column));
@@ -64,7 +59,14 @@ public class VerticalPattern extends Pattern {
             }
             position.setLocation(boundingRectanglePosition.getX(), position.getY() + tileType.getWidth());
         }
+        deleteOutsideTile(area);
         return virtualTileList;
+    }
+
+    public void deleteOutsideTile(Area surface) {
+        for (Tile tile : virtualTileList) {
+            tile.intersect(surface);
+        }
     }
 }
 

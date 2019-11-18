@@ -1,6 +1,5 @@
 package domain.room;
 
-import domain.room.pattern.DefaultPattern;
 import domain.room.pattern.Pattern;
 
 public class Cover {

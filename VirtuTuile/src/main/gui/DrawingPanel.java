@@ -45,7 +45,7 @@ public class DrawingPanel extends JPanel implements Serializable {
         if (mainWindow != null) {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
-            mainWindow.draw(g2d);
+            mainWindow.draw(g2d, this);
 
             //SurfaceDrawer mainDrawer = new SurfaceDrawer(mainWindow.controller, initialDimension, mainWindow.getCurrentMeasurementMode());
 

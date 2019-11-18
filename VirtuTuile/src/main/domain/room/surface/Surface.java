@@ -3,8 +3,8 @@ package domain.room.surface;
 import domain.room.Cover;
 import domain.room.Tile;
 import domain.room.TileType;
-import domain.room.pattern.DefaultPattern;
 import domain.room.pattern.Pattern;
+import domain.room.pattern.StraightPattern;
 import gui.MainWindow;
 import util.UnitConverter;
 
@@ -19,6 +19,7 @@ public class Surface {
     private TileType tileType;
     private Cover cover;
     private Pattern pattern;
+    private boolean isCovered = false;
     private boolean mergedStatus = false;
     private boolean haveHole = false;
     private Polygon polygon;
@@ -30,14 +31,7 @@ public class Surface {
     private ArrayList<ElementarySurface> holes;
     private int numberSummit;
 
-    public Surface(Point point) {
-        this.position = point;
-        wholeSurfaces = new ArrayList<ElementarySurface>();
-        holes = new ArrayList<ElementarySurface>();
-        this.tileType = TileType.createTileWithDefaultParameters();
-        //this.pattern = new DefaultPattern();
-        this.color = (Color.WHITE);
-    }
+
 
     public ArrayList<ElementarySurface> getWholeSurfaces() {
         return wholeSurfaces;
@@ -47,6 +41,15 @@ public class Surface {
         return holes;
     }
 
+    public Surface(Point point) {
+        this.position = point;
+        wholeSurfaces = new ArrayList<ElementarySurface>();
+        holes = new ArrayList<ElementarySurface>();
+        this.pattern = new StraightPattern();
+        this.tileType = TileType.createTileWithDefaultParameters();
+        //this.pattern = new DefaultPattern();
+        this.color = (Color.WHITE);
+    }
 
     public void updatePolygon() {
         if (!mergedStatus) {
@@ -67,6 +70,7 @@ public class Surface {
             }
         }
 
+        this.area = new Area(this.polygon);
         //En pixel selon le bounding rectangle
         this.width = this.polygon.getBounds2D().getWidth();
         this.height = this.polygon.getBounds2D().getHeight();
@@ -189,27 +193,8 @@ public class Surface {
         }
     }
 
-    public Rectangle2D getBoundingRectangle() {
-        return this.area.getBounds2D();
-    }
-
-    public void updateSurfacePositions(double deltaX, double deltaY) {
-        this.updatePolygonPoints(deltaX, deltaY);
-
-        for (ElementarySurface wholeSurface : this.wholeSurfaces) {
-            wholeSurface.updatePoints(deltaX, deltaY);
-        }
-
-        for (ElementarySurface hole : this.holes) {
-            hole.updatePoints(deltaX, deltaY);
-        }
-    }
-
-    private void updatePolygonPoints(double deltaX, double deltaY) {
-        for (int i = 0; i < this.polygon.npoints; i++) {
-            this.polygon.xpoints[i] += deltaX;
-            this.polygon.ypoints[i] += deltaY;
-        }
+    public Rectangle getBoundingRectangle() {
+        return this.area.getBounds();
     }
 
     public Point getPosition() {
@@ -238,19 +223,29 @@ public class Surface {
 
     public void setPattern(Pattern pattern) {
         this.pattern = pattern;
+        this.isCovered = true;
     }
 
+    public boolean isCovered() {
+        return this.isCovered;
+    }
+
+    public void translate(double deltaX, double deltaY) {
+        this.translatePolygon(deltaX, deltaY);
+    }
+
+    /*
     public void translate(double deltaX, double deltaY, double pixelX, double pixelY) {
         this.translatePolygon(deltaX, deltaY);
         this.translateArea(pixelX, pixelY);
     }
 
+     */
+
     private void translatePolygon(double deltaX, double deltaY) {
         this.polygon.translate((int)deltaX, (int)deltaY);
-        translateElementaryPolygons(deltaX, deltaY);
-    }
+        AffineTransform at = new AffineTransform(1, 0, 0, 1, deltaX, deltaY);
 
-    private void translateElementaryPolygons(double deltaX, double deltaY) {
         for (ElementarySurface wholeSurface : wholeSurfaces) {
             wholeSurface.translate(deltaX, deltaY);
         }
@@ -258,13 +253,23 @@ public class Surface {
         for (ElementarySurface holeSurface : holes) {
             holeSurface.translate(deltaX, deltaY);
         }
+
+        for (Tile tile : getPattern().getVirtualTileList()) {
+            tile.transform(at);
+        }
+
+        this.area.transform(at);
+        this.position.translate((int)deltaX, (int)deltaY);
     }
 
+    /*
     private void translateArea(double deltaX, double deltaY) {
         AffineTransform at = new AffineTransform(1, 0, 0, 1, deltaX, deltaY);
         this.area.transform(at);
         this.position.translate((int)deltaX, (int)deltaY);
     }
+
+     */
 
     public void setWidth(double enteredWidth) {
         double deltaX = enteredWidth - this.width;

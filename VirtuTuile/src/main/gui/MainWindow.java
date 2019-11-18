@@ -376,8 +376,10 @@ public class MainWindow extends JFrame {
         if (this.currentApplicationMode == ApplicationMode.SELECT && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
 
-            double xPos = UnitConverter.convertPixelToSelectedUnit((int) this.initMousePoint.getX(), this.currentMeasurementMode);
-            double yPos = UnitConverter.convertPixelToSelectedUnit((int) this.initMousePoint.getY(), this.currentMeasurementMode);
+            double xPos = this.initMousePoint.getX();
+            double yPos = this.initMousePoint.getY();
+            //double xPos = UnitConverter.convertPixelToSelectedUnit((int) this.initMousePoint.getX(), this.currentMeasurementMode);
+            //double yPos = UnitConverter.convertPixelToSelectedUnit((int) this.initMousePoint.getY(), this.currentMeasurementMode);
 
             this.controller.switchSelectionStatus(xPos, yPos, mouseEvent.isShiftDown());
             drawingPanel.repaint();
@@ -404,13 +406,15 @@ public class MainWindow extends JFrame {
         if (this.currentApplicationMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
 
-            Point position = UnitConverter.convertPointToSelectedUnit(this.initMousePoint.getLocation(), this.currentMeasurementMode);
+            Point position = this.initMousePoint.getLocation();
+            //Point position = UnitConverter.convertPointToSelectedUnit(this.initMousePoint.getLocation(), this.currentMeasurementMode);
 
             int[] xDrawPoints = getXDrawPoints();
             int[] yDrawPoints = getYDrawPoints();
 
             if (xDrawPoints[0] - yDrawPoints[1] > 0){
-                position = UnitConverter.convertPointToSelectedUnit(mousePointReleased.getLocation(), this.currentMeasurementMode);
+                position = mousePointReleased.getLocation();
+                //position = UnitConverter.convertPointToSelectedUnit(mousePointReleased.getLocation(), this.currentMeasurementMode);
             }
             drawingPanel.repaint();
             RoomController.clearSurfaceProjectionList();
@@ -430,12 +434,18 @@ public class MainWindow extends JFrame {
     private void drawingPanelMouseDragged(MouseEvent mouseEvent){
         // TODO ça marche pas pcq le init mouse point est pas updaté a bonne palce faique le delta est pas bon
         if (SwingUtilities.isRightMouseButton(mouseEvent)) {
+            double deltaX = (int) (mouseEvent.getX() - this.currentMousePoint.getX());
+            double deltaY = (int) (mouseEvent.getY() - this.currentMousePoint.getY());
+            /*
             double pixelX = (int) (mouseEvent.getX() - this.currentMousePoint.getX());
             double pixelY = (int) (mouseEvent.getY() - this.currentMousePoint.getY());
             double deltaX = UnitConverter.convertPixelToSelectedUnit(pixelX, this.currentMeasurementMode);
             double deltaY = UnitConverter.convertPixelToSelectedUnit(pixelY, this.currentMeasurementMode);
 
-            this.controller.updateSelectedSurfacesPositions(deltaX, deltaY, pixelX, pixelY);
+             */
+
+            this.controller.updateSelectedSurfacesPositions(deltaX, deltaY);
+            //this.controller.updateSelectedSurfacesPositions(deltaX, deltaY, pixelX, pixelY);
             this.currentMousePoint = mouseEvent.getPoint();
         }
         else if (this.currentApplicationMode == ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
@@ -456,7 +466,8 @@ public class MainWindow extends JFrame {
         drawPoints[2] = (int)currentMousePoint.getX();
         drawPoints[3] = (int)initMousePoint.getX();
 
-        return UnitConverter.convertPixelListToSelectedUnit(drawPoints, this.currentMeasurementMode);
+        //return UnitConverter.convertPixelListToSelectedUnit(drawPoints, this.currentMeasurementMode);
+        return drawPoints;
     }
 
     private int[] getYDrawPoints() {
@@ -467,7 +478,8 @@ public class MainWindow extends JFrame {
         drawPoints[2] = (int)currentMousePoint.getY();
         drawPoints[3] = (int)currentMousePoint.getY();
 
-        return UnitConverter.convertPixelListToSelectedUnit(drawPoints, this.currentMeasurementMode);
+        //return UnitConverter.convertPixelListToSelectedUnit(drawPoints, this.currentMeasurementMode);
+        return drawPoints;
     }
 
     private void gridMenuItemActionPerformed(ActionEvent actionEvent) {
@@ -509,8 +521,8 @@ public class MainWindow extends JFrame {
     }
 
 
-    public void draw(Graphics2D g) {
-        controller.draw(g, getCurrentMeasurementMode());
+    public void draw(Graphics2D g, DrawingPanel drawingPanel) {
+        controller.draw(g, getCurrentMeasurementMode(), drawingPanel);
     }
 
     public void setSelectedSurfaceWidth(double enteredWidth) {
@@ -552,22 +564,32 @@ public class MainWindow extends JFrame {
 
     public void setSelectedTileToSelectedSurface(TileType selectedTileType) {
         controller.setSelectedTileToSelectedSurface(selectedTileType);
+        drawingPanel.repaint();
     }
 
     public void setStraightPatternToSelectedSurface() {
         controller.setStraightPatternToSelectedSurface();
+        drawingPanel.repaint();
     }
 
     public void setHorizontalPatternToSelectedSurface() {
         controller.setHorizontalPatternToSelectedSurface();
+        drawingPanel.repaint();
     }
 
     public void setVerticalPatternToSelectedSurface() {
         controller.setVerticalPatternToSelectedSurface();
+        drawingPanel.repaint();
     }
 
     public void setVerticalBrickPatternToSelectedSurface() {
         controller.setVerticalBrickPatternToSelectedSurface();
+        drawingPanel.repaint();
+    }
+
+    public void setSelectedSurfaceColor(Color color) {
+        controller.setSelectedSurfaceColor(color);
+        drawingPanel.repaint();
     }
 
     private ButtonGroup buttonGroup;

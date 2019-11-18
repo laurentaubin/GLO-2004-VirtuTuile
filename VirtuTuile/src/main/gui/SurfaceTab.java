@@ -76,7 +76,7 @@ public class SurfaceTab extends JPanel{
     }
 
     public void setSurfaceColor(Color color){
-        mainWindow.controller.setSelectedSurfaceColor(color);
+        mainWindow.setSelectedSurfaceColor(color);
     }
 
     private Color getSurfaceColor() {

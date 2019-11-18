@@ -5,6 +5,7 @@ import domain.drawing.SurfaceDrawer;
 import domain.room.pattern.Pattern;
 import domain.room.surface.RectangularSurface;
 import domain.room.surface.Surface;
+import gui.DrawingPanel;
 import gui.MainWindow;
 
 import java.awt.*;
@@ -12,12 +13,12 @@ import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
 
 public class RoomController {
-    private static Room room;
+    private  static Room room;
     private SurfaceDrawer surfaceDrawer;
     //private final Room room;
 
     public RoomController(Room room) {
-        RoomController.room = room;
+        this.room = room;
     }
 
 
@@ -25,7 +26,7 @@ public class RoomController {
         room = new Room();
     }
 
-    public void draw(Graphics2D g, MainWindow.MeasurementUnitMode measurementUnitMode) {
+    public void draw(Graphics2D g, MainWindow.MeasurementUnitMode measurementUnitMode, DrawingPanel drawingPanel) {
         ArrayList<Surface> surfaceList = getSurfaceList();
         surfaceDrawer = new SurfaceDrawer(this);
         surfaceDrawer.setMeasurementUnitMode(measurementUnitMode);
@@ -79,9 +80,16 @@ public class RoomController {
         room.switchSelectionStatus(x, y, isShiftDown);
     }
 
+    public void updateSelectedSurfacesPositions(double deltaX, double deltaY) {
+        room.updateSelectedSurfacesPositions(deltaX, deltaY);
+    }
+
+    /*
     public void updateSelectedSurfacesPositions(double deltaX, double deltaY, double pixelX, double pixelY) {
         room.updateSelectedSurfacesPositions(deltaX, deltaY, pixelX, pixelY);
     }
+
+     */
 
     public void setPatternToSelectedSurfaces(Pattern pattern) {
         room.setPatternToSelectedSurfaces(pattern);
@@ -92,7 +100,7 @@ public class RoomController {
     }
 
     public void setTileToSelectedSurfaces(Point point, float width, float height, Color color, String name, int nbrTilesPerBox) {
-        room.setTileToSelectedSufaces(point, width, height, color, name, nbrTilesPerBox);
+        room.setTileToSelectedSufaces(width, height, color, name, nbrTilesPerBox);
     }
 
     public void setMeasurementMode(MainWindow.MeasurementUnitMode mode) {
@@ -118,7 +126,7 @@ public class RoomController {
         return room.numberOfSelectedSurfaces();
     }
 
-    public static void setSelectedSurfaceColor(Color color){
+    public void setSelectedSurfaceColor(Color color){
         room.setSelectedSurfaceColor(color);
 
     }
