@@ -85,6 +85,7 @@ public class MainWindow extends JFrame {
 
         viewMenu = new JMenu();
         gridMenuItem = new JMenuItem();
+        gridOptionItem = new JMenuItem();
         measurementUnitMenuItem = new JMenuItem();
 
         insertMenu = new JMenu();
@@ -276,7 +277,8 @@ public class MainWindow extends JFrame {
         editionMenu.add(cutMenuItem);
 
         viewMenu.setText("Affichage");
-        gridMenuItem.setText("Grille");
+        viewMenu.add(gridMenuItem);
+        gridMenuItem.setText("Afficher/cacher la grille");
         gridMenuItem.setSelected(drawingPanel.getGridlines());
         gridMenuItem.addActionListener(new ActionListener() {
             @Override
@@ -284,7 +286,16 @@ public class MainWindow extends JFrame {
                 gridMenuItemActionPerformed(actionEvent);
             }
         });
-        viewMenu.add(gridMenuItem);
+
+        gridOptionItem.setText("Modifier la grille");
+        viewMenu.add(gridOptionItem);
+        gridOptionItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                gridOptionItemActionPerformed(actionEvent);
+            }
+        });
+
         measurementUnitMenuItem.setText("Unité de mesure");
         viewMenu.add(measurementUnitMenuItem);
 
@@ -504,6 +515,35 @@ public class MainWindow extends JFrame {
         drawingPanel.setGridLines();
     }
 
+    private void gridOptionItemActionPerformed(ActionEvent actionEvent) {
+
+        JPanel fields = new JPanel(new GridLayout(1, 2));
+        JTextField field = new JTextField(15);
+        JComboBox<String> comboBox = new JComboBox<>(new String[]{"mètres", "pouces"});
+
+        fields.add(field);
+        fields.add(comboBox);
+
+        int result = JOptionPane.showConfirmDialog(null, fields, "Entrer les dimensions d'un carré de la grille", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (result == JOptionPane.OK_OPTION) {
+            double newGridGap = Double.parseDouble(field.getText());
+
+            switch(comboBox.getSelectedIndex()) {
+                case 0:
+                    // TODO ajouter la conversion d'unité Mètre -> Pixel
+                    this.drawingPanel.setGridGap(newGridGap);
+                    break;
+                case 1:
+                    // TODO ajouter la conversion d'unité Pouce -> Pixel
+                    this.drawingPanel.setGridGap(newGridGap);
+                    break;
+            }
+            this.drawingPanel.repaint();
+        }
+        // String inputDimensions = JOptionPane.showInputDialog("Entrer les dimensions de la grille");
+        // String inputDimensions = (String) JOptionPane.showInputDialog(null, "Entrer les dimensions de la grille", "Configuration de la grille", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+    }
+
     private void drawingPanelMouseMoved(MouseEvent evt) {
         //TODO convertir les unités
         int x = (int) (evt.getX() / drawingPanel.getZoom());
@@ -684,6 +724,7 @@ public class MainWindow extends JFrame {
 
     private JMenu viewMenu;
     private JMenuItem gridMenuItem;
+    private JMenuItem gridOptionItem;
     private JMenuItem measurementUnitMenuItem;
 
     private JMenu insertMenu;

@@ -147,5 +147,9 @@ public class DrawingPanel extends JPanel implements Serializable {
         validate();
         revalidate();
     }
+
+    public void setGridGap(double newGridGap) {
+        this.gridGap = newGridGap;
+    }
 }
 
