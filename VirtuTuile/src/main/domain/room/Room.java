@@ -524,4 +524,61 @@ public class Room {
         }
         return width;
     }
+
+    public void snapSelectedSurfaceToGrid(double gridGap) {
+        for (Surface surface : this.surfaceList) {
+            if (surface.isSelected()) {
+                double[] topLeftCornerPos = surface.getTopLeftPos();
+                int horizontalGridSquare = (int) (topLeftCornerPos[0] / gridGap);
+                int verticalGridSquare = (int) (topLeftCornerPos[1] / gridGap);
+
+                Point2D[] gridSquareCorners = getGridSquareCorners(horizontalGridSquare, verticalGridSquare, gridGap);
+                Point2D closestCorner = getClosestCorner(surface, gridSquareCorners);
+
+                surface.snapToPoint(closestCorner);
+
+            }
+        }
+    }
+
+    private Point2D[] getGridSquareCorners(double horizontalGridSquare, double verticalGridSquare, double gridGap) {
+        double[] gridSquarePos = getGridSquarePos(horizontalGridSquare, verticalGridSquare, gridGap);
+
+        Point2D topLeft = new Point2D.Double(gridSquarePos[0], gridSquarePos[2]);
+        Point2D topRight = new Point2D.Double(gridSquarePos[1], gridSquarePos[2]);
+        Point2D bottomRight = new Point2D.Double(gridSquarePos[1], gridSquarePos[3]);
+        Point2D bottomLeft = new Point2D.Double(gridSquarePos[0], gridSquarePos[3]);
+
+        return new Point2D[]{topLeft, topRight, bottomRight, bottomLeft};
+    }
+
+    private double[] getGridSquarePos(double horizontalGridSquare, double verticalGridSquare, double gridGap) {
+        double firstX = horizontalGridSquare * gridGap;
+        double secondX = (horizontalGridSquare  + 1) * gridGap;
+        double firstY = (verticalGridSquare + 1) * gridGap;
+        double secondY = verticalGridSquare * gridGap;
+
+        return new double[]{firstX, secondX, firstY, secondY};
+    }
+
+    private Point2D getClosestCorner(Surface surface, Point2D[] gridSquareCorners) {
+        double[] distanceFromSurfaceCorner = new double[4];
+        for (int i = 0; i < 4; i++) {
+            distanceFromSurfaceCorner[i] = surface.getDistanceFromPoint(gridSquareCorners[i]);
+        }
+        int closestCornerIndex = getMinimumElementIndex(distanceFromSurfaceCorner);
+        return gridSquareCorners[closestCornerIndex];
+    }
+
+    private int getMinimumElementIndex(double[] unsortedArray) {
+        double[] sortedArray = new double[4];
+        System.arraycopy(unsortedArray, 0, sortedArray, 0, 4);
+        Arrays.sort(sortedArray);
+        for (int i = 0; i < sortedArray.length; i++) {
+            if (unsortedArray[i] == sortedArray[0]) {
+                return i;
+            }
+        }
+        return 0;
+    }
 }

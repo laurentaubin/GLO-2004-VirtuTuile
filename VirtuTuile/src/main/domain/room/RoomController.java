@@ -242,5 +242,9 @@ public class RoomController {
     public double getSelectedSurfaceGroutWidth() {
         return room.getSelectedSurfaceGroutWidth();
     }
+
+    public void snapSelectedSurfaceToGrid(double gridGap) {
+        room.snapSelectedSurfaceToGrid(gridGap);
+    }
 }
 

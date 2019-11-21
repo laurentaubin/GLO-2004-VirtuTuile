@@ -11,6 +11,7 @@ import util.UnitConverter;
 import java.awt.*;
 import java.awt.geom.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Surface {
     private Point2D.Double position;
@@ -388,6 +389,33 @@ public class Surface {
 
     public double getGroutWidth() {
         return this.pattern.getGroutWidth();
+    }
+
+    public void snapToPoint(Point2D closestCorner) {
+        double[] deltaArray = getDeltasFromPoint(closestCorner);
+        this.translatePolygon(deltaArray[0], deltaArray[1]);
+    }
+
+    private double[] getDeltasFromPoint(Point2D closestCorner) {
+        double[] topLeftPos = getTopLeftPos();
+
+        double deltaX = closestCorner.getX() - topLeftPos[0];
+        double deltaY = closestCorner.getY() - topLeftPos[1];
+
+        return new double[]{deltaX, deltaY};
+    }
+
+    public double[] getTopLeftPos() {
+        PathIterator iter = area.getPathIterator(null);
+        float[] floats = new float[6];
+
+        int type = iter.currentSegment(floats);
+        return new double[]{floats[0], floats[1]};
+    }
+
+    public double getDistanceFromPoint(Point2D point) {
+        double[] deltas = getDeltasFromPoint(point);
+        return Math.sqrt(Math.pow(deltas[0], 2) + Math.pow(deltas[1], 2));
     }
 }
 
