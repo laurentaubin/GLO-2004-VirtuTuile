@@ -381,5 +381,13 @@ public class Surface {
         this.holes.addAll(surface.getHoles());
         this.area.subtract(surface.getAreaTest());
     }
+
+    public void setGroutWidth(double width) {
+        this.getPattern().setGroutWidth(width);
+    }
+
+    public double getGroutWidth() {
+        return this.pattern.getGroutWidth();
+    }
 }
 

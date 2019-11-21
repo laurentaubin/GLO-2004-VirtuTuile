@@ -49,6 +49,10 @@ public class RightPanel extends JTabbedPane implements Serializable {
         this.surfaceTabPanel.setHoleCheckBox(isSelectedSurfaceAHole, number);
     }
 
+    public void updatePatternTab(double groutWidth, int number) {
+        this.patternTabPanel.setGroutWidth(groutWidth, number);
+    }
+
     public MainWindow getMainWindow() {
         return this.mainWindow;
     }

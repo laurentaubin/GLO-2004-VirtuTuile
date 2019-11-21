@@ -55,6 +55,7 @@ public class SurfaceTab extends JPanel{
             }
         });
 
+        //TODO Peut-être à changer pour ActionListener
         holeCheckBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent itemEvent) {

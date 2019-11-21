@@ -503,4 +503,25 @@ public class Room {
         }
         return array;
     }
+
+    public void setSelectedSurfaceGroutWidth(double width) {
+        for (Surface surfaceInRoom : surfaceList) {
+            if (surfaceInRoom.isSelected()) {
+                surfaceInRoom.setGroutWidth(width);
+            }
+        }
+    }
+
+    public double getSelectedSurfaceGroutWidth() {
+        double width = 0d;
+        int counter = getNumberOfSelectedSurfaces();
+        if (counter == 1) {
+            for (Surface surface : surfaceList) {
+                if (surface.isSelected()) {
+                    width = surface.getGroutWidth();
+                }
+            }
+        }
+        return width;
+    }
 }

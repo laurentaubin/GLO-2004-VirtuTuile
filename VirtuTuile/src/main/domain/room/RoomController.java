@@ -235,5 +235,12 @@ public class RoomController {
         return room.getTileDimensions(xPos, yPos);
     }
 
+    public void setSelectedSurfaceGroutWidth(double width) {
+        room.setSelectedSurfaceGroutWidth(width);
+    }
+
+    public double getSelectedSurfaceGroutWidth() {
+        return room.getSelectedSurfaceGroutWidth();
+    }
 }
 

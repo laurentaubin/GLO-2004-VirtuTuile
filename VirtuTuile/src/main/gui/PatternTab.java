@@ -32,6 +32,7 @@ public class PatternTab extends JPanel{
 
     public PatternTab(MainWindow mainWindow) {
         this.mainWindow = mainWindow;
+        this.groutWidthField.setValue(0);
         this.selectedColor = Color.WHITE;
         patternButtonGroup = new ButtonGroup();
         patternButtonGroup.add(straightPatternButton);
@@ -94,6 +95,13 @@ public class PatternTab extends JPanel{
                 verticalBrickButtonActionPerformed();
             }
         });
+
+        groutWidthField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                setEnteredGroutWidth();
+            }
+        });
     }
 
     private void setButtonColor(Color color) {
@@ -121,5 +129,21 @@ public class PatternTab extends JPanel{
 
     private void verticalBrickButtonActionPerformed() {
         mainWindow.setVerticalBrickPatternToSelectedSurface();
+    }
+
+    private void setEnteredGroutWidth() {
+        double width = ((Number)groutWidthField.getValue()).doubleValue();
+        mainWindow.setEnteredGroutWidtht(width);
+    }
+
+    public void setGroutWidth(double width, int number) {
+        if (number == 1) {
+            this.groutWidthField.setEnabled(true);
+            this.groutWidthField.setValue(width);
+        }
+        else {
+            this.groutWidthField.setValue(0);
+            this.groutWidthField.setEnabled(false);
+        }
     }
 }

@@ -19,6 +19,9 @@ public abstract class Pattern {
 
     public Pattern() {
         this.virtualTileList = new ArrayList<Tile>();
+        this.groutWidth = 0d;
+        this.angle = 0;
+        this.groutColor = Color.GRAY;
 
     }
 
@@ -43,6 +46,9 @@ public abstract class Pattern {
         return this.angle;
     }
 
+    public void setGroutWidth(double width) {
+        this.groutWidth = width;
+    }
     public double getGroutWidth() {
         return this.groutWidth;
     }
