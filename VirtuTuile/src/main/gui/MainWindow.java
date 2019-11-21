@@ -58,8 +58,6 @@ public class MainWindow extends JFrame {
         selectButton = new JToggleButton("Sélection");
         rectangularSurfaceButton = new JToggleButton("Ajouter une surface rectangulaire");
         irregularSurfaceButton = new JToggleButton("Ajouter surface irrégulière");
-        zoomInButton = new JButton("+");
-        zoomOutButton = new JButton("-");
 
         measurementUnitComboBox = new javax.swing.JComboBox();
         drawingPanel = new DrawingPanel(this);
@@ -98,8 +96,9 @@ public class MainWindow extends JFrame {
         zoomMenuItem = new JMenuItem();
         cancelZoomMenuItem = new JMenuItem();
 
+        topButtonScrollPane = new JScrollPane();
+
         statusBar = new JLabel(" ");
-        statusBar.setBackground(Color.GRAY);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("VirtuTuile");
@@ -160,9 +159,8 @@ public class MainWindow extends JFrame {
         topButtonBar.add(selectButton);
         topButtonBar.add(rectangularSurfaceButton);
         topButtonBar.add(irregularSurfaceButton);
-        topButtonBar.add(zoomInButton);
-        topButtonBar.add(zoomOutButton);
         topButtonBar.add(measurementUnitComboBox);
+        topButtonBar.setMinimumSize(new Dimension(100, -1));
 
         mainPanel.add(topButtonBar, BorderLayout.NORTH);
 
@@ -501,16 +499,26 @@ public class MainWindow extends JFrame {
         int x = (int) (evt.getX() / drawingPanel.getZoom());
         int y = (int) (evt.getY() / drawingPanel.getZoom());
 
-        String mousePosition = "";
+        String mousePosition = " ";
 
         double xPos = UnitConverter.convertPixelToSelectedUnit( evt.getX(), this.currentMeasurementMode);
         double yPos = UnitConverter.convertPixelToSelectedUnit(evt.getY(), this.currentMeasurementMode);
+        /*
         if (this.currentMeasurementMode == MeasurementUnitMode.METRIC) {
             mousePosition += ("x= " + xPos + "m " + ", y= " + yPos + "m ");
         }
         if (this.currentMeasurementMode == MeasurementUnitMode.IMPERIAL) {
             mousePosition += ("x= " + xPos + "'' " + ", y= " + yPos + "'' ");
         }
+
+         */
+
+        if (this.controller.checkIfMouseAboveTile(evt.getX(), evt.getY())) {
+            ArrayList<Double> tileDimension = this.controller.getTileDimensions(evt.getX(), evt.getY());
+            mousePosition += "Largeur de la tuile = " + tileDimension.get(0) + ", hauteur de la tuile = " + tileDimension.get(1) ;
+            setStatusBarText(mousePosition);
+        }
+
         setStatusBarText(mousePosition);
     }
 
@@ -634,11 +642,10 @@ public class MainWindow extends JFrame {
     private JToggleButton selectButton;
     private JToggleButton rectangularSurfaceButton;
     private JToggleButton irregularSurfaceButton;
-    private JButton zoomOutButton;
-    private JButton zoomInButton;
     private JComboBox measurementUnitComboBox;
     private DrawingPanel drawingPanel;
     private JScrollPane mainScrollPane;
+    private JScrollPane topButtonScrollPane;
     private JSplitPane splitPane;
     private JLabel statusBar;
 

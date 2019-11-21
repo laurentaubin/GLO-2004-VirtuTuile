@@ -7,6 +7,7 @@ import gui.DrawingPanel;
 import gui.MainWindow;
 
 import java.awt.*;
+import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
 
 public class RoomController {
@@ -224,6 +225,14 @@ public class RoomController {
 
     public int getNumberOfSelectedSurfaces() {
         return room.getNumberOfSelectedSurfaces();
+    }
+
+    public boolean checkIfMouseAboveTile(int xPos, int yPos) {
+        return room.checkIfMouseAboveTile(xPos, yPos);
+    }
+
+    public ArrayList<Double> getTileDimensions(int xPos, int yPos) {
+        return room.getTileDimensions(xPos, yPos);
     }
 
 }

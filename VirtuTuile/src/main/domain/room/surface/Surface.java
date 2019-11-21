@@ -285,7 +285,7 @@ public class Surface {
             }
 
             this.area.transform(at);
-            //this.position.translate((int)deltaX, (int)deltaY);
+            this.position.setLocation(this.position.getX() + deltaX, this.position.getY() + deltaY);
         }
     }
 
@@ -299,33 +299,23 @@ public class Surface {
      */
 
     public void setWidth(double enteredWidth) {
-        double deltaX = enteredWidth/this.width;
+        double deltaX = enteredWidth / this.width;
         this.width = enteredWidth;
+
 
         AffineTransform at = new AffineTransform(deltaX, 0, 0, 1, 0, 0);
         this.area.transform(at);
 
-        /*
-        if (getNumberOfSummit() == 4) {
-            this.polygon.xpoints[1] += deltaX;
-            this.polygon.xpoints[2] += deltaX;
-            this.area = new Area(this.polygon);
-        }
-
-         */
         //TODO modifier les dimensions des surfaces élémentaires
         //TODO Faire le code pour les surfaces irrégulières
     }
 
     public void setHeight(double height) {
-        double deltaY = height - this.height;
+        double deltaY = height / this.height;
         this.height = height;
 
-        if (getNumberOfSummit() == 4) {
-            this.polygon.ypoints[2] += deltaY;
-            this.polygon.ypoints[3] += deltaY;
-            this.area = new Area(this.polygon);
-        }
+        AffineTransform at = new AffineTransform(1, 0, 0, deltaY, 0, 0);
+        this.area.transform(at);
 
         //TODO modifier les dimensions des surfaces élémentaires
         //TODO Faire le code pour les surfaces irrégulières

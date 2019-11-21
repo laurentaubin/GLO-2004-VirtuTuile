@@ -67,6 +67,10 @@ public class StraightPattern extends Pattern {
     public void deleteOutsideTile(Area surface) {
         for (Tile tile : virtualTileList) {
             tile.intersect(surface);
+            if(!tile.isEmpty()) {
+                tile.setWidth(tile.getBounds2D().getWidth());
+                tile.setHeight(tile.getBounds2D().getHeight());
+            }
         }
     }
 }
