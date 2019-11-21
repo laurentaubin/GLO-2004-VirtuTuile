@@ -13,7 +13,7 @@ import java.awt.geom.*;
 import java.util.ArrayList;
 
 public class Surface {
-    private Point position;
+    private Point2D.Double position;
     private Color color;
     private boolean selectionStatus = false;
     private TileType tileType;
@@ -30,6 +30,7 @@ public class Surface {
     private ArrayList<ElementarySurface> wholeSurfaces;
     private ArrayList<ElementarySurface> holes;
     private int numberSummit;
+    private boolean isHole;
 
 
 
@@ -41,7 +42,30 @@ public class Surface {
         return holes;
     }
 
-    public Surface(Point point) {
+    public Surface(double[] xPoints, double[] yPoints, int nbr_points) {
+        Path2D.Double path = new Path2D.Double();
+        for (int i = 0; i < nbr_points; i++) {
+            if (i == 0) {
+                this.position = new Point2D.Double(xPoints[i], yPoints[i]);
+                path.moveTo(xPoints[i], yPoints[i]);
+            }
+            else {
+                path.lineTo(xPoints[i], yPoints[i]);
+            }
+        }
+        path.closePath();
+        this.area = new Area(path);
+        this.width = area.getBounds2D().getWidth();
+        this.height = area.getBounds2D().getHeight();
+
+        wholeSurfaces = new ArrayList<ElementarySurface>();
+        holes = new ArrayList<ElementarySurface>();
+        this.pattern = new StraightPattern();
+        this.tileType = TileType.createTileWithDefaultParameters();
+        this.color = (Color.WHITE);
+    }
+
+    public Surface(Point2D.Double point) {
         this.position = point;
         wholeSurfaces = new ArrayList<ElementarySurface>();
         holes = new ArrayList<ElementarySurface>();
@@ -135,7 +159,8 @@ public class Surface {
     }
 
     public double getWidth() {
-        return this.getBoundingRectangle().getWidth();
+        return this.width;
+        //return this.getBoundingRectangle().getWidth();
     }
 
     public double getHeight() {
@@ -197,7 +222,7 @@ public class Surface {
         return this.area.getBounds();
     }
 
-    public Point getPosition() {
+    public Point2D.Double getPosition() {
         return this.position;
     }
 
@@ -206,7 +231,7 @@ public class Surface {
     }
 
     public boolean isHole() {
-        return this.haveHole;
+        return this.isHole;
     }
 
     public TileType getTileType(){
@@ -243,23 +268,25 @@ public class Surface {
      */
 
     private void translatePolygon(double deltaX, double deltaY) {
-        this.polygon.translate((int)deltaX, (int)deltaY);
-        AffineTransform at = new AffineTransform(1, 0, 0, 1, deltaX, deltaY);
+        if (this.area.getBounds2D().getX() + deltaX >= 0 && this.area.getBounds2D().getY() + deltaY >= 0) {
+            //this.polygon.translate((int)deltaX, (int)deltaY);
+            AffineTransform at = new AffineTransform(1, 0, 0, 1, deltaX, deltaY);
 
-        for (ElementarySurface wholeSurface : wholeSurfaces) {
-            wholeSurface.translate(deltaX, deltaY);
+            for (ElementarySurface wholeSurface : wholeSurfaces) {
+                wholeSurface.translate(deltaX, deltaY);
+            }
+
+            for (ElementarySurface holeSurface : holes) {
+                holeSurface.translate(deltaX, deltaY);
+            }
+
+            for (Tile tile : getPattern().getVirtualTileList()) {
+                tile.transform(at);
+            }
+
+            this.area.transform(at);
+            //this.position.translate((int)deltaX, (int)deltaY);
         }
-
-        for (ElementarySurface holeSurface : holes) {
-            holeSurface.translate(deltaX, deltaY);
-        }
-
-        for (Tile tile : getPattern().getVirtualTileList()) {
-            tile.transform(at);
-        }
-
-        this.area.transform(at);
-        this.position.translate((int)deltaX, (int)deltaY);
     }
 
     /*
@@ -272,14 +299,20 @@ public class Surface {
      */
 
     public void setWidth(double enteredWidth) {
-        double deltaX = enteredWidth - this.width;
+        double deltaX = enteredWidth/this.width;
         this.width = enteredWidth;
 
+        AffineTransform at = new AffineTransform(deltaX, 0, 0, 1, 0, 0);
+        this.area.transform(at);
+
+        /*
         if (getNumberOfSummit() == 4) {
             this.polygon.xpoints[1] += deltaX;
             this.polygon.xpoints[2] += deltaX;
             this.area = new Area(this.polygon);
         }
+
+         */
         //TODO modifier les dimensions des surfaces élémentaires
         //TODO Faire le code pour les surfaces irrégulières
     }
@@ -342,6 +375,21 @@ public class Surface {
             pathIterator.next();
         }
         return counter;
+    }
+
+    public void setIsHole() {
+        this.isHole = true;
+    }
+
+    public void setIsHoleAsFalse() {
+        this.isHole = false;
+        System.out.println("setIsHoleAsFalse");
+    }
+
+    public void setHole(Surface surface) {
+        this.wholeSurfaces.addAll(surface.getWholeSurfaces());
+        this.holes.addAll(surface.getHoles());
+        this.area.subtract(surface.getAreaTest());
     }
 }
 

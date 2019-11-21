@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class SurfaceTab extends JPanel{
     private MainWindow mainWindow;
@@ -12,6 +14,8 @@ public class SurfaceTab extends JPanel{
     private JFormattedTextField heightField;
     private JButton combineButton;
     private JButton surfaceColorButton;
+    private JPanel dimensionPanel;
+    private JCheckBox holeCheckBox;
     private Color surfaceColor;
 
     public SurfaceTab(MainWindow mainWindow) {
@@ -26,7 +30,6 @@ public class SurfaceTab extends JPanel{
                 Color color = JColorChooser.showDialog(null, "Choose a color", surfaceColor);
                 setButtonColor(color);
                 setSurfaceColor(color);
-
             }
         });
 
@@ -49,6 +52,18 @@ public class SurfaceTab extends JPanel{
             public void actionPerformed(ActionEvent actionEvent) {
                 combineSelectedSurface();
 
+            }
+        });
+
+        holeCheckBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent itemEvent) {
+                if (itemEvent.getStateChange() == ItemEvent.SELECTED) {
+                    setSelectedSurfaceAsHole();
+                }
+                else if (itemEvent.getStateChange() == ItemEvent.DESELECTED) {
+                    setSelectedSurfaceAsWhole();
+                }
             }
         });
     }
@@ -88,4 +103,27 @@ public class SurfaceTab extends JPanel{
         this.heightField.setValue(dimension.getHeight());
     }
 
+
+    public void setSelectedSurfaceAsWhole() {
+        mainWindow.setSelectedSurfaceAsWhole();
+    }
+
+    public void setSelectedSurfaceAsHole() {
+        mainWindow.setSelectedSurfaceAsHole();
+    }
+
+    public void setHoleCheckBox(boolean isSelectedSurfaceAHole, int numberOfSelectedSurfaces) {
+        if (numberOfSelectedSurfaces == 1) {
+            holeCheckBox.setEnabled(true);
+            if (isSelectedSurfaceAHole) {
+                holeCheckBox.setSelected(true);
+            }
+            else{
+                holeCheckBox.setSelected(false);
+            }
+        }
+        else  {
+            holeCheckBox.setEnabled(false);
+        }
+    }
 }

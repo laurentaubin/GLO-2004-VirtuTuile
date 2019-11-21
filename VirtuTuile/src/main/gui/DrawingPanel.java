@@ -45,13 +45,14 @@ public class DrawingPanel extends JPanel implements Serializable {
         if (mainWindow != null) {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
-            mainWindow.draw(g2d, this);
+            mainWindow.draw(g2d, this, zoom);
 
             //SurfaceDrawer mainDrawer = new SurfaceDrawer(mainWindow.controller, initialDimension, mainWindow.getCurrentMeasurementMode());
 
             //mainDrawer.draw(g2d, zoom, prevZoom, zoomPoint, xOffset, yOffset);
 
             if (isGridActivated) {
+                g2d.scale(zoom, zoom);
 
                 g2d.setPaint(Color.GRAY);
                 g2d.setStroke(new BasicStroke(0.25f));
@@ -96,11 +97,12 @@ public class DrawingPanel extends JPanel implements Serializable {
     }
 
     public void zoomInActionPerformed(Point point) {
-        this.setZoom(getZoom() * 1.01d);
+        this.setZoom(getZoom() * 1.1d);
+        //this.setZoom(getZoom() * 1.1d);
         Point pos = mainWindow.getMainScrollPane().getViewport().getViewPosition();
 
-        int newX = (int)(point.x*(1.01f - 1f) + 1.01f*pos.x);
-        int newY = (int)(point.y*(1.01f - 1f) + 1.01f*pos.y);
+        int newX = (int)(point.x*(1.1f - 1f) + 1.1f*pos.x);
+        int newY = (int)(point.y*(1.1f - 1f) + 1.1f*pos.y);
         Point newPoint = new Point(newX, newY);
         mainWindow.setMainScrollPanePosition(newPoint);
 
@@ -113,11 +115,12 @@ public class DrawingPanel extends JPanel implements Serializable {
     }
 
     public void zoomOutActionPerformed(Point point) {
-        this.setZoom(getZoom() * 0.99d);
+        this.setZoom(getZoom() * 0.9d);
+        //this.setZoom(getZoom() * 0.9d);
         Point pos = mainWindow.getMainScrollPane().getViewport().getViewPosition();
 
-        int newX = (int)(point.x*(0.99f - 1f) + 0.99f*pos.x);
-        int newY = (int)(point.y*(0.99f - 1f) + 0.99f*pos.y);
+        int newX = (int)(point.x*(0.9f - 1f) + 0.9f*pos.x);
+        int newY = (int)(point.y*(0.9f - 1f) + 0.9f*pos.y);
         Point newPoint = new Point(newX, newY);
         mainWindow.setMainScrollPanePosition(newPoint);
 
@@ -129,51 +132,16 @@ public class DrawingPanel extends JPanel implements Serializable {
     }
 
     public void setDrawingPanelDimensions() {
-        this.setPreferredSize(new Dimension((int)(getWidth() * zoom), (int)(getHeight() * zoom)));
+        Dimension dimension = new Dimension((int)initialDimension.getWidth(), (int)initialDimension.getHeight());
+        this.setPreferredSize(new Dimension((int)(dimension.getWidth() * zoom), (int)(dimension.getHeight() * zoom)));
         validate();
         revalidate();
     }
 
-
-    public void zoomActionPerformed() {
-        Point pos = mainWindow.getMainScrollPane().getViewport().getViewPosition();
-
-        this.gridGap *= zoom;
-        setDrawingPanelDimensions();
-        this.validate();
-        //mainWindow.setMainScrollPaneDimension(size);
-        //this.setSize(size);
-
-        this.revalidate();
-        this.repaint();
-        mainWindow.setStatusBarText(" ");
-
-        /*
-
-        for (Surface surface : RoomController.getSurfaceList()) {
-            if (surface.getType() == "RECTANGULAR") {
-                int[] x = surface.getxCoord();
-                int[] y = surface.getyCoord();
-                int deltaX = (int) (x[0] * zoom - x[0]);
-                int deltaY = (int) (y[0] * zoom - y[0]);
-                if (deltaX > 5 && deltaY > 5 && zoom > 1) {
-                    for (int i = 0; i < x.length; i++) {
-                        surface.setxCoord((int) ((x[i] * zoom) - deltaX), i);
-                        surface.setyCoord((int) ((y[i] * zoom) - deltaY), i);
-                    }
-                } else if (deltaX < -5 && deltaY < -5 && zoom < 1) {
-                    for (int i = 0; i < x.length; i++) {
-                        surface.setxCoord((int) ((x[i] * zoom) - deltaX), i);
-                        surface.setyCoord((int) ((y[i] * zoom) - deltaY), i);
-                    }
-                }
-            } else {
-                //TODO après surface irregulière
-            }
-            surface.updateSurface();
-            this.repaint();
-        }
-         */
+    public void setDrawingPanelInitialDimension() {
+        this.setPreferredSize(mainWindow.getMainScrollPaneDimension());
+        validate();
+        revalidate();
     }
 }
 

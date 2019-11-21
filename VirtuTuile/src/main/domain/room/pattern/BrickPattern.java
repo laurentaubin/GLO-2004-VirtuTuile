@@ -31,12 +31,12 @@ public class BrickPattern extends Pattern {
 
         double numberColumn = boundingRectangleWidth /  (tileType.getWidth() + groutWidth);
         if (numberColumn / (int)numberColumn != 0) {
-            numberColumn = (int)(numberColumn + 1);
+            numberColumn = (int)(numberColumn + 2);
         }
 
         double numberRow = boundingRectangleHeight / (tileType.getHeight() + groutWidth);
         if(numberRow / (int)numberRow != 0) {
-            numberRow = (int)(numberRow + 1);
+            numberRow = (int)(numberRow + 2);
         }
 
 

@@ -96,6 +96,7 @@ public class MainWindow extends JFrame {
         windowMenu = new JMenu();
         minimizeMenuItem = new JMenuItem();
         zoomMenuItem = new JMenuItem();
+        cancelZoomMenuItem = new JMenuItem();
 
         statusBar = new JLabel(" ");
         statusBar.setBackground(Color.GRAY);
@@ -131,19 +132,6 @@ public class MainWindow extends JFrame {
                 irregularSurfaceButtonPerformed(actionEvent);
             }
         });
-/*
-        // Pas rapport
-        drawingPanel.addMouseWheelListener(new java.awt.event.MouseAdapter() {
-            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
-                int wheel = evt.getWheelRotation();
-                if (wheel < 0) {
-                    drawingPanel.zoomInActionPerformed(evt.getScrollAmount());
-                } else {
-                    drawingPanel.zoomOutActionPerformed(evt.getScrollAmount());
-                }
-            }
-        });
-*/
 
         measurementUnitComboBox.setModel(new DefaultComboBoxModel<>(new String[] { "MÉTRIQUE", "IMPÉRIALE" }));
         measurementUnitComboBox.setPreferredSize(new Dimension(120, 23));
@@ -196,18 +184,14 @@ public class MainWindow extends JFrame {
             }
         });
 
+
         /*
         drawingPanel.addMouseWheelListener(new java.awt.event.MouseAdapter() {
             public void mouseWheelMoved(MouseWheelEvent evt){
-                Point point = evt.getPoint();
-                if (evt.getPreciseWheelRotation() > 0) {
-                    drawingPanel.zoomInActionPerformed(point);
-                }
-                else {
-                    drawingPanel.zoomOutActionPerformed(point);
-                }
+                mouseWheelMovedEventPerformed(evt);
             }
         });
+
          */
 
         drawingPanel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -249,7 +233,7 @@ public class MainWindow extends JFrame {
 
         splitPane.setOneTouchExpandable(true);
 
-        splitPane.setResizeWeight(0.90);
+        splitPane.setResizeWeight(1);
 
         statusBar.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
@@ -319,6 +303,14 @@ public class MainWindow extends JFrame {
         windowMenu.add(minimizeMenuItem);
         zoomMenuItem.setText("Zoom");
         windowMenu.add(zoomMenuItem);
+        cancelZoomMenuItem.setText("Cancel Zoom");
+        cancelZoomMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                cancelZoomActionPerformed();
+            }
+        });
+        windowMenu.add(cancelZoomMenuItem);
 
         menuBar.add(fileMenu);
         menuBar.add(editionMenu);
@@ -353,13 +345,13 @@ public class MainWindow extends JFrame {
 
     private void drawingPanelKeyPressed(java.awt.event.KeyEvent evt) {
 
-        if(evt.getKeyCode() == KeyEvent.VK_BACK_SPACE && RoomController.surfaceSelecte()){
+        if(evt.getKeyCode() == KeyEvent.VK_BACK_SPACE && controller.surfaceSelecte()){
             String[] options = {"Ok", "Cancel"};
             int indexReponse = JOptionPane.showOptionDialog(null, "Voulez-vous vraiment supprimer cette surface?",
                     "Attention!",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             if(indexReponse == 0){
-                RoomController.deleteSurface();
+                controller.deleteSurface();
             }
         }
         drawingPanel.repaint();
@@ -376,18 +368,16 @@ public class MainWindow extends JFrame {
         if (this.currentApplicationMode == ApplicationMode.SELECT && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
 
-            double xPos = this.initMousePoint.getX();
-            double yPos = this.initMousePoint.getY();
+            double xPos = this.initMousePoint.getX() / drawingPanel.getZoom();
+            double yPos = this.initMousePoint.getY() / drawingPanel.getZoom();
             //double xPos = UnitConverter.convertPixelToSelectedUnit((int) this.initMousePoint.getX(), this.currentMeasurementMode);
             //double yPos = UnitConverter.convertPixelToSelectedUnit((int) this.initMousePoint.getY(), this.currentMeasurementMode);
 
             this.controller.switchSelectionStatus(xPos, yPos, mouseEvent.isShiftDown());
-            drawingPanel.repaint();
 
-           // rightPanel.updateInformations(this.controller.getSelectedRectangularSurfaceDimensions());
             rightPanel.updateSurfaceTabDimensions(this.controller.getSelectedSurfaceDimensions());
             rightPanel.updateSurfaceTabColor(this.controller.getSelectedSurfaceColor());
-
+            rightPanel.updateIfSelectedSurfaceIsAHole(this.controller.getIfSelectedSurfaceIsAHole(), this.controller.getNumberOfSelectedSurfaces());
         }
 
         if (this.currentApplicationMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
@@ -397,7 +387,7 @@ public class MainWindow extends JFrame {
         if (this.currentApplicationMode == ApplicationMode.ADD_IRREGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
         }
-
+        drawingPanel.repaint();
     }
 
     private void drawingPanelMouseReleased(MouseEvent mouseEvent){
@@ -408,17 +398,17 @@ public class MainWindow extends JFrame {
 
             Point position = this.initMousePoint.getLocation();
             //Point position = UnitConverter.convertPointToSelectedUnit(this.initMousePoint.getLocation(), this.currentMeasurementMode);
+            double[] xDrawPoints = getXDrawPoints();
+            double[] yDrawPoints = getYDrawPoints();
 
-            int[] xDrawPoints = getXDrawPoints();
-            int[] yDrawPoints = getYDrawPoints();
+            //int[] xDrawPoints = getXDrawPoints();
+            //int[] yDrawPoints = getYDrawPoints();
 
             if (xDrawPoints[0] - yDrawPoints[1] > 0){
                 position = mousePointReleased.getLocation();
                 //position = UnitConverter.convertPointToSelectedUnit(mousePointReleased.getLocation(), this.currentMeasurementMode);
             }
-            drawingPanel.repaint();
-            RoomController.clearSurfaceProjectionList();
-
+            controller.clearSurfaceProjectionList();
             controller.addSurface(position ,xDrawPoints, yDrawPoints, 4);
         }
 
@@ -450,33 +440,53 @@ public class MainWindow extends JFrame {
         }
         else if (this.currentApplicationMode == ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             this.currentMousePoint = mouseEvent.getPoint();
-            int[] xDrawPoints = getXDrawPoints();
-            int[] yDrawPoints = getYDrawPoints();
+
+            double[] xDrawPoints = getXDrawPoints();
+            double[] yDrawPoints = getYDrawPoints();
+            //int[] xDrawPoints = getXDrawPoints();
+            //int[] yDrawPoints = getYDrawPoints();
 
             controller.addRectangularProjection(this.initMousePoint, xDrawPoints, yDrawPoints);
         }
         drawingPanel.repaint();
     }
 
-    private int[] getXDrawPoints() {
-        int[] drawPoints = new int[4];
+    private double[] getXDrawPoints() {
+        double[] drawPoints = new double[4];
+        //int[] drawPoints = new int[4];
 
+        drawPoints[0] = initMousePoint.getX();
+        drawPoints[1] = currentMousePoint.getX();
+        drawPoints[2] = currentMousePoint.getX();
+        drawPoints[3] = initMousePoint.getX();
+/*
         drawPoints[0] = (int)initMousePoint.getX();
         drawPoints[1] = (int)currentMousePoint.getX();
         drawPoints[2] = (int)currentMousePoint.getX();
         drawPoints[3] = (int)initMousePoint.getX();
 
+ */
+
         //return UnitConverter.convertPixelListToSelectedUnit(drawPoints, this.currentMeasurementMode);
         return drawPoints;
     }
 
-    private int[] getYDrawPoints() {
+    private double[] getYDrawPoints() {
+        double[] drawPoints = new double[4];
+
+        drawPoints[0] = initMousePoint.getY();
+        drawPoints[1] = initMousePoint.getY();
+        drawPoints[2] = currentMousePoint.getY();
+        drawPoints[3] = currentMousePoint.getY();
+        /*
         int[] drawPoints = new int[4];
 
         drawPoints[0] = (int)initMousePoint.getY();
         drawPoints[1] = (int)initMousePoint.getY();
         drawPoints[2] = (int)currentMousePoint.getY();
         drawPoints[3] = (int)currentMousePoint.getY();
+
+         */
 
         //return UnitConverter.convertPixelListToSelectedUnit(drawPoints, this.currentMeasurementMode);
         return drawPoints;
@@ -521,8 +531,8 @@ public class MainWindow extends JFrame {
     }
 
 
-    public void draw(Graphics2D g, DrawingPanel drawingPanel) {
-        controller.draw(g, getCurrentMeasurementMode(), drawingPanel);
+    public void draw(Graphics2D g, DrawingPanel drawingPanel, double zoom) {
+        controller.draw(g, getCurrentMeasurementMode(), drawingPanel, zoom, currentMousePoint);
     }
 
     public void setSelectedSurfaceWidth(double enteredWidth) {
@@ -592,6 +602,31 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
+    public void setSelectedSurfaceAsHole() {
+        controller.setSelectedSurfaceAsHole();
+    }
+
+    public void cancelZoomActionPerformed() {
+        drawingPanel.setZoom(1d);
+        drawingPanel.setDrawingPanelInitialDimension();
+        drawingPanel.repaint();
+    }
+
+    public void mouseWheelMovedEventPerformed(MouseWheelEvent evt) {
+        Point point = evt.getPoint();
+        this.currentMousePoint = evt.getPoint();
+        if (evt.getPreciseWheelRotation() > 0) {
+            drawingPanel.zoomInActionPerformed(point);
+        }
+        else {
+            drawingPanel.zoomOutActionPerformed(point);
+        }
+    }
+
+    public void setSelectedSurfaceAsWhole() {
+        this.controller.setSelectedSurfaceAsWhole();
+    }
+
     private ButtonGroup buttonGroup;
 
     private JPanel mainPanel;
@@ -638,4 +673,5 @@ public class MainWindow extends JFrame {
     private JMenu windowMenu;
     private JMenuItem minimizeMenuItem;
     private JMenuItem zoomMenuItem;
+    private JMenuItem cancelZoomMenuItem;
 }

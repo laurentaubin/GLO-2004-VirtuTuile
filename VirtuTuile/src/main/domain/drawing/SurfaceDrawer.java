@@ -9,6 +9,7 @@ import domain.room.pattern.BrickPattern;
 import domain.room.pattern.VerticalBrickPattern;
 import domain.room.surface.Surface;
 import gui.DrawingPanel;
+import javafx.scene.transform.Affine;
 import util.UnitConverter;
 import gui.MainWindow;
 import org.w3c.dom.css.Rect;
@@ -16,10 +17,7 @@ import org.w3c.dom.css.Rect;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Area;
-import java.awt.geom.Path2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.geom.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,18 +29,18 @@ public class SurfaceDrawer {
     private final RoomController controller;
     private Dimension initialDimension;
     private MainWindow.MeasurementUnitMode measurementMode;
+    private double zoom;
 
 
     public SurfaceDrawer(RoomController controller) {
         this.controller = controller;
     }
 
-    public void draw(Graphics2D g2d, ArrayList<Surface> surfaceList) {
-
-        drawSurface(g2d, surfaceList);
+    public void draw(Graphics2D g2d, ArrayList<Surface> surfaceList, double zoom, Point currentMousePoint) {
+        drawSurface(g2d, surfaceList, zoom, currentMousePoint);
     }
 
-    public void drawSurface(Graphics2D g2d, ArrayList<Surface> surfaceList) {
+    public void drawSurface(Graphics2D g2d, ArrayList<Surface> surfaceList, double zoom, Point currentMousePoint) {
         /*
     }
         for (Surface current_surface : surfaceList) {
@@ -60,8 +58,20 @@ public class SurfaceDrawer {
          */
 
         for (Surface current_surface : surfaceList) {
-            Point point = current_surface.getPosition();
-            Shape shape = current_surface.getShape();
+
+            Point2D.Double point = current_surface.getPosition();
+            Area shape = current_surface.getAreaTest();
+            //Shape shape = current_surface.getShape();
+            if (zoom != 1) {
+                g2d.translate(point.getX(), point.getY());
+                g2d.scale(zoom,zoom);
+                g2d.translate(-point.getX(), -point.getY());
+                /*
+                AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
+                shape.transform(at);
+                this.zoom = zoom;
+                 */
+            }
             Color fillColor = current_surface.getColor();
             g2d.setColor(fillColor);
             g2d.fill(shape);
@@ -103,11 +113,11 @@ public class SurfaceDrawer {
             g2d.draw(shape);
         }
 
-        ArrayList<Surface> surfaceProjectionList = RoomController.getSurfaceProjectionList();
+        ArrayList<Surface> surfaceProjectionList = controller.getSurfaceProjectionList();
         if(!surfaceProjectionList.isEmpty()) {
             Surface rectangularProjection = surfaceProjectionList.get(surfaceProjectionList.size() - 1);
            // g2d.draw(rectangularProjection.getPolygon());
-            g2d.draw(rectangularProjection.getPolygon());
+            g2d.draw(rectangularProjection.getAreaTest());
            //g2d.draw(UnitConverter.convertPolygonToPixel(rectangularProjection.getPolygon(), this.measurementMode));
         }
     }

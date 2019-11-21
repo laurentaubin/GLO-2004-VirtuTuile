@@ -1,19 +1,16 @@
 package domain.room;
 
-import com.sun.tools.javac.Main;
 import domain.drawing.SurfaceDrawer;
 import domain.room.pattern.Pattern;
-import domain.room.surface.RectangularSurface;
 import domain.room.surface.Surface;
 import gui.DrawingPanel;
 import gui.MainWindow;
 
 import java.awt.*;
-import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
 
 public class RoomController {
-    private  static Room room;
+    private Room room;
     private SurfaceDrawer surfaceDrawer;
     //private final Room room;
 
@@ -26,26 +23,51 @@ public class RoomController {
         room = new Room();
     }
 
-    public void draw(Graphics2D g, MainWindow.MeasurementUnitMode measurementUnitMode, DrawingPanel drawingPanel) {
+    public void draw(Graphics2D g, MainWindow.MeasurementUnitMode measurementUnitMode, DrawingPanel drawingPanel, double zoom, Point currentMousePoint) {
         ArrayList<Surface> surfaceList = getSurfaceList();
         surfaceDrawer = new SurfaceDrawer(this);
         surfaceDrawer.setMeasurementUnitMode(measurementUnitMode);
-        surfaceDrawer.draw(g, surfaceList);
+        surfaceDrawer.draw(g, surfaceList, zoom, currentMousePoint);
     }
 
+    public void addRectangularProjection(Point point, double[] xPoints, double[] yPoints) {
+        room.addRectangularProjection(point, xPoints, yPoints);
+    }
+
+    /*
     public void addRectangularProjection(Point point, int[] xPoints, int[] yPoints) {
         room.addRectangularProjection(point, xPoints, yPoints);
     }
 
+     */
+    public void addRectangularSurface(Point point, double[] xPoints, double[] yPoints) {
+        room.addRectangularSurface(point, xPoints, yPoints);
+    }
+
+    /*
     public void addRectangularSurface(Point point, int[] xPoints, int[] yPoints) {
         room.addRectangularSurface(point, xPoints, yPoints);
     }
 
+     */
+
+    /*
     public void addRectangularSurface(Point position, int width, int height){
         room.addRectangularSurface(position, width, height);
     }
 
+     */
 
+    public void addSurface(Point point, double[] xPoints, double[] yPoints, int number_of_edges) {
+        if (number_of_edges == 4) {
+            this.addRectangularSurface(point, xPoints, yPoints);
+        }
+        else {
+            //this.addIrregularSurface(point, xPoints, yPoints, number_of_edges);
+        }
+    }
+
+    /*
     public void addSurface(Point point, int[] xPoints, int[] yPoints, int number_of_edges) {
         if (number_of_edges == 4) {
             this.addRectangularSurface(point, xPoints, yPoints);
@@ -55,26 +77,36 @@ public class RoomController {
         }
     }
 
+     */
+
     private void addIrregularSurface(Point point, int[] xPoints, int[] yPoints, int number_of_edges) {
         room.addIrregularSurface(point, xPoints, yPoints, number_of_edges);
     }
 
-    public static ArrayList<Surface> getSurfaceList() {
+    public ArrayList<Surface> getSurfaceList() {
         return room.getSurfaceList();
     }
 
-    public static ArrayList<Surface> getSurfaceProjectionList() {return room.getSurfaceProjectionList();}
+    public ArrayList<Surface> getSurfaceProjectionList() {
+        return room.getSurfaceProjectionList();
+    }
 
-    public static void clearSurfaceProjectionList() {room.clearSurfaceProjectionList();}
+    public void clearSurfaceProjectionList() {
+        room.clearSurfaceProjectionList();
+    }
 
-    public static void deleteSurface(){ room.deleteSurface(); }
+    public void deleteSurface(){
+        room.deleteSurface();
+    }
 
 
     public int getNumberOfSurfaces() {
         return room.getNumberOfSurfaces();
     }
 
-    public static boolean surfaceSelecte(){ return room.surfaceSelecte(); }
+    public boolean surfaceSelecte(){
+        return room.surfaceSelecte();
+    }
 
     public void switchSelectionStatus(double x, double y, boolean isShiftDown) {
         room.switchSelectionStatus(x, y, isShiftDown);
@@ -123,7 +155,7 @@ public class RoomController {
     }
 
     public int numberOfSelectedSurfaces(){
-        return room.numberOfSelectedSurfaces();
+        return room.getNumberOfSelectedSurfaces();
     }
 
     public void setSelectedSurfaceColor(Color color){
@@ -178,5 +210,21 @@ public class RoomController {
     public void setVerticalBrickPatternToSelectedSurface() {
         room.setVerticalBrickPatternToSelectedSurface();
     }
+
+    public void setSelectedSurfaceAsHole() {
+        room.setSelectedSurfaceAsHole();
+    }
+
+    public void setSelectedSurfaceAsWhole() {
+        room.setSelectedSurfaceAsWhole();
+    }
+    public boolean getIfSelectedSurfaceIsAHole() {
+        return room.getIfSelectedSurfaceIsAHole();
+    }
+
+    public int getNumberOfSelectedSurfaces() {
+        return room.getNumberOfSelectedSurfaces();
+    }
+
 }
 

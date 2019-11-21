@@ -33,6 +33,11 @@ public class Room {
         this.surfaceProjectionList.add(surface);
     }
 
+    public void addRectangularProjection(Point point, double[] xPoints, double[] yPoints) {
+        Surface surface = new Surface(xPoints, yPoints, 4);
+        this.addSurfaceToProjectionList(surface);
+    }
+    /*
     public void addRectangularProjection(Point point, int[] xPoints,int[] yPoints) {
         RectangularSurface rectangularSurfaceProjection = new RectangularSurface(point, xPoints, yPoints);
         Surface surfaceProjection = new Surface(point);
@@ -41,6 +46,13 @@ public class Room {
         this.addSurfaceToProjectionList(surfaceProjection);
     }
 
+     */
+
+    public void addRectangularSurface(Point point, double[] xPoints, double[] yPoints) {
+        Surface surface = new Surface(xPoints, yPoints, 4);
+        this.addSurfaceToList(surface);
+    }
+/*
     public void addRectangularSurface(Point point, int[] xPoints, int[] yPoints) {
         RectangularSurface rectangularSurface = new RectangularSurface(point, xPoints, yPoints);
         Surface surface = new Surface(point);
@@ -49,12 +61,17 @@ public class Room {
         this.addSurfaceToList(surface);
     }
 
+ */
+
+/*
     public void addRectangularSurface(Point point, int width, int height) {
         RectangularSurface rectangularSurface = new RectangularSurface(point, width, height);
         Surface surface = new Surface(point);
         surface.addElementaryWholeSurface(rectangularSurface);
         this.addSurfaceToList(surface);
     }
+
+ */
 
     public void addIrregularSurface(Point point, int[] xPoints, int[] yPoints, int number_of_edges) {
         //TODO Code pour ajouter une surface irrégulière
@@ -82,15 +99,26 @@ public class Room {
 
 
     void switchSelectionStatus(double x, double y, boolean isShiftDown) {
+        for (int i = surfaceList.size() - 1; i >= 0; i--) {
+            if (surfaceList.get(i).getAreaTest().contains(x, y)) {
+                this.switchSelectionStatusIfContains(x, y, isShiftDown, surfaceList.get(i));
+                break;
+            }
+            else {
+                surfaceList.get(i).unselect();
+            }
+        }
+        /*
         for (Surface surfaceInRoom : this.surfaceList) {
             this.switchSelectionStatusIfContains(x, y, isShiftDown, surfaceInRoom);
         }
+         */
     }
 
     private void switchSelectionStatusIfContains(double x, double y, boolean isShiftDown, Surface surfaceInRoom) {
         Point2D.Double point = new Point2D.Double(x, y);
         //TODO changer le OR pour une meilleure condition
-        if (surfaceInRoom.getPolygon().contains(point) || surfaceInRoom.getAreaTest().contains(point)) {
+        if (surfaceInRoom.getAreaTest().contains(point)) {
             surfaceInRoom.switchSelectionStatus();
         }
         else if (!isShiftDown){
@@ -238,13 +266,8 @@ public class Room {
     }
 
     public Color getSelectedSurfaceColor() {
-        int counter = 0;
         Color color = Color.WHITE;
-        for (Surface surface: this.surfaceList) {
-            if (surface.isSelected()) {
-                counter += 1;
-            }
-        }
+        int counter = getNumberOfSelectedSurfaces();
         if (counter == 1) {
             for (Surface surface : this.surfaceList) {
                 if (surface.isSelected()) {
@@ -294,31 +317,19 @@ public class Room {
     }
 
     public Dimension getSelectedSurfaceDimensions() {
-        int counterOfSelectedSurfaces = 0;
-        for (Surface surfaceInRoom : surfaceList) {
-            if (surfaceInRoom.isSelected()) {
-                counterOfSelectedSurfaces += 1;
-                if (counterOfSelectedSurfaces > 1) {
-                    break;
-                }
-            }
-        }
-        if (counterOfSelectedSurfaces == 1) {
+        Dimension dimension = new Dimension(0,0);
+        int counter = getNumberOfSelectedSurfaces();
+        if (counter == 1) {
             for (Surface surfaceInRoom : surfaceList) {
                 if (surfaceInRoom.isSelected()) {
-                    return surfaceInRoom.getDimensions();
+                    dimension =  surfaceInRoom.getDimensions();
                 }
             }
         }
-        else {
-            Dimension dimension = new Dimension();
-            dimension.setSize(0d, 0d);
-            return dimension;
-        }
-        return null;
+        return dimension;
     }
 
-    public int numberOfSelectedSurfaces(){
+    public int getNumberOfSelectedSurfaces(){
         int count = 0;
         for(Surface surface:surfaceList){
             if(surface.isSelected()){
@@ -350,8 +361,15 @@ public class Room {
 
         for (Surface surface : surfacesToCombine) {
             if (baseSurface.intersect(surface.getAreaTest())) {
-                baseSurface.merge(surface);
-                surfaceList.remove(surface);
+                if(surface.isHole()) {
+                    System.out.println("ABFJS");
+                    baseSurface.setHole(surface);
+                    surfaceList.remove(surface);
+                }
+                else {
+                    baseSurface.merge(surface);
+                    surfaceList.remove(surface);
+                }
             }
         }
     }
@@ -426,5 +444,38 @@ public class Room {
                 surfaceInRoom.setPattern(verticalBrickPattern);
             }
         }
+    }
+
+    public void setSelectedSurfaceAsHole() {
+        int counter = getNumberOfSelectedSurfaces();
+        if (counter == 1) {
+            for (Surface surfaceInRoom : surfaceList) {
+                if (surfaceInRoom.isSelected())
+                    surfaceInRoom.setIsHole();
+            }
+        }
+    }
+
+    public void setSelectedSurfaceAsWhole() {
+        int counter = getNumberOfSelectedSurfaces();
+        if (counter == 1) {
+            for (Surface surfaceInRoom : surfaceList) {
+                if (surfaceInRoom.isSelected())
+                    surfaceInRoom.setIsHoleAsFalse();
+            }
+        }
+    }
+
+    public boolean getIfSelectedSurfaceIsAHole() {
+        boolean isAHole = false;
+        int counter = getNumberOfSelectedSurfaces();
+        if (counter == 1) {
+            for (Surface surface : this.surfaceList) {
+                if (surface.isSelected()) {
+                    isAHole = surface.isHole();
+                }
+            }
+        }
+        return isAHole;
     }
 }

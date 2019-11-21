@@ -37,22 +37,16 @@ public class RightPanel extends JTabbedPane implements Serializable {
         this.setSelectedIndex(0);
     }
 
-    /*
-
-    public void updateSurfaceTabDimensions(double[] dimensions){
-        this.surfaceTabPanel.setDimensionsValue(dimensions);
-    }
-
-     */
-
-
-
     public void updateSurfaceTabDimensions(Dimension dimension) {
         this.surfaceTabPanel.setSurfaceDimensionField(dimension);
     }
 
     public void updateSurfaceTabColor(Color color) {
         this.surfaceTabPanel.setButtonColor(color);
+    }
+
+    public void updateIfSelectedSurfaceIsAHole(boolean isSelectedSurfaceAHole, int number) {
+        this.surfaceTabPanel.setHoleCheckBox(isSelectedSurfaceAHole, number);
     }
 
     public MainWindow getMainWindow() {
@@ -62,6 +56,5 @@ public class RightPanel extends JTabbedPane implements Serializable {
     private SurfaceTab surfaceTabPanel;
     private PatternTab patternTabPanel;
     private TileTab tileTabPanel;
-    private JPanel groutTabPanel;
     private JButton button;
 }

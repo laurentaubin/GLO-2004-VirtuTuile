@@ -38,7 +38,7 @@ public class VerticalPattern extends Pattern {
         if(numberRow / (int)numberRow != 0) {
             numberRow = (int)(numberRow + 1);
         }
-        
+
         for (int row = 1; row <= numberRow ; row++) {
             for (int column = 1; column <= numberColumn; column++) {
 
