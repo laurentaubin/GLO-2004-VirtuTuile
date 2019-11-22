@@ -256,6 +256,14 @@ public class Room {
             surface.setMeasurementMode(mode);
         }
     }
+    public void setGroutColor(Color color){
+        for (Surface surface : this.surfaceList) {
+            if (surface.isSelected() && surface.isCovered()) {
+                surface.setColor(color);
+            }
+        }
+    }
+
 
     public void setSelectedSurfaceColor(Color color) {
         for (Surface surface : this.surfaceList) {
@@ -392,6 +400,10 @@ public class Room {
     public ArrayList<TileType> getTileList() {
         return tileTypeList;
     }
+
+
+
+
 
     public void setSelectedTileToSelectedSurface(TileType selectedTileType) {
         for (Surface surfaceInRoom : surfaceList) {

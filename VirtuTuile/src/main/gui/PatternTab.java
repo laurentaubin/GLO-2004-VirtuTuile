@@ -26,7 +26,6 @@ public class PatternTab extends JPanel{
     private JLabel groutColorLabel;
     private JButton groutColorButton;
     private JFormattedTextField groutWidthField;
-    private JButton modifierLaLargeurDuButton;
     private Color selectedColor;
 
 
@@ -102,6 +101,7 @@ public class PatternTab extends JPanel{
                 setEnteredGroutWidth();
             }
         });
+
     }
 
     private void setButtonColor(Color color) {
@@ -109,15 +109,14 @@ public class PatternTab extends JPanel{
         groutColorButton.setBackground(color);
         groutColorButton.setOpaque(true);
         groutColorButton.setBorderPainted(false);
+        this.mainWindow.setGroutColor(color);
     }
 
     private Color getSelectedColor() {
         return this.selectedColor;
     }
 
-    private void straightPatternButtonActionPerformed() {
-        mainWindow.setStraightPatternToSelectedSurface();
-    }
+    private void straightPatternButtonActionPerformed() { mainWindow.setStraightPatternToSelectedSurface(); }
 
     private void horizontalBrickButtonActionPerformed() {
         mainWindow.setHorizontalPatternToSelectedSurface();
@@ -131,9 +130,10 @@ public class PatternTab extends JPanel{
         mainWindow.setVerticalBrickPatternToSelectedSurface();
     }
 
+
     private void setEnteredGroutWidth() {
-        double width = ((Number)groutWidthField.getValue()).doubleValue();
-        mainWindow.setEnteredGroutWidtht(width);
+        double width = Double.valueOf(groutWidthField.getValue().toString());
+        this.mainWindow.setEnteredGroutWidtht(width);
     }
 
     public void setGroutWidth(double width, int number) {
