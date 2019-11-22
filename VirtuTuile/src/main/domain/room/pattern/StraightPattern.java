@@ -16,10 +16,6 @@ public class StraightPattern extends Pattern {
         super();
     }
 
-    public StraightPattern(double xOffset, double yOffset, int angle, double groutWidth, Color groutColor) {
-        super(xOffset, yOffset, angle, groutWidth, groutColor);
-    }
-
     public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area) {
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
         Point2D.Double position = new Point2D.Double(boundingRectanglePosition.getX(), boundingRectangle.getY());

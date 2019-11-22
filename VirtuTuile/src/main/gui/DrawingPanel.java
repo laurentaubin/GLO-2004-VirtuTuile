@@ -54,7 +54,7 @@ public class DrawingPanel extends JPanel implements Serializable {
             if (isGridActivated) {
                 g2d.scale(zoom, zoom);
 
-                g2d.setPaint(Color.GRAY);
+                g2d.setPaint(Color.LIGHT_GRAY);
                 g2d.setStroke(new BasicStroke(0.25f));
                 for (int row = 1; row <= this.getHeight() / this.gridGap; row++) {
                     g2d.drawLine(0, (int)(row * this.gridGap), this.getWidth(), (int)(row * this.gridGap));

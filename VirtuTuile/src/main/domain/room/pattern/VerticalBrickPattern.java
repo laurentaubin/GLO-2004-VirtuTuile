@@ -15,9 +15,6 @@ public class VerticalBrickPattern extends Pattern {
         super();
     }
 
-    public VerticalBrickPattern(double xOffset, double yOffset, int angle, double groutWidth, Color groutColor) {
-        super(xOffset, yOffset, angle, groutWidth, groutColor);
-    }
 
     public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area) {
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
@@ -30,14 +27,14 @@ public class VerticalBrickPattern extends Pattern {
         int groutWidth = 2;
 
         double numberColumn = boundingRectangleWidth / (tileType.getHeight() + groutWidth);
-        if (numberColumn / (int)numberColumn != 0) {
-            numberColumn = (int)(numberColumn + 1);
-        }
+
+        numberColumn = (int)(numberColumn + 2);
+
 
         double numberRow = boundingRectangleHeight / (tileType.getWidth() + groutWidth);
-        if(numberRow / (int)numberRow != 0) {
-            numberRow = (int)(numberRow + 1);
-        }
+
+        numberRow = (int)(numberRow + 2);
+
 
 
         for (int row = 1; row <= numberRow ; row++) {
