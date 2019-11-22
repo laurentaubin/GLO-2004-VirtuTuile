@@ -391,6 +391,11 @@ public class MainWindow extends JFrame {
             rightPanel.updateSurfaceTabColor(this.controller.getSelectedSurfaceColor());
             rightPanel.updateIfSelectedSurfaceIsAHole(this.controller.getIfSelectedSurfaceIsAHole(), this.controller.getNumberOfSelectedSurfaces());
             rightPanel.updatePatternTab(this.controller.getSelectedSurfaceGroutWidth(), this.controller.getNumberOfSelectedSurfaces());
+            rightPanel.updateTileTab(   controller.getCurrentTileWidth(),
+                                        controller.getCurrentTileHeight(),
+                                        controller.getCurrentNameTile(),
+                                        controller.getSelectedSurfaceColor(),
+                                        controller.getCurrentTilePerBox());
         }
 
         if (this.currentApplicationMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {

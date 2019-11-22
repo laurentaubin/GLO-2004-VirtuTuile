@@ -581,4 +581,59 @@ public class Room {
         }
         return 0;
     }
+
+    public float getCurrentTileWidth() {
+        float tileWidth = 0;
+        int counter = getNumberOfSelectedSurfaces();
+        if (counter == 1) {
+            for (Surface surface : surfaceList) {
+                tileWidth = surface.getTileType().getWidth();
+            }
+        }
+        return tileWidth;
+    }
+
+    public float getCurrentTileHeight() {
+        float tileHeight = 0;
+        int counter = getNumberOfSelectedSurfaces();
+        if (counter == 1) {
+            for (Surface surface : surfaceList) {
+                tileHeight = surface.getTileType().getHeight();
+            }
+        }
+        return tileHeight;
+    }
+
+    public String getCurrentTileName() {
+        String name = "";
+        int counter = getNumberOfSelectedSurfaces();
+        if (counter == 1) {
+            for (Surface surface : surfaceList) {
+                name = surface.getTileType().getName();
+            }
+        }
+        return name;
+    }
+
+    public Color getCurrentTileColor() {
+        Color color = Color.WHITE;
+        int counter = getNumberOfSelectedSurfaces();
+        if (counter == 1) {
+            for (Surface surface : surfaceList) {
+                color = surface.getTileType().getColor();
+            }
+        }
+        return color;
+    }
+
+    public int getCurrentTileNumberPerBox() {
+        int nbrOfTilePerBox = 0;
+        int counter = getNumberOfSelectedSurfaces();
+        if (counter == 1) {
+            for (Surface surface : surfaceList) {
+                nbrOfTilePerBox = surface.getTileType().getNbrTilesPerBox();
+            }
+        }
+        return nbrOfTilePerBox;
+    }
 }

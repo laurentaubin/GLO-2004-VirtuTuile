@@ -27,7 +27,7 @@ public class BrickPattern extends Pattern {
         double boundingRectangleHeight = (int)boundingRectangle.getHeight();
 
         //Aller chercher la vrai dimension de grout
-        int groutWidth = 2;
+        double groutWidth = this.getGroutWidth();
 
         double numberColumn = boundingRectangleWidth /  (tileType.getWidth() + groutWidth);
         if (numberColumn / (int)numberColumn != 0) {

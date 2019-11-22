@@ -78,5 +78,35 @@ public class TileTab extends JPanel {
         mainWindow.setSelectedTileToSelectedSurface(selectedTileType);
     }
 
+    public void setCurrentTileInfo(float width, float height, String name, Color color, int nbrTilesPerBox) {
+        setTileWidht(width);
+        setTileHeight(height);
+        setTileName(name);
+        setTileColor(color);
+        setTileNumberPerBoxField(nbrTilesPerBox);
+    }
+
+    public void setTileWidht(float width) {
+        this.tileWidthField.setValue(width);
+    }
+
+    public void setTileHeight(float height) {
+        this.tileHeightField.setValue(height);
+    }
+
+    public void setTileName(String name) {
+        this.tileNameField.setText(name);
+    }
+
+    public void setTileColor(Color color) {
+        this.tileColorButton.setBackground(color);
+        this.tileColorButton.setOpaque(true);
+        this.tileColorButton.setBorderPainted(false);
+    }
+
+    public void setTileNumberPerBoxField(int nbrOfTiles) {
+        this.tileNumberPerBoxField.setValue(nbrOfTiles);
+    }
+
 
 }

@@ -246,5 +246,25 @@ public class RoomController {
     public void snapSelectedSurfaceToGrid(double gridGap) {
         room.snapSelectedSurfaceToGrid(gridGap);
     }
+
+    public float getCurrentTileWidth() {
+        return this.room.getCurrentTileWidth();
+    }
+
+    public float getCurrentTileHeight() {
+        return this.room.getCurrentTileHeight();
+    }
+
+    public String getCurrentNameTile() {
+        return this.room.getCurrentTileName();
+    }
+
+    public Color getCurrentTileColor() {
+        return this.room.getCurrentTileColor();
+    }
+
+    public int getCurrentTilePerBox() {
+        return this.room.getCurrentTileNumberPerBox();
+    }
 }
 

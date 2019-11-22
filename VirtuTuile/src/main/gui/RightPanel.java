@@ -1,5 +1,7 @@
 package gui;
 
+import domain.room.TileType;
+
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
@@ -51,6 +53,10 @@ public class RightPanel extends JTabbedPane implements Serializable {
 
     public void updatePatternTab(double groutWidth, int number) {
         this.patternTabPanel.setGroutWidth(groutWidth, number);
+    }
+
+    public void updateTileTab(float width, float height, String name, Color color, int nbrTilesPerBox) {
+        tileTabPanel.setCurrentTileInfo(width, height, name, color, nbrTilesPerBox);
     }
 
     public MainWindow getMainWindow() {

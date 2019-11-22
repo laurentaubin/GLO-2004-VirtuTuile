@@ -374,7 +374,6 @@ public class Surface {
 
     public void setIsHoleAsFalse() {
         this.isHole = false;
-        System.out.println("setIsHoleAsFalse");
     }
 
     public void setHole(Surface surface) {
