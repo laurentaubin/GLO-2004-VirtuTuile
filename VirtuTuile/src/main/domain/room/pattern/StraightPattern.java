@@ -24,9 +24,7 @@ public class StraightPattern extends Pattern {
         double boundingRectangleWidth = (int)boundingRectangle.getWidth() ;
         double boundingRectangleHeight = (int)boundingRectangle.getHeight();
 
-        //Aller chercher la vrai dimension de grout
         double groutWidth = this.getGroutWidth();
-        //int groutWidth = 2;
 
         double numberColumn = boundingRectangleWidth / (tileType.getWidth() + groutWidth);
         if (numberColumn / (int)numberColumn != 0) {

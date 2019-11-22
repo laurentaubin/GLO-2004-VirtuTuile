@@ -330,22 +330,9 @@ public class Surface {
 
     //Inspiré de: https://stackoverflow.com/questions/31209541/convert-from-java-awt-geom-area-to-java-awt-polygon
     public boolean intersect(Area otherArea) {
-        boolean isIntersect = false;
-        PathIterator pathIterator = otherArea.getPathIterator(null);
-        float[] floats = new float[6];
-        while (!pathIterator.isDone()) {
-            int type = pathIterator.currentSegment(floats);
-            int x = (int) floats[0];
-            int y = (int) floats[1];
-            if (type != PathIterator.SEG_CLOSE) {
-                if (this.area.contains(x, y)) {
-                    isIntersect = true;
-                    break;
-                }
-            }
-            pathIterator.next();
-        }
-        return isIntersect;
+        Area testArea = new Area(this.area);
+        testArea.intersect(otherArea);
+        return !testArea.isEmpty();
     }
 
     public void setArea(Area area) {
