@@ -532,8 +532,18 @@ public class MainWindow extends JFrame {
 
         int result = JOptionPane.showConfirmDialog(null, fields, "Entrer les dimensions d'un carré de la grille", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
-            double newGridGap = Double.parseDouble(field.getText());
+            double newGridGap;
+            try {
+                newGridGap = Double.parseDouble(field.getText());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "La valeur entrée n'est pas un nombre. Veuillez recommencer.");
+                return;
+            }
 
+            if (newGridGap <= 0) {
+                JOptionPane.showMessageDialog(null, "La valeur entrée est plus petite ou égale à zéro. Veuillez recommencer.");
+                throw new ArithmeticException("Negative grid gap.");
+            }
             switch(comboBox.getSelectedIndex()) {
                 case 0:
                     // TODO ajouter la conversion d'unité Mètre -> Pixel
