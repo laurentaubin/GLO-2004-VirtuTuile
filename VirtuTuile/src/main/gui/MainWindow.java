@@ -186,14 +186,14 @@ public class MainWindow extends JFrame {
         });
 
 
-        /*
+
         drawingPanel.addMouseWheelListener(new java.awt.event.MouseAdapter() {
             public void mouseWheelMoved(MouseWheelEvent evt){
                 mouseWheelMovedEventPerformed(evt);
             }
         });
 
-         */
+
 
         drawingPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -412,7 +412,7 @@ public class MainWindow extends JFrame {
     private void drawingPanelMouseReleased(MouseEvent mouseEvent){
         Point mousePointReleased = mouseEvent.getPoint();
 
-        if (this.currentApplicationMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
+        if (this.currentApplicationMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent) && mouseWasDragged) {
             //TODO Ajouter la conversion des unités de mesure ici!
 
             Point position = this.initMousePoint.getLocation();
@@ -420,15 +420,13 @@ public class MainWindow extends JFrame {
             double[] xDrawPoints = getXDrawPoints();
             double[] yDrawPoints = getYDrawPoints();
 
-            //int[] xDrawPoints = getXDrawPoints();
-            //int[] yDrawPoints = getYDrawPoints();
-
             if (xDrawPoints[0] - yDrawPoints[1] > 0){
                 position = mousePointReleased.getLocation();
                 //position = UnitConverter.convertPointToSelectedUnit(mousePointReleased.getLocation(), this.currentMeasurementMode);
             }
             controller.clearSurfaceProjectionList();
             controller.addSurface(position ,xDrawPoints, yDrawPoints, 4);
+            this.mouseWasDragged = false;
         }
 
         else if (this.currentApplicationMode == ADD_IRREGULAR) {
@@ -701,11 +699,13 @@ public class MainWindow extends JFrame {
     public void mouseWheelMovedEventPerformed(MouseWheelEvent evt) {
         Point point = evt.getPoint();
         this.currentMousePoint = evt.getPoint();
-        if (evt.getPreciseWheelRotation() > 0) {
-            drawingPanel.zoomInActionPerformed(point);
+        if (evt.getWheelRotation() < 0) {
+            drawingPanel.zoomIn(point);
+            // drawingPanel.zoomInActionPerformed(point);
         }
         else {
-            drawingPanel.zoomOutActionPerformed(point);
+            drawingPanel.zoomOut(point);
+            // drawingPanel.zoomOutActionPerformed(point);
         }
     }
 
