@@ -30,14 +30,34 @@ public class TileTab extends JPanel {
     private JButton créerUneNouvelleTuileButton;
     private JPanel tileListPanel;
     private JScrollPane tileListScrollPane;
+    private JButton modifyTile;
     private JButton applySelectedTile;
     private JComboBox tileComboBox;
+
+    private Color tileColor;
+    private Color updateColor;
 
     public TileTab(MainWindow mainWindow) {
         this.mainWindow = mainWindow;
         this.add(mainTileTab);
 
 
+
+        modifyTile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                modifySelectedTile();
+            }
+        });
+
+        tileColorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                Color color = JColorChooser.showDialog(null, "Choose a color", tileColor);
+                setButtonColor(color);
+
+            }
+        });
         créerUneNouvelleTuileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -51,7 +71,37 @@ public class TileTab extends JPanel {
                 setSelectedTileToSelectedSurface();
             }
         });
+
+
+        tileComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                setTileInformation();
+            }
+        });
+
     }
+
+    private void modifySelectedTile(){
+        TileType selectedTileType = (TileType)tileComboBox.getSelectedItem();
+        selectedTileType.setWidth((float)this.tileWidthField.getValue());
+        selectedTileType.setHeight((float)this.tileHeightField.getValue());
+        selectedTileType.setName(this.tileNameField.getText());
+        selectedTileType.setNbrTilesPerBox((int)this.tileNumberPerBoxField.getValue());
+        selectedTileType.setColor(this.updateColor);
+        mainWindow.updateSelectedTile();
+
+
+    }
+
+    public void setButtonColor(Color color) {
+        this.updateColor = color;
+        this.tileColorButton.setBackground(color);
+        tileColorButton.setOpaque(true);
+        tileColorButton.setBorderPainted(false);
+    }
+
+
 
     public void createTileButtonActionPerformed(){
 
@@ -63,6 +113,22 @@ public class TileTab extends JPanel {
         createTileDialog.setVisible(true);
     }
 
+
+
+    public void setTileInformation() {
+        TileType selectedTileType = (TileType)tileComboBox.getSelectedItem();
+        this.tileWidthField.setValue(selectedTileType.getWidth());
+        this.tileHeightField.setValue(selectedTileType.getHeight());
+        this.tileNameField.setText(selectedTileType.getName());
+        this.tileColorButton.setBackground(selectedTileType.getColor());
+        this.updateColor =  selectedTileType.getColor();
+        this.tileColorButton.setOpaque(true);
+        this.tileColorButton.setBorderPainted(false);
+        this.tileNumberPerBoxField.setValue(selectedTileType.getNbrTilesPerBox());
+    }
+
+
+
     public void createTileFromUserInput(Color color, float width, float height, String name, int nbrTilesPerBox) {
         mainWindow.createTileFromUserInput(color, width, height, name, nbrTilesPerBox);
         updateTileComboBox();
@@ -73,9 +139,12 @@ public class TileTab extends JPanel {
         tileComboBox.addItem(tileList.get(tileList.size() - 1));
     }
 
+
+
     public void setSelectedTileToSelectedSurface() {
         TileType selectedTileType = (TileType)tileComboBox.getSelectedItem();
         mainWindow.setSelectedTileToSelectedSurface(selectedTileType);
+
     }
 
     public void setCurrentTileInfo(float width, float height, String name, Color color, int nbrTilesPerBox) {

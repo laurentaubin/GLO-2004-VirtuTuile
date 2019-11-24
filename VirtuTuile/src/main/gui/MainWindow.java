@@ -395,6 +395,7 @@ public class MainWindow extends JFrame {
             rightPanel.updateSurfaceTabColor(this.controller.getSelectedSurfaceColor());
             rightPanel.updateIfSelectedSurfaceIsAHole(this.controller.getIfSelectedSurfaceIsAHole(), this.controller.getNumberOfSelectedSurfaces());
             rightPanel.updatePatternTab(this.controller.getSelectedSurfaceGroutWidth(), this.controller.getNumberOfSelectedSurfaces());
+
             rightPanel.updateTileTab(   controller.getCurrentTileWidth(),
                                         controller.getCurrentTileHeight(),
                                         controller.getCurrentNameTile(),
@@ -639,6 +640,10 @@ public class MainWindow extends JFrame {
         return controller.getTileList();
     }
 
+    public void updateSelectedTile(){
+        drawingPanel.repaint();
+    }
+
     public void setSelectedTileToSelectedSurface(TileType selectedTileType) {
         controller.setSelectedTileToSelectedSurface(selectedTileType);
         drawingPanel.repaint();
@@ -661,6 +666,14 @@ public class MainWindow extends JFrame {
 
     public void setVerticalBrickPatternToSelectedSurface() {
         controller.setVerticalBrickPatternToSelectedSurface();
+        drawingPanel.repaint();
+    }
+
+
+    //Fait Juste repaint la couleur de la surface de la couleur choisit pour grout
+    public void setGroutColor(Color color){
+
+        controller.setGroutColor(color);
         drawingPanel.repaint();
     }
 

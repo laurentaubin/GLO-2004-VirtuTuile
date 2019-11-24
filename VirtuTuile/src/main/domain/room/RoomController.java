@@ -159,6 +159,10 @@ public class RoomController {
         return room.getNumberOfSelectedSurfaces();
     }
 
+    public void setGroutColor(Color color){
+        room.setGroutColor(color);
+    }
+
     public void setSelectedSurfaceColor(Color color){
         room.setSelectedSurfaceColor(color);
 
@@ -191,6 +195,8 @@ public class RoomController {
     public ArrayList<TileType> getTileList() {
         return room.getTileList();
     }
+
+
 
     public void setSelectedTileToSelectedSurface(TileType selectedTileType) {
         room.setSelectedTileToSelectedSurface(selectedTileType);
