@@ -65,7 +65,6 @@ public class MainWindow extends JFrame {
         irregularSurfaceButton = new JToggleButton("Ajouter surface irrégulière");
 
         measurementUnitComboBox = new javax.swing.JComboBox();
-        drawingPanel = new DrawingPanel(this);
         mainScrollPane = new JScrollPane();
         splitPane = new JSplitPane();
 
@@ -176,6 +175,7 @@ public class MainWindow extends JFrame {
 
         mainScrollPane.setMinimumSize(new Dimension(0, 202));
         mainScrollPane.setPreferredSize(new Dimension((int)(Toolkit.getDefaultToolkit().getScreenSize().width*0.85), (int)(Toolkit.getDefaultToolkit().getScreenSize().height*0.5)));
+        drawingPanel = new DrawingPanel(this);
 
         addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent evt) {
@@ -189,15 +189,11 @@ public class MainWindow extends JFrame {
             }
         });
 
-
-        /*
         drawingPanel.addMouseWheelListener(new java.awt.event.MouseAdapter() {
             public void mouseWheelMoved(MouseWheelEvent evt){
                 mouseWheelMovedEventPerformed(evt);
             }
         });
-
-         */
 
         drawingPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -338,11 +334,17 @@ public class MainWindow extends JFrame {
         pack();
     }
 
-    public void selectButtonActionPerformed(ActionEvent actionEvent){this.setApplicationMode(ApplicationMode.SELECT);}
+    public void selectButtonActionPerformed(ActionEvent actionEvent){
+        this.setApplicationMode(ApplicationMode.SELECT);
+    }
 
-    public void rectangularSurfaceButtonPerformed(ActionEvent actionEvent){this.setApplicationMode(ApplicationMode.ADD_RECTANGULAR);}
+    public void rectangularSurfaceButtonPerformed(ActionEvent actionEvent){
+        this.setApplicationMode(ApplicationMode.ADD_RECTANGULAR);
+    }
 
-    public void irregularSurfaceButtonPerformed(ActionEvent actionEvent){this.setApplicationMode(ApplicationMode.ADD_IRREGULAR);}
+    public void irregularSurfaceButtonPerformed(ActionEvent actionEvent){
+        this.setApplicationMode(ApplicationMode.ADD_IRREGULAR);
+    }
 
     public void metricModeSelected(ActionEvent actionEvent) {
         this.setMeasurementMode(MeasurementUnitMode.METRIC);
@@ -383,9 +385,10 @@ public class MainWindow extends JFrame {
 
         if (this.currentApplicationMode == ApplicationMode.SELECT && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
-
             double xPos = this.initMousePoint.getX() / drawingPanel.getZoom();
             double yPos = this.initMousePoint.getY() / drawingPanel.getZoom();
+
+
             //double xPos = UnitConverter.convertPixelToSelectedUnit((int) this.initMousePoint.getX(), this.currentMeasurementMode);
             //double yPos = UnitConverter.convertPixelToSelectedUnit((int) this.initMousePoint.getY(), this.currentMeasurementMode);
 
@@ -420,6 +423,7 @@ public class MainWindow extends JFrame {
             //TODO Ajouter la conversion des unités de mesure ici!
 
             Point position = this.initMousePoint.getLocation();
+            position.setLocation(position.getX(), position.getY());
             //Point position = UnitConverter.convertPointToSelectedUnit(this.initMousePoint.getLocation(), this.currentMeasurementMode);
             double[] xDrawPoints = getXDrawPoints();
             double[] yDrawPoints = getYDrawPoints();
@@ -452,8 +456,8 @@ public class MainWindow extends JFrame {
     public void drawingPanelMouseDragged(MouseEvent mouseEvent){
         // TODO ça marche pas pcq le init mouse point est pas updaté a bonne palce faique le delta est pas bon
         if (SwingUtilities.isRightMouseButton(mouseEvent)) {
-            double deltaX = (int) (mouseEvent.getX() - this.currentMousePoint.getX());
-            double deltaY = (int) (mouseEvent.getY() - this.currentMousePoint.getY());
+            double deltaX = (mouseEvent.getX() - this.currentMousePoint.getX());
+            double deltaY = (mouseEvent.getY() - this.currentMousePoint.getY());
             /*
             double pixelX = (int) (mouseEvent.getX() - this.currentMousePoint.getX());
             double pixelY = (int) (mouseEvent.getY() - this.currentMousePoint.getY());
@@ -464,10 +468,13 @@ public class MainWindow extends JFrame {
 
             this.controller.updateSelectedSurfacesPositions(deltaX, deltaY);
             //this.controller.updateSelectedSurfacesPositions(deltaX, deltaY, pixelX, pixelY);
+            //this.currentMousePoint.setLocation(mouseEvent.getX() / drawingPanel.getZoom(), mouseEvent.getY() / drawingPanel.getZoom());
             this.currentMousePoint = mouseEvent.getPoint();
         }
         else if (this.currentApplicationMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
+            //this.currentMousePoint.setLocation(mouseEvent.getX() / drawingPanel.getZoom(), mouseEvent.getY() / drawingPanel.getZoom());
             this.currentMousePoint = mouseEvent.getPoint();
+
 
             double[] xDrawPoints = getXDrawPoints();
             double[] yDrawPoints = getYDrawPoints();
@@ -556,14 +563,17 @@ public class MainWindow extends JFrame {
 
     public void drawingPanelMouseMoved(MouseEvent evt) {
         //TODO convertir les unités
-        int x = (int) (evt.getX() / drawingPanel.getZoom());
-        int y = (int) (evt.getY() / drawingPanel.getZoom());
+        int x = (int) (evt.getX());
+        int y = (int) (evt.getY());
 
         String mousePosition = " ";
 
-        double xPos = UnitConverter.convertPixelToSelectedUnit( evt.getX(), this.currentMeasurementMode);
-        double yPos = UnitConverter.convertPixelToSelectedUnit(evt.getY(), this.currentMeasurementMode);
-        /*
+
+        double xPos = evt.getX() / drawingPanel.getZoom();
+        double yPos = evt.getY() / drawingPanel.getZoom();
+        //double xPos = UnitConverter.convertPixelToSelectedUnit( evt.getX(), this.currentMeasurementMode);
+        //double yPos = UnitConverter.convertPixelToSelectedUnit(evt.getY(), this.currentMeasurementMode);
+
         if (this.currentMeasurementMode == MeasurementUnitMode.METRIC) {
             mousePosition += ("x= " + xPos + "m " + ", y= " + yPos + "m ");
         }
@@ -571,7 +581,6 @@ public class MainWindow extends JFrame {
             mousePosition += ("x= " + xPos + "'' " + ", y= " + yPos + "'' ");
         }
 
-         */
 
         if (this.controller.checkIfMouseAboveTile(evt.getX(), evt.getY())) {
             ArrayList<Double> tileDimension = this.controller.getTileDimensions(evt.getX(), evt.getY());
@@ -694,7 +703,6 @@ public class MainWindow extends JFrame {
 
     public void mouseWheelMovedEventPerformed(MouseWheelEvent evt) {
         Point point = evt.getPoint();
-        this.currentMousePoint = evt.getPoint();
         if (evt.getPreciseWheelRotation() > 0) {
             drawingPanel.zoomInActionPerformed(point);
         }

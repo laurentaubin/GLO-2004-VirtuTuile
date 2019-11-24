@@ -75,6 +75,9 @@ public class VerticalBrickPattern extends Pattern {
                 tile.setWidth(tile.getBounds2D().getWidth());
                 tile.setHeight(tile.getBounds2D().getHeight());
             }
+            if (tile.getHeight() < tile.MIN_HEIGHT || tile.getWidth() < tile.MIN_WIDTH) {
+                tile.setInspect();
+            }
         }
     }
 }

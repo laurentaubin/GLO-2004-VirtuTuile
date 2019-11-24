@@ -63,15 +63,16 @@ public class SurfaceDrawer {
             Area shape = current_surface.getAreaTest();
             //Shape shape = current_surface.getShape();
             if (zoom != 1) {
-                g2d.translate(point.getX(), point.getY());
-                g2d.scale(zoom,zoom);
-                g2d.translate(-point.getX(), -point.getY());
+                //g2d.translate(point.getX(), point.getY());
+                g2d.transform(AffineTransform.getScaleInstance(zoom, zoom));
+                //g2d.translate(-point.getX(), -point.getY());
                 /*
                 AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
                 shape.transform(at);
                 this.zoom = zoom;
                  */
             }
+
             Color fillColor = current_surface.getColor();
             g2d.setColor(fillColor);
             g2d.fill(shape);
@@ -82,26 +83,18 @@ public class SurfaceDrawer {
                 current_surface.getPattern().generateTiles(current_surface.getBoundingRectangle(), current_surface.getTileType(), current_surface.getAreaTest());
                     ArrayList<Tile> array = current_surface.getPattern().getVirtualTileList();
                     for (Tile tile : array) {
-                        g2d.setColor(current_surface.getTileType().getColor());
+                        if (tile.isTooSmall()) {
+                            g2d.setColor(tile.getInspecColor());
+                        }
+                        else {
+                            g2d.setColor(current_surface.getTileType().getColor());
+                        }
                         g2d.fill(tile);
                         g2d.setColor(Color.BLACK);
                         g2d.draw(tile);
                 }
             }
-
-            //StraightPattern pattern = new StraightPattern();
-            //VerticalPattern pattern = new VerticalPattern();
-            //BrickPattern pattern = new BrickPattern();
-            //VerticalBrickPattern pattern = new VerticalBrickPattern();
             g2d.setColor(Color.BLACK);
-            //current_surface.setPattern(pattern);
-            /*
-            for (Polygon polygon : current_surface.getPattern().generateTiles((Rectangle) current_surface.getBoundingRectangle(), current_surface.getTileType(), measurementMode)) {
-                g2d.draw(polygon);
-            }
-            g2d.draw(current_surface.getBoundingRectangle());
-
-             */
             if (current_surface.isSelected()) {
                 Color selectedColor = new Color(56, 177, 255);
                 g2d.setColor(selectedColor);
