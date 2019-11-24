@@ -16,6 +16,10 @@ public class SurfaceTab extends JPanel{
     private JButton surfaceColorButton;
     private JPanel dimensionPanel;
     private JCheckBox holeCheckBox;
+    private JLabel surfaceTitle;
+    private JLabel dimensionLabel;
+    private JPanel optionsPanel;
+    private JLabel dispositionLabel;
     private Color surfaceColor;
 
     public SurfaceTab(MainWindow mainWindow) {
@@ -23,6 +27,8 @@ public class SurfaceTab extends JPanel{
         this.add(surfaceTab);
         widthField.setValue(0d);
         heightField.setValue(0d);
+        surfaceTitle.setFont(new Font("Helvetica Neue", Font.BOLD, 13));
+        holeCheckBox.setFocusPainted(true);
 
         surfaceColorButton.addActionListener(new ActionListener() {
             @Override
