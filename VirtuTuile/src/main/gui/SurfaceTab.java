@@ -20,6 +20,7 @@ public class SurfaceTab extends JPanel{
     private JLabel dimensionLabel;
     private JPanel optionsPanel;
     private JLabel dispositionLabel;
+    private JButton chromaticButton;
     private Color surfaceColor;
 
     public SurfaceTab(MainWindow mainWindow) {
@@ -29,6 +30,11 @@ public class SurfaceTab extends JPanel{
         heightField.setValue(0d);
         surfaceTitle.setFont(new Font("Helvetica Neue", Font.BOLD, 13));
         holeCheckBox.setFocusPainted(true);
+
+
+        surfaceColorButton.setPreferredSize(new Dimension(50, 20));
+        chromaticButton.setPreferredSize(new Dimension(20, 20));
+        chromaticButton.setIcon(new ImageIcon(new ImageIcon("src/image/chromatic.png").getImage().getScaledInstance(15, 15, Image.SCALE_DEFAULT)));
 
         surfaceColorButton.addActionListener(new ActionListener() {
             @Override
@@ -73,6 +79,15 @@ public class SurfaceTab extends JPanel{
                 }
             }
         });
+
+        chromaticButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                Color color = JColorChooser.showDialog(null, "Choose a color", surfaceColor);
+                setButtonColor(color);
+                setSurfaceColor(color);
+            }
+        });
     }
 
     public void setEnteredWidthSurfaceDimensions(){
@@ -93,7 +108,6 @@ public class SurfaceTab extends JPanel{
         this.surfaceColor = color;
         surfaceColorButton.setBackground(color);
         surfaceColorButton.setOpaque(true);
-        surfaceColorButton.setBorderPainted(false);
 
     }
 

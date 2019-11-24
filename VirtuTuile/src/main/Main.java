@@ -31,9 +31,7 @@ public class Main {
         UIManager.put("ToggleButton.select", new Color(216, 216, 220));
         UIManager.put("ToggleButton.background", Color.WHITE);
 
-        UIManager.put("Button.light",Color.YELLOW);
-        UIManager.put("Button.focus",Color.YELLOW);
-        UIManager.put("Button.background",Color.LIGHT_GRAY);
+        UIManager.put("Button.background", Color.WHITE);
 
         UIManager.put("CheckBox.select", new Color(0,112,245));
         //UIManager.put("CheckBox.interiorBackground", new Color(0,112,245));
@@ -50,7 +48,7 @@ public class Main {
         UIManager.put("ComboBox.buttonBackground", Color.BLACK);
 
         UIManager.put("TabbedPane.unselectedTabForeground", new Color(108,108,112));
-        //UIManager.put("TabbedPane.selected", new Color(108,108,112));
+        UIManager.put("TabbedPane.selected", new Color(0,122,255));
         //UIManager.put("TabbedPane.selectedForeground", new Color(216, 216, 220));
         //UIManager.put("TabbedPane.contentAreaColor", Color.LIGHT_GRAY);
         //UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 0, 0));

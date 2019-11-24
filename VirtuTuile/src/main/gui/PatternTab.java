@@ -20,12 +20,14 @@ public class PatternTab extends JPanel{
     private JPanel panelInsideScrollPane;
     private JPanel straightPatternPanel;
     private JPanel brickPatternPanel;
-    private JPanel anglePatternPanel;
-    private JPanel lPatternPanel;
+    private JPanel verticalPatternPanel;
+    private JPanel verticalBrickPatternPanel;
     private JPanel groutPanel;
     private JLabel groutColorLabel;
     private JButton groutColorButton;
     private JFormattedTextField groutWidthField;
+    private JLabel horizontalLabel;
+    private JButton chromaticButton;
     private Color selectedColor;
 
 
@@ -54,6 +56,10 @@ public class PatternTab extends JPanel{
 
         verticalBrickShapeButton.setIcon(new ImageIcon(new ImageIcon("src/image/brique_verticale.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT)));
         verticalBrickShapeButton.setMargin(new Insets(10, 0, 10, 0));
+
+        groutColorButton.setPreferredSize(new Dimension(50, 20));
+        chromaticButton.setPreferredSize(new Dimension(20,20));
+        chromaticButton.setIcon(new ImageIcon(new ImageIcon("src/image/chromatic.png").getImage().getScaledInstance(15, 15, Image.SCALE_DEFAULT)));
 
         //Ajouter les autres motifs
 
@@ -102,6 +108,13 @@ public class PatternTab extends JPanel{
             }
         });
 
+        chromaticButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                Color color = JColorChooser.showDialog(null, "Choose a color", selectedColor);
+                setButtonColor(color);
+            }
+        });
     }
 
     private void setButtonColor(Color color) {

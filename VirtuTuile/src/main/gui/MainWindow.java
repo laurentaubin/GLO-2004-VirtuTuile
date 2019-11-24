@@ -12,14 +12,14 @@ import java.awt.event.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
-import static gui.MainWindow.ApplicationMode.*;
+
 
 
 public class MainWindow extends JFrame {
 
     public RoomController controller;
 
-    private ApplicationMode currentApplicationMode = SELECT;
+    private ApplicationMode currentApplicationMode = ApplicationMode.SELECT;
     private MeasurementUnitMode currentMeasurementMode = MeasurementUnitMode.METRIC;
 
     public Point currentMousePoint = new Point();
@@ -435,12 +435,12 @@ public class MainWindow extends JFrame {
             controller.addSurface(position ,xDrawPoints, yDrawPoints, 4);
         }
 
-        else if (this.currentApplicationMode == ADD_IRREGULAR) {
+        else if (this.currentApplicationMode == ApplicationMode.ADD_IRREGULAR) {
                 SwingUtilities.isLeftMouseButton((mouseEvent));
             }
             //TODO Code pour surface irrégulière
 
-        else if (this.currentApplicationMode == SELECT && mouseWasDragged) {
+        else if (this.currentApplicationMode == ApplicationMode.SELECT && mouseWasDragged) {
             if (drawingPanel.getGridlines()) {
                 controller.snapSelectedSurfaceToGrid(drawingPanel.getGridGap());
             }
@@ -466,7 +466,7 @@ public class MainWindow extends JFrame {
             //this.controller.updateSelectedSurfacesPositions(deltaX, deltaY, pixelX, pixelY);
             this.currentMousePoint = mouseEvent.getPoint();
         }
-        else if (this.currentApplicationMode == ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
+        else if (this.currentApplicationMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             this.currentMousePoint = mouseEvent.getPoint();
 
             double[] xDrawPoints = getXDrawPoints();

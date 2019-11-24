@@ -1,15 +1,11 @@
 package gui;
 
-import com.sun.tools.javac.Main;
-import domain.room.Tile;
 import domain.room.TileType;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 public class TileTab extends JPanel {
@@ -27,12 +23,13 @@ public class TileTab extends JPanel {
     private JLabel tileColorLabel;
     private JLabel numberOfTilesLabel;
     private JFormattedTextField tileNumberPerBoxField;
-    private JButton créerUneNouvelleTuileButton;
+    private JButton createNewTile;
     private JPanel tileListPanel;
     private JScrollPane tileListScrollPane;
     private JButton modifyTile;
     private JButton applySelectedTile;
     private JComboBox tileComboBox;
+    private JButton chromaticButton;
 
     private Color tileColor;
     private Color updateColor;
@@ -41,7 +38,19 @@ public class TileTab extends JPanel {
         this.mainWindow = mainWindow;
         this.add(mainTileTab);
 
+        createNewTile.setBackground(new Color(30, 195 ,55));
+        createNewTile.setForeground(new Color(235, 235, 240));
+        //creerUneNouvelleTuileButton.setBackground(new Color(40, 205, 65));
 
+        modifyTile.setBackground(new Color(255, 159, 10));
+        modifyTile.setForeground(new Color(235, 235, 240));
+
+        applySelectedTile.setBackground(new Color(0,112,245));
+        applySelectedTile.setForeground(new Color(235, 235, 240));
+
+        tileColorButton.setPreferredSize(new Dimension(20,20));
+        chromaticButton.setPreferredSize(new Dimension(20, 20));
+        chromaticButton.setIcon((new ImageIcon(new ImageIcon("src/image/chromatic.png").getImage().getScaledInstance(15, 15, Image.SCALE_DEFAULT))));
 
         modifyTile.addActionListener(new ActionListener() {
             @Override
@@ -55,10 +64,10 @@ public class TileTab extends JPanel {
             public void actionPerformed(ActionEvent actionEvent) {
                 Color color = JColorChooser.showDialog(null, "Choose a color", tileColor);
                 setButtonColor(color);
-
             }
         });
-        créerUneNouvelleTuileButton.addActionListener(new ActionListener() {
+
+        createNewTile.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 createTileButtonActionPerformed();
@@ -80,18 +89,25 @@ public class TileTab extends JPanel {
             }
         });
 
+        chromaticButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                Color color = JColorChooser.showDialog(null, "Choose a color", tileColor);
+                setButtonColor(color);
+            }
+        });
     }
 
     private void modifySelectedTile(){
-        TileType selectedTileType = (TileType)tileComboBox.getSelectedItem();
-        selectedTileType.setWidth((float)this.tileWidthField.getValue());
-        selectedTileType.setHeight((float)this.tileHeightField.getValue());
-        selectedTileType.setName(this.tileNameField.getText());
-        selectedTileType.setNbrTilesPerBox((int)this.tileNumberPerBoxField.getValue());
-        selectedTileType.setColor(this.updateColor);
-        mainWindow.updateSelectedTile();
-
-
+        if (tileComboBox.getItemCount() != 0) {
+            TileType selectedTileType = (TileType)tileComboBox.getSelectedItem();
+            selectedTileType.setWidth((float)this.tileWidthField.getValue());
+            selectedTileType.setHeight((float)this.tileHeightField.getValue());
+            selectedTileType.setName(this.tileNameField.getText());
+            selectedTileType.setNbrTilesPerBox((int)this.tileNumberPerBoxField.getValue());
+            selectedTileType.setColor(this.updateColor);
+            mainWindow.updateSelectedTile();
+        }
     }
 
     public void setButtonColor(Color color) {
