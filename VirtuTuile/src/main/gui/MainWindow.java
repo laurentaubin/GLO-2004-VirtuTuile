@@ -2,9 +2,11 @@ package gui;
 
 import domain.room.RoomController;
 import domain.room.TileType;
+import javafx.scene.Group;
 import util.UnitConverter;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Point2D;
@@ -57,6 +59,7 @@ public class MainWindow extends JFrame {
         mainPanel = new JPanel();
         buttonGroup = new ButtonGroup();
         topButtonBar = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        topButtonBarTest = new TopButtonBar(this);
         selectButton = new JToggleButton("Sélection");
         rectangularSurfaceButton = new JToggleButton("Ajouter une surface rectangulaire");
         irregularSurfaceButton = new JToggleButton("Ajouter surface irrégulière");
@@ -165,7 +168,8 @@ public class MainWindow extends JFrame {
         topButtonBar.add(measurementUnitComboBox);
         topButtonBar.setMinimumSize(new Dimension(100, -1));
 
-        mainPanel.add(topButtonBar, BorderLayout.NORTH);
+        //mainPanel.add(topButtonBar, BorderLayout.NORTH);
+        mainPanel.add(topButtonBarTest, BorderLayout.NORTH);
 
         splitPane.setMinimumSize(new Dimension(0, 202));
         splitPane.setPreferredSize(new Dimension((int)(Toolkit.getDefaultToolkit().getScreenSize().width*0.85), (int)(Toolkit.getDefaultToolkit().getScreenSize().height*0.5)));
@@ -334,19 +338,19 @@ public class MainWindow extends JFrame {
         pack();
     }
 
-    private void selectButtonActionPerformed(ActionEvent actionEvent){this.setApplicationMode(ApplicationMode.SELECT);}
+    public void selectButtonActionPerformed(ActionEvent actionEvent){this.setApplicationMode(ApplicationMode.SELECT);}
 
-    private void rectangularSurfaceButtonPerformed(ActionEvent actionEvent){this.setApplicationMode(ApplicationMode.ADD_RECTANGULAR);}
+    public void rectangularSurfaceButtonPerformed(ActionEvent actionEvent){this.setApplicationMode(ApplicationMode.ADD_RECTANGULAR);}
 
-    private void irregularSurfaceButtonPerformed(ActionEvent actionEvent){this.setApplicationMode(ApplicationMode.ADD_IRREGULAR);}
+    public void irregularSurfaceButtonPerformed(ActionEvent actionEvent){this.setApplicationMode(ApplicationMode.ADD_IRREGULAR);}
 
-    private void metricModeSelected(ActionEvent actionEvent) {
+    public void metricModeSelected(ActionEvent actionEvent) {
         this.setMeasurementMode(MeasurementUnitMode.METRIC);
         this.controller.setMeasurementMode(MeasurementUnitMode.METRIC);
         this.drawingPanel.repaint();
     }
 
-    private void imperialModeSelected(ActionEvent actionEvent) {
+    public void imperialModeSelected(ActionEvent actionEvent) {
         this.setMeasurementMode(MeasurementUnitMode.IMPERIAL);
         this.controller.setMeasurementMode(MeasurementUnitMode.IMPERIAL);
         this.drawingPanel.repaint();
@@ -354,7 +358,7 @@ public class MainWindow extends JFrame {
 
 
 
-    private void drawingPanelKeyPressed(java.awt.event.KeyEvent evt) {
+    public void drawingPanelKeyPressed(java.awt.event.KeyEvent evt) {
 
         if(evt.getKeyCode() == KeyEvent.VK_BACK_SPACE && controller.surfaceSelecte()){
             String[] options = {"Ok", "Cancel"};
@@ -368,7 +372,7 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
-    private void drawingPanelMousePressed(MouseEvent mouseEvent){
+    public void drawingPanelMousePressed(MouseEvent mouseEvent){
         this.initMousePoint = mouseEvent.getPoint();
         this.currentMousePoint = this.initMousePoint;
 
@@ -408,7 +412,7 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
-    private void drawingPanelMouseReleased(MouseEvent mouseEvent){
+    public void drawingPanelMouseReleased(MouseEvent mouseEvent){
         Point mousePointReleased = mouseEvent.getPoint();
 
         if (this.currentApplicationMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
@@ -444,7 +448,7 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
-    private void drawingPanelMouseDragged(MouseEvent mouseEvent){
+    public void drawingPanelMouseDragged(MouseEvent mouseEvent){
         // TODO ça marche pas pcq le init mouse point est pas updaté a bonne palce faique le delta est pas bon
         if (SwingUtilities.isRightMouseButton(mouseEvent)) {
             double deltaX = (int) (mouseEvent.getX() - this.currentMousePoint.getX());
@@ -475,7 +479,7 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
-    private double[] getXDrawPoints() {
+    public double[] getXDrawPoints() {
         double[] drawPoints = new double[4];
         //int[] drawPoints = new int[4];
 
@@ -495,7 +499,7 @@ public class MainWindow extends JFrame {
         return drawPoints;
     }
 
-    private double[] getYDrawPoints() {
+    public double[] getYDrawPoints() {
         double[] drawPoints = new double[4];
 
         drawPoints[0] = initMousePoint.getY();
@@ -516,11 +520,11 @@ public class MainWindow extends JFrame {
         return drawPoints;
     }
 
-    private void gridMenuItemActionPerformed(ActionEvent actionEvent) {
+    public void gridMenuItemActionPerformed(ActionEvent actionEvent) {
         drawingPanel.setGridLines();
     }
 
-    private void gridOptionItemActionPerformed(ActionEvent actionEvent) {
+    public void gridOptionItemActionPerformed(ActionEvent actionEvent) {
 
         JPanel fields = new JPanel(new GridLayout(1, 2));
         JTextField field = new JTextField(15);
@@ -549,7 +553,7 @@ public class MainWindow extends JFrame {
         // String inputDimensions = (String) JOptionPane.showInputDialog(null, "Entrer les dimensions de la grille", "Configuration de la grille", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
     }
 
-    private void drawingPanelMouseMoved(MouseEvent evt) {
+    public void drawingPanelMouseMoved(MouseEvent evt) {
         //TODO convertir les unités
         int x = (int) (evt.getX() / drawingPanel.getZoom());
         int y = (int) (evt.getY() / drawingPanel.getZoom());
@@ -698,7 +702,10 @@ public class MainWindow extends JFrame {
     private ButtonGroup buttonGroup;
 
     private JPanel mainPanel;
+
     private JPanel topButtonBar;
+    private TopButtonBar topButtonBarTest;
+
     private JToggleButton selectButton;
     private JToggleButton rectangularSurfaceButton;
     private JToggleButton irregularSurfaceButton;

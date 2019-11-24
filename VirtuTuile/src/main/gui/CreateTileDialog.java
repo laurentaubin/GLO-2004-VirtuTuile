@@ -39,6 +39,8 @@ public class CreateTileDialog extends JDialog {
         this.color = Color.WHITE;
         this.numberTilesField.setValue(0);
 
+        buttonOK.setBackground(new Color(10,132,255));
+
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);

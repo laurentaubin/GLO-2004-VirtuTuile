@@ -12,6 +12,9 @@ public class RightPanel extends JTabbedPane implements Serializable {
 
     public Dimension initialDimension;
     private MainWindow mainWindow;
+    private ImageIcon surfaceTabIcon;
+    private ImageIcon patternTabIcon;
+    private ImageIcon tileTabIcon;
 
     public RightPanel(MainWindow mainWindow){
         this.mainWindow = mainWindow;
@@ -30,11 +33,15 @@ public class RightPanel extends JTabbedPane implements Serializable {
         tileTabPanel = new TileTab(mainWindow);
         //groutTabPanel = new GroutTabPanel(this);
 
-        //this.setPreferredSize(new Dimension(10, 10));
+        //Rectangle icon by Icons8
+        surfaceTabIcon = new ImageIcon(new ImageIcon("src/image/surfaceTab.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+        this.addTab("", surfaceTabIcon, surfaceTabPanel, "");
 
-        this.addTab("Surface", null, surfaceTabPanel, "");
-        this.addTab("Motif", null, patternTabPanel, "");
-        this.addTab("Tuile", null, tileTabPanel, "" );
+        patternTabIcon = new ImageIcon(new ImageIcon("src/image/patternTab.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+        this.addTab("", patternTabIcon, patternTabPanel, "");
+
+        tileTabIcon = new ImageIcon(new ImageIcon("src/image/tileIcon.jpg").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+        this.addTab("", tileTabIcon, tileTabPanel, "" );
         //this.addTab("Coulis", null, groutTabPanel, "");
         this.setSelectedIndex(0);
     }
