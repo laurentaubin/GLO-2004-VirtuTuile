@@ -101,11 +101,12 @@ public class Room {
     void switchSelectionStatus(double x, double y, boolean isShiftDown) {
         for (int i = surfaceList.size() - 1; i >= 0; i--) {
             if (surfaceList.get(i).getAreaTest().contains(x, y)) {
-                this.switchSelectionStatusIfContains(x, y, isShiftDown, surfaceList.get(i));
-                break;
+                //this.switchSelectionStatusIfContains(x, y, isShiftDown, surfaceList.get(i));
+                //break;
+                surfaceList.get(i).switchSelectionStatus();
             }
             else {
-                surfaceList.get(i).unselect();
+                if(!isShiftDown) surfaceList.get(i).unselect();
             }
         }
         /*
@@ -114,7 +115,7 @@ public class Room {
         }
          */
     }
-
+    
     private void switchSelectionStatusIfContains(double x, double y, boolean isShiftDown, Surface surfaceInRoom) {
         Point2D.Double point = new Point2D.Double(x, y);
         //TODO changer le OR pour une meilleure condition
@@ -362,19 +363,36 @@ public class Room {
     }
 
     public void combineSelectedSurface() {
+        int index = 0;
         ArrayList<Surface> surfacesToCombine = getSurfaceToCombine();
 
-        Surface baseSurface = surfacesToCombine.get(0);
-        surfacesToCombine.remove(0);
+        while(surfacesToCombine.get(index).isHole()) {
+            index++;
+            if(index >= surfacesToCombine.size()) {
+                index = 0;
+                break;
+            }
+        }
+
+        Surface baseSurface = surfacesToCombine.get(index);
+        surfacesToCombine.remove(index);
 
         for (Surface surface : surfacesToCombine) {
             if (baseSurface.intersect(surface.getAreaTest())) {
                 if(surface.isHole()) {
-                    System.out.println("ABFJS");
-                    baseSurface.setHole(surface);
-                    surfaceList.remove(surface);
+                    if(baseSurface.isHole()) {
+                        //System.out.println("Cond1");
+                        baseSurface.merge(surface);
+                        surfaceList.remove(surface);
+                    }
+                    else{
+                        //System.out.println("Cond2");
+                        baseSurface.setHole(surface);
+                        surfaceList.remove(surface);
+                    }
                 }
                 else {
+                    //System.out.println("Cond3");
                     baseSurface.merge(surface);
                     surfaceList.remove(surface);
                 }
