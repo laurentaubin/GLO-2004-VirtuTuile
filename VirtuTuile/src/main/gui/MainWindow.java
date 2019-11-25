@@ -2,7 +2,6 @@ package gui;
 
 import domain.room.RoomController;
 import domain.room.TileType;
-import javafx.scene.Group;
 import util.UnitConverter;
 
 import javax.swing.*;
@@ -189,11 +188,14 @@ public class MainWindow extends JFrame {
             }
         });
 
+
+
         drawingPanel.addMouseWheelListener(new java.awt.event.MouseAdapter() {
             public void mouseWheelMoved(MouseWheelEvent evt){
                 mouseWheelMovedEventPerformed(evt);
             }
         });
+
 
         drawingPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -340,10 +342,13 @@ public class MainWindow extends JFrame {
 
     public void rectangularSurfaceButtonPerformed(ActionEvent actionEvent){
         this.setApplicationMode(ApplicationMode.ADD_RECTANGULAR);
+        this.controller.unselectAllSurfaces();
     }
 
     public void irregularSurfaceButtonPerformed(ActionEvent actionEvent){
         this.setApplicationMode(ApplicationMode.ADD_IRREGULAR);
+        this.controller.unselectAllSurfaces();
+
     }
 
     public void metricModeSelected(ActionEvent actionEvent) {
@@ -423,7 +428,7 @@ public class MainWindow extends JFrame {
                 (int)(mouseEvent.getY() / drawingPanel.getZoom())
         );
 
-        if (this.currentApplicationMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
+        if (this.currentApplicationMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent) && mouseWasDragged) {
             //TODO Ajouter la conversion des unités de mesure ici!
 
             Point position = this.initMousePoint.getLocation();
@@ -432,15 +437,13 @@ public class MainWindow extends JFrame {
             double[] xDrawPoints = getXDrawPoints();
             double[] yDrawPoints = getYDrawPoints();
 
-            //int[] xDrawPoints = getXDrawPoints();
-            //int[] yDrawPoints = getYDrawPoints();
-
             if (xDrawPoints[0] - yDrawPoints[1] > 0){
                 position = mousePointReleased.getLocation();
                 //position = UnitConverter.convertPointToSelectedUnit(mousePointReleased.getLocation(), this.currentMeasurementMode);
             }
             controller.clearSurfaceProjectionList();
             controller.addSurface(position ,xDrawPoints, yDrawPoints, 4);
+            this.mouseWasDragged = false;
         }
 
         else if (this.currentApplicationMode == ApplicationMode.ADD_IRREGULAR) {
@@ -552,8 +555,18 @@ public class MainWindow extends JFrame {
 
         int result = JOptionPane.showConfirmDialog(null, fields, "Entrer les dimensions d'un carré de la grille", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
-            double newGridGap = Double.parseDouble(field.getText());
+            double newGridGap;
+            try {
+                newGridGap = Double.parseDouble(field.getText());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "La valeur entrée n'est pas un nombre. Veuillez recommencer.");
+                return;
+            }
 
+            if (newGridGap <= 0) {
+                JOptionPane.showMessageDialog(null, "La valeur entrée est plus petite ou égale à zéro. Veuillez recommencer.");
+                throw new ArithmeticException("Negative grid gap.");
+            }
             switch(comboBox.getSelectedIndex()) {
                 case 0:
                     // TODO ajouter la conversion d'unité Mètre -> Pixel
@@ -712,10 +725,12 @@ public class MainWindow extends JFrame {
 
     public void mouseWheelMovedEventPerformed(MouseWheelEvent evt) {
         Point point = evt.getPoint();
+        this.currentMousePoint = evt.getPoint();
         if (evt.getPreciseWheelRotation() > 0) {
             drawingPanel.zoomInActionPerformed(point);
         }
         else {
+            // drawingPanel.zoomOut(point);
             drawingPanel.zoomOutActionPerformed(point);
         }
     }

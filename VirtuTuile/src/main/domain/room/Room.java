@@ -648,4 +648,10 @@ public class Room {
         }
         return nbrOfTilePerBox;
     }
+
+    public void unselectAllSurfaces() {
+        for (Surface surface : this.surfaceList) {
+            surface.unselect();
+        }
+    }
 }
