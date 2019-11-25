@@ -99,14 +99,17 @@ public class Room {
 
 
     void switchSelectionStatus(double x, double y, boolean isShiftDown) {
+        Boolean latestSurfaceSelected = true;
         for (int i = surfaceList.size() - 1; i >= 0; i--) {
-            if (surfaceList.get(i).getAreaTest().contains(x, y)) {
+            if (surfaceList.get(i).getAreaTest().contains(x, y) && latestSurfaceSelected == true) {
                 //this.switchSelectionStatusIfContains(x, y, isShiftDown, surfaceList.get(i));
                 //break;
                 surfaceList.get(i).switchSelectionStatus();
+                latestSurfaceSelected = false;
             }
             else {
                 if(!isShiftDown) surfaceList.get(i).unselect();
+                //surfaceList.get(i).unselect();
             }
         }
         /*
@@ -115,7 +118,7 @@ public class Room {
         }
          */
     }
-    
+
     private void switchSelectionStatusIfContains(double x, double y, boolean isShiftDown, Surface surfaceInRoom) {
         Point2D.Double point = new Point2D.Double(x, y);
         //TODO changer le OR pour une meilleure condition
