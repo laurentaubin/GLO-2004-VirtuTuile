@@ -35,11 +35,12 @@ public class DrawingPanel extends JPanel implements Serializable {
 
         int width = mainWindow.getMainScrollPaneDimension().width;
         int height = mainWindow.getMainScrollPaneDimension().height;
+
         //int width = (int) (Toolkit.getDefaultToolkit().getScreenSize().width);
         setPreferredSize(new Dimension(width, height));
         setVisible(true);
         //int height = (int) (width * 0.5);
-        initialDimension = new Dimension(800, 600);
+        this.initialDimension = new Dimension(800, 600);
         setBackground(Color.WHITE);
     }
 
@@ -79,6 +80,7 @@ public class DrawingPanel extends JPanel implements Serializable {
                         g2d.drawLine((int) ((col) * this.gridGap), 0, (int) ((col) * this.gridGap), (int)(ajustingDimension.getHeight() / zoom));
                     }
                 }
+                //Code pour essayer d'incliner le plan
                 /*
                 if (zoom >= 1) {
 
@@ -176,6 +178,16 @@ public class DrawingPanel extends JPanel implements Serializable {
         revalidate();
     }
 
+    public void setDrawingPanelDimensionsOut() {
+        Dimension dimension = new Dimension((int)this.getWidth(), (int)this.getHeight());
+        //Dimension dimension = new Dimension((int)initialDimension.getWidth(), (int)initialDimension.getHeight());
+        this.setPreferredSize(new Dimension((int)(dimension.getWidth() / ZOOM_FACTOR), (int)(dimension.getHeight() / ZOOM_FACTOR)));
+        //this.setPreferredSize(new Dimension((int)(this.getWidth() / ZOOM_FACTOR), (int)(this.getHeight() / ZOOM_FACTOR)));
+        revalidate();
+    }
+
+
+
     public void setDrawingPanelInitialDimension() {
         this.setPreferredSize(mainWindow.getMainScrollPaneDimension());
         validate();
@@ -184,6 +196,22 @@ public class DrawingPanel extends JPanel implements Serializable {
 
     public void setGridGap(double newGridGap) {
         this.gridGap = newGridGap;
+    }
+
+    public void setWidth() {
+        Dimension dimension = new Dimension(this.getWidth() + 20, this.getHeight());
+        this.setPreferredSize(dimension);
+        this.initialDimension = dimension;
+        validate();
+        revalidate();
+    }
+
+    public void setHeight() {
+        Dimension dimension = new Dimension(this.getWidth(), this.getHeight() + 20);
+        this.setPreferredSize(dimension);
+        this.initialDimension = dimension;
+        validate();
+        revalidate();
     }
 }
 

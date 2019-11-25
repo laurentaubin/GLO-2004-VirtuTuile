@@ -188,13 +188,21 @@ public class MainWindow extends JFrame {
             }
         });
 
+        mainScrollPane.addMouseWheelListener(new MouseAdapter() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent evt) {
+                mouseWheelMovedEventPerformed(evt);
+            }
+        });
 
 
+        /*
         drawingPanel.addMouseWheelListener(new java.awt.event.MouseAdapter() {
             public void mouseWheelMoved(MouseWheelEvent evt){
                 mouseWheelMovedEventPerformed(evt);
             }
         });
+        */
 
 
         drawingPanel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -492,6 +500,22 @@ public class MainWindow extends JFrame {
 
             double[] xDrawPoints = getXDrawPoints();
             double[] yDrawPoints = getYDrawPoints();
+
+            if (currentMousePoint.getX() >= drawingPanel.getWidth() - 20) {
+                drawingPanel.setWidth();
+                Point translateScrollPane  = new Point (
+                        (int)mainScrollPane.getViewport().getViewPosition().getX() + 20,
+                        (int) mainScrollPane.getViewport().getViewPosition().getY());
+                setMainScrollPanePosition(translateScrollPane);
+            }
+
+            if (currentMousePoint.getY() >= drawingPanel.getHeight() - 20) {
+                drawingPanel.setHeight();
+                Point translateScrollPane  = new Point (
+                        (int)mainScrollPane.getViewport().getViewPosition().getX(),
+                        (int) mainScrollPane.getViewport().getViewPosition().getY() + 20);
+                setMainScrollPanePosition(translateScrollPane);
+            }
 
             controller.addRectangularProjection(this.initMousePoint, xDrawPoints, yDrawPoints);
         }

@@ -58,13 +58,9 @@ public class SurfaceDrawer {
          */
 
         for (Surface current_surface : surfaceList) {
-
             Point2D.Double point = current_surface.getPosition();
             Area shape = new Area(current_surface.getAreaTest());
-            //Shape shape = current_surface.getShape();
             if (zoom != 1) {
-                //g2d.translate(point.getX(), point.getY());
-                //g2d.translate(-point.getX(), -point.getY());
                 AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
                 shape.transform(at);
             }
@@ -77,19 +73,22 @@ public class SurfaceDrawer {
             if (current_surface.isCovered()) {
                 current_surface.getPattern().getVirtualTileList().clear();
                 current_surface.getPattern().generateTiles(current_surface.getBoundingRectangle(), current_surface.getTileType(), current_surface.getAreaTest());
-                    ArrayList<Tile> array = current_surface.getPattern().getVirtualTileList();
-                    for (Tile tile : array) {
-                        if (tile.isTooSmall()) {
-                            g2d.setColor(tile.getInspecColor());
-                        }
-                        else {
-                            g2d.setColor(current_surface.getTileType().getColor());
-                        }
-                        g2d.fill(tile);
-                        g2d.setColor(Color.BLACK);
-                        g2d.draw(tile);
+                ArrayList<Tile> array = current_surface.getPattern().getVirtualTileList();
+                for (Tile tile : array) {
+                    AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
+                    tile.transform(at);
+                    if (tile.isTooSmall()) {
+                        g2d.setColor(tile.getInspecColor());
+                    }
+                    else {
+                        g2d.setColor(current_surface.getTileType().getColor());
+                    }
+                    g2d.fill(tile);
+                    g2d.setColor(Color.BLACK);
+                    g2d.draw(tile);
                 }
             }
+
             g2d.setColor(Color.BLACK);
             if (current_surface.isSelected()) {
                 Color selectedColor = new Color(56, 177, 255);

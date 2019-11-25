@@ -318,7 +318,13 @@ public class Surface {
         this.height = height;
 
         AffineTransform at = new AffineTransform(1, 0, 0, deltaY, 0, 0);
+        double initialXPosition = this.area.getBounds().getY();
         this.area.transform(at);
+        double newXPosition = this.area.getBounds().getY();
+        double deltaPosition = (newXPosition - initialXPosition);
+
+        AffineTransform atPosition = new AffineTransform(1, 0, 0, 1, 0, -deltaPosition);
+        this.area.transform(atPosition);
 
     }
 
