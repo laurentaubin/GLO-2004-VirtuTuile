@@ -342,10 +342,13 @@ public class MainWindow extends JFrame {
 
     public void rectangularSurfaceButtonPerformed(ActionEvent actionEvent){
         this.setApplicationMode(ApplicationMode.ADD_RECTANGULAR);
+        this.controller.unselectAllSurfaces();
     }
 
     public void irregularSurfaceButtonPerformed(ActionEvent actionEvent){
         this.setApplicationMode(ApplicationMode.ADD_IRREGULAR);
+        this.controller.unselectAllSurfaces();
+
     }
 
     public void metricModeSelected(ActionEvent actionEvent) {

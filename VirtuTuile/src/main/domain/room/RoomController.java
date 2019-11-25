@@ -272,5 +272,9 @@ public class RoomController {
     public int getCurrentTilePerBox() {
         return this.room.getCurrentTileNumberPerBox();
     }
+
+    public void unselectAllSurfaces() {
+        room.unselectAllSurfaces();
+    }
 }
 
