@@ -62,12 +62,46 @@ public class DrawingPanel extends JPanel implements Serializable {
 
                 g2d.setPaint(Color.LIGHT_GRAY);
                 g2d.setStroke(new BasicStroke(0.25f));
-                for (int row = 1; row <= this.getHeight() / this.gridGap; row++) {
-                    g2d.drawLine(0, (int)(row * this.gridGap), this.getWidth(), (int)(row * this.gridGap));
+                Dimension ajustingDimension = new Dimension(this.getWidth(), this.getHeight());
+                if (zoom >= 1) {
+                    for (int row = 1; row <= ajustingDimension.getHeight() / this.gridGap; row++) {
+                        g2d.drawLine(0, (int) (row * this.gridGap), (int)ajustingDimension.getWidth(), (int) (row * this.gridGap));
+                    }
+                    for (int col = 1; col <= (int)ajustingDimension.getWidth() / this.gridGap; col++) {
+                        g2d.drawLine((int) (col * this.gridGap), 0, (int) (col * this.gridGap), (int)ajustingDimension.getHeight());
+                    }
                 }
-                for (int col = 1; col <= this.getWidth() / this.gridGap; col++) {
-                    g2d.drawLine((int)(col * this.gridGap), 0, (int)(col * this.gridGap), this.getHeight());
+                else if (zoom < 1) {
+                    for (int row = 1; row <= (ajustingDimension.getHeight()/ (this.gridGap)) / (zoom) ; row++) {
+                        g2d.drawLine(0, (int) (row * this.gridGap), (int)(ajustingDimension.getWidth() / zoom), (int) (row * this.gridGap));
+                    }
+                    for (int col = 1; col <= ((int)ajustingDimension.getWidth() / this.gridGap) / (zoom); col++) {
+                        g2d.drawLine((int) ((col) * this.gridGap), 0, (int) ((col) * this.gridGap), (int)(ajustingDimension.getHeight() / zoom));
+                    }
                 }
+                /*
+                if (zoom >= 1) {
+
+                    for (int row = 1; row <= ajustingDimension.getHeight() / this.gridGap; row++) {
+                        //g2d.drawLine(0, (int) (row * this.gridGap), (int)ajustingDimension.getWidth(), (int) (row * this.gridGap));
+                        g2d.drawLine(0, (int) ((row/zoom) * this.gridGap), (int)(ajustingDimension.getWidth() / zoom), (int) ((row/zoom) * this.gridGap));
+                    }
+                    for (int col = 1; col <= (int)ajustingDimension.getWidth() / this.gridGap; col++) {
+                        g2d.drawLine((int) (col * this.gridGap), 0, (int) (col * this.gridGap), (int)ajustingDimension.getHeight());
+                    }
+                }
+                else if (zoom < 1) {
+                    for (int row = 1; row <= (ajustingDimension.getHeight()/ (this.gridGap)) / (zoom) ; row++) {
+                        //g2d.drawLine(0, (int) (row * this.gridGap), (int)(ajustingDimension.getWidth() / zoom), (int) (row * this.gridGap));
+                        //Inclinaison du plan?
+                        g2d.drawLine(0, (int) ((row/zoom) * this.gridGap), (int)(ajustingDimension.getWidth() / zoom), (int) ((row) * this.gridGap));
+                    }
+                    for (int col = 1; col <= ((int)ajustingDimension.getWidth() / this.gridGap) / (zoom); col++) {
+                        g2d.drawLine((int) ((col) * this.gridGap), 0, (int) ((col) * this.gridGap), (int)(ajustingDimension.getHeight() / zoom));
+                    }
+                }
+
+                 */
             }
         }
     }
