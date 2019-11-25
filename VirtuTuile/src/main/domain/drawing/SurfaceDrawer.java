@@ -60,17 +60,13 @@ public class SurfaceDrawer {
         for (Surface current_surface : surfaceList) {
 
             Point2D.Double point = current_surface.getPosition();
-            Area shape = current_surface.getAreaTest();
+            Area shape = new Area(current_surface.getAreaTest());
             //Shape shape = current_surface.getShape();
             if (zoom != 1) {
                 //g2d.translate(point.getX(), point.getY());
-                g2d.transform(AffineTransform.getScaleInstance(zoom, zoom));
                 //g2d.translate(-point.getX(), -point.getY());
-                /*
                 AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
                 shape.transform(at);
-                this.zoom = zoom;
-                 */
             }
 
             Color fillColor = current_surface.getColor();
@@ -110,6 +106,9 @@ public class SurfaceDrawer {
         if(!surfaceProjectionList.isEmpty()) {
             Surface rectangularProjection = surfaceProjectionList.get(surfaceProjectionList.size() - 1);
            // g2d.draw(rectangularProjection.getPolygon());
+            Shape shape = rectangularProjection.getAreaTest();
+            AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
+            ((Area) shape).transform(at);
             g2d.draw(rectangularProjection.getAreaTest());
            //g2d.draw(UnitConverter.convertPolygonToPixel(rectangularProjection.getPolygon(), this.measurementMode));
         }

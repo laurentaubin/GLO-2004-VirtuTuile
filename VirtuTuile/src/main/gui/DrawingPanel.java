@@ -13,7 +13,7 @@ import javax.swing.border.Border;
 //Code du zoom inspiré de https://stackoverflow.com/questions/13155382/jscrollpane-zoom-relative-to-mouse-position
 
 public class DrawingPanel extends JPanel implements Serializable {
-    final double ZOOM_FACTOR = 1.1;
+    final double ZOOM_FACTOR = 1.05;
 
     public Dimension initialDimension;
     private MainWindow mainWindow;
@@ -110,8 +110,8 @@ public class DrawingPanel extends JPanel implements Serializable {
         this.setZoom(getZoom() * ZOOM_FACTOR);
         Point pos = mainWindow.getMainScrollPane().getViewport().getViewPosition();
 
-        int newX = (int)(point.x*(1.1f - 1f) + 1.1f*pos.x);
-        int newY = (int)(point.y*(1.1f - 1f) + 1.1f*pos.y);
+        int newX = (int)(point.x*(1.1f - 1f) + ZOOM_FACTOR * pos.x);
+        int newY = (int)(point.y*(1.1f - 1f) + ZOOM_FACTOR * pos.y);
         Point newPoint = new Point(newX, newY);
         mainWindow.setMainScrollPanePosition(newPoint);
 
@@ -125,8 +125,8 @@ public class DrawingPanel extends JPanel implements Serializable {
         this.setZoom(getZoom() / ZOOM_FACTOR);
         Point pos = mainWindow.getMainScrollPane().getViewport().getViewPosition();
 
-        int newX = (int)(point.x*(0.9f - 1f) + 0.9f*pos.x);
-        int newY = (int)(point.y*(0.9f - 1f) + 0.9f*pos.y);
+        int newX = (int)(point.x*(0.9f - 1f) + pos.x / ZOOM_FACTOR);
+        int newY = (int)(point.y*(0.9f - 1f) + pos.y / ZOOM_FACTOR);
         Point newPoint = new Point(newX, newY);
         mainWindow.setMainScrollPanePosition(newPoint);
 
@@ -139,7 +139,6 @@ public class DrawingPanel extends JPanel implements Serializable {
     public void setDrawingPanelDimensions() {
         Dimension dimension = new Dimension((int)initialDimension.getWidth(), (int)initialDimension.getHeight());
         this.setPreferredSize(new Dimension((int)(dimension.getWidth() * zoom), (int)(dimension.getHeight() * zoom)));
-        validate();
         revalidate();
     }
 

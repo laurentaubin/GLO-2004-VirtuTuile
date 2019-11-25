@@ -303,12 +303,14 @@ public class Surface {
         double deltaX = enteredWidth / this.width;
         this.width = enteredWidth;
 
-
         AffineTransform at = new AffineTransform(deltaX, 0, 0, 1, 0, 0);
+        double initialXPosition = this.area.getBounds().getX();
         this.area.transform(at);
+        double newXPosition = this.area.getBounds().getX();
+        double deltaPosition = (newXPosition - initialXPosition);
 
-        //TODO modifier les dimensions des surfaces élémentaires
-        //TODO Faire le code pour les surfaces irrégulières
+        //AffineTransform atPosition = new AffineTransform(1, 0, 0, 1, newXPosition - deltaPosition, 0);
+        //this.area.transform(atPosition);
     }
 
     public void setHeight(double height) {
@@ -318,8 +320,6 @@ public class Surface {
         AffineTransform at = new AffineTransform(1, 0, 0, deltaY, 0, 0);
         this.area.transform(at);
 
-        //TODO modifier les dimensions des surfaces élémentaires
-        //TODO Faire le code pour les surfaces irrégulières
     }
 
     public Dimension getDimensions() {

@@ -361,7 +361,6 @@ public class MainWindow extends JFrame {
 
 
     public void drawingPanelKeyPressed(java.awt.event.KeyEvent evt) {
-
         if(evt.getKeyCode() == KeyEvent.VK_BACK_SPACE && controller.surfaceSelecte()){
             String[] options = {"Ok", "Cancel"};
             int indexReponse = JOptionPane.showOptionDialog(null, "Voulez-vous vraiment supprimer cette surface?",
@@ -375,8 +374,10 @@ public class MainWindow extends JFrame {
     }
 
     public void drawingPanelMousePressed(MouseEvent mouseEvent){
-        this.initMousePoint = mouseEvent.getPoint();
-        this.currentMousePoint = this.initMousePoint;
+        this.initMousePoint = new Point(
+                (int)(mouseEvent.getPoint().getX() / drawingPanel.getZoom()),
+                (int)(mouseEvent.getPoint().getY() / drawingPanel.getZoom()));
+        this.currentMousePoint = new Point(this.initMousePoint);
 
         this.requestFocus();
         boolean isShiftDown = false;
@@ -385,8 +386,8 @@ public class MainWindow extends JFrame {
 
         if (this.currentApplicationMode == ApplicationMode.SELECT && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
-            double xPos = this.initMousePoint.getX() / drawingPanel.getZoom();
-            double yPos = this.initMousePoint.getY() / drawingPanel.getZoom();
+            double xPos = this.initMousePoint.getX();
+            double yPos = this.initMousePoint.getY();
 
 
             //double xPos = UnitConverter.convertPixelToSelectedUnit((int) this.initMousePoint.getX(), this.currentMeasurementMode);
@@ -417,7 +418,10 @@ public class MainWindow extends JFrame {
     }
 
     public void drawingPanelMouseReleased(MouseEvent mouseEvent){
-        Point mousePointReleased = mouseEvent.getPoint();
+        Point mousePointReleased = new Point(
+                (int)(mouseEvent.getX() / drawingPanel.getZoom()),
+                (int)(mouseEvent.getY() / drawingPanel.getZoom())
+        );
 
         if (this.currentApplicationMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
@@ -456,8 +460,10 @@ public class MainWindow extends JFrame {
     public void drawingPanelMouseDragged(MouseEvent mouseEvent){
         // TODO ça marche pas pcq le init mouse point est pas updaté a bonne palce faique le delta est pas bon
         if (SwingUtilities.isRightMouseButton(mouseEvent)) {
-            double deltaX = (mouseEvent.getX() - this.currentMousePoint.getX());
-            double deltaY = (mouseEvent.getY() - this.currentMousePoint.getY());
+            double deltaX = (
+                    (int)(mouseEvent.getX() / drawingPanel.getZoom()) - (int)(this.currentMousePoint.getX() / drawingPanel.getZoom()));
+            double deltaY = (
+                    (int)(mouseEvent.getY() / drawingPanel.getZoom()) - (int)(this.currentMousePoint.getY() / drawingPanel.getZoom()));
             /*
             double pixelX = (int) (mouseEvent.getX() - this.currentMousePoint.getX());
             double pixelY = (int) (mouseEvent.getY() - this.currentMousePoint.getY());
@@ -469,17 +475,20 @@ public class MainWindow extends JFrame {
             this.controller.updateSelectedSurfacesPositions(deltaX, deltaY);
             //this.controller.updateSelectedSurfacesPositions(deltaX, deltaY, pixelX, pixelY);
             //this.currentMousePoint.setLocation(mouseEvent.getX() / drawingPanel.getZoom(), mouseEvent.getY() / drawingPanel.getZoom());
-            this.currentMousePoint = mouseEvent.getPoint();
+            this.currentMousePoint = new Point(
+                    (int)(mouseEvent.getX() / drawingPanel.getZoom()),
+                    (int)(mouseEvent.getY() / drawingPanel.getZoom())
+                    );
         }
         else if (this.currentApplicationMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
-            //this.currentMousePoint.setLocation(mouseEvent.getX() / drawingPanel.getZoom(), mouseEvent.getY() / drawingPanel.getZoom());
-            this.currentMousePoint = mouseEvent.getPoint();
+            this.currentMousePoint = new Point(
+                    (int)(mouseEvent.getX() / drawingPanel.getZoom()),
+                    (int)(mouseEvent.getY() / drawingPanel.getZoom())
+            );
 
 
             double[] xDrawPoints = getXDrawPoints();
             double[] yDrawPoints = getYDrawPoints();
-            //int[] xDrawPoints = getXDrawPoints();
-            //int[] yDrawPoints = getYDrawPoints();
 
             controller.addRectangularProjection(this.initMousePoint, xDrawPoints, yDrawPoints);
         }
