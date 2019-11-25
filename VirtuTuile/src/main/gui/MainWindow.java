@@ -622,14 +622,14 @@ public class MainWindow extends JFrame {
         double yPos = evt.getY() / drawingPanel.getZoom();
         //double xPos = UnitConverter.convertPixelToSelectedUnit( evt.getX(), this.currentMeasurementMode);
         //double yPos = UnitConverter.convertPixelToSelectedUnit(evt.getY(), this.currentMeasurementMode);
-
+/*
         if (this.currentMeasurementMode == MeasurementUnitMode.METRIC) {
             mousePosition += ("x= " + xPos + "m " + ", y= " + yPos + "m ");
         }
         if (this.currentMeasurementMode == MeasurementUnitMode.IMPERIAL) {
             mousePosition += ("x= " + xPos + "'' " + ", y= " + yPos + "'' ");
         }
-
+*/
 
         if (this.controller.checkIfMouseAboveTile(evt.getX(), evt.getY())) {
             ArrayList<Double> tileDimension = this.controller.getTileDimensions(evt.getX(), evt.getY());
