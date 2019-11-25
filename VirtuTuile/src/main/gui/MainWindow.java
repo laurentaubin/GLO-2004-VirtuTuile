@@ -501,6 +501,7 @@ public class MainWindow extends JFrame {
             double[] xDrawPoints = getXDrawPoints();
             double[] yDrawPoints = getYDrawPoints();
 
+            /*
             if (currentMousePoint.getX() >= drawingPanel.getWidth() - 20) {
                 drawingPanel.setWidth();
                 Point translateScrollPane  = new Point (
@@ -516,6 +517,8 @@ public class MainWindow extends JFrame {
                         (int) mainScrollPane.getViewport().getViewPosition().getY() + 20);
                 setMainScrollPanePosition(translateScrollPane);
             }
+            
+             */
 
             controller.addRectangularProjection(this.initMousePoint, xDrawPoints, yDrawPoints);
         }
