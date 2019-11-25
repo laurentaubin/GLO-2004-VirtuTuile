@@ -309,8 +309,8 @@ public class Surface {
         double newXPosition = this.area.getBounds().getX();
         double deltaPosition = (newXPosition - initialXPosition);
 
-        //AffineTransform atPosition = new AffineTransform(1, 0, 0, 1, newXPosition - deltaPosition, 0);
-        //this.area.transform(atPosition);
+        AffineTransform atPosition = new AffineTransform(1, 0, 0, 1, -deltaPosition, 0);
+        this.area.transform(atPosition);
     }
 
     public void setHeight(double height) {

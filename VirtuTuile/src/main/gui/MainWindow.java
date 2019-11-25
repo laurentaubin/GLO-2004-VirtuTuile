@@ -461,9 +461,9 @@ public class MainWindow extends JFrame {
         // TODO ça marche pas pcq le init mouse point est pas updaté a bonne palce faique le delta est pas bon
         if (SwingUtilities.isRightMouseButton(mouseEvent)) {
             double deltaX = (
-                    (int)(mouseEvent.getX() / drawingPanel.getZoom()) - (int)(this.currentMousePoint.getX() / drawingPanel.getZoom()));
+                    (int)(mouseEvent.getX() / drawingPanel.getZoom()) - (int)(this.currentMousePoint.getX()));
             double deltaY = (
-                    (int)(mouseEvent.getY() / drawingPanel.getZoom()) - (int)(this.currentMousePoint.getY() / drawingPanel.getZoom()));
+                    (int)(mouseEvent.getY() / drawingPanel.getZoom()) - (int)(this.currentMousePoint.getY()));
             /*
             double pixelX = (int) (mouseEvent.getX() - this.currentMousePoint.getX());
             double pixelY = (int) (mouseEvent.getY() - this.currentMousePoint.getY());
