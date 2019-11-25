@@ -7,10 +7,13 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Dimension2D;
 import java.io.Serializable;
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 
 //Code du zoom inspiré de https://stackoverflow.com/questions/13155382/jscrollpane-zoom-relative-to-mouse-position
 
 public class DrawingPanel extends JPanel implements Serializable {
+    final double ZOOM_FACTOR = 1.05;
 
     public Dimension initialDimension;
     private MainWindow mainWindow;
@@ -30,11 +33,14 @@ public class DrawingPanel extends JPanel implements Serializable {
     public DrawingPanel(MainWindow mainWindow) {
         this.mainWindow = mainWindow;
 
-        int width = (int) (Toolkit.getDefaultToolkit().getScreenSize().width);
-        setPreferredSize(new Dimension(width, 1));
+        int width = mainWindow.getMainScrollPaneDimension().width;
+        int height = mainWindow.getMainScrollPaneDimension().height;
+        //int width = (int) (Toolkit.getDefaultToolkit().getScreenSize().width);
+        setPreferredSize(new Dimension(width, height));
         setVisible(true);
-        int height = (int) (width * 0.5);
+        //int height = (int) (width * 0.5);
         initialDimension = new Dimension(800, 600);
+        setBackground(Color.WHITE);
     }
 
 
@@ -101,36 +107,31 @@ public class DrawingPanel extends JPanel implements Serializable {
     }
 
     public void zoomInActionPerformed(Point point) {
-        this.setZoom(getZoom() * 1.1d);
-        //this.setZoom(getZoom() * 1.1d);
+        this.setZoom(getZoom() * ZOOM_FACTOR);
         Point pos = mainWindow.getMainScrollPane().getViewport().getViewPosition();
 
-        int newX = (int)(point.x*(1.1f - 1f) + 1.1f*pos.x);
-        int newY = (int)(point.y*(1.1f - 1f) + 1.1f*pos.y);
+        int newX = (int)(point.x*(1.1f - 1f) + ZOOM_FACTOR * pos.x);
+        int newY = (int)(point.y*(1.1f - 1f) + ZOOM_FACTOR * pos.y);
         Point newPoint = new Point(newX, newY);
         mainWindow.setMainScrollPanePosition(newPoint);
 
         setDrawingPanelDimensions();
 
-        validate();
         revalidate();
         repaint();
-
     }
 
     public void zoomOutActionPerformed(Point point) {
-        this.setZoom(getZoom() * 0.9d);
-        //this.setZoom(getZoom() * 0.9d);
+        this.setZoom(getZoom() / ZOOM_FACTOR);
         Point pos = mainWindow.getMainScrollPane().getViewport().getViewPosition();
 
-        int newX = (int)(point.x*(0.9f - 1f) + 0.9f*pos.x);
-        int newY = (int)(point.y*(0.9f - 1f) + 0.9f*pos.y);
+        int newX = (int)(point.x*(0.9f - 1f) + pos.x / ZOOM_FACTOR);
+        int newY = (int)(point.y*(0.9f - 1f) + pos.y / ZOOM_FACTOR);
         Point newPoint = new Point(newX, newY);
         mainWindow.setMainScrollPanePosition(newPoint);
 
         setDrawingPanelDimensions();
 
-        validate();
         revalidate();
         repaint();
     }
@@ -138,7 +139,6 @@ public class DrawingPanel extends JPanel implements Serializable {
     public void setDrawingPanelDimensions() {
         Dimension dimension = new Dimension((int)initialDimension.getWidth(), (int)initialDimension.getHeight());
         this.setPreferredSize(new Dimension((int)(dimension.getWidth() * zoom), (int)(dimension.getHeight() * zoom)));
-        validate();
         revalidate();
     }
 

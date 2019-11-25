@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="gui.TileTab">
-  <grid id="27dc6" binding="mainTileTab" layout-manager="GridLayoutManager" row-count="7" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
+  <grid id="27dc6" binding="mainTileTab" layout-manager="GridBagLayout">
     <constraints>
-      <xy x="20" y="20" width="500" height="426"/>
+      <xy x="224" y="20" width="621" height="725"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="5dbe3" binding="caracPanel" layout-manager="GridLayoutManager" row-count="5" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="0" left="0" bottom="0" right="0"/>
+      <grid id="5dbe3" binding="caracPanel" layout-manager="GridBagLayout">
         <constraints>
-          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="5" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="1.0" weighty="1.0"/>
         </constraints>
         <properties/>
-        <border type="bevel-lowered" title="Caractéristiques"/>
+        <border type="none"/>
         <children>
           <component id="e0324" class="javax.swing.JLabel" binding="tileWidthLabel">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag top="5" left="0" bottom="5" right="0" weightx="1.0" weighty="1.0"/>
             </constraints>
             <properties>
               <text value="Largeur"/>
@@ -27,6 +27,7 @@
           <component id="83220" class="javax.swing.JLabel" binding="tileHeightLabel">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag top="5" left="0" bottom="5" right="0" weightx="1.0" weighty="1.0"/>
             </constraints>
             <properties>
               <text value="Hauteur"/>
@@ -35,54 +36,34 @@
           <component id="79c22" class="javax.swing.JLabel" binding="tileNameLabel">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag top="5" left="0" bottom="5" right="0" weightx="1.0" weighty="1.0"/>
             </constraints>
             <properties>
               <text value="Nom"/>
             </properties>
           </component>
-          <component id="79826" class="javax.swing.JFormattedTextField" binding="tileWidthField">
-            <constraints>
-              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="100" height="-1"/>
-              </grid>
-            </constraints>
-            <properties/>
-          </component>
           <component id="225b5" class="javax.swing.JFormattedTextField" binding="tileHeightField">
             <constraints>
-              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+              <grid row="1" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="100" height="-1"/>
               </grid>
-            </constraints>
-            <properties/>
-          </component>
-          <component id="55f6c" class="javax.swing.JTextField" binding="tileNameField">
-            <constraints>
-              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="100" height="-1"/>
-              </grid>
+              <gridbag top="5" left="5" bottom="5" right="0" weightx="1.0" weighty="1.0"/>
             </constraints>
             <properties/>
           </component>
           <component id="b8776" class="javax.swing.JLabel" binding="tileColorLabel">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag top="5" left="0" bottom="5" right="0" weightx="1.0" weighty="1.0"/>
             </constraints>
             <properties>
               <text value="Couleur"/>
             </properties>
           </component>
-          <component id="c63c1" class="javax.swing.JButton" binding="tileColorButton">
-            <constraints>
-              <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Cliquer ici"/>
-            </properties>
-          </component>
           <component id="f1317" class="javax.swing.JLabel" binding="numberOfTilesLabel">
             <constraints>
               <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag top="5" left="0" bottom="5" right="0" weightx="1.0" weighty="1.0"/>
             </constraints>
             <properties>
               <text value="Nombre de tuiles par boîte"/>
@@ -90,33 +71,63 @@
           </component>
           <component id="828da" class="javax.swing.JFormattedTextField" binding="tileNumberPerBoxField">
             <constraints>
-              <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+              <grid row="4" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="100" height="-1"/>
               </grid>
+              <gridbag top="5" left="5" bottom="5" right="0" weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="c63c1" class="javax.swing.JButton" binding="tileColorButton">
+            <constraints>
+              <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag top="5" left="5" bottom="5" right="0" weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="58795" class="javax.swing.JButton" binding="chromaticButton">
+            <constraints>
+              <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="79826" class="javax.swing.JFormattedTextField" binding="tileWidthField">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="100" height="-1"/>
+              </grid>
+              <gridbag top="5" left="5" bottom="5" right="0" weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="55f6c" class="javax.swing.JTextField" binding="tileNameField">
+            <constraints>
+              <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="100" height="-1"/>
+              </grid>
+              <gridbag top="5" left="5" bottom="5" right="0" weightx="1.0" weighty="1.0"/>
             </constraints>
             <properties/>
           </component>
         </children>
       </grid>
-      <component id="5148c" class="javax.swing.JButton" binding="modifyTile">
+      <grid id="d3ce0" binding="tileListPanel" layout-manager="GridBagLayout">
         <constraints>
-          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Modifier la tuile sélectionnée"/>
-        </properties>
-      </component>
-      <grid id="d3ce0" binding="tileListPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="0" left="0" bottom="0" right="0"/>
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="1.0" weighty="1.0"/>
         </constraints>
         <properties/>
-        <border type="bevel-lowered" title="Liste des types de tuiles définies" title-justification="1"/>
+        <border type="none" title-justification="1"/>
         <children>
           <scrollpane id="85708" binding="tileListScrollPane">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="6" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -129,37 +140,70 @@
           </scrollpane>
           <component id="f4b80" class="javax.swing.JButton" binding="applySelectedTile">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag top="10" left="5" bottom="10" right="0" weightx="1.0" weighty="0.0"/>
             </constraints>
             <properties>
               <text value="Appliquer"/>
             </properties>
           </component>
+          <component id="a5331" class="javax.swing.JSeparator">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="6" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="3ed0e" class="javax.swing.JButton" binding="createNewTile">
+            <constraints>
+              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag top="10" left="0" bottom="10" right="5" weightx="1.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Ajouter"/>
+            </properties>
+          </component>
+          <component id="5148c" class="javax.swing.JButton" binding="modifyTile">
+            <constraints>
+              <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <text value="Modifier"/>
+            </properties>
+          </component>
         </children>
       </grid>
-      <component id="5da14" class="javax.swing.JButton" binding="créerUneNouvelleTuileButton" default-binding="true">
+      <component id="8b81" class="javax.swing.JLabel">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
-          <text value="Créer une nouvelle tuile"/>
+          <font style="1"/>
+          <text value="Tuile"/>
         </properties>
       </component>
-      <vspacer id="58e36">
+      <component id="f08a8" class="javax.swing.JLabel">
         <constraints>
-          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag top="10" left="0" bottom="10" right="0" weightx="0.0" weighty="0.0"/>
         </constraints>
-      </vspacer>
-      <vspacer id="d5a07">
+        <properties>
+          <font style="1"/>
+          <text value="Liste des tuiles définies"/>
+        </properties>
+      </component>
+      <component id="49a5e" class="javax.swing.JLabel">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag top="10" left="0" bottom="5" right="0" weightx="0.0" weighty="0.0"/>
         </constraints>
-      </vspacer>
-      <vspacer id="661e5">
-        <constraints>
-          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-        </constraints>
-      </vspacer>
+        <properties>
+          <font style="1"/>
+          <text value="Caracteristiques"/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>
