@@ -48,8 +48,8 @@ public class Room {
 
      */
 
-    public void addRectangularSurface(Point point, double[] xPoints, double[] yPoints) {
-        Surface surface = new Surface(xPoints, yPoints, 4);
+    public void addRectangularSurface(double[] xPoints, double[] yPoints, int number_of_edges) {
+        Surface surface = new Surface(xPoints, yPoints, number_of_edges);
         this.addSurfaceToList(surface);
     }
 /*
