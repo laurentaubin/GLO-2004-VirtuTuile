@@ -78,8 +78,8 @@ public class SurfaceDrawer {
                     AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
                     tile.transform(at);
                     if (tile.isTooSmall()) {
-                        g2d.setColor(tile.getInspecColor());
-
+                        // g2d.setColor(tile.getInspecColor());
+                        g2d.setColor(current_surface.getTileType().getColor());
                     }
                     else {
                         g2d.setColor(current_surface.getTileType().getColor());
