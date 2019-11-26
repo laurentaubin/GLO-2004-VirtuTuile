@@ -9,6 +9,7 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Point2D;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -35,7 +36,7 @@ public class MainWindow extends JFrame {
     private boolean mouseWasDragged;
 
 
-    public MainWindow(){
+    public MainWindow() throws IOException {
 
         controller = new RoomController();
         initComponents();
@@ -53,7 +54,7 @@ public class MainWindow extends JFrame {
     }
 
 
-    private void initComponents() {
+    private void initComponents() throws IOException {
 
         mainPanel = new JPanel();
         buttonGroup = new ButtonGroup();

@@ -4,11 +4,12 @@ import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
 import java.awt.*;
+import java.io.IOException;
 
 
 public class Main {
 
-    public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
+    public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, IOException {
         /*
         MainPanelTest mainPanelTest = new MainPanelTest();
         mainPanelTest.setExtendedState(mainPanelTest.getExtendedState() | JFrame.MAXIMIZED_BOTH);

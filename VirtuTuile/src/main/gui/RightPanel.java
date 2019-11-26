@@ -2,9 +2,12 @@ package gui;
 
 import domain.room.TileType;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.io.Serializable;
 
 
@@ -16,7 +19,7 @@ public class RightPanel extends JTabbedPane implements Serializable {
     private ImageIcon patternTabIcon;
     private ImageIcon tileTabIcon;
 
-    public RightPanel(MainWindow mainWindow){
+    public RightPanel(MainWindow mainWindow) throws IOException {
         this.mainWindow = mainWindow;
         setBorder(new BevelBorder(BevelBorder.LOWERED));
         int width = (int)(Toolkit.getDefaultToolkit().getScreenSize().width);
@@ -27,20 +30,23 @@ public class RightPanel extends JTabbedPane implements Serializable {
         initRightPanel();
     }
 
-    private void initRightPanel(){
+    private void initRightPanel() throws IOException {
         surfaceTabPanel = new SurfaceTab(mainWindow);
         patternTabPanel = new PatternTab(mainWindow);
         tileTabPanel = new TileTab(mainWindow);
         //groutTabPanel = new GroutTabPanel(this);
 
         //Rectangle icon by Icons8
-        surfaceTabIcon = new ImageIcon(new ImageIcon("src/image/surfaceTab.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+        BufferedImage surfaceImage = ImageIO.read(this.getClass().getResourceAsStream("/image/surfaceTab.png"));
+        Icon surfaceTabIcon = new ImageIcon(surfaceImage.getScaledInstance(50, 50, Image.SCALE_DEFAULT));
         this.addTab("", surfaceTabIcon, surfaceTabPanel, "");
 
-        patternTabIcon = new ImageIcon(new ImageIcon("src/image/patternTab.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+        BufferedImage patternImage = ImageIO.read(this.getClass().getResourceAsStream("/image/patternTab.png"));
+        Icon patternTabIcon = new ImageIcon(patternImage.getScaledInstance(50, 50, Image.SCALE_DEFAULT));
         this.addTab("", patternTabIcon, patternTabPanel, "");
 
-        tileTabIcon = new ImageIcon(new ImageIcon("src/image/tileIcon.jpg").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+        BufferedImage tileImage = ImageIO.read(this.getClass().getResourceAsStream("/image/tileIcon.jpg"));
+        Icon tileTabIcon = new ImageIcon(tileImage.getScaledInstance(50, 50, Image.SCALE_DEFAULT));
         this.addTab("", tileTabIcon, tileTabPanel, "" );
         //this.addTab("Coulis", null, groutTabPanel, "");
         this.setSelectedIndex(0);
