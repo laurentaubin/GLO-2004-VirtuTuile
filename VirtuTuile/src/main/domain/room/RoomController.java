@@ -41,9 +41,12 @@ public class RoomController {
     }
 
      */
+
+    /*
     public void addRectangularSurface(Point point, double[] xPoints, double[] yPoints) {
         room.addRectangularSurface(point, xPoints, yPoints);
     }
+    */
 
     /*
     public void addRectangularSurface(Point point, int[] xPoints, int[] yPoints) {
@@ -61,7 +64,7 @@ public class RoomController {
 
     public void addSurface(Point point, double[] xPoints, double[] yPoints, int number_of_edges) {
         if (number_of_edges == 4) {
-            this.addRectangularSurface(point, xPoints, yPoints);
+            room.addRectangularSurface(xPoints, yPoints, number_of_edges);
         }
         else {
             //this.addIrregularSurface(point, xPoints, yPoints, number_of_edges);
