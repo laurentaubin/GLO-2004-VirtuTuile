@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8c246219-cf09-4492-905b-d80bdbddbe18" name="Default Changelist" comment="">
+    <list default="true" id="8c246219-cf09-4492-905b-d80bdbddbe18" name="Default Changelist" comment="Brrrrrrrrrrrrrrrruuhh">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/gui/DrawingPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/DrawingPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/drawing/SurfaceDrawer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/drawing/SurfaceDrawer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/TileTab.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/TileTab.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/TileTab.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/TileTab.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -37,7 +39,6 @@
     <property name="Repository.Attach.Annotations" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -46,12 +47,8 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="restartRequiresConfirmation" value="false" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/mouseClickedIcon" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/gui" />
     </key>
@@ -112,23 +109,12 @@
       <workItem from="1573919177064" duration="8039000" />
       <workItem from="1573930488455" duration="6473000" />
       <workItem from="1573946664481" duration="2379000" />
-      <workItem from="1574182206616" duration="946000" />
-      <workItem from="1574189520124" duration="623000" />
-      <workItem from="1574193089869" duration="14855000" />
-      <workItem from="1574259465193" duration="624000" />
-      <workItem from="1574265100211" duration="453000" />
-      <workItem from="1574278328740" duration="70000" />
-      <workItem from="1574293098789" duration="11569000" />
-      <workItem from="1574448170813" duration="173000" />
-      <workItem from="1574448566465" duration="147000" />
-      <workItem from="1574449573109" duration="132000" />
-      <workItem from="1574456771650" duration="161000" />
-      <workItem from="1574457019871" duration="3408000" />
-      <workItem from="1574480049667" duration="1581000" />
-      <workItem from="1574522626789" duration="11311000" />
-      <workItem from="1574538798363" duration="27525000" />
-      <workItem from="1574611769762" duration="17285000" />
-      <workItem from="1574648048437" duration="3102000" />
+      <workItem from="1574271327506" duration="575000" />
+      <workItem from="1574371902051" duration="11182000" />
+      <workItem from="1574462318284" duration="586000" />
+      <workItem from="1574703511519" duration="4202000" />
+      <workItem from="1574708035478" duration="3494000" />
+      <workItem from="1574738448325" duration="902000" />
     </task>
     <task id="LOCAL-00001" summary="xml(?)">
       <created>1573883748096</created>
@@ -158,7 +144,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573927129176</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Brrrrrrrrrrrrrrrruuhh">
+      <created>1574462848566</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1574462848568</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -187,6 +180,7 @@
     <MESSAGE value="Changer la couleur de des surfaces merge" />
     <MESSAGE value="Alert si les surfaces à combiner ne sont pas en contact" />
     <MESSAGE value="bruh" />
-    <option name="LAST_COMMIT_MESSAGE" value="bruh" />
+    <MESSAGE value="Brrrrrrrrrrrrrrrruuhh" />
+    <option name="LAST_COMMIT_MESSAGE" value="Brrrrrrrrrrrrrrrruuhh" />
   </component>
 </project>

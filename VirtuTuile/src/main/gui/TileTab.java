@@ -100,6 +100,7 @@ public class TileTab extends JPanel {
 
     private void modifySelectedTile(){
         if (tileComboBox.getItemCount() != 0) {
+            System.out.println("wasa");
             TileType selectedTileType = (TileType)tileComboBox.getSelectedItem();
             selectedTileType.setWidth((float)this.tileWidthField.getValue());
             selectedTileType.setHeight((float)this.tileHeightField.getValue());
@@ -107,6 +108,7 @@ public class TileTab extends JPanel {
             selectedTileType.setNbrTilesPerBox((int)this.tileNumberPerBoxField.getValue());
             selectedTileType.setColor(this.updateColor);
             mainWindow.updateSelectedTile();
+
         }
     }
 
@@ -195,3 +197,4 @@ public class TileTab extends JPanel {
 
 
 }
+
