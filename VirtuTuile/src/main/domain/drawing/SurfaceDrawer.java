@@ -79,11 +79,13 @@ public class SurfaceDrawer {
                     tile.transform(at);
                     if (tile.isTooSmall()) {
                         g2d.setColor(tile.getInspecColor());
+
                     }
                     else {
                         g2d.setColor(current_surface.getTileType().getColor());
                     }
                     g2d.fill(tile);
+
                     g2d.setColor(Color.BLACK);
                     g2d.draw(tile);
                 }
