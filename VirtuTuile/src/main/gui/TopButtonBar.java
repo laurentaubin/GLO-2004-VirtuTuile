@@ -1,5 +1,6 @@
 package gui;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -7,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class TopButtonBar extends JPanel{
     private MainWindow mainWindow;
@@ -23,7 +26,7 @@ public class TopButtonBar extends JPanel{
     private Border oldBorder;
 
 
-    public TopButtonBar(MainWindow mainWindow) {
+    public TopButtonBar(MainWindow mainWindow) throws IOException {
         this.mainWindow = mainWindow;
         this.add(buttonBarMainPanel);
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -50,11 +53,23 @@ public class TopButtonBar extends JPanel{
         this.createIrrSurfaceButton.setPreferredSize(new Dimension(50, 50));
 
         // Hand Up icon by Icons8
-        this.selectButton.setIcon(new ImageIcon(new ImageIcon("src/image/mouseClicked.png").getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
+        BufferedImage selectImage = ImageIO.read(this.getClass().getResourceAsStream("/image/mouseClicked.png"));
+        Icon selectIcon = new ImageIcon(selectImage.getScaledInstance(30, 30, Image.SCALE_DEFAULT));
+        this.selectButton.setIcon(selectIcon);
+
         // Rectangle icon by Icons8
-        this.createRecSurfaceButton.setIcon(new ImageIcon(new ImageIcon("src/image/addRec.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
+        BufferedImage createRecImage = ImageIO.read(this.getClass().getResourceAsStream("/image/addRec.png"));
+        Icon createRecIcon = new ImageIcon(createRecImage.getScaledInstance(40, 40, Image.SCALE_DEFAULT));
+        this.createRecSurfaceButton.setIcon(createRecIcon);
+
+        BufferedImage createIrrImage = ImageIO.read(this.getClass().getResourceAsStream("/image/addIrr.png"));
+        Icon addIrrIcon = new ImageIcon(createIrrImage.getScaledInstance(40, 40, Image.SCALE_DEFAULT));
+        this.createIrrSurfaceButton.setIcon(addIrrIcon);
+
+
+        //this.createRecSurfaceButton.setIcon(new ImageIcon(new ImageIcon("src/image/addRec.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
         //Polygon icon by Icons8
-        this.createIrrSurfaceButton.setIcon(new ImageIcon(new ImageIcon("src/image/addIrr.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
+        //this.createIrrSurfaceButton.setIcon(new ImageIcon(new ImageIcon("src/image/addIrr.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
 
         selectButton.addMouseListener(new MouseAdapter() {
             @Override

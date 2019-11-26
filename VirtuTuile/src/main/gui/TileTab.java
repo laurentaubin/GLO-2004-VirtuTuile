@@ -2,10 +2,13 @@ package gui;
 
 import domain.room.TileType;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class TileTab extends JPanel {
@@ -34,7 +37,7 @@ public class TileTab extends JPanel {
     private Color tileColor;
     private Color updateColor;
 
-    public TileTab(MainWindow mainWindow) {
+    public TileTab(MainWindow mainWindow) throws IOException {
         this.mainWindow = mainWindow;
         this.add(mainTileTab);
 
@@ -50,7 +53,9 @@ public class TileTab extends JPanel {
 
         tileColorButton.setPreferredSize(new Dimension(20,20));
         chromaticButton.setPreferredSize(new Dimension(20, 20));
-        chromaticButton.setIcon((new ImageIcon(new ImageIcon("src/image/chromatic.png").getImage().getScaledInstance(15, 15, Image.SCALE_DEFAULT))));
+        BufferedImage chromImage = ImageIO.read(this.getClass().getResourceAsStream("/image/chromatic.png"));
+        Icon chromIcon = new ImageIcon(chromImage.getScaledInstance(15, 15, Image.SCALE_DEFAULT));
+        chromaticButton.setIcon(chromIcon);
 
         modifyTile.addActionListener(new ActionListener() {
             @Override

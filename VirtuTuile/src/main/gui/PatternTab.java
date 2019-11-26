@@ -1,9 +1,12 @@
 package gui;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class PatternTab extends JPanel{
 
@@ -31,7 +34,7 @@ public class PatternTab extends JPanel{
     private Color selectedColor;
 
 
-    public PatternTab(MainWindow mainWindow) {
+    public PatternTab(MainWindow mainWindow) throws IOException {
         this.mainWindow = mainWindow;
         this.groutWidthField.setValue(0);
         this.selectedColor = Color.WHITE;
@@ -45,21 +48,36 @@ public class PatternTab extends JPanel{
 
         //groutColorButton.setPreferredSize(new Dimension(60, 40));
 
-        straightPatternButton.setIcon(new ImageIcon(new ImageIcon("src/image/droite_horizontale.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT)));
+        BufferedImage straightImage = ImageIO.read(this.getClass().getResourceAsStream("/image/droite_horizontale.png"));
+        Icon straightIcon = new ImageIcon(straightImage.getScaledInstance(120, 100, Image.SCALE_DEFAULT));
+        straightPatternButton.setIcon(straightIcon);
         straightPatternButton.setMargin(new Insets(10, 0, 10, 0));
 
-        brickPatternButton.setIcon(new ImageIcon(new ImageIcon("src/image/brique_horizontale.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT)));
-        brickPatternButton.setMargin(new Insets(10, 0, 10, 0));
-
-        verticalPatternButton.setIcon(new ImageIcon(new ImageIcon("src/image/droite_verticale.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT)));
+        BufferedImage vertImage = ImageIO.read(this.getClass().getResourceAsStream("/image/droite_verticale.png"));
+        Icon vertIcon = new ImageIcon(vertImage.getScaledInstance(120, 100, Image.SCALE_DEFAULT));
+        verticalPatternButton.setIcon(vertIcon);
         verticalPatternButton.setMargin(new Insets(10, 0, 10, 0));
 
-        verticalBrickShapeButton.setIcon(new ImageIcon(new ImageIcon("src/image/brique_verticale.png").getImage().getScaledInstance(120, 100, Image.SCALE_DEFAULT)));
+        BufferedImage brickImage = ImageIO.read(this.getClass().getResourceAsStream("/image/brique_horizontale.png"));
+        Icon brickIcon = new ImageIcon(brickImage.getScaledInstance(120, 100, Image.SCALE_DEFAULT));
+        this.brickPatternButton.setIcon(brickIcon);
+
+        BufferedImage vertBrickImage = ImageIO.read(this.getClass().getResourceAsStream("/image/brique_verticale.png"));
+        Icon vertBrickIcon = new ImageIcon(vertBrickImage.getScaledInstance(120, 100, Image.SCALE_DEFAULT));
+        this.verticalBrickShapeButton.setIcon(vertBrickIcon);
+
+
+
+        brickPatternButton.setMargin(new Insets(10, 0, 10, 0));
+
         verticalBrickShapeButton.setMargin(new Insets(10, 0, 10, 0));
 
         groutColorButton.setPreferredSize(new Dimension(50, 20));
+
         chromaticButton.setPreferredSize(new Dimension(20,20));
-        chromaticButton.setIcon(new ImageIcon(new ImageIcon("src/image/chromatic.png").getImage().getScaledInstance(15, 15, Image.SCALE_DEFAULT)));
+        BufferedImage chromImage = ImageIO.read(this.getClass().getResourceAsStream("/image/chromatic.png"));
+        Icon chromIcon = new ImageIcon(chromImage.getScaledInstance(15, 15, Image.SCALE_DEFAULT));
+        chromaticButton.setIcon(chromIcon);
 
         //Ajouter les autres motifs
 

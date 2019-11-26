@@ -1,11 +1,14 @@
 package gui;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class SurfaceTab extends JPanel{
     private MainWindow mainWindow;
@@ -23,7 +26,7 @@ public class SurfaceTab extends JPanel{
     private JButton chromaticButton;
     private Color surfaceColor;
 
-    public SurfaceTab(MainWindow mainWindow) {
+    public SurfaceTab(MainWindow mainWindow) throws IOException {
         this.mainWindow = mainWindow;
         this.add(surfaceTab);
         widthField.setValue(0d);
@@ -34,7 +37,10 @@ public class SurfaceTab extends JPanel{
 
         surfaceColorButton.setPreferredSize(new Dimension(50, 20));
         chromaticButton.setPreferredSize(new Dimension(20, 20));
-        chromaticButton.setIcon(new ImageIcon(new ImageIcon("src/image/chromatic.png").getImage().getScaledInstance(15, 15, Image.SCALE_DEFAULT)));
+
+        BufferedImage chromImage = ImageIO.read(this.getClass().getResourceAsStream("/image/chromatic.png"));
+        Icon chromIcon = new ImageIcon(chromImage.getScaledInstance(15, 15, Image.SCALE_DEFAULT));
+        chromaticButton.setIcon(chromIcon);
 
         surfaceColorButton.addActionListener(new ActionListener() {
             @Override
