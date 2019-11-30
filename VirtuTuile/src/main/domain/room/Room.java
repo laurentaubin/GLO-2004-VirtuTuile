@@ -384,19 +384,19 @@ public class Room {
             if (baseSurface.intersect(surface.getAreaTest())) {
                 if(surface.isHole()) {
                     if(baseSurface.isHole()) {
-                        //System.out.println("Cond1");
                         baseSurface.merge(surface);
+                        baseSurface.addMergeSurfaceToList(surface);
                         surfaceList.remove(surface);
                     }
                     else{
-                        //System.out.println("Cond2");
                         baseSurface.setHole(surface);
+                        baseSurface.addMergeSurfaceToList(surface);
                         surfaceList.remove(surface);
                     }
                 }
                 else {
-                    //System.out.println("Cond3");
                     baseSurface.merge(surface);
+                    baseSurface.addMergeSurfaceToList(surface);
                     surfaceList.remove(surface);
                 }
             }
@@ -673,6 +673,33 @@ public class Room {
     public void unselectAllSurfaces() {
         for (Surface surface : this.surfaceList) {
             surface.unselect();
+        }
+    }
+
+    public void separateSelectedSurface() {
+        int counter = getNumberOfSelectedSurfaces();
+        if (counter == 1) {
+            for (Surface surface: surfaceList) {
+                if (surface.isSelected()) {
+                    ArrayList<Surface> compositeSurface = surface.getElementarySurface();
+                    Surface baseSurface = compositeSurface.get(0);
+                    for (int i = 0; i < compositeSurface.size(); i++) {
+                        if (i == 0) {
+                            Surface newBaseSurface = new Surface(baseSurface.xPoints, baseSurface.yPoints, baseSurface.nPoints);
+                            newBaseSurface.setTileType(baseSurface.getTileType());
+                            newBaseSurface.setColor(baseSurface.getColor());
+                            if (baseSurface.isCovered()) {
+                                newBaseSurface.setPattern(baseSurface.getPattern());
+                            }
+                            surfaceList.add(newBaseSurface);
+                        }
+                        else {
+                            surfaceList.add(compositeSurface.get(i));
+                        }
+                    }
+                    surfaceList.remove(surface);
+                }
+            }
         }
     }
 }

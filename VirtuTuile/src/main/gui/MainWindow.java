@@ -772,6 +772,11 @@ public class MainWindow extends JFrame {
         this.controller.setSelectedSurfaceAsWhole();
     }
 
+    public void separateSelectedSurface() {
+        this.controller.separateSelectedSurface();
+        drawingPanel.repaint();
+    }
+
     private ButtonGroup buttonGroup;
 
     private JPanel mainPanel;

@@ -24,6 +24,7 @@ public class SurfaceTab extends JPanel{
     private JPanel optionsPanel;
     private JLabel dispositionLabel;
     private JButton chromaticButton;
+    private JButton separateButton;
     private Color surfaceColor;
 
     public SurfaceTab(MainWindow mainWindow) throws IOException {
@@ -94,6 +95,13 @@ public class SurfaceTab extends JPanel{
                 setSurfaceColor(color);
             }
         });
+
+        separateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                separateSelectedSurface();
+            }
+        });
     }
 
     public void setEnteredWidthSurfaceDimensions(){
@@ -152,5 +160,9 @@ public class SurfaceTab extends JPanel{
         else  {
             holeCheckBox.setEnabled(false);
         }
+    }
+
+    public void separateSelectedSurface() {
+        mainWindow.separateSelectedSurface();
     }
 }

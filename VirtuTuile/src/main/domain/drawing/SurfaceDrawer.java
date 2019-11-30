@@ -41,8 +41,8 @@ public class SurfaceDrawer {
     }
 
     public void drawSurface(Graphics2D g2d, ArrayList<Surface> surfaceList, double zoom, Point currentMousePoint) {
+
         /*
-    }
         for (Surface current_surface : surfaceList) {
             Shape shape;
             if (current_surface.getShape() == null) {

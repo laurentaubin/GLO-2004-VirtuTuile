@@ -279,5 +279,9 @@ public class RoomController {
     public void unselectAllSurfaces() {
         room.unselectAllSurfaces();
     }
+
+    public void separateSelectedSurface() {
+        room.separateSelectedSurface();
+    }
 }
 
