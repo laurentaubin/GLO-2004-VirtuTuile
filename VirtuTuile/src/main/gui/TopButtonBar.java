@@ -21,6 +21,8 @@ public class TopButtonBar extends JPanel{
     private JPanel buttonsPanel;
     private JComboBox measurementUnitComboBox;
     private JLabel createRecLabel;
+    private JButton undoButton;
+    private JButton redoButton;
     private ImageIcon selectIcon;
     private Color initColor;
     private Border oldBorder;
@@ -48,9 +50,15 @@ public class TopButtonBar extends JPanel{
         buttonGroup.add(createIrrSurfaceButton);
         buttonGroup.add(createRecSurfaceButton);
 
-        this.selectButton.setPreferredSize(new Dimension(50, 50));
-        this.createRecSurfaceButton.setPreferredSize(new Dimension(50, 50));
-        this.createIrrSurfaceButton.setPreferredSize(new Dimension(50, 50));
+        Dimension mainButtonDimension = new Dimension(50,50);
+        this.selectButton.setPreferredSize(mainButtonDimension);
+        this.createRecSurfaceButton.setPreferredSize(mainButtonDimension);
+        this.createIrrSurfaceButton.setPreferredSize(mainButtonDimension);
+
+        Dimension smallButtonDimension = new Dimension(25, 25);
+
+        this.undoButton.setPreferredSize(smallButtonDimension);
+        this.redoButton.setPreferredSize(smallButtonDimension);
 
         // Hand Up icon by Icons8
         BufferedImage selectImage = ImageIO.read(this.getClass().getResourceAsStream("/image/mouseClicked.png"));
@@ -65,6 +73,17 @@ public class TopButtonBar extends JPanel{
         BufferedImage createIrrImage = ImageIO.read(this.getClass().getResourceAsStream("/image/addIrr.png"));
         Icon addIrrIcon = new ImageIcon(createIrrImage.getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         this.createIrrSurfaceButton.setIcon(addIrrIcon);
+
+        BufferedImage undoImage = ImageIO.read(this.getClass().getResourceAsStream("/image/undo.png"));
+        Icon undoIcon = new ImageIcon(undoImage.getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        this.undoButton.setIcon(undoIcon);
+
+        BufferedImage redoImage = ImageIO.read(this.getClass().getResourceAsStream("/image/redo.png"));
+        Icon redoIcon = new ImageIcon(redoImage.getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        this.redoButton.setIcon(redoIcon);
+
+
+
 
 
         //this.createRecSurfaceButton.setIcon(new ImageIcon(new ImageIcon("src/image/addRec.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
@@ -116,6 +135,20 @@ public class TopButtonBar extends JPanel{
                         mainWindow.imperialModeSelected(actionEvent);
                         break;
                 }
+            }
+        });
+
+        undoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                mainWindow.undo();
+            }
+        });
+
+        redoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                mainWindow.redo();
             }
         });
     }

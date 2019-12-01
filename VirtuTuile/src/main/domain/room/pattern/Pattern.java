@@ -61,5 +61,5 @@ public abstract class Pattern {
         return this.virtualTileList;
     }
 
-    public abstract ArrayList<Tile> generateTiles(Rectangle boudingRectangle, TileType tileType, Area area);
+    public abstract ArrayList<Tile> generateTiles(Rectangle boudingRectangle, TileType tileType, Area area, double groutWidth);
 }

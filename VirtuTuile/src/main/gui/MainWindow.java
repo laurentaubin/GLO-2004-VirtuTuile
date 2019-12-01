@@ -103,6 +103,7 @@ public class MainWindow extends JFrame {
 
         topButtonScrollPane = new JScrollPane();
 
+
         statusBar = new JLabel(" ");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -157,18 +158,8 @@ public class MainWindow extends JFrame {
 
         });
 
-        buttonGroup.add(selectButton);
-        buttonGroup.add(rectangularSurfaceButton);
-        buttonGroup.add(irregularSurfaceButton);
-
-        topButtonBar.add(selectButton);
-        topButtonBar.add(rectangularSurfaceButton);
-        topButtonBar.add(irregularSurfaceButton);
-        topButtonBar.add(measurementUnitComboBox);
-        topButtonBar.setMinimumSize(new Dimension(100, -1));
-
-        //mainPanel.add(topButtonBar, BorderLayout.NORTH);
-        mainPanel.add(topButtonBarTest, BorderLayout.NORTH);
+        topButtonScrollPane.setViewportView(topButtonBarTest);
+        mainPanel.add(topButtonScrollPane, BorderLayout.NORTH);
 
         splitPane.setMinimumSize(new Dimension(0, 202));
         splitPane.setPreferredSize(new Dimension((int)(Toolkit.getDefaultToolkit().getScreenSize().width*0.85), (int)(Toolkit.getDefaultToolkit().getScreenSize().height*0.5)));
@@ -245,7 +236,7 @@ public class MainWindow extends JFrame {
 
         splitPane.setOneTouchExpandable(true);
 
-        splitPane.setResizeWeight(1);
+        splitPane.setResizeWeight(0.85);
 
         statusBar.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
@@ -770,6 +761,21 @@ public class MainWindow extends JFrame {
 
     public void setSelectedSurfaceAsWhole() {
         this.controller.setSelectedSurfaceAsWhole();
+    }
+
+    public void separateSelectedSurface() {
+        this.controller.separateSelectedSurface();
+        drawingPanel.repaint();
+    }
+
+    public void undo() {
+        this.controller.undo();
+        drawingPanel.repaint();
+    }
+
+    public void redo() {
+        this.controller.redo();
+        drawingPanel.repaint();
     }
 
     private ButtonGroup buttonGroup;

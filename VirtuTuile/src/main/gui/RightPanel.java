@@ -31,24 +31,29 @@ public class RightPanel extends JTabbedPane implements Serializable {
     }
 
     private void initRightPanel() throws IOException {
+        surfaceTabScrollpane = new JScrollPane();
+        patternTabScrollpane = new JScrollPane();
+        tileTabScrollpane = new JScrollPane();
+
         surfaceTabPanel = new SurfaceTab(mainWindow);
         patternTabPanel = new PatternTab(mainWindow);
         tileTabPanel = new TileTab(mainWindow);
-        //groutTabPanel = new GroutTabPanel(this);
 
         //Rectangle icon by Icons8
         BufferedImage surfaceImage = ImageIO.read(this.getClass().getResourceAsStream("/image/surfaceTab.png"));
         Icon surfaceTabIcon = new ImageIcon(surfaceImage.getScaledInstance(50, 50, Image.SCALE_DEFAULT));
-        this.addTab("", surfaceTabIcon, surfaceTabPanel, "");
+        surfaceTabScrollpane.setViewportView(surfaceTabPanel);
+        this.addTab("", surfaceTabIcon, surfaceTabScrollpane, "");
 
         BufferedImage patternImage = ImageIO.read(this.getClass().getResourceAsStream("/image/patternTab.png"));
         Icon patternTabIcon = new ImageIcon(patternImage.getScaledInstance(50, 50, Image.SCALE_DEFAULT));
-        this.addTab("", patternTabIcon, patternTabPanel, "");
+        patternTabScrollpane.setViewportView(patternTabPanel);
+        this.addTab("", patternTabIcon, patternTabScrollpane, "");
 
         BufferedImage tileImage = ImageIO.read(this.getClass().getResourceAsStream("/image/tileIcon.jpg"));
         Icon tileTabIcon = new ImageIcon(tileImage.getScaledInstance(50, 50, Image.SCALE_DEFAULT));
-        this.addTab("", tileTabIcon, tileTabPanel, "" );
-        //this.addTab("Coulis", null, groutTabPanel, "");
+        tileTabScrollpane.setViewportView(tileTabPanel);
+        this.addTab("", tileTabIcon, tileTabScrollpane, "" );
         this.setSelectedIndex(0);
     }
 
@@ -80,4 +85,7 @@ public class RightPanel extends JTabbedPane implements Serializable {
     private PatternTab patternTabPanel;
     private TileTab tileTabPanel;
     private JButton button;
+    private JScrollPane patternTabScrollpane;
+    private JScrollPane surfaceTabScrollpane;
+    private JScrollPane tileTabScrollpane;
 }

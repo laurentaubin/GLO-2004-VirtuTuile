@@ -41,8 +41,8 @@ public class SurfaceDrawer {
     }
 
     public void drawSurface(Graphics2D g2d, ArrayList<Surface> surfaceList, double zoom, Point currentMousePoint) {
+
         /*
-    }
         for (Surface current_surface : surfaceList) {
             Shape shape;
             if (current_surface.getShape() == null) {
@@ -72,7 +72,7 @@ public class SurfaceDrawer {
 
             if (current_surface.isCovered()) {
                 current_surface.getPattern().getVirtualTileList().clear();
-                current_surface.getPattern().generateTiles(current_surface.getBoundingRectangle(), current_surface.getTileType(), current_surface.getAreaTest());
+                current_surface.getPattern().generateTiles(current_surface.getBoundingRectangle(), current_surface.getTileType(), current_surface.getAreaTest(), current_surface.getGroutWidth());
                 ArrayList<Tile> array = current_surface.getPattern().getVirtualTileList();
                 for (Tile tile : array) {
                     AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);

@@ -16,7 +16,7 @@ public class VerticalBrickPattern extends Pattern {
     }
 
 
-    public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area) {
+    public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth) {
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
         Point2D.Double position = new Point2D.Double(boundingRectanglePosition.getX(), boundingRectangle.getY());
         //Le width du bounding rectangle devrait être un double
@@ -24,9 +24,6 @@ public class VerticalBrickPattern extends Pattern {
         double boundingRectangleHeight = (int)boundingRectangle.getHeight();
 
         //Aller chercher la vrai dimension de grout
-
-        double groutWidth = this.getGroutWidth();
-
         double numberColumn = boundingRectangleWidth / (tileType.getHeight() + groutWidth);
 
         numberColumn = (int)(numberColumn + 2);

@@ -52,17 +52,11 @@ public class DrawingPanel extends JPanel implements Serializable {
         if (mainWindow != null) {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
-            mainWindow.draw(g2d, this, zoom);
-
-            //SurfaceDrawer mainDrawer = new SurfaceDrawer(mainWindow.controller, initialDimension, mainWindow.getCurrentMeasurementMode());
-
-            //mainDrawer.draw(g2d, zoom, prevZoom, zoomPoint, xOffset, yOffset);
 
             if (isGridActivated) {
                 g2d.scale(zoom, zoom);
-
                 g2d.setPaint(Color.LIGHT_GRAY);
-                g2d.setStroke(new BasicStroke(0.25f));
+                g2d.setStroke(new BasicStroke(0.25f / (float)getZoom()));
                 Dimension ajustingDimension = new Dimension(this.getWidth(), this.getHeight());
                 if (zoom >= 1) {
                     for (int row = 1; row <= ajustingDimension.getHeight() / this.gridGap; row++) {
@@ -80,31 +74,8 @@ public class DrawingPanel extends JPanel implements Serializable {
                         g2d.drawLine((int) ((col) * this.gridGap), 0, (int) ((col) * this.gridGap), (int)(ajustingDimension.getHeight() / zoom));
                     }
                 }
-                //Code pour essayer d'incliner le plan
-                /*
-                if (zoom >= 1) {
-
-                    for (int row = 1; row <= ajustingDimension.getHeight() / this.gridGap; row++) {
-                        //g2d.drawLine(0, (int) (row * this.gridGap), (int)ajustingDimension.getWidth(), (int) (row * this.gridGap));
-                        g2d.drawLine(0, (int) ((row/zoom) * this.gridGap), (int)(ajustingDimension.getWidth() / zoom), (int) ((row/zoom) * this.gridGap));
-                    }
-                    for (int col = 1; col <= (int)ajustingDimension.getWidth() / this.gridGap; col++) {
-                        g2d.drawLine((int) (col * this.gridGap), 0, (int) (col * this.gridGap), (int)ajustingDimension.getHeight());
-                    }
-                }
-                else if (zoom < 1) {
-                    for (int row = 1; row <= (ajustingDimension.getHeight()/ (this.gridGap)) / (zoom) ; row++) {
-                        //g2d.drawLine(0, (int) (row * this.gridGap), (int)(ajustingDimension.getWidth() / zoom), (int) (row * this.gridGap));
-                        //Inclinaison du plan?
-                        g2d.drawLine(0, (int) ((row/zoom) * this.gridGap), (int)(ajustingDimension.getWidth() / zoom), (int) ((row) * this.gridGap));
-                    }
-                    for (int col = 1; col <= ((int)ajustingDimension.getWidth() / this.gridGap) / (zoom); col++) {
-                        g2d.drawLine((int) ((col) * this.gridGap), 0, (int) ((col) * this.gridGap), (int)(ajustingDimension.getHeight() / zoom));
-                    }
-                }
-
-                 */
             }
+            mainWindow.draw(g2d, this, zoom);
         }
     }
 

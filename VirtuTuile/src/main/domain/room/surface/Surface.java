@@ -33,6 +33,13 @@ public class Surface {
     private int numberSummit;
     private boolean isHole;
 
+    //Attributs tests
+    public double[] xPoints;
+    public double[] yPoints;
+    public int nPoints;
+    private ArrayList<Surface> elementarySurface;
+    private double groutWidth;
+
 
 
     public ArrayList<ElementarySurface> getWholeSurfaces() {
@@ -64,6 +71,14 @@ public class Surface {
         this.pattern = new StraightPattern();
         this.tileType = TileType.createTileWithDefaultParameters();
         this.color = (Color.WHITE);
+
+        //Test
+        this.xPoints = xPoints;
+        this.yPoints = yPoints;
+        this.nPoints = nbr_points;
+        this.elementarySurface = new ArrayList<Surface>();
+        this.elementarySurface.add(this);
+        this.groutWidth = 0d;
     }
 
     public Surface(Point2D.Double point) {
@@ -284,10 +299,27 @@ public class Surface {
             for (Tile tile : getPattern().getVirtualTileList()) {
                 tile.transform(at);
             }
-
             this.area.transform(at);
             this.position.setLocation(this.position.getX() + deltaX, this.position.getY() + deltaY);
+            for (int i = 0; i < elementarySurface.size(); i++){
+                if (i != 0) {
+                    elementarySurface.get(i).translate(deltaX, deltaY);
+                }
+            }
+            translateInitialPoints(deltaX, deltaY);
         }
+    }
+
+    public void translateInitialPoints(double deltaX, double deltaY) {
+        double[] newXPosition = new double[this.nPoints];
+        double[] newYPosition = new double[this.nPoints];
+        for (int i = 0; i < nPoints; i++){
+            newXPosition[i] = this.xPoints[i] + deltaX;
+            newYPosition[i] = this.yPoints[i] + deltaY;
+        }
+        this.xPoints = newXPosition;
+        this.yPoints = newYPosition;
+
     }
 
     /*
@@ -376,11 +408,12 @@ public class Surface {
     }
 
     public void setGroutWidth(double width) {
-        this.getPattern().setGroutWidth(width);
+        this.groutWidth = width;
+        //this.getPattern().setGroutWidth(width);
     }
 
     public double getGroutWidth() {
-        return this.pattern.getGroutWidth();
+        return this.groutWidth;
     }
 
     public void snapToPoint(Point2D closestCorner) {
@@ -408,6 +441,14 @@ public class Surface {
     public double getDistanceFromPoint(Point2D point) {
         double[] deltas = getDeltasFromPoint(point);
         return Math.sqrt(Math.pow(deltas[0], 2) + Math.pow(deltas[1], 2));
+    }
+
+    public void addMergeSurfaceToList(Surface surfaceToAdd) {
+        this.elementarySurface.add(surfaceToAdd);
+    }
+
+    public ArrayList<Surface> getElementarySurface() {
+        return this.elementarySurface;
     }
 }
 
