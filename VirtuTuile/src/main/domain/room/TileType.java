@@ -10,12 +10,18 @@ public class TileType extends Polygon{
     private String name;
     private int nbrTilesPerBox;
 
+    private double xOffset;
+    private double yOffset;
+
     public TileType(Color color, float width, float height, String name, int nbrTilesPerBox) {
         this.color = color;
         this.width = width;
         this.height = height;
         this.name = name;
         this.nbrTilesPerBox = nbrTilesPerBox;
+
+        this.xOffset = 0;
+        this.yOffset = 0;
     }
 
     public static TileType createTileWithDefaultParameters() {
@@ -64,6 +70,14 @@ public class TileType extends Polygon{
 
     public void setNbrTilesPerBox(int nbrTilesPerBox) {
         this.nbrTilesPerBox = nbrTilesPerBox;
+    }
+
+    public double getxOffset() {
+        return this.xOffset;
+    }
+
+    public double getyOffset() {
+        return this.yOffset;
     }
 
     @Override

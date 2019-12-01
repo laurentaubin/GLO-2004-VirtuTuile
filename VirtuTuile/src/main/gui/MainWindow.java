@@ -245,7 +245,7 @@ public class MainWindow extends JFrame {
 
         splitPane.setOneTouchExpandable(true);
 
-        splitPane.setResizeWeight(1);
+        splitPane.setResizeWeight(0.85);
 
         statusBar.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
