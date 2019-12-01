@@ -774,7 +774,7 @@ public class MainWindow extends JFrame {
     }
 
     public void redo() {
-        //this.controller.redo();
+        this.controller.redo();
         drawingPanel.repaint();
     }
 

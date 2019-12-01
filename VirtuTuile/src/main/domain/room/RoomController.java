@@ -26,7 +26,7 @@ public class RoomController {
     public RoomController(){
         room = new Room();
         roomList = new ArrayList<Room>();
-        roomList.add(new Room(room));
+        //roomList.add(new Room(room));
     }
 
     public Room getRoom() {
@@ -67,6 +67,14 @@ public class RoomController {
         }
         setRoom(roomList.get(undoRedoPointer));
         undoRedoPointer--;
+    }
+
+    public void redo() {
+        if (undoRedoPointer == roomList.size() - 1) {
+            return;
+        }
+        undoRedoPointer++;
+        setRoom(roomList.get(undoRedoPointer));
     }
 
     public void draw(Graphics2D g, MainWindow.MeasurementUnitMode measurementUnitMode, DrawingPanel drawingPanel, double zoom, Point currentMousePoint) {
