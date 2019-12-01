@@ -416,6 +416,14 @@ public class Surface {
         return this.groutWidth;
     }
 
+    public Point2D getTopMostPoint() {
+        PathIterator iter = area.getPathIterator(null);
+        float[] floats = new float[6];
+
+        int type = iter.currentSegment(floats);
+        return new Point2D.Double();
+    }
+
     public void snapToPoint(Point2D closestCorner) {
         double[] deltaArray = getDeltasFromPoint(closestCorner);
         this.translatePolygon(deltaArray[0], deltaArray[1]);

@@ -442,7 +442,12 @@ public class MainWindow extends JFrame {
                 //position = UnitConverter.convertPointToSelectedUnit(mousePointReleased.getLocation(), this.currentMeasurementMode);
             }
             controller.clearSurfaceProjectionList();
-            controller.addSurface(position ,xDrawPoints, yDrawPoints, 4);
+            if (drawingPanel.getGridlines()) {
+                controller.addSurfaceOnGrid(position, xDrawPoints, yDrawPoints, 4, drawingPanel.getGridGap());
+            }
+            else {
+                controller.addSurface(position, xDrawPoints, yDrawPoints, 4);
+            }
             this.mouseWasDragged = false;
         }
 

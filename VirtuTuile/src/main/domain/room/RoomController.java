@@ -94,7 +94,17 @@ public class RoomController {
             room.addRectangularSurface(xPoints, yPoints, number_of_edges);
         }
         else {
-            //this.addIrregularSurface(point, xPoints, yPoints, number_of_edges);
+            //room.addIrregularSurface(point, xPoints, yPoints, number_of_edges);
+        }
+    }
+
+    public void addSurfaceOnGrid(Point position, double[] xDrawPoints, double[] yDrawPoints, int number_of_edges, double gridGap) {
+        addRoom();
+        if (number_of_edges == 4) {
+            room.addRectangularSurfaceOnGrid(xDrawPoints, yDrawPoints, number_of_edges, gridGap);
+        }
+        else {
+            // room.addIrregularSurfaceOnGrid(point, xPoints, yPoints, number_of_edges, gridGap);
         }
     }
 
@@ -298,5 +308,6 @@ public class RoomController {
     public void separateSelectedSurface() {
         room.separateSelectedSurface();
     }
+
 }
 

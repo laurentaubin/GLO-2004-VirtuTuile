@@ -58,6 +58,12 @@ public class Room {
         Surface surface = new Surface(xPoints, yPoints, number_of_edges);
         this.addSurfaceToList(surface);
     }
+
+    public void addRectangularSurfaceOnGrid(double[] xDrawPoints, double[] yDrawPoints, int number_of_edges, double gridGap) {
+        Surface surface = new Surface(xDrawPoints, yDrawPoints, number_of_edges);
+        this.addSurfaceToList(surface);
+        this.snapSurfaceToGrid(surface, gridGap);
+    }
 /*
     public void addRectangularSurface(Point point, int[] xPoints, int[] yPoints) {
         RectangularSurface rectangularSurface = new RectangularSurface(point, xPoints, yPoints);
@@ -567,17 +573,20 @@ public class Room {
     public void snapSelectedSurfaceToGrid(double gridGap) {
         for (Surface surface : this.surfaceList) {
             if (surface.isSelected()) {
-                double[] topLeftCornerPos = surface.getTopLeftPos();
-                int horizontalGridSquare = (int) (topLeftCornerPos[0] / gridGap);
-                int verticalGridSquare = (int) (topLeftCornerPos[1] / gridGap);
-
-                Point2D[] gridSquareCorners = getGridSquareCorners(horizontalGridSquare, verticalGridSquare, gridGap);
-                Point2D closestCorner = getClosestCorner(surface, gridSquareCorners);
-
-                surface.snapToPoint(closestCorner);
-
+                this.snapSurfaceToGrid(surface, gridGap);
             }
         }
+    }
+
+    private void snapSurfaceToGrid(Surface surface, double gridGap) {
+        double[] topLeftCornerPos = surface.getTopLeftPos();
+        int horizontalGridSquare = (int) (topLeftCornerPos[0] / gridGap);
+        int verticalGridSquare = (int) (topLeftCornerPos[1] / gridGap);
+
+        Point2D[] gridSquareCorners = getGridSquareCorners(horizontalGridSquare, verticalGridSquare, gridGap);
+        Point2D closestCorner = getClosestCorner(surface, gridSquareCorners);
+
+        surface.snapToPoint(closestCorner);
     }
 
     private Point2D[] getGridSquareCorners(double horizontalGridSquare, double verticalGridSquare, double gridGap) {
