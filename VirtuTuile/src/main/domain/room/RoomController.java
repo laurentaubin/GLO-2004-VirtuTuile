@@ -13,15 +13,60 @@ import java.util.ArrayList;
 public class RoomController {
     private Room room;
     private SurfaceDrawer surfaceDrawer;
-    //private final Room room;
+
+    private final int roomListLimit = 30;
+    private ArrayList<Room> roomList;
+    private int undoRedoPointer = -1;
+
 
     public RoomController(Room room) {
         this.room = room;
     }
 
-
     public RoomController(){
         room = new Room();
+        roomList = new ArrayList<Room>();
+        roomList.add(new Room(room));
+    }
+
+    public Room getRoom() {
+        return this.room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public void addRoom() {
+        deleteElementsAfterPointer(this.undoRedoPointer);
+        Room room = new Room(this.room);
+        if (roomList.size() >= 30) {
+            this.roomList.remove(0);
+            this.roomList.add(room);
+            this.undoRedoPointer = 29;
+        }
+        else {
+            this.roomList.add(room);
+            undoRedoPointer++;
+        }
+    }
+
+    //https://stackoverflow.com/questions/11530276/how-do-i-implement-a-simple-undo-redo-for-actions-in-java
+    private void deleteElementsAfterPointer(int undoRedoPointer)
+    {
+        if(roomList.isEmpty()) return;
+        for(int i = roomList.size()-1; i > undoRedoPointer; i--)
+        {
+            roomList.remove(i);
+        }
+    }
+
+    public void undo() {
+        if (undoRedoPointer < 0) {
+            return;
+        }
+        setRoom(roomList.get(undoRedoPointer));
+        undoRedoPointer--;
     }
 
     public void draw(Graphics2D g, MainWindow.MeasurementUnitMode measurementUnitMode, DrawingPanel drawingPanel, double zoom, Point currentMousePoint) {
@@ -35,34 +80,8 @@ public class RoomController {
         room.addRectangularProjection(point, xPoints, yPoints);
     }
 
-    /*
-    public void addRectangularProjection(Point point, int[] xPoints, int[] yPoints) {
-        room.addRectangularProjection(point, xPoints, yPoints);
-    }
-
-     */
-
-    /*
-    public void addRectangularSurface(Point point, double[] xPoints, double[] yPoints) {
-        room.addRectangularSurface(point, xPoints, yPoints);
-    }
-    */
-
-    /*
-    public void addRectangularSurface(Point point, int[] xPoints, int[] yPoints) {
-        room.addRectangularSurface(point, xPoints, yPoints);
-    }
-
-     */
-
-    /*
-    public void addRectangularSurface(Point position, int width, int height){
-        room.addRectangularSurface(position, width, height);
-    }
-
-     */
-
     public void addSurface(Point point, double[] xPoints, double[] yPoints, int number_of_edges) {
+        addRoom();
         if (number_of_edges == 4) {
             room.addRectangularSurface(xPoints, yPoints, number_of_edges);
         }
@@ -70,18 +89,6 @@ public class RoomController {
             //this.addIrregularSurface(point, xPoints, yPoints, number_of_edges);
         }
     }
-
-    /*
-    public void addSurface(Point point, int[] xPoints, int[] yPoints, int number_of_edges) {
-        if (number_of_edges == 4) {
-            this.addRectangularSurface(point, xPoints, yPoints);
-        }
-        else {
-            this.addIrregularSurface(point, xPoints, yPoints, number_of_edges);
-        }
-    }
-
-     */
 
     private void addIrregularSurface(Point point, int[] xPoints, int[] yPoints, int number_of_edges) {
         room.addIrregularSurface(point, xPoints, yPoints, number_of_edges);

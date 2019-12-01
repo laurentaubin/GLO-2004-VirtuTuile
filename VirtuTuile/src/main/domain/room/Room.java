@@ -25,6 +25,12 @@ public class Room {
         tileTypeList = new ArrayList<TileType>();
     }
 
+    public Room (Room room) {
+        surfaceList = new ArrayList<Surface>(room.getSurfaceList());
+        surfaceProjectionList = new ArrayList<Surface>(room.getSurfaceProjectionList());
+        tileTypeList = new ArrayList<TileType>(room.getTileList());
+    }
+
     public void addSurfaceToList(Surface surface) {
         this.surfaceList.add(surface);
     }
