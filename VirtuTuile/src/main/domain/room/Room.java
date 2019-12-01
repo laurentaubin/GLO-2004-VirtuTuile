@@ -433,7 +433,7 @@ public class Room {
             }
 
             if (surfaceInRoom.isCovered()) {
-                surfaceInRoom.getPattern().generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest());
+                surfaceInRoom.getPattern().generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest(), surfaceInRoom.getGroutWidth());
             }
         }
     }
@@ -442,7 +442,7 @@ public class Room {
         for (Surface surfaceInRoom : surfaceList) {
             if (surfaceInRoom.isSelected()) {
                 StraightPattern straightPattern = new StraightPattern();
-                straightPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest());
+                straightPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest(), surfaceInRoom.getGroutWidth());
                 surfaceInRoom.setPattern(straightPattern);
             }
         }
@@ -452,7 +452,7 @@ public class Room {
         for (Surface surfaceInRoom : surfaceList) {
             if (surfaceInRoom.isSelected()) {
                 BrickPattern brickPattern = new BrickPattern();
-                brickPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest());
+                brickPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest(), surfaceInRoom.getGroutWidth());
                 surfaceInRoom.setPattern(brickPattern);
             }
         }
@@ -463,7 +463,7 @@ public class Room {
         for (Surface surfaceInRoom : surfaceList) {
             if (surfaceInRoom.isSelected()) {
                 VerticalPattern verticalPattern = new VerticalPattern();
-                verticalPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest());
+                verticalPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest(), surfaceInRoom.getGroutWidth());
                 surfaceInRoom.setPattern(verticalPattern);
             }
         }
@@ -473,7 +473,7 @@ public class Room {
         for (Surface surfaceInRoom : surfaceList) {
             if (surfaceInRoom.isSelected()) {
                 VerticalBrickPattern verticalBrickPattern = new VerticalBrickPattern();
-                verticalBrickPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest());
+                verticalBrickPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest(), surfaceInRoom.getGroutWidth());
                 surfaceInRoom.setPattern(verticalBrickPattern);
             }
         }

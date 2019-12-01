@@ -19,14 +19,11 @@ public class BrickPattern extends Pattern {
         super(xOffset, yOffset, angle, groutWidth, groutColor);
     }
 
-    public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area) {
+    public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth) {
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
         Point2D.Double position = new Point2D.Double(boundingRectanglePosition.getX(), boundingRectangle.getY());
-        //Le width du bounding rectangle devrait être un double
         double boundingRectangleWidth = (int)boundingRectangle.getWidth() ;
         double boundingRectangleHeight = (int)boundingRectangle.getHeight();
-
-        double groutWidth = this.getGroutWidth();
 
         double numberColumn = boundingRectangleWidth /  (tileType.getWidth() + groutWidth);
         if (numberColumn / (int)numberColumn != 0) {
@@ -56,7 +53,6 @@ public class BrickPattern extends Pattern {
                 virtualTileList.add(new Tile(position, xPoints, yPoints, 4));
 
                 position.setLocation(position.getX() + tileType.getWidth(), position.getY());
-
 
             }
             if(row % 2 == 0) {

@@ -38,6 +38,7 @@ public class Surface {
     public double[] yPoints;
     public int nPoints;
     private ArrayList<Surface> elementarySurface;
+    private double groutWidth;
 
 
 
@@ -77,6 +78,7 @@ public class Surface {
         this.nPoints = nbr_points;
         this.elementarySurface = new ArrayList<Surface>();
         this.elementarySurface.add(this);
+        this.groutWidth = 0d;
     }
 
     public Surface(Point2D.Double point) {
@@ -406,11 +408,12 @@ public class Surface {
     }
 
     public void setGroutWidth(double width) {
-        this.getPattern().setGroutWidth(width);
+        this.groutWidth = width;
+        //this.getPattern().setGroutWidth(width);
     }
 
     public double getGroutWidth() {
-        return this.pattern.getGroutWidth();
+        return this.groutWidth;
     }
 
     public void snapToPoint(Point2D closestCorner) {

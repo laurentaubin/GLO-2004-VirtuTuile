@@ -16,8 +16,7 @@ public class StraightPattern extends Pattern {
         super();
     }
 
-    public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area) {
-        double groutWidth = this.getGroutWidth();
+    public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth) {
         double xOffset = tileType.getxOffset();
         double yOffset = tileType.getyOffset();
         double tileWidth = tileType.getWidth();
