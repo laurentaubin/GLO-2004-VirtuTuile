@@ -75,6 +75,10 @@ public class DrawingPanel extends JPanel implements Serializable {
                     }
                 }
             }
+
+            if (mainWindow.getApplicationMode() == MainWindow.ApplicationMode.ADD_IRREGULAR) {
+
+            }
             mainWindow.draw(g2d, this, zoom);
         }
     }

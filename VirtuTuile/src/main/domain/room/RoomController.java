@@ -8,6 +8,7 @@ import gui.MainWindow;
 
 import java.awt.*;
 import java.awt.geom.Dimension2D;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class RoomController {
@@ -18,6 +19,8 @@ public class RoomController {
     private ArrayList<Room> roomList;
     private int undoRedoPointer = -1;
 
+    private ArrayList<Point> pointList;
+
 
     public RoomController(Room room) {
         this.room = room;
@@ -26,7 +29,8 @@ public class RoomController {
     public RoomController(){
         room = new Room();
         roomList = new ArrayList<Room>();
-        //roomList.add(new Room(room));
+
+        pointList = new ArrayList<Point>();
     }
 
     public Room getRoom() {
@@ -109,7 +113,7 @@ public class RoomController {
     }
 
     private void addIrregularSurface(Point point, int[] xPoints, int[] yPoints, int number_of_edges) {
-        room.addIrregularSurface(point, xPoints, yPoints, number_of_edges);
+        //room.addIrregularSurface(point, xPoints, yPoints, number_of_edges);
     }
 
     public ArrayList<Surface> getSurfaceList() {
@@ -307,6 +311,25 @@ public class RoomController {
 
     public void separateSelectedSurface() {
         room.separateSelectedSurface();
+    }
+
+    public ArrayList<Point> getPointList() {
+        return this.pointList;
+    }
+
+    public void addPoint(Point point, double zoom) {
+        if (!this.pointList.isEmpty()) {
+            if (Math.abs(point.x - this.pointList.get(0).x) <= (5/zoom) && Math.abs(point.y - this.pointList.get(0).y) <= (5/zoom)) {
+                room.addIrregularSurface(this.pointList);
+                clearPointList();
+                return;
+            }
+        }
+        this.pointList.add(point);
+    }
+
+    public void clearPointList() {
+        this.pointList.clear();
     }
 
 }
