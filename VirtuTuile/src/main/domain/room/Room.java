@@ -101,13 +101,34 @@ public class Room {
 
     void switchSelectionStatus(double x, double y, boolean isShiftDown) {
         Boolean latestSurfaceSelected = true;
+        int nbrHole = 0;
         for (int i = surfaceList.size() - 1; i >= 0; i--) {
+            if(surfaceList.get(i).isHole()){
+                nbrHole++;
+                surfaceList.add(surfaceList.get(i));
+                surfaceList.remove(i);
+            }
+
             if (surfaceList.get(i).getAreaTest().contains(x, y) && latestSurfaceSelected == true) {
                 //this.switchSelectionStatusIfContains(x, y, isShiftDown, surfaceList.get(i));
                 //break;
-                surfaceList.get(i).switchSelectionStatus();
-                latestSurfaceSelected = false;
+
+                if(!surfaceList.get(i).isHole()) {
+                    surfaceList.add(surfaceList.size() - (nbrHole), surfaceList.get(i));
+                    surfaceList.remove(i);
+
+
+                    surfaceList.get(surfaceList.size() - (1 + nbrHole)).switchSelectionStatus();
+                    latestSurfaceSelected = false;
+                }
+                else{
+                    surfaceList.get(i).switchSelectionStatus();
+                    latestSurfaceSelected = false;
+                }
+
+
             }
+
             else {
                 if(!isShiftDown) surfaceList.get(i).unselect();
                 //surfaceList.get(i).unselect();
@@ -196,7 +217,7 @@ public class Room {
 
     void addCoverToSelectedSurfaces(Cover cover){
         for (Surface surface : this.surfaceList) {
-            if (surface.isSelected()) {
+            if (surface.isSelected() ) {
                 surface.setCover(cover);
             }
         }
@@ -441,7 +462,7 @@ public class Room {
 
     public void setStraightPatternToSelectedSurface() {
         for (Surface surfaceInRoom : surfaceList) {
-            if (surfaceInRoom.isSelected()) {
+            if (surfaceInRoom.isSelected()  && !surfaceInRoom.isHole()) {
                 StraightPattern straightPattern = new StraightPattern();
                 straightPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest(), surfaceInRoom.getGroutWidth());
                 surfaceInRoom.setPattern(straightPattern);
@@ -451,7 +472,7 @@ public class Room {
 
     public void setHorizontalPatternToSelectedSurface() {
         for (Surface surfaceInRoom : surfaceList) {
-            if (surfaceInRoom.isSelected()) {
+            if (surfaceInRoom.isSelected()  && !surfaceInRoom.isHole()) {
                 BrickPattern brickPattern = new BrickPattern();
                 brickPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest(), surfaceInRoom.getGroutWidth());
                 surfaceInRoom.setPattern(brickPattern);
@@ -462,7 +483,7 @@ public class Room {
     public void setVerticalPatternToSelectedSurface() {
 
         for (Surface surfaceInRoom : surfaceList) {
-            if (surfaceInRoom.isSelected()) {
+            if (surfaceInRoom.isSelected()  && !surfaceInRoom.isHole()) {
                 VerticalPattern verticalPattern = new VerticalPattern();
                 verticalPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest(), surfaceInRoom.getGroutWidth());
                 surfaceInRoom.setPattern(verticalPattern);
@@ -472,7 +493,7 @@ public class Room {
 
     public void setVerticalBrickPatternToSelectedSurface() {
         for (Surface surfaceInRoom : surfaceList) {
-            if (surfaceInRoom.isSelected()) {
+            if (surfaceInRoom.isSelected()  && !surfaceInRoom.isHole()) {
                 VerticalBrickPattern verticalBrickPattern = new VerticalBrickPattern();
                 verticalBrickPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest(), surfaceInRoom.getGroutWidth());
                 surfaceInRoom.setPattern(verticalBrickPattern);

@@ -3,7 +3,7 @@ package domain.room.pattern;
 import domain.room.Tile;
 import domain.room.TileType;
 import gui.MainWindow;
-import javafx.scene.transform.Affine;
+//import javafx.scene.transform.Affine;
 import util.UnitConverter;
 
 import java.awt.*;
