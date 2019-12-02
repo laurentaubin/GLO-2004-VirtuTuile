@@ -107,11 +107,44 @@ public class SurfaceDrawer {
         if(!surfaceProjectionList.isEmpty()) {
             Surface rectangularProjection = surfaceProjectionList.get(surfaceProjectionList.size() - 1);
            // g2d.draw(rectangularProjection.getPolygon());
-            Shape shape = rectangularProjection.getAreaTest();
+            Area shape = rectangularProjection.getAreaTest();
             AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
-            ((Area) shape).transform(at);
+            shape.transform(at);
             g2d.draw(rectangularProjection.getAreaTest());
            //g2d.draw(UnitConverter.convertPolygonToPixel(rectangularProjection.getPolygon(), this.measurementMode));
+        }
+
+        ArrayList<Point> irregularPointList = controller.getPointList();
+        if(!irregularPointList.isEmpty()) {
+            AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
+            g2d.setColor(Color.RED);
+            for (int i = 0; i < irregularPointList.size(); i++) {
+                int currentX;
+                int currentY;
+                int lastX;
+                int lastY;
+                currentX = irregularPointList.get(i).x;
+                currentY = irregularPointList.get(i).y;
+                if (i == 0) {
+                    lastX = currentX;
+                    lastY = currentY;
+                }
+                else {
+                    lastX = irregularPointList.get(i - 1).x;
+                    lastY = irregularPointList.get(i - 1).y;
+                }
+
+                Line2D linish = new Line2D.Double(lastX, lastY, currentX, currentY);
+                Path2D line = new Path2D.Double(linish);
+                line.transform(at);
+                g2d.draw(line);
+
+                Ellipse2D dotish = new Ellipse2D.Double(currentX - 3/zoom, currentY - 3/zoom, 6/zoom, 6/zoom);
+                Area dot = new Area(dotish);
+                dot.transform(at);
+                g2d.fill(dot);
+                g2d.draw(dot);
+            }
         }
     }
 

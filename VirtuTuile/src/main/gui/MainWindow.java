@@ -46,6 +46,10 @@ public class MainWindow extends JFrame {
     public void setApplicationMode (ApplicationMode newMode) {
         this.currentApplicationMode = newMode;
     }
+    public ApplicationMode getApplicationMode() {
+        return this.currentApplicationMode;
+    }
+
     public void setMeasurementMode (MeasurementUnitMode newMode) { this.currentMeasurementMode = newMode; }
     public MeasurementUnitMode getCurrentMeasurementMode() { return this.currentMeasurementMode; }
 
@@ -418,6 +422,9 @@ public class MainWindow extends JFrame {
 
         if (this.currentApplicationMode == ApplicationMode.ADD_IRREGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             //TODO Ajouter la conversion des unités de mesure ici!
+            Point point = new Point((int)this.initMousePoint.getX(),(int) this.initMousePoint.getY());
+            controller.addPoint(point, drawingPanel.getZoom());
+            drawingPanel.repaint();
         }
         drawingPanel.repaint();
     }

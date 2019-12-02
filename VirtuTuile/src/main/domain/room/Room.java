@@ -64,29 +64,18 @@ public class Room {
         this.addSurfaceToList(surface);
         this.snapSurfaceToGrid(surface, gridGap);
     }
-/*
-    public void addRectangularSurface(Point point, int[] xPoints, int[] yPoints) {
-        RectangularSurface rectangularSurface = new RectangularSurface(point, xPoints, yPoints);
-        Surface surface = new Surface(point);
-        surface.addElementaryWholeSurface(rectangularSurface);
-        surface.updatePolygon();
-        this.addSurfaceToList(surface);
-    }
 
- */
-
-/*
-    public void addRectangularSurface(Point point, int width, int height) {
-        RectangularSurface rectangularSurface = new RectangularSurface(point, width, height);
-        Surface surface = new Surface(point);
-        surface.addElementaryWholeSurface(rectangularSurface);
-        this.addSurfaceToList(surface);
-    }
-
- */
-
-    public void addIrregularSurface(Point point, int[] xPoints, int[] yPoints, int number_of_edges) {
+    public void addIrregularSurface(ArrayList<Point> pointList) {
         //TODO Code pour ajouter une surface irrégulière
+        int n = pointList.size();
+        double[] x = new double[n];
+        double[] y = new double[n];
+        for (int i = 0; i < n; i++) {
+            x[i] = pointList.get(i).x;
+            y[i] = pointList.get(i).y;
+        }
+        Surface surface = new Surface(x, y, n);
+        this.addSurfaceToList(surface);
     }
 
     public boolean isEmpty() {
