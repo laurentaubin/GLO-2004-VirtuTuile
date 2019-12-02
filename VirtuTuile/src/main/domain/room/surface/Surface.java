@@ -416,12 +416,83 @@ public class Surface {
         return this.groutWidth;
     }
 
+    public Point2D getBottomMostPoint() {
+        Point2D[] points = this.getPoints();
+        Point2D topMostPoint = new Point2D.Double();
+        double maxHeight = 0.0;
+
+        for (Point2D point : points) {
+            double y = point.getY();
+            if (y > maxHeight) {
+                maxHeight = y;
+                topMostPoint = point;
+            }
+        }
+        return topMostPoint;
+    }
+
     public Point2D getTopMostPoint() {
+        Point2D[] points = this.getPoints();
+        Point2D bottomMostPoint = new Point2D.Double();
+        double minHeight = Double.POSITIVE_INFINITY;
+
+        for (Point2D point : points) {
+            double y = point.getY();
+            if (y < minHeight) {
+                minHeight = y;
+                bottomMostPoint = point;
+            }
+        }
+        return bottomMostPoint;
+    }
+
+    public Point2D getLeftMostPoint() {
+        Point2D[] points = this.getPoints();
+        Point2D leftMostPoint = new Point2D.Double();
+        double minWidth = Double.POSITIVE_INFINITY;
+
+        for (Point2D point : points) {
+            double x = point.getX();
+            if (x < minWidth) {
+                minWidth = x;
+                leftMostPoint = point;
+            }
+        }
+        return leftMostPoint;
+    }
+
+    public Point2D getRightMostPoint() {
+        Point2D[] points = this.getPoints();
+        Point2D rightMostPoint = new Point2D.Double();
+        double maxWidth = 0.0;
+
+        for (Point2D point : points) {
+            double x = point.getX();
+            if (x > maxWidth) {
+                maxWidth = x;
+                rightMostPoint = point;
+            }
+        }
+        return rightMostPoint;
+    }
+
+    public Point2D[] getPoints() {
         PathIterator iter = area.getPathIterator(null);
         float[] floats = new float[6];
+        Point2D[] points = new Point2D[this.getNumberOfSummit()];
+        int i = 0;
 
-        int type = iter.currentSegment(floats);
-        return new Point2D.Double();
+        while (!iter.isDone()) {
+            int type = iter.currentSegment(floats);
+            float x = floats[0];
+            float y = floats[1];
+            if (type != PathIterator.SEG_CLOSE) {
+                points[i] = new Point2D.Float(x, y);
+            }
+            i++;
+            iter.next();
+        }
+        return points;
     }
 
     public void snapToPoint(Point2D closestCorner) {
@@ -430,20 +501,20 @@ public class Surface {
     }
 
     private double[] getDeltasFromPoint(Point2D closestCorner) {
-        double[] topLeftPos = getTopLeftPos();
+        Point2D topLeftPoint = getTopLeftPoint();
 
-        double deltaX = closestCorner.getX() - topLeftPos[0];
-        double deltaY = closestCorner.getY() - topLeftPos[1];
+        double deltaX = closestCorner.getX() - topLeftPoint.getX();
+        double deltaY = closestCorner.getY() - topLeftPoint.getY();
 
         return new double[]{deltaX, deltaY};
     }
 
-    public double[] getTopLeftPos() {
+    public Point2D getTopLeftPoint() {
         PathIterator iter = area.getPathIterator(null);
         float[] floats = new float[6];
 
         int type = iter.currentSegment(floats);
-        return new double[]{floats[0], floats[1]};
+        return new Point2D.Double(floats[0], floats[1]);
     }
 
     public double getDistanceFromPoint(Point2D point) {
@@ -457,6 +528,19 @@ public class Surface {
 
     public ArrayList<Surface> getElementarySurface() {
         return this.elementarySurface;
+    }
+
+    public boolean isToTheLeft(Surface otherSurface) {
+        Point2D thisTopLeftPoint = this.getTopLeftPoint();
+        Point2D otherTopLeftPoint = otherSurface.getTopLeftPoint();
+
+        return (thisTopLeftPoint.getX() < otherTopLeftPoint.getX());
+    }
+    public boolean isBeneath(Surface otherSurface) {
+        Point2D thisTopLeftPoint = this.getTopLeftPoint();
+        Point2D otherTopLeftPoint = otherSurface.getTopLeftPoint();
+
+        return (thisTopLeftPoint.getY() > otherTopLeftPoint.getY());
     }
 }
 

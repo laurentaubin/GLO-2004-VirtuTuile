@@ -309,5 +309,12 @@ public class RoomController {
         room.separateSelectedSurface();
     }
 
+    public void verticallyAlignSelectedSurfaces() {
+        room.verticallyAlignSelectedSurfaces();
+    }
+
+    public void horizontallyAlignSelectedSurfaces() {
+        room.horizontallyAlignSelectedSurfaces();
+    }
 }
 

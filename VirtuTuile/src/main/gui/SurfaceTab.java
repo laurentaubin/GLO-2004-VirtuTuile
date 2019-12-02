@@ -25,6 +25,8 @@ public class SurfaceTab extends JPanel{
     private JLabel dispositionLabel;
     private JButton chromaticButton;
     private JButton separateButton;
+    private JButton horizontallyAlignButton;
+    private JButton verticallyAlignButton;
     private Color surfaceColor;
 
     public SurfaceTab(MainWindow mainWindow) throws IOException {
@@ -102,6 +104,28 @@ public class SurfaceTab extends JPanel{
                 separateSelectedSurface();
             }
         });
+
+        verticallyAlignButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                verticallyAlignSelectedSurfaces();
+            }
+        });
+
+        horizontallyAlignButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                horizontallyAlignSelectedSurfaces();
+            }
+        });
+    }
+
+    private void horizontallyAlignSelectedSurfaces() {
+        mainWindow.horizontallyAlignSelectedSurfaces();
+    }
+
+    private void verticallyAlignSelectedSurfaces() {
+        mainWindow.verticallyAlignSelectedSurfaces();
     }
 
     public void setEnteredWidthSurfaceDimensions(){
