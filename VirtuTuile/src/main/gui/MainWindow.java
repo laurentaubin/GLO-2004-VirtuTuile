@@ -772,7 +772,7 @@ public class MainWindow extends JFrame {
         this.controller.separateSelectedSurface();
         drawingPanel.repaint();
     }
-    
+
     public void horizontallyAlignSelectedSurfaces() {
         controller.horizontallyAlignSelectedSurfaces();
         drawingPanel.repaint();
