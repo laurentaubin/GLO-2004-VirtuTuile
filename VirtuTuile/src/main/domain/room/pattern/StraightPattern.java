@@ -3,9 +3,11 @@ package domain.room.pattern;
 import domain.room.Tile;
 import domain.room.TileType;
 import gui.MainWindow;
+import javafx.scene.transform.Affine;
 import util.UnitConverter;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -17,6 +19,8 @@ public class StraightPattern extends Pattern {
     }
 
     public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth) {
+        AffineTransform at = new AffineTransform(1, 0, 0, 1, 0, 0);
+        at.rotate(Math.PI / 4);
         double xOffset = tileType.getxOffset();
         double yOffset = tileType.getyOffset();
         double tileWidth = tileType.getWidth();
@@ -51,7 +55,9 @@ public class StraightPattern extends Pattern {
                 yPoints[2] = (int)(position.getY() + yOffset + tileType.getHeight() + (groutWidth * row));
                 yPoints[3] = (int)(position.getY() + yOffset + tileType.getHeight() + (groutWidth * row));
 
-                virtualTileList.add(new Tile(position, xPoints, yPoints, 4));
+                Tile tile = new Tile(position, xPoints, yPoints, 4);
+                tile.transform(at);
+                virtualTileList.add(tile);
                 position.setLocation(position.getX() + tileType.getWidth(), position.getY());
             }
             position.setLocation(boundingRectanglePosition.getX(), position.getY() + tileType.getHeight());

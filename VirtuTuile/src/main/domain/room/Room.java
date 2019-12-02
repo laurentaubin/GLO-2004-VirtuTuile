@@ -738,7 +738,8 @@ public class Room {
     public void separateSelectedSurface() {
         int counter = getNumberOfSelectedSurfaces();
         if (counter == 1) {
-            for (Surface surface: surfaceList) {
+            ArrayList<Surface> copyList = new ArrayList<Surface>(surfaceList);
+            for (Surface surface: copyList) {
                 if (surface.isSelected()) {
                     ArrayList<Surface> compositeSurface = surface.getElementarySurface();
                     Surface baseSurface = compositeSurface.get(0);
