@@ -357,13 +357,13 @@ public class MainWindow extends JFrame {
 
     public void metricModeSelected(ActionEvent actionEvent) {
         this.setMeasurementMode(MeasurementUnitMode.METRIC);
-        this.controller.setMeasurementMode(MeasurementUnitMode.METRIC);
+        // this.controller.setMeasurementMode(MeasurementUnitMode.METRIC);
         this.drawingPanel.repaint();
     }
 
     public void imperialModeSelected(ActionEvent actionEvent) {
         this.setMeasurementMode(MeasurementUnitMode.IMPERIAL);
-        this.controller.setMeasurementMode(MeasurementUnitMode.IMPERIAL);
+        // this.controller.setMeasurementMode(MeasurementUnitMode.IMPERIAL);
         this.drawingPanel.repaint();
     }
 
@@ -459,8 +459,8 @@ public class MainWindow extends JFrame {
         }
 
         else if (this.currentApplicationMode == ApplicationMode.ADD_IRREGULAR) {
-                SwingUtilities.isLeftMouseButton((mouseEvent));
-            }
+            SwingUtilities.isLeftMouseButton((mouseEvent));
+        }
             //TODO Code pour surface irrégulière
 
         else if (this.currentApplicationMode == ApplicationMode.SELECT && mouseWasDragged) {
@@ -777,6 +777,16 @@ public class MainWindow extends JFrame {
 
     public void separateSelectedSurface() {
         this.controller.separateSelectedSurface();
+        drawingPanel.repaint();
+    }
+    
+    public void horizontallyAlignSelectedSurfaces() {
+        controller.horizontallyAlignSelectedSurfaces();
+        drawingPanel.repaint();
+    }
+
+    public void verticallyAlignSelectedSurfaces() {
+        controller.verticallyAlignSelectedSurfaces();
         drawingPanel.repaint();
     }
 
