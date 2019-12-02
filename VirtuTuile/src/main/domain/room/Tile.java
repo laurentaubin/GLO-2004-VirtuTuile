@@ -4,10 +4,13 @@ import domain.room.surface.Surface;
 
 import java.awt.*;
 import java.awt.geom.Area;
+import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
 public class Tile extends Area {
+    final public double MIN_LENGTH = 2;
     final public double MIN_WIDTH = 20;
     final public double MIN_HEIGHT = 20;
     private Point2D.Double position;
@@ -48,5 +51,43 @@ public class Tile extends Area {
 
     public void setInspect() {
         this.tooSmall = true;
+    }
+
+    public void inspect() {
+        ArrayList<Point> cornerList = new ArrayList<Point>();
+        float[] floats = new float[6];
+
+        PathIterator pathIterator = this.getPathIterator(null);
+        while(!pathIterator.isDone()) {
+            int type = pathIterator.currentSegment(floats);
+            int x = (int)floats[0];
+            int y = (int)floats[1];
+            if (type != PathIterator.SEG_CLOSE) {
+                cornerList.add(new Point(x, y));
+            }
+            pathIterator.next();
+        }
+
+        for (int i = 0; i < cornerList.size(); i++) {
+            Point point1 = cornerList.get(i);
+            int x1 = point1.x;
+            int y1 = point1.y;
+
+            Point point2;
+            if (i == cornerList.size() - 1) {
+                point2 = cornerList.get(0);
+            }
+            else {
+                point2 = cornerList.get(i + 1);
+            }
+            int x2 = point2.x;
+            int y2 = point2.y;
+
+            double segmentLength = Math.abs(x2 - x1) + Math.abs(y2 - y1);
+            if (segmentLength <= MIN_LENGTH) {
+                this.setInspect();
+                break;
+            }
+        }
     }
 }
