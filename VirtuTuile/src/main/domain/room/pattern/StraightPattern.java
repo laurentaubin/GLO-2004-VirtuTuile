@@ -19,8 +19,6 @@ public class StraightPattern extends Pattern {
     }
 
     public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth) {
-        AffineTransform at = new AffineTransform(1, 0, 0, 1, 0, 0);
-        at.rotate(Math.PI / 4);
         double xOffset = tileType.getxOffset();
         double yOffset = tileType.getyOffset();
         double tileWidth = tileType.getWidth();
@@ -56,7 +54,6 @@ public class StraightPattern extends Pattern {
                 yPoints[3] = (int)(position.getY() + yOffset + tileType.getHeight() + (groutWidth * row));
 
                 Tile tile = new Tile(position, xPoints, yPoints, 4);
-                tile.transform(at);
                 virtualTileList.add(tile);
                 position.setLocation(position.getX() + tileType.getWidth(), position.getY());
             }

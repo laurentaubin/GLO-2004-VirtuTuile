@@ -93,11 +93,9 @@ public class TopButtonBar extends JPanel{
         selectButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                System.out.println("Entered");
             }
             @Override
             public void mouseExited(MouseEvent e) {
-                System.out.println("Exited");
             }
         });
 

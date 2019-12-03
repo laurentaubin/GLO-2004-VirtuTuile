@@ -250,6 +250,10 @@ public class RoomController {
         room.setVerticalBrickPatternToSelectedSurface();
     }
 
+    public void setAnglePattern() {
+        room.setAnglePattern();
+    }
+
     public void setSelectedSurfaceAsHole() {
         room.setSelectedSurfaceAsHole();
     }
@@ -337,6 +341,10 @@ public class RoomController {
 
     public void clearPointList() {
         this.pointList.clear();
+    }
+
+    public void setMismatch(double mismatch) {
+        room.setMismatch(mismatch);
     }
 
 }

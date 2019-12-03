@@ -473,7 +473,7 @@ public class Room {
     public void setHorizontalPatternToSelectedSurface() {
         for (Surface surfaceInRoom : surfaceList) {
             if (surfaceInRoom.isSelected()  && !surfaceInRoom.isHole()) {
-                BrickPattern brickPattern = new BrickPattern();
+                BrickPattern brickPattern = new BrickPattern(surfaceInRoom.getMismatch());
                 brickPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest(), surfaceInRoom.getGroutWidth());
                 surfaceInRoom.setPattern(brickPattern);
             }
@@ -494,9 +494,19 @@ public class Room {
     public void setVerticalBrickPatternToSelectedSurface() {
         for (Surface surfaceInRoom : surfaceList) {
             if (surfaceInRoom.isSelected()  && !surfaceInRoom.isHole()) {
-                VerticalBrickPattern verticalBrickPattern = new VerticalBrickPattern();
+                VerticalBrickPattern verticalBrickPattern = new VerticalBrickPattern(surfaceInRoom.getMismatch());
                 verticalBrickPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest(), surfaceInRoom.getGroutWidth());
                 surfaceInRoom.setPattern(verticalBrickPattern);
+            }
+        }
+    }
+
+    public void setAnglePattern() {
+        for (Surface surfaceInRoom : surfaceList) {
+            if (surfaceInRoom.isSelected()) {
+                InclinePattern inclinePattern = new InclinePattern();
+                inclinePattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest(), surfaceInRoom.getGroutWidth());
+                surfaceInRoom.setPattern(inclinePattern);
             }
         }
     }
@@ -779,6 +789,17 @@ public class Room {
                         }
                     }
                     surfaceList.remove(surface);
+                }
+            }
+        }
+    }
+
+    public void setMismatch(double mismatch) {
+        int counter = getNumberOfSelectedSurfaces();
+        if (counter == 1) {
+            for (Surface surface : surfaceList) {
+                if (surface.isSelected()) {
+                    surface.setMismatch(mismatch);
                 }
             }
         }

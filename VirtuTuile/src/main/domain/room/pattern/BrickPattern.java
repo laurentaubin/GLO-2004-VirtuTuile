@@ -11,12 +11,18 @@ import java.util.ArrayList;
 
 public class BrickPattern extends Pattern {
 
-    public BrickPattern() {
+    public BrickPattern(double mismatch) {
         super();
+        this.mismatch = mismatch;
     }
 
-    public BrickPattern(double xOffset, double yOffset, int angle, double groutWidth, Color groutColor) {
+    public BrickPattern(double xOffset, double yOffset, int angle, double groutWidth, Color groutColor, double mismatch) {
         super(xOffset, yOffset, angle, groutWidth, groutColor);
+        this.mismatch = mismatch;
+    }
+
+    public void setMismatch(double mismatch) {
+        this.mismatch = mismatch;
     }
 
     public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth) {
@@ -60,7 +66,7 @@ public class BrickPattern extends Pattern {
             }
             else{
                 position.setLocation(boundingRectanglePosition.getX(), position.getY() + tileType.getHeight());
-                position.setLocation(position.getX() - (tileType.getWidth()/2), position.getY());
+                position.setLocation(position.getX() - (tileType.getWidth() * this.mismatch), position.getY());
             }
 
         }

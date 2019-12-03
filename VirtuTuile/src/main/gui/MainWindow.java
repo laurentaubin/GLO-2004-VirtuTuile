@@ -25,6 +25,7 @@ public class MainWindow extends JFrame {
     public Point currentMousePoint = new Point();
     public Point initMousePoint = new Point();
 
+
     public enum ApplicationMode {
         SELECT, ADD_RECTANGULAR, ADD_IRREGULAR
     }
@@ -731,6 +732,11 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
+    public void setAnglePattern() {
+        controller.setAnglePattern();
+        drawingPanel.repaint();
+    }
+
 
     //Fait Juste repaint la couleur de la surface de la couleur choisit pour grout
     public void setGroutColor(Color color){
@@ -797,6 +803,11 @@ public class MainWindow extends JFrame {
 
     public void redo() {
         this.controller.redo();
+        drawingPanel.repaint();
+    }
+
+    public void setMismatch(double mismatch) {
+        controller.setMismatch(mismatch);
         drawingPanel.repaint();
     }
 
