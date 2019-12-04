@@ -23,7 +23,7 @@ public class TopButtonBar extends JPanel{
     private JLabel createRecLabel;
     private JButton undoButton;
     private JButton redoButton;
-    private JToggleButton movePatternButton;
+    private JButton saveButton;
     private ImageIcon selectIcon;
     private Color initColor;
     private Border oldBorder;
@@ -50,13 +50,12 @@ public class TopButtonBar extends JPanel{
         buttonGroup.add(selectButton);
         buttonGroup.add(createIrrSurfaceButton);
         buttonGroup.add(createRecSurfaceButton);
-        buttonGroup.add(movePatternButton);
 
         Dimension mainButtonDimension = new Dimension(50,50);
         this.selectButton.setPreferredSize(mainButtonDimension);
         this.createRecSurfaceButton.setPreferredSize(mainButtonDimension);
         this.createIrrSurfaceButton.setPreferredSize(mainButtonDimension);
-        this.movePatternButton.setPreferredSize(mainButtonDimension);
+        this.saveButton.setPreferredSize(mainButtonDimension);
 
         Dimension smallButtonDimension = new Dimension(25, 25);
 
@@ -85,12 +84,10 @@ public class TopButtonBar extends JPanel{
         Icon redoIcon = new ImageIcon(redoImage.getScaledInstance(20, 20, Image.SCALE_DEFAULT));
         this.redoButton.setIcon(redoIcon);
 
-        //Move Grabber icon icon by Icons8
-        BufferedImage movePatternImage = ImageIO.read(this.getClass().getResourceAsStream("/image/movePattern.png"));
-        Icon movePatternIcon = new ImageIcon(movePatternImage.getScaledInstance(30, 30, Image.SCALE_DEFAULT));
-        this.movePatternButton.setIcon(movePatternIcon);
-
-
+        //Save icon icon by Icons8
+        BufferedImage saveImage = ImageIO.read(this.getClass().getResourceAsStream("/image/save.png"));
+        Icon saveIcon = new ImageIcon(saveImage.getScaledInstance(40, 40, Image.SCALE_DEFAULT));
+        this.saveButton.setIcon(saveIcon);
 
 
 
@@ -153,5 +150,16 @@ public class TopButtonBar extends JPanel{
                 mainWindow.redo();
             }
         });
+
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                saveActionPerformed();
+            }
+        });
+    }
+
+    public void saveActionPerformed() {
+        return;
     }
 }

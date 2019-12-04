@@ -503,6 +503,16 @@ public class Room {
         }
     }
 
+    public void setSquarePatternToSelectedSurface() {
+        for (Surface surface : surfaceList) {
+            if (surface.isSelected()) {
+                SquarePattern squarePattern = new SquarePattern();
+                squarePattern.generateTiles(surface.getBoundingRectangle(), surface.getTileType(), surface.getAreaTest(), surface.getGroutWidth());
+                surface.setPattern(squarePattern);
+            }
+        }
+    }
+
     public void setSelectedSurfaceAsHole() {
         int counter = getNumberOfSelectedSurfaces();
         if (counter == 1) {

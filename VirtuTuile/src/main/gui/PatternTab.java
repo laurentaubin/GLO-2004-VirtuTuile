@@ -36,6 +36,8 @@ public class PatternTab extends JPanel{
     private JLabel mismatchLabel;
     private JComboBox percentComboBox;
     private JButton percentButton;
+    private JPanel squarePanel;
+    private JToggleButton squarePatternButton;
     private Color selectedColor;
 
 
@@ -73,19 +75,26 @@ public class PatternTab extends JPanel{
         BufferedImage brickImage = ImageIO.read(this.getClass().getResourceAsStream("/image/brique_horizontale.png"));
         Icon brickIcon = new ImageIcon(brickImage.getScaledInstance(120, 100, Image.SCALE_DEFAULT));
         this.brickPatternButton.setIcon(brickIcon);
+        brickPatternButton.setMargin(new Insets(10, 0, 10, 0));
 
         BufferedImage vertBrickImage = ImageIO.read(this.getClass().getResourceAsStream("/image/brique_verticale.png"));
         Icon vertBrickIcon = new ImageIcon(vertBrickImage.getScaledInstance(120, 100, Image.SCALE_DEFAULT));
         this.verticalBrickShapeButton.setIcon(vertBrickIcon);
+        verticalBrickShapeButton.setMargin(new Insets(10, 0, 10, 0));
+
 
         BufferedImage angleImage = ImageIO.read(this.getClass().getResourceAsStream("/image/incline.png"));
         Icon angleIcon = new ImageIcon(angleImage.getScaledInstance(120, 100, Image.SCALE_DEFAULT));
         this.anglePatternButton.setIcon(angleIcon);
         anglePatternButton.setMargin(new Insets(10, 0, 10, 0));
 
-        brickPatternButton.setMargin(new Insets(10, 0, 10, 0));
+        BufferedImage squareImage = ImageIO.read(this.getClass().getResourceAsStream("/image/square.png"));
+        Icon squareIcon = new ImageIcon(squareImage.getScaledInstance(120, 100, Image.SCALE_DEFAULT));
+        this.squarePatternButton.setIcon(squareIcon);
+        squarePatternButton.setMargin(new Insets(10, 0, 10, 0));
 
-        verticalBrickShapeButton.setMargin(new Insets(10, 0, 10, 0));
+
+
 
         groutColorButton.setPreferredSize(new Dimension(50, 20));
 
@@ -160,6 +169,13 @@ public class PatternTab extends JPanel{
             }
         });
 
+        squarePatternButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                squarePatternButtonActionPerformed();
+            }
+        });
+
         percentButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -197,6 +213,10 @@ public class PatternTab extends JPanel{
 
     private void anglePatternButtonActionPerformed() {
         mainWindow.setAnglePattern();;
+    }
+
+    private void squarePatternButtonActionPerformed() {
+        mainWindow.setSquarePattern();
     }
 
 

@@ -250,6 +250,10 @@ public class RoomController {
         room.setVerticalBrickPatternToSelectedSurface();
     }
 
+    public void setSquarePatternToSelectedSurface() {
+        room.setSquarePatternToSelectedSurface();
+    }
+
     public void setAnglePattern() {
         room.setAnglePattern();
     }
