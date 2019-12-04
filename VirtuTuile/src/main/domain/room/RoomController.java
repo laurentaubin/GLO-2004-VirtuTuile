@@ -347,5 +347,9 @@ public class RoomController {
         room.setMismatch(mismatch);
     }
 
+    public void updateSelectedSurfacesPatternPosition(double deltaX, double deltaY) {
+        this.room.updateSelectedSurfacesPatternPosition(deltaX, deltaY);
+    }
+
 }
 

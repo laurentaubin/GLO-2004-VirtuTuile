@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="gui.TopButtonBar">
   <grid id="27dc6" binding="buttonBarMainPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="0">
     <constraints>
-      <xy x="20" y="20" width="871" height="410"/>
+      <xy x="20" y="20" width="983" height="410"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -37,7 +37,7 @@
           <component id="e84c7" class="javax.swing.JToggleButton" binding="createIrrSurfaceButton">
             <constraints>
               <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag top="0" left="5" bottom="0" right="10" weightx="1.0" weighty="1.0"/>
+              <gridbag top="0" left="5" bottom="0" right="5" weightx="1.0" weighty="1.0"/>
             </constraints>
             <properties>
               <text value=""/>
@@ -45,7 +45,7 @@
           </component>
           <component id="ac1ad" class="javax.swing.JComboBox" binding="measurementUnitComboBox">
             <constraints>
-              <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
               <gridbag top="0" left="10" bottom="0" right="5" weightx="0.0" weighty="0.0" ipadx="100"/>
             </constraints>
             <properties/>
@@ -63,7 +63,7 @@
           <component id="56da2" class="javax.swing.JLabel" binding="createRecLabel">
             <constraints>
               <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
+              <gridbag top="0" left="5" bottom="0" right="5" weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
               <text value="Surface"/>
@@ -72,7 +72,7 @@
           <component id="3e494" class="javax.swing.JLabel">
             <constraints>
               <grid row="1" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag top="0" left="5" bottom="0" right="10" weightx="1.0" weighty="1.0"/>
+              <gridbag top="0" left="5" bottom="0" right="5" weightx="1.0" weighty="1.0"/>
             </constraints>
             <properties>
               <text value="Surface"/>
@@ -80,7 +80,7 @@
           </component>
           <component id="2ce5c" class="javax.swing.JLabel">
             <constraints>
-              <grid row="1" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag top="0" left="10" bottom="0" right="5" weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
@@ -100,7 +100,7 @@
           <component id="8584" class="javax.swing.JLabel">
             <constraints>
               <grid row="2" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag top="0" left="5" bottom="0" right="10" weightx="0.0" weighty="0.0"/>
+              <gridbag top="0" left="5" bottom="0" right="5" weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
               <text value="irreguliere"/>
@@ -108,7 +108,7 @@
           </component>
           <component id="1e370" class="javax.swing.JSeparator">
             <constraints>
-              <grid row="0" column="8" row-span="3" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="9" row-span="3" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
@@ -126,7 +126,7 @@
           </component>
           <component id="69870" class="javax.swing.JSeparator">
             <constraints>
-              <grid row="0" column="6" row-span="3" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="7" row-span="3" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
@@ -149,6 +149,31 @@
             </constraints>
             <properties>
               <text value=""/>
+            </properties>
+          </component>
+          <component id="9fdc7" class="javax.swing.JToggleButton" binding="movePatternButton">
+            <constraints>
+              <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag top="0" left="5" bottom="0" right="10" weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="498c7" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="1" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag top="0" left="5" bottom="0" right="10" weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Déplacer"/>
+            </properties>
+          </component>
+          <component id="57dc4" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="2" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag top="0" left="5" bottom="0" right="10" weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="motif"/>
             </properties>
           </component>
         </children>
