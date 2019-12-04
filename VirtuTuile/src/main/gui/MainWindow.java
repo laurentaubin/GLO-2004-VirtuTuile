@@ -757,6 +757,11 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
+    public void setSquarePattern() {
+        controller.setSquarePatternToSelectedSurface();
+        drawingPanel.repaint();
+    }
+
 
     //Fait Juste repaint la couleur de la surface de la couleur choisit pour grout
     public void setGroutColor(Color color){
