@@ -38,6 +38,8 @@ public class PatternTab extends JPanel{
     private JButton percentButton;
     private JPanel squarePanel;
     private JToggleButton squarePatternButton;
+    private JPanel chevronPattern;
+    private JToggleButton chevronButton;
     private Color selectedColor;
 
 
@@ -92,6 +94,12 @@ public class PatternTab extends JPanel{
         Icon squareIcon = new ImageIcon(squareImage.getScaledInstance(120, 100, Image.SCALE_DEFAULT));
         this.squarePatternButton.setIcon(squareIcon);
         squarePatternButton.setMargin(new Insets(10, 0, 10, 0));
+
+        BufferedImage chevronImage = ImageIO.read(this.getClass().getResourceAsStream("/image/chevron.png"));
+        Icon chevronIcon = new ImageIcon(chevronImage.getScaledInstance(120, 100, Image.SCALE_DEFAULT));
+        this.chevronButton.setIcon(chevronIcon);
+        chevronButton.setMargin(new Insets(10, 0, 10, 0));
+
 
 
 
