@@ -26,7 +26,7 @@ public class StraightPattern extends Pattern {
         double tileHeight = tileType.getHeight();
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
         Point2D.Double position = new Point2D.Double(boundingRectanglePosition.getX(), boundingRectangle.getY());
-        if (xOffset < 0) {
+        if (xOffset <= 0) {
             position.x = position.x + xOffset;
         }
 
@@ -34,7 +34,7 @@ public class StraightPattern extends Pattern {
             position.x = position.x - tileWidth + (xOffset%tileWidth);
         }
 
-        if (yOffset < 0) {
+        if (yOffset <= 0) {
             position.y = position.y + yOffset;
         }
         else {
@@ -54,7 +54,7 @@ public class StraightPattern extends Pattern {
 
         double numberRow = boundingRectangleHeight / (tileType.getHeight() + groutWidth);
         if(numberRow / (int)numberRow != 0) {
-            numberRow = (int)(numberRow + 1);
+            numberRow = (int)(numberRow + 2);
         }
 
         for (int row = 1; row <= numberRow ; row++) {
