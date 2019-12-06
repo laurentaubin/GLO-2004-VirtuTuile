@@ -10,10 +10,11 @@ import util.UnitConverter;
 
 import java.awt.*;
 import java.awt.geom.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Surface {
+public class Surface implements Serializable{
     private Point2D.Double position;
     private Color color;
     private boolean selectionStatus = false;

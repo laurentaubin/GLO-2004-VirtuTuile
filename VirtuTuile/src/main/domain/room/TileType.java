@@ -25,7 +25,7 @@ public class TileType extends Polygon{
     }
 
     public static TileType createTileWithDefaultParameters() {
-        return new TileType(Color.WHITE, 50, 20, "Default", 100);
+        return new TileType(Color.WHITE, 50, 25, "Default", 100);
     }
 
     public Color getColor() {

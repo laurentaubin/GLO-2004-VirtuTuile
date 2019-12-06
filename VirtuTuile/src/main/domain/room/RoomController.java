@@ -1,17 +1,23 @@
 package domain.room;
 
+
 import domain.drawing.SurfaceDrawer;
 import domain.room.pattern.Pattern;
 import domain.room.surface.Surface;
 import gui.DrawingPanel;
 import gui.MainWindow;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
+import java.io.*;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class RoomController {
+
+public class RoomController implements Serializable{
     private Room room;
     private SurfaceDrawer surfaceDrawer;
 
@@ -48,7 +54,7 @@ public class RoomController {
         Room room = new Room(this.room);
         if (roomList.size() >= 30) {
             this.roomList.remove(0);
-            this.roomList.add(room);
+            this.roomList.add(null);
             this.undoRedoPointer = 29;
         }
         else {
@@ -81,6 +87,51 @@ public class RoomController {
         }
         undoRedoPointer++;
         setRoom(roomList.get(undoRedoPointer));
+    }
+
+
+    public void openMenuSelected() {
+        String path = Paths.get("").toAbsolutePath().toString();
+
+        JFileChooser chooser = new JFileChooser(path);
+        chooser.showSaveDialog(null);
+        File curFile = chooser.getSelectedFile();
+
+        try {
+        FileInputStream inputFile = new FileInputStream(new File(String.valueOf(curFile)));
+        ObjectInputStream inputObject = new ObjectInputStream(inputFile);
+
+        Room openRoom = new Room((Room) inputObject.readObject());
+        this.room = openRoom;
+        System.out.println(openRoom.getSurfaceList().get(0).getWidth());
+
+        }
+        catch (IOException e) {
+            System.out.println(e);
+        }
+        catch (ClassNotFoundException e){
+            System.out.println(e);
+        }
+    }
+
+
+    public void saveAsSelected(){
+        String path = Paths.get("").toAbsolutePath().toString();
+        JFileChooser chooser = new JFileChooser(path);
+        chooser.showSaveDialog(null);
+        File curFile = chooser.getSelectedFile();
+        Room saveRoom = new Room(this.room);
+
+        try {
+            FileOutputStream fileOut = new FileOutputStream(curFile + ".ser");
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+            objectOut.writeObject(saveRoom);
+            objectOut.close();
+            System.out.println("The Object  was succesfully written to a file");
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void draw(Graphics2D g, MainWindow.MeasurementUnitMode measurementUnitMode, DrawingPanel drawingPanel, double zoom, Point currentMousePoint) {

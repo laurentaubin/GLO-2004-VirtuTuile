@@ -95,7 +95,7 @@ public class PatternTab extends JPanel{
         this.squarePatternButton.setIcon(squareIcon);
         squarePatternButton.setMargin(new Insets(10, 0, 10, 0));
 
-        BufferedImage chevronImage = ImageIO.read(this.getClass().getResourceAsStream("/image/chevron.png"));
+        BufferedImage chevronImage = ImageIO.read(this.getClass().getResourceAsStream("/image/Chevron.png"));
         Icon chevronIcon = new ImageIcon(chevronImage.getScaledInstance(120, 100, Image.SCALE_DEFAULT));
         this.chevronButton.setIcon(chevronIcon);
         chevronButton.setMargin(new Insets(10, 0, 10, 0));
