@@ -226,6 +226,7 @@ public class RoomController {
 
     public void combineSelectedSurfaces() {
         room.combineSelectedSurface();
+        addRoom();
     }
 
     public void createTileFromUserInput(Color color, float width, float height, String name, int nbrTilesPerBox) {
@@ -340,6 +341,15 @@ public class RoomController {
     public void horizontallyAlignSelectedSurfaces() {
         room.horizontallyAlignSelectedSurfaces();
     }
+
+    public void verticallyCenterSelectedSurfaces() {
+        room.verticallyCenterSelectedSurfaces();
+    }
+
+    public void horizontallyCenterSelectedSurfaces() {
+
+    }
+
     public ArrayList<Point> getPointList() {
         return this.pointList;
     }

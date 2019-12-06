@@ -832,6 +832,16 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
+    public void horizontallyCenterSelectedSurfaces() {
+        controller.horizontallyCenterSelectedSurfaces();
+        drawingPanel.repaint();
+    }
+
+    public void verticallyCenterSelectedSurfaces() {
+        controller.verticallyCenterSelectedSurfaces();
+        drawingPanel.repaint();
+    }
+
     public void undo() {
         this.controller.undo();
         drawingPanel.repaint();

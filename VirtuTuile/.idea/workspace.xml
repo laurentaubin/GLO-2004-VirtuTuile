@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8c246219-cf09-4492-905b-d80bdbddbe18" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="8c246219-cf09-4492-905b-d80bdbddbe18" name="Default Changelist" comment="Undo/redo temporary fixed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/Room.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/domain/room/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/RoomController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/PatternTab.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/PatternTab.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/SurfaceTab.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/SurfaceTab.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/SurfaceTab.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/SurfaceTab.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,6 +18,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -135,6 +137,14 @@
       <workItem from="1574703904289" duration="7799000" />
       <workItem from="1574714040797" duration="2160000" />
       <workItem from="1574739971532" duration="1248000" />
+      <workItem from="1574869214600" duration="796000" />
+      <workItem from="1575477569916" duration="6124000" />
+      <workItem from="1575493515013" duration="95000" />
+      <workItem from="1575493655636" duration="3799000" />
+      <workItem from="1575499028310" duration="434000" />
+      <workItem from="1575501199777" duration="629000" />
+      <workItem from="1575655779284" duration="251000" />
+      <workItem from="1575658216500" duration="5043000" />
     </task>
     <task id="LOCAL-00001" summary="xml(?)">
       <created>1573883748096</created>
@@ -185,7 +195,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574741218814</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Undo/redo temporary fixed">
+      <created>1575501548912</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1575501548912</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -217,7 +234,8 @@
     <MESSAGE value="Fixed merge &amp; selectionStatus" />
     <MESSAGE value="switchSelectionStatus really fixed" />
     <MESSAGE value="Quick refactor" />
-    <option name="LAST_COMMIT_MESSAGE" value="Quick refactor" />
+    <MESSAGE value="Undo/redo temporary fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Undo/redo temporary fixed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

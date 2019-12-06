@@ -649,6 +649,27 @@ public class Room {
         rightSurface.snapToPoint(rightSurfaceTopLeftPoint);
     }
 
+    public void verticallyCenterSelectedSurfaces() {
+        ArrayList<Surface> selectedSurfaceList = this.getSelectedSurfaces();
+        if (selectedSurfaceList.get(0).isToTheLeft(selectedSurfaceList.get(1))) {
+            Surface leftSurface = selectedSurfaceList.get(0);
+            Surface rightSurface = selectedSurfaceList.get(1);
+
+            Point2D leftSurfaceMiddlePoint = leftSurface.getLeftMostPoint();
+            leftSurfaceMiddlePoint.setLocation(leftSurfaceMiddlePoint.getX(), (leftSurfaceMiddlePoint.getY() + leftSurface.getHeight() / 2));
+
+            Point2D rightSurfaceLeftMostPoint = rightSurface.getLeftMostPoint();
+            rightSurfaceLeftMostPoint.setLocation(rightSurfaceLeftMostPoint.getX(), leftSurfaceMiddlePoint.getY() - (rightSurface.getHeight() / 2));
+
+            rightSurface.snapToPoint(rightSurfaceLeftMostPoint);
+        } else {
+            return;
+        }
+
+
+
+    }
+
     private ArrayList<Surface> getSelectedSurfaces() {
         ArrayList<Surface> selectedSurfaceList = new ArrayList<Surface>();
         for (Surface surface : this.surfaceList) {

@@ -33,6 +33,9 @@ public class SurfaceTab extends JPanel{
     private JButton downButton;
     private JButton topAlignButton;
     private JButton rightButton;
+    private JButton verticallyCenterButton;
+    private JButton horizontallyCenterButton;
+    private JButton centrerHButton;
     private Color surfaceColor;
 
     public SurfaceTab(MainWindow mainWindow) throws IOException {
@@ -127,6 +130,20 @@ public class SurfaceTab extends JPanel{
             }
         });
 
+        verticallyCenterButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                verticallyCenterSelectedSurfaces();
+            }
+        });
+
+        horizontallyCenterButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                horizontallyCenterSelectedSurfaces();
+            }
+        });
+
         //Align Center icon icon by Icons8
         //Align Bottom icon icon by Icons8
         //Align Top icon icon by Icons8
@@ -174,11 +191,14 @@ public class SurfaceTab extends JPanel{
         horizontallyAlignButton.setIcon(collerHorIcon);
 
 
+    }
 
+    private void horizontallyCenterSelectedSurfaces() {
+        mainWindow.horizontallyCenterSelectedSurfaces();
+    }
 
-
-
-
+    private void verticallyCenterSelectedSurfaces() {
+        mainWindow.verticallyCenterSelectedSurfaces();
     }
 
     private void horizontallyAlignSelectedSurfaces() {
