@@ -27,6 +27,10 @@ public class SurfaceTab extends JPanel{
     private JButton separateButton;
     private JButton horizontallyAlignButton;
     private JButton verticallyAlignButton;
+    private JButton leftAlignButton;
+    private JButton downButton;
+    private JButton topAlignButton;
+    private JButton rightButton;
     private Color surfaceColor;
 
     public SurfaceTab(MainWindow mainWindow) throws IOException {
@@ -36,6 +40,8 @@ public class SurfaceTab extends JPanel{
         heightField.setValue(0d);
         surfaceTitle.setFont(new Font("Helvetica Neue", Font.BOLD, 13));
         holeCheckBox.setFocusPainted(true);
+
+        Dimension tabButtonDimesion = new Dimension(20,20);
 
 
         surfaceColorButton.setPreferredSize(new Dimension(50, 20));
@@ -118,6 +124,59 @@ public class SurfaceTab extends JPanel{
                 horizontallyAlignSelectedSurfaces();
             }
         });
+
+        //Align Center icon icon by Icons8
+        //Align Bottom icon icon by Icons8
+        //Align Top icon icon by Icons8
+
+        //Merge Docunemts icon icon by Icons8
+        BufferedImage mergeImage = ImageIO.read(this.getClass().getResourceAsStream("/image/merge.png"));
+        Icon mergeIcon = new ImageIcon(mergeImage.getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        combineButton.setIcon(mergeIcon);
+
+        //Separate Document icon icon by Icons8
+        BufferedImage separateImage = ImageIO.read(this.getClass().getResourceAsStream("/image/separate.png"));
+        Icon separateIcon = new ImageIcon(separateImage.getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        separateButton.setIcon(separateIcon);
+
+        //Align Left icon icon by Icons8
+        BufferedImage leftImage = ImageIO.read(this.getClass().getResourceAsStream("/image/left.png"));
+        Icon leftIcon = new ImageIcon(leftImage.getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        leftAlignButton.setIcon(leftIcon);
+        //leftAlignButton.setPreferredSize(tabButtonDimesion);
+
+        //Align Top icon icon by Icons8
+        BufferedImage upImage = ImageIO.read(this.getClass().getResourceAsStream("/image/up.png"));
+        Icon upIcon = new ImageIcon(upImage.getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        topAlignButton.setIcon(upIcon);
+        //topAlignButton.setPreferredSize(tabButtonDimesion);
+
+        //Align Bottom icon icon by Icons8
+        BufferedImage downImage = ImageIO.read(this.getClass().getResourceAsStream("/image/down.png"));
+        Icon downIcon = new ImageIcon(downImage.getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        downButton.setIcon(downIcon);
+
+        //Align Right icon icon by Icons8
+        BufferedImage rightImage = ImageIO.read(this.getClass().getResourceAsStream("/image/right.png"));
+        Icon rightIcon = new ImageIcon(rightImage.getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        rightButton.setIcon(rightIcon);
+
+        //Merge Horizontal icon icon by Icons8
+        BufferedImage verticallyAlignImage = ImageIO.read(this.getClass().getResourceAsStream("/image/collerVert.png"));
+        Icon collerVertIcon = new ImageIcon(verticallyAlignImage.getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        verticallyAlignButton.setIcon(collerVertIcon);
+
+        //Merge Horizontal icon icon by Icons8
+        BufferedImage horizontalAlignImage = ImageIO.read(this.getClass().getResourceAsStream("/image/collerHor.png"));
+        Icon collerHorIcon = new ImageIcon(horizontalAlignImage.getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        horizontallyAlignButton.setIcon(collerHorIcon);
+
+
+
+
+
+
+
     }
 
     private void horizontallyAlignSelectedSurfaces() {
@@ -188,5 +247,9 @@ public class SurfaceTab extends JPanel{
 
     public void separateSelectedSurface() {
         mainWindow.separateSelectedSurface();
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }
