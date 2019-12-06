@@ -44,7 +44,6 @@ public class RoomController {
     }
 
     public void addRoom() {
-        deleteElementsAfterPointer(this.undoRedoPointer);
         Room room = new Room(this.room);
         if (roomList.size() >= 30) {
             this.roomList.remove(0);
@@ -60,8 +59,11 @@ public class RoomController {
     //https://stackoverflow.com/questions/11530276/how-do-i-implement-a-simple-undo-redo-for-actions-in-java
     private void deleteElementsAfterPointer(int undoRedoPointer)
     {
-        if(roomList.isEmpty()) return;
-        for(int i = roomList.size()-1; i > undoRedoPointer; i--)
+        if(roomList.isEmpty()) {
+            return;
+        }
+
+        for(int i = roomList.size() - 1; i > undoRedoPointer; i--)
         {
             roomList.remove(i);
         }
@@ -85,7 +87,9 @@ public class RoomController {
 
     public void draw(Graphics2D g, MainWindow.MeasurementUnitMode measurementUnitMode, DrawingPanel drawingPanel, double zoom, Point currentMousePoint) {
         ArrayList<Surface> surfaceList = getSurfaceList();
-        surfaceDrawer = new SurfaceDrawer(this);
+        if (surfaceDrawer == null) {
+            surfaceDrawer = new SurfaceDrawer(this);
+        }
         surfaceDrawer.setMeasurementUnitMode(measurementUnitMode);
         surfaceDrawer.draw(g, surfaceList, zoom, currentMousePoint);
     }
@@ -95,6 +99,7 @@ public class RoomController {
     }
 
     public void addSurface(Point point, double[] xPoints, double[] yPoints, int number_of_edges) {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         if (number_of_edges == 4) {
             room.addRectangularSurface(xPoints, yPoints, number_of_edges);
         }
@@ -259,6 +264,10 @@ public class RoomController {
 
     public void setAnglePattern() {
         room.setAnglePattern();
+    }
+
+    public void setChevronPattern() {
+        room.setChevronPattern();
     }
 
     public void setSelectedSurfaceAsHole() {

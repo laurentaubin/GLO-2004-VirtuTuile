@@ -16,8 +16,11 @@ public class UnitConverter {
 
     private static final float INCH_TO_METER = (float) 0.0254;
     private static final float METER_TO_INCH = (float) 39.3701;
-    private static final float PIXEL_TO_METER = (float) 0.0002645833;
-    private static final float PIXEL_TO_INCH = (float) 0.0104166667;
+    private static final float PIXEL_TO_METER = (float) 0.01;
+    private static final float PIXEL_TO_INCH = (float) (0.01 * 3.281);
+
+    //private static final float PIXEL_TO_METER = (float) 0.0002645833;
+    //private static final float PIXEL_TO_INCH = (float) 0.0104166667;
 
 /*
     private static final float INCH_TO_METER = (float) 1;
@@ -26,11 +29,11 @@ public class UnitConverter {
     private static final float PIXEL_TO_INCH = (float) 1;
 
 */
-    private static double pixelToInch(double pixel) {
+    public static double pixelToInch(double pixel) {
         return pixel * PIXEL_TO_INCH;
     }
 
-    private static double pixelToMeter(double pixel) {
+    public static double pixelToMeter(double pixel) {
         return pixel * PIXEL_TO_METER;
     }
 

@@ -41,25 +41,19 @@ public class SurfaceDrawer {
     }
 
     public void drawSurface(Graphics2D g2d, ArrayList<Surface> surfaceList, double zoom, Point currentMousePoint) {
-
-        /*
         for (Surface current_surface : surfaceList) {
-            Shape shape;
-            if (current_surface.getShape() == null) {
-                Polygon pixelPolygon = UnitConverter.convertPolygonToPixel(current_surface.getPolygon(), this.measurementMode);
-                Area area = new Area(pixelPolygon);
-                shape = area;
-                current_surface.setArea(area);
+            Path2D.Double path = new Path2D.Double();
+            for (int i = 0; i < current_surface.nPoints; i++) {
+                if (i == 0) {
+                    path.moveTo(current_surface.xPoints[i], current_surface.yPoints[i]);
+                }
+                else {
+                    path.lineTo(current_surface.xPoints[i], current_surface.yPoints[i]);
+                }
             }
-            else {
-                shape = current_surface.getShape();
-            }
+            path.closePath();
+            Area shape = new Area(path);
 
-         */
-
-        for (Surface current_surface : surfaceList) {
-            Point2D.Double point = current_surface.getPosition();
-            Area shape = new Area(current_surface.getAreaTest());
             if (zoom != 1) {
                 AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
                 shape.transform(at);
@@ -78,7 +72,6 @@ public class SurfaceDrawer {
                     AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
                     tile.transform(at);
                     if (tile.isTooSmall()) {
-                        // g2d.setColor(tile.getInspecColor());
                         g2d.setColor(tile.getInspecColor());
                     }
                     else {

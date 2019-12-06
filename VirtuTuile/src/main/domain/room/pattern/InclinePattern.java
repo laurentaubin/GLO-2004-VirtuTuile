@@ -22,8 +22,8 @@ public class InclinePattern extends Pattern {
         double yOffset = tileType.getyOffset();
         double tileWidth = tileType.getWidth();
         double tileHeight = tileType.getHeight();
-        double angle = 45;
 
+        double angle = 45;
         angle = -Math.toRadians(30);
 
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());

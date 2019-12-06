@@ -2,6 +2,7 @@ package gui;
 
 import domain.room.RoomController;
 import domain.room.TileType;
+import util.UnitConverter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -647,18 +648,23 @@ public class MainWindow extends JFrame {
         double yPos = evt.getY() / drawingPanel.getZoom();
         //double xPos = UnitConverter.convertPixelToSelectedUnit( evt.getX(), this.currentMeasurementMode);
         //double yPos = UnitConverter.convertPixelToSelectedUnit(evt.getY(), this.currentMeasurementMode);
-/*
+
+        /*
         if (this.currentMeasurementMode == MeasurementUnitMode.METRIC) {
-            mousePosition += ("x= " + xPos + "m " + ", y= " + yPos + "m ");
+            mousePosition += ("x= " + (double)(Math.round(UnitConverter.pixelToMeter(xPos) * 100d) / 100d) + "m " + ", y= " + Math.round(UnitConverter.pixelToMeter(yPos) * 100d) / 100d + "m ");
         }
+
+         */
+
+
         if (this.currentMeasurementMode == MeasurementUnitMode.IMPERIAL) {
             mousePosition += ("x= " + xPos + "'' " + ", y= " + yPos + "'' ");
         }
-*/
+
 
         if (this.controller.checkIfMouseAboveTile(evt.getX(), evt.getY())) {
             ArrayList<Double> tileDimension = this.controller.getTileDimensions(evt.getX(), evt.getY());
-            mousePosition += "Largeur de la tuile = " + tileDimension.get(0) + ", hauteur de la tuile = " + tileDimension.get(1) ;
+            mousePosition += " | Largeur de la tuile = " + tileDimension.get(0) + ", hauteur de la tuile = " + tileDimension.get(1) ;
             setStatusBarText(mousePosition);
         }
 
@@ -759,6 +765,11 @@ public class MainWindow extends JFrame {
 
     public void setSquarePattern() {
         controller.setSquarePatternToSelectedSurface();
+        drawingPanel.repaint();
+    }
+
+    public void setChevronPattern() {
+        controller.setChevronPattern();
         drawingPanel.repaint();
     }
 

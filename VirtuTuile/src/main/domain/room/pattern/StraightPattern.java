@@ -66,14 +66,6 @@ public class StraightPattern extends Pattern {
                 xPoints[2] = (int)(position.getX() + tileType.getWidth() + (groutWidth * column));
                 xPoints[3] = (int)(position.getX() + (groutWidth * column));
 
-                /*
-                xPoints[0] = (int)(position.getX() + xOffset + (groutWidth * column));
-                xPoints[1] = (int)(position.getX() + xOffset + tileType.getWidth() + (groutWidth * column));
-                xPoints[2] = (int)(position.getX() + xOffset + tileType.getWidth() + (groutWidth * column));
-                xPoints[3] = (int)(position.getX() + xOffset + (groutWidth * column));
-
-                 */
-
                 yPoints[0] = (int)(position.getY() + (groutWidth * row));
                 yPoints[1] = (int)(position.getY() + (groutWidth * row));
                 yPoints[2] = (int)(position.getY() + tileType.getHeight() + (groutWidth * row));
