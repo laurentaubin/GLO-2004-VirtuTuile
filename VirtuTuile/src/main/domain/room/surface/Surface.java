@@ -514,7 +514,6 @@ public class Surface implements Serializable{
     public Point2D getTopLeftPoint() {
         PathIterator iter = area.getPathIterator(null);
         float[] floats = new float[6];
-
         int type = iter.currentSegment(floats);
         return new Point2D.Double(floats[0], floats[1]);
     }

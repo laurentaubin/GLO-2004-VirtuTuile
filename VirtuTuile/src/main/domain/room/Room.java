@@ -531,6 +531,17 @@ public class Room implements Serializable{
         }
     }
 
+    public void setChevronPattern() {
+        for (Surface surface : surfaceList) {
+            if (surface.isSelected()) {
+                ChevronPattern chevronPattern = new ChevronPattern();
+                chevronPattern.generateTiles(surface.getBoundingRectangle(), surface.getTileType(), surface.getAreaTest(), surface.getGroutWidth());
+                surface.setPattern(chevronPattern);
+            }
+        }
+    }
+
+
     public void setSelectedSurfaceAsHole() {
         int counter = getNumberOfSelectedSurfaces();
         if (counter == 1) {

@@ -191,6 +191,13 @@ public class PatternTab extends JPanel{
 
             }
         });
+
+        chevronButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                mainWindow.setChevronPattern();
+            }
+        });
     }
 
     private void setButtonColor(Color color) {

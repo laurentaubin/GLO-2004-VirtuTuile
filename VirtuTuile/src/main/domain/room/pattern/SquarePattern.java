@@ -16,7 +16,6 @@ public class SquarePattern extends Pattern{
     public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth) {
         double xOffset = tileType.getxOffset();
         double yOffset = tileType.getyOffset();
-
         double tileWidth = tileType.getWidth();
         double tileHeight = tileType.getHeight();
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
@@ -80,6 +79,8 @@ public class SquarePattern extends Pattern{
             }
             position.setLocation(initPosition.getX(), position.getY() + tileType.getHeight());
         }
+
+
         deleteOutsideTile(area, tileWidth, tileHeight);
         return virtualTileList;
     }

@@ -22,8 +22,8 @@ public class InclinePattern extends Pattern {
         double yOffset = tileType.getyOffset();
         double tileWidth = tileType.getWidth();
         double tileHeight = tileType.getHeight();
-        double angle = 0;
 
+        double angle = 45;
         angle = -Math.toRadians(30);
 
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
@@ -64,7 +64,7 @@ public class InclinePattern extends Pattern {
 
                 Tile tile = new Tile(position, xPoints, yPoints, 4);
                 AffineTransform at = new AffineTransform(1, 0, 0, 1, 0, 0);
-                at.rotate(angle, xPoints[3], yPoints[3]);
+                at.rotate(angle, xPoints[0], yPoints[0]);
                 tile.transform(at);
                 virtualTileList.add(tile);
                 tile.setWidth(Math.abs(xPoints[0] - xPoints[1]) + Math.abs(yPoints[0] - yPoints[1]));

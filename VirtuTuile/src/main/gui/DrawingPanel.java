@@ -52,6 +52,7 @@ public class DrawingPanel extends JPanel implements Serializable {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
 
+
             if (isGridActivated) {
                 g2d.scale(zoom, zoom);
                 g2d.setPaint(Color.LIGHT_GRAY);
@@ -74,11 +75,9 @@ public class DrawingPanel extends JPanel implements Serializable {
                     }
                 }
             }
-
-            if (mainWindow.getApplicationMode() == MainWindow.ApplicationMode.ADD_IRREGULAR) {
-
-            }
+            g2d.scale(1/zoom, 1/zoom);
             mainWindow.draw(g2d, this, zoom);
+
         }
     }
 

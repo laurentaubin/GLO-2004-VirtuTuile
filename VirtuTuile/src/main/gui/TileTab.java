@@ -1,6 +1,7 @@
 package gui;
 
 import domain.room.TileType;
+import util.UnitConverter;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -171,18 +172,19 @@ public class TileTab extends JPanel {
     }
 
     public void setCurrentTileInfo(float width, float height, String name, Color color, int nbrTilesPerBox) {
-        setTileWidht(width);
-        setTileHeight(height);
+        MainWindow.MeasurementUnitMode measurementUnitMode = mainWindow.getCurrentMeasurementMode();
+        setTileWidht(UnitConverter.convertPixelToSelectedUnit(width, measurementUnitMode));
+        setTileHeight(UnitConverter.convertPixelToSelectedUnit(height, measurementUnitMode));
         setTileName(name);
         setTileColor(color);
         setTileNumberPerBoxField(nbrTilesPerBox);
     }
 
-    public void setTileWidht(float width) {
+    public void setTileWidht(double width) {
         this.tileWidthField.setValue(width);
     }
 
-    public void setTileHeight(float height) {
+    public void setTileHeight(double height) {
         this.tileHeightField.setValue(height);
     }
 

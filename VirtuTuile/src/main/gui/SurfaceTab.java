@@ -1,5 +1,7 @@
 package gui;
 
+import util.UnitConverter;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -188,12 +190,13 @@ public class SurfaceTab extends JPanel{
     }
 
     public void setEnteredWidthSurfaceDimensions(){
-        double enteredWidth = (double)widthField.getValue();
+        double enteredWidth = UnitConverter.convertSelectedUnitToPixel((double)widthField.getValue(), mainWindow.getCurrentMeasurementMode());
         this.mainWindow.setSelectedSurfaceWidth(enteredWidth);
     }
 
     public void setEnteredHeightSurfaceDimensions() {
-        double enteredHeight = (double)heightField.getValue();
+        double enteredHeight = UnitConverter.convertSelectedUnitToPixel((double)heightField.getValue(), mainWindow.getCurrentMeasurementMode());
+
         this.mainWindow.setSelectedSurfaceHeight(enteredHeight);
     }
 
@@ -217,8 +220,11 @@ public class SurfaceTab extends JPanel{
     }
 
     public void setSurfaceDimensionField(Dimension dimension) {
-        this.widthField.setValue(dimension.getWidth());
-        this.heightField.setValue(dimension.getHeight());
+        MainWindow.MeasurementUnitMode current = mainWindow.getCurrentMeasurementMode();
+        double width = UnitConverter.convertPixelToSelectedUnit(dimension.width, current);
+        double height = UnitConverter.convertPixelToSelectedUnit(dimension.height, current);
+        this.widthField.setValue(width);
+        this.heightField.setValue(height);
     }
 
 
