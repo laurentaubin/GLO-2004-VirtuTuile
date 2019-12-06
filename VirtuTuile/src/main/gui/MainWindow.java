@@ -797,10 +797,8 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
-
     //Fait Juste repaint la couleur de la surface de la couleur choisit pour grout
     public void setGroutColor(Color color){
-
         controller.setGroutColor(color);
         drawingPanel.repaint();
     }
@@ -863,6 +861,11 @@ public class MainWindow extends JFrame {
 
     public void verticallyCenterSelectedSurfaces() {
         controller.verticallyCenterSelectedSurfaces();
+        drawingPanel.repaint();
+    }
+
+    public void leftAlignSelectedSurfaces() {
+        controller.leftAlignSelectedSurfaces();
         drawingPanel.repaint();
     }
 
