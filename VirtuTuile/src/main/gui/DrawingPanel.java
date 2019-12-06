@@ -27,8 +27,7 @@ public class DrawingPanel extends JPanel implements Serializable {
     private double gridGap = 100d;
     private boolean isGridActivated = false;
 
-    public DrawingPanel() {
-    }
+    public DrawingPanel() {}
 
     public DrawingPanel(MainWindow mainWindow) {
         this.mainWindow = mainWindow;

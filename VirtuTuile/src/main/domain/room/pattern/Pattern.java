@@ -7,9 +7,10 @@ import gui.MainWindow;
 import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Pattern {
+public abstract class Pattern implements Serializable {
     private double xOffset;
     private double yOffset;
     private int angle;

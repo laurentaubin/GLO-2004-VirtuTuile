@@ -44,12 +44,16 @@ public class InclinePattern extends Pattern {
             numberRow = (int)(numberRow + 1);
         }
 
-        for (int row = 1; row <= numberRow*2 ; row++) {
-            for (int column = 1; column <= numberColumn*2; column++){
+        for (int row = 1; row <= numberRow ; row++) {
+            for (int column = 1; column <= numberColumn; column++){
+
                 int[] xPoints = new int[4];
                 int[] yPoints = new int[4];
+
+
+
                 xPoints[0] = (int)(position.getX() + xOffset + (groutWidth * column));
-                xPoints[1] = (int)(position.getX() + xOffset+ tileType.getWidth() + (groutWidth * column));
+                xPoints[1] = (int)(position.getX() + xOffset + tileType.getWidth() + (groutWidth * column));
                 xPoints[2] = (int)(position.getX() + xOffset + tileType.getWidth() + (groutWidth * column));
                 xPoints[3] = (int)(position.getX() + xOffset + (groutWidth * column));
 
@@ -78,8 +82,8 @@ public class InclinePattern extends Pattern {
         for (Tile tile : virtualTileList) {
             tile.intersect(surface);
             if(!tile.isEmpty()) {
-                //tile.setWidth(tile.getBounds2D().getWidth());
-                //tile.setHeight(tile.getBounds2D().getHeight());
+                tile.setWidth(tile.getBounds2D().getWidth());
+                tile.setHeight(tile.getBounds2D().getHeight());
                 tile.inspect();
             }
         }

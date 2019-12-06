@@ -2,14 +2,16 @@ package domain.room;
 
 import domain.room.surface.Surface;
 
+
 import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Tile extends Area {
+public class Tile extends Area implements Serializable {
     final public double MIN_LENGTH = 2;
     private Point2D.Double position;
     private double width;

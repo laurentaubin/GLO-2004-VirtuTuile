@@ -6,14 +6,17 @@ import domain.room.surface.RectangularSurface;
 import domain.room.surface.Surface;
 import gui.MainWindow;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 
-public class Room {
+
+public class Room implements Serializable{
 
     private ArrayList<Surface> surfaceList;
     private ArrayList<Surface> surfaceProjectionList;
@@ -503,13 +506,28 @@ public class Room {
         }
     }
 
+
     public void setSquarePatternToSelectedSurface() {
+        boolean incorrect = false;
         for (Surface surface : surfaceList) {
             if (surface.isSelected()) {
-                SquarePattern squarePattern = new SquarePattern();
-                squarePattern.generateTiles(surface.getBoundingRectangle(), surface.getTileType(), surface.getAreaTest(), surface.getGroutWidth());
-                surface.setPattern(squarePattern);
+                if((surface.getTileType().getWidth() / surface.getTileType().getHeight()) == 2) {
+                    SquarePattern squarePattern = new SquarePattern();
+                    squarePattern.generateTiles(surface.getBoundingRectangle(), surface.getTileType(), surface.getAreaTest(), surface.getGroutWidth());
+                    surface.setPattern(squarePattern);
+                }
+                else{
+                    incorrect = true;
+                }
             }
+        }
+        if (incorrect){
+
+            String[] options = {"Ok"};
+            int indexReponse = JOptionPane.showOptionDialog(null, "Les dimensions des tuiles sont invalides, elles doivent avoir un ratio de 2:1",
+                    "Attention!",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+
         }
     }
 
@@ -827,6 +845,7 @@ public class Room {
             }
         }
     }
+
 
     public void setMismatch(double mismatch) {
         int counter = getNumberOfSelectedSurfaces();

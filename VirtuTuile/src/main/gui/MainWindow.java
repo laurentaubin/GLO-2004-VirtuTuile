@@ -285,10 +285,23 @@ public class MainWindow extends JFrame {
         viewMenu.add(gridMenuItem);
         gridMenuItem.setText("Afficher/cacher la grille");
         gridMenuItem.setSelected(drawingPanel.getGridlines());
+
         gridMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 gridMenuItemActionPerformed(actionEvent);
+            }
+        });
+        openMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                openMenuItemActionPerform(actionEvent);
+            }
+        });
+        saveAsMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                saveAsMenuItemActionPerformed(actionEvent);
             }
         });
 
@@ -592,6 +605,17 @@ public class MainWindow extends JFrame {
         //return UnitConverter.convertPixelListToSelectedUnit(drawPoints, this.currentMeasurementMode);
         return drawPoints;
     }
+
+    public void openMenuItemActionPerform(ActionEvent actionEvent){
+        this.controller.openMenuSelected();
+        controller.getSelectedSurfaceGroutWidth();
+        drawingPanel.repaint();
+
+    }
+    public void saveAsMenuItemActionPerformed(ActionEvent actionEvent){
+        this.controller.saveAsSelected();
+    }
+
 
     public void gridMenuItemActionPerformed(ActionEvent actionEvent) {
         drawingPanel.setGridLines();
