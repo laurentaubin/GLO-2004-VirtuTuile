@@ -2,13 +2,10 @@ package gui;
 
 import domain.room.RoomController;
 import domain.room.TileType;
-import util.UnitConverter;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -25,8 +22,9 @@ public class MainWindow extends JFrame {
     public Point currentMousePoint = new Point();
     public Point initMousePoint = new Point();
 
+
     public enum ApplicationMode {
-        SELECT, ADD_RECTANGULAR, ADD_IRREGULAR
+        SELECT, ADD_RECTANGULAR, ADD_IRREGULAR, MOVE_PATTERN
     }
 
     public enum MeasurementUnitMode {
@@ -240,7 +238,7 @@ public class MainWindow extends JFrame {
 
         splitPane.setOneTouchExpandable(true);
 
-        splitPane.setResizeWeight(0.85);
+        splitPane.setResizeWeight(0.83);
 
         statusBar.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
@@ -355,6 +353,11 @@ public class MainWindow extends JFrame {
 
     }
 
+    public void movePatternButtonActionPerformed(ActionEvent actionEvent) {
+        this.setApplicationMode(ApplicationMode.MOVE_PATTERN);
+        this.controller.unselectAllSurfaces();
+    }
+
     public void metricModeSelected(ActionEvent actionEvent) {
         this.setMeasurementMode(MeasurementUnitMode.METRIC);
         // this.controller.setMeasurementMode(MeasurementUnitMode.METRIC);
@@ -426,6 +429,10 @@ public class MainWindow extends JFrame {
             controller.addPoint(point, drawingPanel.getZoom());
             drawingPanel.repaint();
         }
+
+
+
+
         drawingPanel.repaint();
     }
 
@@ -474,7 +481,7 @@ public class MainWindow extends JFrame {
 
     public void drawingPanelMouseDragged(MouseEvent mouseEvent){
         // TODO ça marche pas pcq le init mouse point est pas updaté a bonne palce faique le delta est pas bon
-        if (SwingUtilities.isRightMouseButton(mouseEvent)) {
+        if (SwingUtilities.isRightMouseButton(mouseEvent) && !mouseEvent.isShiftDown()) {
             double deltaX = (
                     (int)(mouseEvent.getX() / drawingPanel.getZoom()) - (int)(this.currentMousePoint.getX()));
             double deltaY = (
@@ -495,6 +502,20 @@ public class MainWindow extends JFrame {
                     (int)(mouseEvent.getY() / drawingPanel.getZoom())
                     );
         }
+
+        else if (SwingUtilities.isRightMouseButton(mouseEvent) && mouseEvent.isShiftDown()) {
+            double deltaX = (
+                    (int)(mouseEvent.getX() / drawingPanel.getZoom()) - (int)(this.currentMousePoint.getX()));
+            double deltaY = (
+                    (int)(mouseEvent.getY() / drawingPanel.getZoom()) - (int)(this.currentMousePoint.getY()));
+
+            this.controller.updateSelectedSurfacesPatternPosition(deltaX, deltaY);
+            this.currentMousePoint = new Point(
+                    (int)(mouseEvent.getX() / drawingPanel.getZoom()),
+                    (int)(mouseEvent.getY() / drawingPanel.getZoom())
+            );
+        }
+
         else if (this.currentApplicationMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
             this.currentMousePoint = new Point(
                     (int)(mouseEvent.getX() / drawingPanel.getZoom()),
@@ -731,6 +752,16 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
+    public void setAnglePattern() {
+        controller.setAnglePattern();
+        drawingPanel.repaint();
+    }
+
+    public void setSquarePattern() {
+        controller.setSquarePatternToSelectedSurface();
+        drawingPanel.repaint();
+    }
+
 
     //Fait Juste repaint la couleur de la surface de la couleur choisit pour grout
     public void setGroutColor(Color color){
@@ -797,6 +828,11 @@ public class MainWindow extends JFrame {
 
     public void redo() {
         this.controller.redo();
+        drawingPanel.repaint();
+    }
+
+    public void setMismatch(double mismatch) {
+        controller.setMismatch(mismatch);
         drawingPanel.repaint();
     }
 

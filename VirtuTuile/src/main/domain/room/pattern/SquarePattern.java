@@ -2,19 +2,14 @@ package domain.room.pattern;
 
 import domain.room.Tile;
 import domain.room.TileType;
-import gui.MainWindow;
-//import javafx.scene.transform.Affine;
-import util.UnitConverter;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
-public class StraightPattern extends Pattern {
-
-    public StraightPattern() {
+public class SquarePattern extends Pattern{
+    public SquarePattern() {
         super();
     }
 
@@ -100,4 +95,5 @@ public class StraightPattern extends Pattern {
             tile.inspect();
         }
     }
+
 }

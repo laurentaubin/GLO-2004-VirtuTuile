@@ -24,6 +24,7 @@ public class RoomController {
 
     public RoomController(Room room) {
         this.room = room;
+        addRoom();
     }
 
     public RoomController(){
@@ -31,6 +32,7 @@ public class RoomController {
         roomList = new ArrayList<Room>();
 
         pointList = new ArrayList<Point>();
+        addRoom();
     }
 
     public Room getRoom() {
@@ -66,11 +68,11 @@ public class RoomController {
     }
 
     public void undo() {
-        if (undoRedoPointer < 0) {
+        if (undoRedoPointer <= 0) {
             return;
         }
-        setRoom(roomList.get(undoRedoPointer));
         undoRedoPointer--;
+        setRoom(roomList.get(undoRedoPointer));
     }
 
     public void redo() {
@@ -93,23 +95,23 @@ public class RoomController {
     }
 
     public void addSurface(Point point, double[] xPoints, double[] yPoints, int number_of_edges) {
-        addRoom();
         if (number_of_edges == 4) {
             room.addRectangularSurface(xPoints, yPoints, number_of_edges);
         }
         else {
             //room.addIrregularSurface(point, xPoints, yPoints, number_of_edges);
         }
+        addRoom();
     }
 
     public void addSurfaceOnGrid(Point position, double[] xDrawPoints, double[] yDrawPoints, int number_of_edges, double gridGap) {
-        addRoom();
         if (number_of_edges == 4) {
             room.addRectangularSurfaceOnGrid(xDrawPoints, yDrawPoints, number_of_edges, gridGap);
         }
         else {
             // room.addIrregularSurfaceOnGrid(point, xPoints, yPoints, number_of_edges, gridGap);
         }
+        addRoom();
     }
 
     private void addIrregularSurface(Point point, int[] xPoints, int[] yPoints, int number_of_edges) {
@@ -130,6 +132,7 @@ public class RoomController {
 
     public void deleteSurface(){
         room.deleteSurface();
+        addRoom();
     }
 
 
@@ -250,6 +253,14 @@ public class RoomController {
         room.setVerticalBrickPatternToSelectedSurface();
     }
 
+    public void setSquarePatternToSelectedSurface() {
+        room.setSquarePatternToSelectedSurface();
+    }
+
+    public void setAnglePattern() {
+        room.setAnglePattern();
+    }
+
     public void setSelectedSurfaceAsHole() {
         room.setSelectedSurfaceAsHole();
     }
@@ -337,6 +348,14 @@ public class RoomController {
 
     public void clearPointList() {
         this.pointList.clear();
+    }
+
+    public void setMismatch(double mismatch) {
+        room.setMismatch(mismatch);
+    }
+
+    public void updateSelectedSurfacesPatternPosition(double deltaX, double deltaY) {
+        this.room.updateSelectedSurfacesPatternPosition(deltaX, deltaY);
     }
 
 }

@@ -25,7 +25,7 @@ public class Room {
         tileTypeList = new ArrayList<TileType>();
     }
 
-    public Room (Room room) {
+    public Room(Room room) {
         surfaceList = new ArrayList<Surface>(room.getSurfaceList());
         surfaceProjectionList = new ArrayList<Surface>(room.getSurfaceProjectionList());
         tileTypeList = new ArrayList<TileType>(room.getTileList());
@@ -101,15 +101,33 @@ public class Room {
 
     void switchSelectionStatus(double x, double y, boolean isShiftDown) {
         Boolean latestSurfaceSelected = true;
+        int nbrHole = 0;
         for (int i = surfaceList.size() - 1; i >= 0; i--) {
+            if (surfaceList.get(i).isHole()) {
+                nbrHole++;
+                surfaceList.add(surfaceList.get(i));
+                surfaceList.remove(i);
+            }
+
             if (surfaceList.get(i).getAreaTest().contains(x, y) && latestSurfaceSelected == true) {
                 //this.switchSelectionStatusIfContains(x, y, isShiftDown, surfaceList.get(i));
                 //break;
-                surfaceList.get(i).switchSelectionStatus();
-                latestSurfaceSelected = false;
-            }
-            else {
-                if(!isShiftDown) surfaceList.get(i).unselect();
+
+                if (!surfaceList.get(i).isHole()) {
+                    surfaceList.add(surfaceList.size() - (nbrHole), surfaceList.get(i));
+                    surfaceList.remove(i);
+
+
+                    surfaceList.get(surfaceList.size() - (1 + nbrHole)).switchSelectionStatus();
+                    latestSurfaceSelected = false;
+                } else {
+                    surfaceList.get(i).switchSelectionStatus();
+                    latestSurfaceSelected = false;
+                }
+
+
+            } else {
+                if (!isShiftDown) surfaceList.get(i).unselect();
                 //surfaceList.get(i).unselect();
             }
         }
@@ -125,8 +143,7 @@ public class Room {
         //TODO changer le OR pour une meilleure condition
         if (surfaceInRoom.getAreaTest().contains(point)) {
             surfaceInRoom.switchSelectionStatus();
-        }
-        else if (!isShiftDown){
+        } else if (!isShiftDown) {
             surfaceInRoom.unselect();
         }
     }
@@ -174,10 +191,10 @@ public class Room {
     }
 */
 
-    public boolean surfaceSelecte(){
+    public boolean surfaceSelecte() {
         boolean auMoinsUne = false;
-        for(Surface surface: surfaceList){
-            if(surface.isSelected()){
+        for (Surface surface : surfaceList) {
+            if (surface.isSelected()) {
                 auMoinsUne = true;
                 break;
             }
@@ -194,7 +211,7 @@ public class Room {
         }
     }
 
-    void addCoverToSelectedSurfaces(Cover cover){
+    void addCoverToSelectedSurfaces(Cover cover) {
         for (Surface surface : this.surfaceList) {
             if (surface.isSelected()) {
                 surface.setCover(cover);
@@ -205,8 +222,8 @@ public class Room {
 
     public double[] getSelectedRectangularSurfaceDimensions() {
         double[] dimensionList = new double[2];
-        for (Surface surface : this.surfaceList){
-            if (surface.isSelected()){
+        for (Surface surface : this.surfaceList) {
+            if (surface.isSelected()) {
                 dimensionList[0] = surface.getWidth();
                 dimensionList[1] = surface.getHeight();
             }
@@ -235,9 +252,9 @@ public class Room {
      */
 
 
-    public void deleteSurface(){
-        for(int i = this.surfaceList.size() - 1; i >= 0; i--){
-            if(this.surfaceList.get(i).isSelected()){
+    public void deleteSurface() {
+        for (int i = this.surfaceList.size() - 1; i >= 0; i--) {
+            if (this.surfaceList.get(i).isSelected()) {
                 surfaceList.remove(i);
             }
         }
@@ -261,7 +278,8 @@ public class Room {
             surface.setMeasurementMode(mode);
         }
     }
-    public void setGroutColor(Color color){
+
+    public void setGroutColor(Color color) {
         for (Surface surface : this.surfaceList) {
             if (surface.isSelected() && surface.isCovered()) {
                 surface.setColor(color);
@@ -330,29 +348,29 @@ public class Room {
     }
 
     public Dimension getSelectedSurfaceDimensions() {
-        Dimension dimension = new Dimension(0,0);
+        Dimension dimension = new Dimension(0, 0);
         int counter = getNumberOfSelectedSurfaces();
         if (counter == 1) {
             for (Surface surfaceInRoom : surfaceList) {
                 if (surfaceInRoom.isSelected()) {
-                    dimension =  surfaceInRoom.getDimensions();
+                    dimension = surfaceInRoom.getDimensions();
                 }
             }
         }
         return dimension;
     }
 
-    public int getNumberOfSelectedSurfaces(){
+    public int getNumberOfSelectedSurfaces() {
         int count = 0;
-        for(Surface surface:surfaceList){
-            if(surface.isSelected()){
+        for (Surface surface : surfaceList) {
+            if (surface.isSelected()) {
                 count++;
             }
         }
         return count;
     }
 
-    public boolean surfaceInTouch(){
+    public boolean surfaceInTouch() {
         boolean areIntersect = true;
         ArrayList<Surface> surfacesToCombine = getSurfaceToCombine();
         Surface baseSurface = surfacesToCombine.get(0);
@@ -370,9 +388,9 @@ public class Room {
         int index = 0;
         ArrayList<Surface> surfacesToCombine = getSurfaceToCombine();
 
-        while(surfacesToCombine.get(index).isHole()) {
+        while (surfacesToCombine.get(index).isHole()) {
             index++;
-            if(index >= surfacesToCombine.size()) {
+            if (index >= surfacesToCombine.size()) {
                 index = 0;
                 break;
             }
@@ -383,19 +401,17 @@ public class Room {
 
         for (Surface surface : surfacesToCombine) {
             if (baseSurface.intersect(surface.getAreaTest())) {
-                if(surface.isHole()) {
-                    if(baseSurface.isHole()) {
+                if (surface.isHole()) {
+                    if (baseSurface.isHole()) {
                         baseSurface.merge(surface);
                         baseSurface.addMergeSurfaceToList(surface);
                         surfaceList.remove(surface);
-                    }
-                    else{
+                    } else {
                         baseSurface.setHole(surface);
                         baseSurface.addMergeSurfaceToList(surface);
                         surfaceList.remove(surface);
                     }
-                }
-                else {
+                } else {
                     baseSurface.merge(surface);
                     baseSurface.addMergeSurfaceToList(surface);
                     surfaceList.remove(surface);
@@ -424,9 +440,6 @@ public class Room {
     }
 
 
-
-
-
     public void setSelectedTileToSelectedSurface(TileType selectedTileType) {
         for (Surface surfaceInRoom : surfaceList) {
             if (surfaceInRoom.isSelected()) {
@@ -441,7 +454,7 @@ public class Room {
 
     public void setStraightPatternToSelectedSurface() {
         for (Surface surfaceInRoom : surfaceList) {
-            if (surfaceInRoom.isSelected()) {
+            if (surfaceInRoom.isSelected() && !surfaceInRoom.isHole()) {
                 StraightPattern straightPattern = new StraightPattern();
                 straightPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest(), surfaceInRoom.getGroutWidth());
                 surfaceInRoom.setPattern(straightPattern);
@@ -451,8 +464,8 @@ public class Room {
 
     public void setHorizontalPatternToSelectedSurface() {
         for (Surface surfaceInRoom : surfaceList) {
-            if (surfaceInRoom.isSelected()) {
-                BrickPattern brickPattern = new BrickPattern();
+            if (surfaceInRoom.isSelected() && !surfaceInRoom.isHole()) {
+                BrickPattern brickPattern = new BrickPattern(surfaceInRoom.getMismatch());
                 brickPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest(), surfaceInRoom.getGroutWidth());
                 surfaceInRoom.setPattern(brickPattern);
             }
@@ -462,7 +475,7 @@ public class Room {
     public void setVerticalPatternToSelectedSurface() {
 
         for (Surface surfaceInRoom : surfaceList) {
-            if (surfaceInRoom.isSelected()) {
+            if (surfaceInRoom.isSelected() && !surfaceInRoom.isHole()) {
                 VerticalPattern verticalPattern = new VerticalPattern();
                 verticalPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest(), surfaceInRoom.getGroutWidth());
                 surfaceInRoom.setPattern(verticalPattern);
@@ -472,10 +485,30 @@ public class Room {
 
     public void setVerticalBrickPatternToSelectedSurface() {
         for (Surface surfaceInRoom : surfaceList) {
-            if (surfaceInRoom.isSelected()) {
-                VerticalBrickPattern verticalBrickPattern = new VerticalBrickPattern();
+            if (surfaceInRoom.isSelected() && !surfaceInRoom.isHole()) {
+                VerticalBrickPattern verticalBrickPattern = new VerticalBrickPattern(surfaceInRoom.getMismatch());
                 verticalBrickPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest(), surfaceInRoom.getGroutWidth());
                 surfaceInRoom.setPattern(verticalBrickPattern);
+            }
+        }
+    }
+
+    public void setAnglePattern() {
+        for (Surface surfaceInRoom : surfaceList) {
+            if (surfaceInRoom.isSelected()) {
+                InclinePattern inclinePattern = new InclinePattern();
+                inclinePattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest(), surfaceInRoom.getGroutWidth());
+                surfaceInRoom.setPattern(inclinePattern);
+            }
+        }
+    }
+
+    public void setSquarePatternToSelectedSurface() {
+        for (Surface surface : surfaceList) {
+            if (surface.isSelected()) {
+                SquarePattern squarePattern = new SquarePattern();
+                squarePattern.generateTiles(surface.getBoundingRectangle(), surface.getTileType(), surface.getAreaTest(), surface.getGroutWidth());
+                surface.setPattern(squarePattern);
             }
         }
     }
@@ -566,8 +599,7 @@ public class Room {
         ArrayList<Surface> selectedSurfaceList = this.getSelectedSurfaces();
         if (selectedSurfaceList.get(0).isBeneath(selectedSurfaceList.get(1))) {
             verticallyAlignSurfaces(selectedSurfaceList.get(0), selectedSurfaceList.get(1));
-        }
-        else {
+        } else {
             verticallyAlignSurfaces(selectedSurfaceList.get(1), selectedSurfaceList.get(0));
         }
     }
@@ -590,11 +622,11 @@ public class Room {
         ArrayList<Surface> selectedSurfaceList = this.getSelectedSurfaces();
         if (selectedSurfaceList.get(0).isToTheLeft(selectedSurfaceList.get(1))) {
             horizontallyAlignSurfaces(selectedSurfaceList.get(0), selectedSurfaceList.get(1));
-        }
-        else {
+        } else {
             horizontallyAlignSurfaces(selectedSurfaceList.get(1), selectedSurfaceList.get(0));
         }
     }
+
     private void horizontallyAlignSurfaces(Surface leftSurface, Surface rightSurface) {
         Point2D rightSurfaceLeftMostPoint = rightSurface.getLeftMostPoint();
         Point2D leftSurfaceRightMostPoint = leftSurface.getRightMostPoint();
@@ -609,7 +641,9 @@ public class Room {
     private ArrayList<Surface> getSelectedSurfaces() {
         ArrayList<Surface> selectedSurfaceList = new ArrayList<Surface>();
         for (Surface surface : this.surfaceList) {
-            if (surface.isSelected()) { selectedSurfaceList.add(surface); }
+            if (surface.isSelected()) {
+                selectedSurfaceList.add(surface);
+            }
         }
         return selectedSurfaceList;
     }
@@ -646,7 +680,7 @@ public class Room {
 
     private double[] getGridSquarePos(double horizontalGridSquare, double verticalGridSquare, double gridGap) {
         double firstX = horizontalGridSquare * gridGap;
-        double secondX = (horizontalGridSquare  + 1) * gridGap;
+        double secondX = (horizontalGridSquare + 1) * gridGap;
         double firstY = (verticalGridSquare + 1) * gridGap;
         double secondY = verticalGridSquare * gridGap;
 
@@ -738,7 +772,8 @@ public class Room {
     public void separateSelectedSurface() {
         int counter = getNumberOfSelectedSurfaces();
         if (counter == 1) {
-            for (Surface surface: surfaceList) {
+            ArrayList<Surface> copyList = new ArrayList<Surface>(surfaceList);
+            for (Surface surface : copyList) {
                 if (surface.isSelected()) {
                     ArrayList<Surface> compositeSurface = surface.getElementarySurface();
                     Surface baseSurface = compositeSurface.get(0);
@@ -751,12 +786,33 @@ public class Room {
                                 newBaseSurface.setPattern(baseSurface.getPattern());
                             }
                             surfaceList.add(newBaseSurface);
-                        }
-                        else {
+                        } else {
                             surfaceList.add(compositeSurface.get(i));
                         }
                     }
                     surfaceList.remove(surface);
+                }
+            }
+        }
+    }
+
+    public void setMismatch(double mismatch) {
+        int counter = getNumberOfSelectedSurfaces();
+        if (counter == 1) {
+            for (Surface surface : surfaceList) {
+                if (surface.isSelected()) {
+                    surface.setMismatch(mismatch);
+                }
+            }
+        }
+    }
+
+    public void updateSelectedSurfacesPatternPosition(double deltaX, double deltaY) {
+        int counter = getNumberOfSelectedSurfaces();
+        if (counter == 1) {
+            for (Surface surface : surfaceList) {
+                if (surface.isSelected()) {
+                    surface.translatePattern(deltaX, deltaY);
                 }
             }
         }

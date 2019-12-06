@@ -17,6 +17,8 @@ public abstract class Pattern {
     private Color groutColor;
     public ArrayList<Tile> virtualTileList;
 
+    public double mismatch;
+
     public Pattern() {
         this.virtualTileList = new ArrayList<Tile>();
         this.groutWidth = 0d;
@@ -62,4 +64,8 @@ public abstract class Pattern {
     }
 
     public abstract ArrayList<Tile> generateTiles(Rectangle boudingRectangle, TileType tileType, Area area, double groutWidth);
+
+    public void setMismatch(double mismatch){
+        this.mismatch = mismatch;
+    }
 }

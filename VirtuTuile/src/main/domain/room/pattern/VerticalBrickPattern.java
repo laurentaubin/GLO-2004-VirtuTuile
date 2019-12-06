@@ -11,8 +11,9 @@ import java.util.ArrayList;
 
 public class VerticalBrickPattern extends Pattern {
 
-    public VerticalBrickPattern() {
+    public VerticalBrickPattern(double mismatch) {
         super();
+        this.mismatch = mismatch;
     }
 
 
@@ -58,7 +59,7 @@ public class VerticalBrickPattern extends Pattern {
             }
             else{
                 position.setLocation(boundingRectanglePosition.getX(), position.getY() + tileType.getWidth());
-                position.setLocation(position.getX() - (tileType.getHeight()/2), position.getY());
+                position.setLocation(position.getX() - (tileType.getHeight()*this.mismatch), position.getY());
             }
         }
         deleteOutsideTile(area);

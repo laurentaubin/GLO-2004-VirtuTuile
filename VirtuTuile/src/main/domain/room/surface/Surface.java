@@ -39,6 +39,7 @@ public class Surface {
     public int nPoints;
     private ArrayList<Surface> elementarySurface;
     private double groutWidth;
+    private double mismatch = 0.5d;
 
 
 
@@ -541,6 +542,20 @@ public class Surface {
         Point2D otherTopLeftPoint = otherSurface.getTopLeftPoint();
 
         return (thisTopLeftPoint.getY() > otherTopLeftPoint.getY());
+    }
+
+    public void setMismatch(double mismatch) {
+        this.mismatch = mismatch;
+        this.pattern.setMismatch(mismatch);
+    }
+
+    public double getMismatch() {
+        return this.mismatch;
+    }
+
+    public void translatePattern(double x, double y) {
+        this.tileType.setxOffset(x);
+        this.tileType.setyOffset(y);
     }
 }
 

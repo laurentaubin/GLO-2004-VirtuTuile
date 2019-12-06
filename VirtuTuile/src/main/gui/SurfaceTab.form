@@ -99,7 +99,7 @@
       <grid id="1a118" layout-manager="GridBagLayout">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="1.0" weighty="1.0"/>
+          <gridbag weightx="0.0" weighty="1.0"/>
         </constraints>
         <properties/>
         <border type="none"/>
@@ -190,20 +190,10 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="cfd47" class="javax.swing.JButton" binding="combineButton">
-            <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-              <gridbag top="5" left="0" bottom="5" right="0" weightx="1.0" weighty="1.0"/>
-            </constraints>
-            <properties>
-              <enabled value="true"/>
-              <text value="Combiner les surfaces"/>
-            </properties>
-          </component>
           <component id="35916" class="javax.swing.JLabel" binding="dispositionLabel">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag top="10" left="0" bottom="5" right="0" weightx="1.0" weighty="1.0"/>
+              <grid row="1" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag top="10" left="0" bottom="5" right="0" weightx="0.0" weighty="1.0"/>
             </constraints>
             <properties>
               <font style="1"/>
@@ -217,31 +207,79 @@
             </constraints>
             <properties/>
           </component>
-          <component id="5e7a0" class="javax.swing.JButton" binding="separateButton">
+          <component id="d4e01" class="javax.swing.JButton" binding="verticallyAlignButton">
             <constraints>
-              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
               <gridbag top="5" left="0" bottom="5" right="0" weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
-              <text value="Décombiner les surfaces"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="cfd47" class="javax.swing.JButton" binding="combineButton">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag top="5" left="0" bottom="5" right="0" weightx="0.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <enabled value="true"/>
+              <text value=""/>
+              <toolTipText value="Combiner"/>
+            </properties>
+          </component>
+          <component id="c34b9" class="javax.swing.JButton" binding="leftAlignButton">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag top="5" left="0" bottom="0" right="0" weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="9c474" class="javax.swing.JButton" binding="downButton">
+            <constraints>
+              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag top="5" left="0" bottom="0" right="0" weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="3a3ed" class="javax.swing.JButton" binding="topAlignButton">
+            <constraints>
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag top="5" left="0" bottom="0" right="0" weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="7c808" class="javax.swing.JButton" binding="rightButton">
+            <constraints>
+              <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag top="5" left="0" bottom="0" right="0" weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value=""/>
             </properties>
           </component>
           <component id="93f43" class="javax.swing.JButton" binding="horizontallyAlignButton">
             <constraints>
-              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="4" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
               <gridbag top="5" left="0" bottom="5" right="0" weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
-              <text value="Aligner horizontalement les surfaces"/>
+              <text value=" "/>
             </properties>
           </component>
-          <component id="d4e01" class="javax.swing.JButton" binding="verticallyAlignButton">
+          <component id="5e7a0" class="javax.swing.JButton" binding="separateButton">
             <constraints>
-              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-              <gridbag top="5" left="0" bottom="5" right="0" weightx="0.0" weighty="0.0"/>
+              <grid row="3" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag top="5" left="0" bottom="5" right="0" weightx="0.0" weighty="1.0"/>
             </constraints>
             <properties>
-              <text value="Aligner verticallement les surfaces"/>
+              <text value=""/>
+              <toolTipText value="Séparer"/>
             </properties>
           </component>
         </children>

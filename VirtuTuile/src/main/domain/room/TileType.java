@@ -80,6 +80,14 @@ public class TileType extends Polygon{
         return this.yOffset;
     }
 
+    public void setxOffset(double x) {
+        this.xOffset += x;
+    }
+
+    public void setyOffset(double y) {
+        this.yOffset += y;
+    }
+
     @Override
     public String toString() {
         return getName();

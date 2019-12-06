@@ -11,8 +11,6 @@ import java.util.ArrayList;
 
 public class Tile extends Area {
     final public double MIN_LENGTH = 2;
-    final public double MIN_WIDTH = 20;
-    final public double MIN_HEIGHT = 20;
     private Point2D.Double position;
     private double width;
     private double height;

@@ -15,7 +15,7 @@ public class PatternTab extends JPanel{
     private JToggleButton straightPatternButton;
     private JToggleButton brickPatternButton;
     private JToggleButton verticalBrickShapeButton;
-    private JToggleButton whatPatternButton;
+    private JToggleButton anglePatternButton;
     private JToggleButton chevronPatternButton;
     private JToggleButton verticalPatternButton;
     private ButtonGroup patternButtonGroup;
@@ -31,6 +31,15 @@ public class PatternTab extends JPanel{
     private JFormattedTextField groutWidthField;
     private JLabel horizontalLabel;
     private JButton chromaticButton;
+    private JPanel anglePanel;
+    private JPanel mismatchPanel;
+    private JLabel mismatchLabel;
+    private JComboBox percentComboBox;
+    private JButton percentButton;
+    private JPanel squarePanel;
+    private JToggleButton squarePatternButton;
+    private JPanel chevronPattern;
+    private JToggleButton chevronButton;
     private Color selectedColor;
 
 
@@ -38,15 +47,22 @@ public class PatternTab extends JPanel{
         this.mainWindow = mainWindow;
         this.groutWidthField.setValue(0);
         this.selectedColor = Color.WHITE;
+        this.mismatchPanel.setVisible(false);
         patternButtonGroup = new ButtonGroup();
         patternButtonGroup.add(straightPatternButton);
         patternButtonGroup.add(brickPatternButton);
         patternButtonGroup.add(verticalBrickShapeButton);
         patternButtonGroup.add(verticalPatternButton);
         patternButtonGroup.add(chevronPatternButton);
-        patternButtonGroup.add(whatPatternButton);
+        patternButtonGroup.add(anglePatternButton);
 
-        //groutColorButton.setPreferredSize(new Dimension(60, 40));
+        percentComboBox.addItem(25);
+        percentComboBox.addItem(50);
+        percentComboBox.addItem(75);
+        percentComboBox.setSelectedIndex(1);
+
+        percentButton.setBackground(new Color(0,112,245));
+        percentButton.setForeground(new Color(235, 235, 240));
 
         BufferedImage straightImage = ImageIO.read(this.getClass().getResourceAsStream("/image/droite_horizontale.png"));
         Icon straightIcon = new ImageIcon(straightImage.getScaledInstance(120, 100, Image.SCALE_DEFAULT));
@@ -61,16 +77,32 @@ public class PatternTab extends JPanel{
         BufferedImage brickImage = ImageIO.read(this.getClass().getResourceAsStream("/image/brique_horizontale.png"));
         Icon brickIcon = new ImageIcon(brickImage.getScaledInstance(120, 100, Image.SCALE_DEFAULT));
         this.brickPatternButton.setIcon(brickIcon);
+        brickPatternButton.setMargin(new Insets(10, 0, 10, 0));
 
         BufferedImage vertBrickImage = ImageIO.read(this.getClass().getResourceAsStream("/image/brique_verticale.png"));
         Icon vertBrickIcon = new ImageIcon(vertBrickImage.getScaledInstance(120, 100, Image.SCALE_DEFAULT));
         this.verticalBrickShapeButton.setIcon(vertBrickIcon);
-
-
-
-        brickPatternButton.setMargin(new Insets(10, 0, 10, 0));
-
         verticalBrickShapeButton.setMargin(new Insets(10, 0, 10, 0));
+
+
+        BufferedImage angleImage = ImageIO.read(this.getClass().getResourceAsStream("/image/incline.png"));
+        Icon angleIcon = new ImageIcon(angleImage.getScaledInstance(120, 100, Image.SCALE_DEFAULT));
+        this.anglePatternButton.setIcon(angleIcon);
+        anglePatternButton.setMargin(new Insets(10, 0, 10, 0));
+
+        BufferedImage squareImage = ImageIO.read(this.getClass().getResourceAsStream("/image/square.png"));
+        Icon squareIcon = new ImageIcon(squareImage.getScaledInstance(120, 100, Image.SCALE_DEFAULT));
+        this.squarePatternButton.setIcon(squareIcon);
+        squarePatternButton.setMargin(new Insets(10, 0, 10, 0));
+
+        BufferedImage chevronImage = ImageIO.read(this.getClass().getResourceAsStream("/image/chevron.png"));
+        Icon chevronIcon = new ImageIcon(chevronImage.getScaledInstance(120, 100, Image.SCALE_DEFAULT));
+        this.chevronButton.setIcon(chevronIcon);
+        chevronButton.setMargin(new Insets(10, 0, 10, 0));
+
+
+
+
 
         groutColorButton.setPreferredSize(new Dimension(50, 20));
 
@@ -95,6 +127,7 @@ public class PatternTab extends JPanel{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 straightPatternButtonActionPerformed();
+                mismatchPanel.setVisible(false);
             }
         });
 
@@ -102,6 +135,7 @@ public class PatternTab extends JPanel{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 horizontalBrickButtonActionPerformed();
+                mismatchPanel.setVisible(true);
             }
         });
 
@@ -109,6 +143,7 @@ public class PatternTab extends JPanel{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 verticalPatternButtonActionPerformed();
+                mismatchPanel.setVisible(false);
             }
         });
 
@@ -116,6 +151,7 @@ public class PatternTab extends JPanel{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 verticalBrickButtonActionPerformed();
+                mismatchPanel.setVisible(true);
             }
         });
 
@@ -131,6 +167,28 @@ public class PatternTab extends JPanel{
             public void actionPerformed(ActionEvent actionEvent) {
                 Color color = JColorChooser.showDialog(null, "Choose a color", selectedColor);
                 setButtonColor(color);
+            }
+        });
+
+        anglePatternButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                anglePatternButtonActionPerformed();
+            }
+        });
+
+        squarePatternButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                squarePatternButtonActionPerformed();
+            }
+        });
+
+        percentButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                applyMismatchActionPerformed();
+
             }
         });
     }
@@ -161,9 +219,17 @@ public class PatternTab extends JPanel{
         mainWindow.setVerticalBrickPatternToSelectedSurface();
     }
 
+    private void anglePatternButtonActionPerformed() {
+        mainWindow.setAnglePattern();;
+    }
+
+    private void squarePatternButtonActionPerformed() {
+        mainWindow.setSquarePattern();
+    }
+
 
     private void setEnteredGroutWidth() {
-        double width = Double.valueOf(groutWidthField.getValue().toString());
+        double width = Double.parseDouble(groutWidthField.getValue().toString());
         this.mainWindow.setEnteredGroutWidtht(width);
     }
 
@@ -175,6 +241,14 @@ public class PatternTab extends JPanel{
         else {
             this.groutWidthField.setValue(0);
             this.groutWidthField.setEnabled(false);
+        }
+    }
+
+    public void applyMismatchActionPerformed() {
+        double mismatch = (int)percentComboBox.getSelectedItem();
+        if (mismatch >= 0 && mismatch <= 100) {
+            mismatch = mismatch/100;
+            mainWindow.setMismatch(mismatch);
         }
     }
 }

@@ -11,19 +11,46 @@ import java.util.ArrayList;
 
 public class BrickPattern extends Pattern {
 
-    public BrickPattern() {
+    public BrickPattern(double mismatch) {
         super();
+        this.mismatch = mismatch;
     }
 
-    public BrickPattern(double xOffset, double yOffset, int angle, double groutWidth, Color groutColor) {
+    public BrickPattern(double xOffset, double yOffset, int angle, double groutWidth, Color groutColor, double mismatch) {
         super(xOffset, yOffset, angle, groutWidth, groutColor);
+        this.mismatch = mismatch;
+    }
+
+    public void setMismatch(double mismatch) {
+        this.mismatch = mismatch;
     }
 
     public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth) {
+        double xOffset = tileType.getxOffset();
+        double yOffset = tileType.getyOffset();
+        double tileWidth = tileType.getWidth();
+        double tileHeight = tileType.getHeight();
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
         Point2D.Double position = new Point2D.Double(boundingRectanglePosition.getX(), boundingRectangle.getY());
-        double boundingRectangleWidth = (int)boundingRectangle.getWidth() ;
-        double boundingRectangleHeight = (int)boundingRectangle.getHeight();
+        if (xOffset <= 0) {
+            position.x = position.x + xOffset;
+        }
+
+        else {
+            position.x = position.x - tileWidth + (xOffset%tileWidth);
+        }
+
+        if (yOffset <= 0) {
+            position.y = position.y + yOffset;
+        }
+        else {
+            position.y = position.y - tileHeight + (yOffset%tileHeight);
+
+        }
+        Point2D.Double initPosition = new Point2D.Double(position.getX(), position.getY());
+
+        double boundingRectangleWidth = (int)boundingRectangle.getWidth() + Math.abs(xOffset) ;
+        double boundingRectangleHeight = (int)boundingRectangle.getHeight() + Math.abs(yOffset);
 
         double numberColumn = boundingRectangleWidth /  (tileType.getWidth() + groutWidth);
         if (numberColumn / (int)numberColumn != 0) {
@@ -56,11 +83,11 @@ public class BrickPattern extends Pattern {
 
             }
             if(row % 2 == 0) {
-                position.setLocation(boundingRectanglePosition.getX(), position.getY() + tileType.getHeight());
+                position.setLocation(initPosition.getX(), position.getY() + tileType.getHeight());
             }
             else{
-                position.setLocation(boundingRectanglePosition.getX(), position.getY() + tileType.getHeight());
-                position.setLocation(position.getX() - (tileType.getWidth()/2), position.getY());
+                position.setLocation(initPosition.getX(), position.getY() + tileType.getHeight());
+                position.setLocation(position.getX() - (tileType.getWidth() * this.mismatch), position.getY());
             }
 
         }

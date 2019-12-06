@@ -23,6 +23,7 @@ public class TopButtonBar extends JPanel{
     private JLabel createRecLabel;
     private JButton undoButton;
     private JButton redoButton;
+    private JButton saveButton;
     private ImageIcon selectIcon;
     private Color initColor;
     private Border oldBorder;
@@ -54,6 +55,7 @@ public class TopButtonBar extends JPanel{
         this.selectButton.setPreferredSize(mainButtonDimension);
         this.createRecSurfaceButton.setPreferredSize(mainButtonDimension);
         this.createIrrSurfaceButton.setPreferredSize(mainButtonDimension);
+        this.saveButton.setPreferredSize(mainButtonDimension);
 
         Dimension smallButtonDimension = new Dimension(25, 25);
 
@@ -82,22 +84,19 @@ public class TopButtonBar extends JPanel{
         Icon redoIcon = new ImageIcon(redoImage.getScaledInstance(20, 20, Image.SCALE_DEFAULT));
         this.redoButton.setIcon(redoIcon);
 
+        //Save icon icon by Icons8
+        BufferedImage saveImage = ImageIO.read(this.getClass().getResourceAsStream("/image/save.png"));
+        Icon saveIcon = new ImageIcon(saveImage.getScaledInstance(40, 40, Image.SCALE_DEFAULT));
+        this.saveButton.setIcon(saveIcon);
 
 
-
-
-        //this.createRecSurfaceButton.setIcon(new ImageIcon(new ImageIcon("src/image/addRec.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
-        //Polygon icon by Icons8
-        //this.createIrrSurfaceButton.setIcon(new ImageIcon(new ImageIcon("src/image/addIrr.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
 
         selectButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                System.out.println("Entered");
             }
             @Override
             public void mouseExited(MouseEvent e) {
-                System.out.println("Exited");
             }
         });
 
@@ -151,5 +150,16 @@ public class TopButtonBar extends JPanel{
                 mainWindow.redo();
             }
         });
+
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                saveActionPerformed();
+            }
+        });
+    }
+
+    public void saveActionPerformed() {
+        return;
     }
 }
