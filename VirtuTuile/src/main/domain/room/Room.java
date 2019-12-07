@@ -694,6 +694,33 @@ public class Room implements Serializable{
         }
     }
 
+    public void leftAlignSelectedSurfaces() {
+        if (this.getNumberOfSelectedSurfaces() == 2) {
+            ArrayList<Surface> selectedSurfaceList = this.getSurfaceList();
+
+            if (selectedSurfaceList.get(0).isToTheLeft(selectedSurfaceList.get(1))) {
+                Surface leftSurface = selectedSurfaceList.get(0);
+                Surface rightSurface = selectedSurfaceList.get(1);
+                leftAlign(leftSurface, rightSurface);
+
+            }
+            else {
+                Surface leftSurface = selectedSurfaceList.get(1);
+                Surface rightSurface = selectedSurfaceList.get(0);
+                leftAlign(leftSurface, rightSurface);
+            }
+        }
+    }
+
+    public void leftAlign(Surface leftSurface, Surface rightSurface) {
+        Point2D leftPos = leftSurface.getLeftMostPoint();
+        Point2D rightSurfaceTopLeftPoint = rightSurface.getTopLeftPoint();
+        double x = rightSurfaceTopLeftPoint.getX() - leftPos.getX();
+
+        rightSurfaceTopLeftPoint.setLocation(rightSurfaceTopLeftPoint.getX() - x, rightSurfaceTopLeftPoint.getY());
+        rightSurface.snapToPoint(rightSurfaceTopLeftPoint);
+    }
+
     private ArrayList<Surface> getSelectedSurfaces() {
         ArrayList<Surface> selectedSurfaceList = new ArrayList<Surface>();
         for (Surface surface : this.surfaceList) {

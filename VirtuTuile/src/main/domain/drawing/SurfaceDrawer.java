@@ -42,6 +42,7 @@ public class SurfaceDrawer {
 
     public void drawSurface(Graphics2D g2d, ArrayList<Surface> surfaceList, double zoom, Point currentMousePoint) {
         for (Surface current_surface : surfaceList) {
+            /*
             Path2D.Double path = new Path2D.Double();
             for (int i = 0; i < current_surface.nPoints; i++) {
                 if (i == 0) {
@@ -53,6 +54,12 @@ public class SurfaceDrawer {
             }
             path.closePath();
             Area shape = new Area(path);
+             */
+
+            Area shape = new Area(current_surface.getAreaTest());
+            //Area otherShape = new Area(current_surface.getAreaTest());
+            //AffineTransform tx = new AffineTransform(0.5, 0,0,0.5,0,0);
+            //otherShape.transform(tx);
 
             if (zoom != 1) {
                 AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);

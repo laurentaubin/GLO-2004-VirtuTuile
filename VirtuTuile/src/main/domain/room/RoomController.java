@@ -401,6 +401,11 @@ public class RoomController implements Serializable{
 
     }
 
+
+    public void leftAlignSelectedSurfaces() {
+        room.leftAlignSelectedSurfaces();
+    }
+
     public ArrayList<Point> getPointList() {
         return this.pointList;
     }

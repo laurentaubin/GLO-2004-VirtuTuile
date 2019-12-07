@@ -144,6 +144,13 @@ public class SurfaceTab extends JPanel{
             }
         });
 
+        leftAlignButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                leftAlignSelectedSurfaces();
+            }
+        });
+
         //Align Center icon icon by Icons8
         //Align Bottom icon icon by Icons8
         //Align Top icon icon by Icons8
@@ -209,6 +216,10 @@ public class SurfaceTab extends JPanel{
         mainWindow.verticallyAlignSelectedSurfaces();
     }
 
+    private void leftAlignSelectedSurfaces() {
+        mainWindow.leftAlignSelectedSurfaces();
+    }
+
     public void setEnteredWidthSurfaceDimensions(){
         double enteredWidth = UnitConverter.convertSelectedUnitToPixel((double)widthField.getValue(), mainWindow.getCurrentMeasurementMode());
         this.mainWindow.setSelectedSurfaceWidth(enteredWidth);
@@ -228,7 +239,6 @@ public class SurfaceTab extends JPanel{
         this.surfaceColor = color;
         surfaceColorButton.setBackground(color);
         surfaceColorButton.setOpaque(true);
-
     }
 
     public void setSurfaceColor(Color color){
