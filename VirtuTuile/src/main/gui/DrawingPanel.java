@@ -74,10 +74,9 @@ public class DrawingPanel extends JPanel implements Serializable {
                         g2d.drawLine((int) ((col) * this.gridGap), 0, (int) ((col) * this.gridGap), (int)(ajustingDimension.getHeight() / zoom));
                     }
                 }
+                g2d.scale(1/zoom, 1/zoom);
             }
-            g2d.scale(1/zoom, 1/zoom);
             mainWindow.draw(g2d, this, zoom);
-
         }
     }
 
