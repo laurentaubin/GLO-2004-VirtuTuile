@@ -674,23 +674,50 @@ public class Room implements Serializable{
             Surface rightSurface = selectedSurfaceList.get(1);
 
             Point2D leftSurfaceMiddlePoint = leftSurface.getLeftMostPoint();
-            leftSurfaceMiddlePoint.setLocation(leftSurfaceMiddlePoint.getX(), leftSurfaceMiddlePoint.getY() + (leftSurface.getHeight() / 2));
+            leftSurfaceMiddlePoint.setLocation(leftSurfaceMiddlePoint.getX(), leftSurfaceMiddlePoint.getY() + (leftSurface.getHeight() / 2.0));
 
             Point2D rightSurfaceLeftMostPoint = rightSurface.getLeftMostPoint();
-            rightSurfaceLeftMostPoint.setLocation(rightSurfaceLeftMostPoint.getX(), leftSurfaceMiddlePoint.getY() - (rightSurface.getHeight() / 2));
+            rightSurfaceLeftMostPoint.setLocation(rightSurfaceLeftMostPoint.getX(), leftSurfaceMiddlePoint.getY() - (rightSurface.getHeight() / 2.0));
 
             rightSurface.snapToPoint(rightSurfaceLeftMostPoint);
         } else {
             Surface rightSurface = selectedSurfaceList.get(0);
             Surface leftSurface = selectedSurfaceList.get(1);
 
-            Point2D rightSurfaceMiddlePoint = rightSurface.getTopMostPoint();
-            rightSurfaceMiddlePoint.setLocation(rightSurfaceMiddlePoint.getX(), rightSurfaceMiddlePoint.getY() + (rightSurface.getHeight() / 2));
+            Point2D rightSurfaceMiddlePoint = rightSurface.getLeftMostPoint();
+            rightSurfaceMiddlePoint.setLocation(rightSurfaceMiddlePoint.getX(), rightSurfaceMiddlePoint.getY() + (rightSurface.getHeight() / 2.0));
 
-            Point2D leftSurfaceRightMostPoint = leftSurface.getTopMostPoint();
-            leftSurfaceRightMostPoint.setLocation(leftSurfaceRightMostPoint.getX(), rightSurfaceMiddlePoint.getY() - (leftSurface.getHeight() / 2));
+            Point2D leftSurfaceLeftMostPoint = leftSurface.getLeftMostPoint();
+            leftSurfaceLeftMostPoint.setLocation(leftSurfaceLeftMostPoint.getX(), rightSurfaceMiddlePoint.getY() - (leftSurface.getHeight() / 2.0));
 
-            leftSurface.snapToPoint(leftSurfaceRightMostPoint);
+            leftSurface.snapToPoint(leftSurfaceLeftMostPoint);
+        }
+    }
+
+    public void horizontallyCenterSelectedSurfaces() {
+        ArrayList<Surface> selectedSurfaceList = this.getSelectedSurfaces();
+        if(selectedSurfaceList.get(0).isToTheLeft(selectedSurfaceList.get(1))) {
+            Surface leftSurface = selectedSurfaceList.get(0);
+            Surface rightSurface = selectedSurfaceList.get(1);
+
+            Point2D leftSurfaceMiddlePoint = leftSurface.getLeftMostPoint();
+            leftSurfaceMiddlePoint.setLocation(leftSurfaceMiddlePoint.getX() + (leftSurface.getWidth() / 2.0), leftSurfaceMiddlePoint.getY());
+
+            Point2D rightSurfaceLeftMostPoint = rightSurface.getLeftMostPoint();
+            rightSurfaceLeftMostPoint.setLocation(leftSurfaceMiddlePoint.getX() - (rightSurface.getWidth() / 2.0), rightSurfaceLeftMostPoint.getY());
+
+            rightSurface.snapToPoint(rightSurfaceLeftMostPoint);
+        } else {
+            Surface rightSurface = selectedSurfaceList.get(0);
+            Surface leftSurface = selectedSurfaceList.get(1);
+
+            Point2D rightSurfaceMiddlePoint = rightSurface.getLeftMostPoint();
+            rightSurfaceMiddlePoint.setLocation(rightSurfaceMiddlePoint.getX() + (rightSurface.getWidth() / 2.0), rightSurfaceMiddlePoint.getY());
+
+            Point2D leftSurfaceLeftMostPoint = leftSurface.getLeftMostPoint();
+            leftSurfaceLeftMostPoint.setLocation(rightSurfaceMiddlePoint.getX() - (leftSurface.getWidth() / 2.0), leftSurfaceLeftMostPoint.getY());
+
+            leftSurface.snapToPoint(leftSurfaceLeftMostPoint);
         }
     }
 

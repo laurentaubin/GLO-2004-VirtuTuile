@@ -398,7 +398,7 @@ public class RoomController implements Serializable{
     }
 
     public void horizontallyCenterSelectedSurfaces() {
-
+        room.horizontallyCenterSelectedSurfaces();
     }
 
 

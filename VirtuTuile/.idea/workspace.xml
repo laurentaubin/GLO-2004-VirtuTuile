@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8c246219-cf09-4492-905b-d80bdbddbe18" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+    <list default="true" id="8c246219-cf09-4492-905b-d80bdbddbe18" name="Default Changelist" comment="Undo/redo temporary fixed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/domain/room/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/RoomController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/gui/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/MainWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/gui/SurfaceTab.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/SurfaceTab.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,6 +15,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -53,7 +49,6 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -139,27 +134,16 @@
       <workItem from="1574703904289" duration="7799000" />
       <workItem from="1574714040797" duration="2160000" />
       <workItem from="1574739971532" duration="1248000" />
-      <workItem from="1575136265751" duration="4603000" />
-      <workItem from="1575156506102" duration="17421000" />
-      <workItem from="1575175317521" duration="775000" />
-      <workItem from="1575207107769" duration="1274000" />
-      <workItem from="1575243602114" duration="3007000" />
-      <workItem from="1575248710488" duration="6426000" />
-      <workItem from="1575296622971" duration="1588000" />
-      <workItem from="1575315416034" duration="3673000" />
-      <workItem from="1575329349187" duration="406000" />
-      <workItem from="1575331793404" duration="3943000" />
-      <workItem from="1575336113645" duration="118000" />
-      <workItem from="1575383348277" duration="3604000" />
-      <workItem from="1575408820775" duration="7540000" />
-      <workItem from="1575426212929" duration="4719000" />
-      <workItem from="1575431537642" duration="781000" />
-      <workItem from="1575468704999" duration="371000" />
-      <workItem from="1575470359388" duration="2881000" />
-      <workItem from="1575485441523" duration="1570000" />
-      <workItem from="1575630042036" duration="5599000" />
-      <workItem from="1575637904366" duration="8567000" />
-      <workItem from="1575646971481" duration="12409000" />
+      <workItem from="1574869214600" duration="796000" />
+      <workItem from="1575477569916" duration="6124000" />
+      <workItem from="1575493515013" duration="95000" />
+      <workItem from="1575493655636" duration="3799000" />
+      <workItem from="1575499028310" duration="434000" />
+      <workItem from="1575501199777" duration="629000" />
+      <workItem from="1575655779284" duration="251000" />
+      <workItem from="1575658216500" duration="9149000" />
+      <workItem from="1575668915330" duration="109000" />
+      <workItem from="1575676797017" duration="5278000" />
     </task>
     <task id="LOCAL-00001" summary="xml(?)">
       <created>1573883748096</created>
@@ -210,7 +194,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574741218814</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Undo/redo temporary fixed">
+      <created>1575501548912</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1575501548912</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -242,6 +233,28 @@
     <MESSAGE value="Fixed merge &amp; selectionStatus" />
     <MESSAGE value="switchSelectionStatus really fixed" />
     <MESSAGE value="Quick refactor" />
-    <option name="LAST_COMMIT_MESSAGE" value="Quick refactor" />
+    <MESSAGE value="Undo/redo temporary fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Undo/redo temporary fixed" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/gui/TileTab.java</url>
+          <line>114</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/gui/TileTab.java</url>
+          <line>108</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/gui/TileTab.java</url>
+          <line>161</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
