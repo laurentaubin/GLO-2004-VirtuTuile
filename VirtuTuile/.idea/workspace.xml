@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8c246219-cf09-4492-905b-d80bdbddbe18" name="Default Changelist" comment="Undo/redo temporary fixed">
+    <list default="true" id="8c246219-cf09-4492-905b-d80bdbddbe18" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/TileType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/TileType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/ChevronPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/ChevronPattern.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/SquarePattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/SquarePattern.java" afterDir="false" />
     </list>
@@ -145,7 +147,7 @@
       <workItem from="1575658216500" duration="9149000" />
       <workItem from="1575668915330" duration="109000" />
       <workItem from="1575676797017" duration="5278000" />
-      <workItem from="1575809418330" duration="3672000" />
+      <workItem from="1575809418330" duration="17431000" />
     </task>
     <task id="LOCAL-00001" summary="xml(?)">
       <created>1573883748096</created>
@@ -203,7 +205,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575501548912</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="square et chevron pattern done">
+      <created>1575813117774</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1575813117774</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -236,7 +245,8 @@
     <MESSAGE value="switchSelectionStatus really fixed" />
     <MESSAGE value="Quick refactor" />
     <MESSAGE value="Undo/redo temporary fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Undo/redo temporary fixed" />
+    <MESSAGE value="square et chevron pattern done" />
+    <option name="LAST_COMMIT_MESSAGE" value="square et chevron pattern done" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

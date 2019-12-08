@@ -58,8 +58,6 @@ public class SquarePattern extends Pattern{
             for (int column = 1; column <= numberColumn; column++) {
                 int[] xPoints = new int[4];
                 int[] yPoints = new int[4];
-
-
                 if ((column % 2 != 0 && row % 2 != 0) || (column % 2 == 0 && row % 2 == 0)) {
 
 
@@ -106,6 +104,8 @@ public class SquarePattern extends Pattern{
                     position.setLocation(position.getX() + tileType.getWidth() + groutWidth, position.getY() - (2*tileType.getHeight()));
 
                 }
+
+
 
                 if(position.getX() > boundingRectanglePosition.getX() + boundingRectangleWidth) {
                     break;

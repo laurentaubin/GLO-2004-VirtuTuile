@@ -20,6 +20,7 @@ public class ChevronPattern extends Pattern {
     }
 
     public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth) {
+
         double xOffset = tileType.getxOffset();
         double yOffset = tileType.getyOffset();
 
@@ -28,7 +29,7 @@ public class ChevronPattern extends Pattern {
 
 
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
-        Point2D.Double position = new Point2D.Double(boundingRectanglePosition.getX() - 3*tileType.getWidth(), boundingRectangle.getY() - 3*tileType.getHeight());
+        Point2D.Double position = new Point2D.Double(boundingRectanglePosition.getX(), boundingRectangle.getY());
 
         if (xOffset <= 0) {
             position.x = position.x + xOffset;
@@ -53,51 +54,87 @@ public class ChevronPattern extends Pattern {
 
         double numberColumn = boundingRectangleWidth / (tileType.getWidth() + groutWidth);
         if (numberColumn / (int)numberColumn != 0) {
-            numberColumn = (int)(numberColumn + 2);
+            numberColumn = (int)(numberColumn + 5);
         }
 
         double numberRow = boundingRectangleHeight / (tileType.getHeight() + groutWidth);
         if(numberRow / (int)numberRow != 0) {
-            numberRow = (int)(numberRow + 2);
+            numberRow = (int)(numberRow + 5);
         }
+        int count = 0;
 
-        for (int row = 1; row <= numberRow ; row++) {
-            for (int column = 1; column <= numberColumn; column++){
-                int[] xPoints = new int[4];
-                int[] yPoints = new int[4];
-                xPoints[0] = (int)(position.getX());
-                xPoints[1] = (int)(position.getX() + tileType.getWidth());
-                xPoints[2] = (int)(position.getX() + tileType.getWidth());
-                xPoints[3] = (int)(position.getX());
+        boolean test;
+        for (int column = 1; column <= (numberColumn+numberRow)/2; column++){
+            int[] xPoints = new int[4];
+            int[] yPoints = new int[4];
 
-                yPoints[0] = (int)(position.getY());
-                yPoints[1] = (int)(position.getY());
-                yPoints[2] = (int)(position.getY() + tileType.getHeight());
-                yPoints[3] = (int)(position.getY() + tileType.getHeight());
 
-                Tile tile = new Tile(position, xPoints, yPoints, 4);
-                virtualTileList.add(tile);
+            if ((column % 2 == 1)) {
+                count = 0;
 
-                position.setLocation(position.getX() + tileWidth + groutWidth, position.getY());
+                do {
+                    count++;
+                    xPoints[0] = (int) (position.getX());
+                    yPoints[0] = (int) (position.getY());
 
-                xPoints[0] = (int)(position.getX());
-                xPoints[1] = (int)(position.getX() + tileHeight);
-                xPoints[2] = (int)(position.getX() + tileHeight);
-                xPoints[3] = (int)(position.getX());
+                    xPoints[1] = (int) (position.getX() + tileType.getHeight());
+                    yPoints[1] = (int) (position.getY());
 
-                yPoints[0] = (int)(position.getY());
-                yPoints[1] = (int)(position.getY());
-                yPoints[2] = (int)(position.getY() + tileWidth);
-                yPoints[3] = (int)(position.getY() + tileWidth);
+                    xPoints[2] = (int) (position.getX() + tileType.getHeight());
+                    yPoints[2] = (int) (position.getY() + tileType.getWidth());
 
-                tile = new Tile(position, xPoints, yPoints, 4);
-                virtualTileList.add(tile);
-                position.setLocation(position.getX() + 2*(tileHeight + groutWidth) , position.getY());
+                    xPoints[3] = (int) (position.getX());
+                    yPoints[3] = (int) (position.getY() + tileType.getWidth());
+
+                    virtualTileList.add(new Tile(position, xPoints, yPoints, 4));
+                    position.setLocation(position.getX() + tileType.getHeight() + groutWidth, position.getY() - (tileType.getHeight() + groutWidth));
+
+                    test = (boundingRectangle.contains(xPoints[0],  yPoints[0]) ||
+                            boundingRectangle.contains(xPoints[1],  yPoints[1]) ||
+                            boundingRectangle.contains(xPoints[2],  yPoints[2]) ||
+                            boundingRectangle.contains(xPoints[3],  yPoints[3])) || count == 1;
+                }
+                while(test);
+
+
+                //6
+                position.setLocation(position.getX() - (tileType.getHeight() + groutWidth), position.getY() + tileType.getWidth() + tileType.getHeight() + 2*groutWidth);
 
             }
-            initPosition.x = initPosition.getX() - tileHeight - groutWidth;
-            position.setLocation(initPosition.getX() - tileHeight, position.getY() + tileHeight + groutWidth);
-        }
+
+                else {
+                    count = 0;
+
+                    do {
+                        count++;
+                        xPoints[0] = (int) (position.getX());
+                        xPoints[1] = (int) (position.getX() + tileType.getWidth());
+                        xPoints[2] = (int) (position.getX() + tileType.getWidth());
+                        xPoints[3] = (int) (position.getX());
+
+
+                        yPoints[0] = (int) (position.getY());
+                        yPoints[1] = (int) (position.getY());
+                        yPoints[2] = (int) (position.getY() + tileType.getHeight());
+                        yPoints[3] = (int) (position.getY() + tileType.getHeight());
+
+                        virtualTileList.add(new Tile(position, xPoints, yPoints, 4));
+                        position.setLocation(position.getX() - tileType.getHeight() - groutWidth, position.getY() + (tileType.getHeight() + groutWidth));
+
+                        test = (boundingRectangle.contains(xPoints[0],  yPoints[0]) ||
+                                boundingRectangle.contains(xPoints[1],  yPoints[1]) ||
+                                boundingRectangle.contains(xPoints[2],  yPoints[2]) ||
+                                boundingRectangle.contains(xPoints[3],  yPoints[3])) || count == 1;
+                    }
+                    while(test);
+
+                position.setLocation(position.getX() + tileType.getWidth() + tileType.getHeight() + 2*groutWidth, position.getY() - (tileType.getHeight() + groutWidth));
+
+                }
+
+            }
+
+
 
         deleteOutsideTile(area, tileWidth, tileHeight);
         return virtualTileList;
