@@ -25,8 +25,27 @@ public class ChevronPattern extends Pattern {
 
         double tileWidth = tileType.getWidth();
         double tileHeight = tileType.getHeight();
+
+
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
-        Point2D.Double position = new Point2D.Double(boundingRectanglePosition.getX(), boundingRectangle.getY());
+        Point2D.Double position = new Point2D.Double(boundingRectanglePosition.getX() - 3*tileType.getWidth(), boundingRectangle.getY() - 3*tileType.getHeight());
+
+        if (xOffset <= 0) {
+            position.x = position.x + xOffset;
+        }
+
+        else {
+            position.x = position.x - tileWidth + (xOffset%tileWidth);
+        }
+
+        if (yOffset <= 0) {
+            position.y = position.y + yOffset;
+        }
+        else {
+            position.y = position.y - tileHeight + (yOffset%tileHeight);
+
+        }
+
         Point2D.Double initPosition = new Point2D.Double(position.getX(), position.getY());
 
         double boundingRectangleWidth = (int)boundingRectangle.getWidth() + Math.abs(xOffset);
@@ -46,38 +65,38 @@ public class ChevronPattern extends Pattern {
             for (int column = 1; column <= numberColumn; column++){
                 int[] xPoints = new int[4];
                 int[] yPoints = new int[4];
-                xPoints[0] = (int)(position.getX() + groutWidth);
-                xPoints[1] = (int)(position.getX() + tileType.getWidth() + groutWidth);
-                xPoints[2] = (int)(position.getX() + tileType.getWidth() + groutWidth);
-                xPoints[3] = (int)(position.getX() + groutWidth);
+                xPoints[0] = (int)(position.getX());
+                xPoints[1] = (int)(position.getX() + tileType.getWidth());
+                xPoints[2] = (int)(position.getX() + tileType.getWidth());
+                xPoints[3] = (int)(position.getX());
 
-                yPoints[0] = (int)(position.getY() + groutWidth);
-                yPoints[1] = (int)(position.getY() + groutWidth);
-                yPoints[2] = (int)(position.getY() + tileType.getHeight() + groutWidth);
-                yPoints[3] = (int)(position.getY() + tileType.getHeight() + groutWidth);
+                yPoints[0] = (int)(position.getY());
+                yPoints[1] = (int)(position.getY());
+                yPoints[2] = (int)(position.getY() + tileType.getHeight());
+                yPoints[3] = (int)(position.getY() + tileType.getHeight());
 
                 Tile tile = new Tile(position, xPoints, yPoints, 4);
                 virtualTileList.add(tile);
 
                 position.setLocation(position.getX() + tileWidth + groutWidth, position.getY());
 
-                xPoints[0] = (int)(position.getX() + groutWidth);
-                xPoints[1] = (int)(position.getX() + tileHeight + groutWidth);
-                xPoints[2] = (int)(position.getX() + tileHeight + groutWidth);
-                xPoints[3] = (int)(position.getX() + groutWidth);
+                xPoints[0] = (int)(position.getX());
+                xPoints[1] = (int)(position.getX() + tileHeight);
+                xPoints[2] = (int)(position.getX() + tileHeight);
+                xPoints[3] = (int)(position.getX());
 
-                yPoints[0] = (int)(position.getY() + groutWidth);
-                yPoints[1] = (int)(position.getY() + groutWidth);
-                yPoints[2] = (int)(position.getY() + tileWidth + groutWidth);
-                yPoints[3] = (int)(position.getY() + tileWidth + groutWidth);
+                yPoints[0] = (int)(position.getY());
+                yPoints[1] = (int)(position.getY());
+                yPoints[2] = (int)(position.getY() + tileWidth);
+                yPoints[3] = (int)(position.getY() + tileWidth);
 
                 tile = new Tile(position, xPoints, yPoints, 4);
                 virtualTileList.add(tile);
-                position.setLocation(position.getX() + 2 * (tileHeight) + groutWidth , position.getY());
+                position.setLocation(position.getX() + 2*(tileHeight + groutWidth) , position.getY());
 
             }
             initPosition.x = initPosition.getX() - tileHeight - groutWidth;
-            position.setLocation(initPosition.getX() - tileHeight - groutWidth, position.getY() + tileHeight + groutWidth);
+            position.setLocation(initPosition.getX() - tileHeight, position.getY() + tileHeight + groutWidth);
         }
 
         deleteOutsideTile(area, tileWidth, tileHeight);

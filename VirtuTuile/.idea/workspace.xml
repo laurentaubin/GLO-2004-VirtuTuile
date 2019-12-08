@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="8c246219-cf09-4492-905b-d80bdbddbe18" name="Default Changelist" comment="Undo/redo temporary fixed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/ChevronPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/ChevronPattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/SquarePattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/SquarePattern.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -144,6 +145,7 @@
       <workItem from="1575658216500" duration="9149000" />
       <workItem from="1575668915330" duration="109000" />
       <workItem from="1575676797017" duration="5278000" />
+      <workItem from="1575809418330" duration="3672000" />
     </task>
     <task id="LOCAL-00001" summary="xml(?)">
       <created>1573883748096</created>
