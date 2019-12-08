@@ -104,41 +104,20 @@ public class Room implements Serializable{
 
     void switchSelectionStatus(double x, double y, boolean isShiftDown) {
         Boolean latestSurfaceSelected = true;
-        int nbrHole = 0;
+
         for (int i = surfaceList.size() - 1; i >= 0; i--) {
-            if (surfaceList.get(i).isHole()) {
-                nbrHole++;
-                surfaceList.add(surfaceList.get(i));
-                surfaceList.remove(i);
-            }
+
 
             if (surfaceList.get(i).getAreaTest().contains(x, y) && latestSurfaceSelected == true) {
-                //this.switchSelectionStatusIfContains(x, y, isShiftDown, surfaceList.get(i));
-                //break;
 
-                if (!surfaceList.get(i).isHole()) {
-                    surfaceList.add(surfaceList.size() - (nbrHole), surfaceList.get(i));
-                    surfaceList.remove(i);
-
-
-                    surfaceList.get(surfaceList.size() - (1 + nbrHole)).switchSelectionStatus();
-                    latestSurfaceSelected = false;
-                } else {
                     surfaceList.get(i).switchSelectionStatus();
                     latestSurfaceSelected = false;
-                }
-
 
             } else {
                 if (!isShiftDown) surfaceList.get(i).unselect();
-                //surfaceList.get(i).unselect();
+
             }
         }
-        /*
-        for (Surface surfaceInRoom : this.surfaceList) {
-            this.switchSelectionStatusIfContains(x, y, isShiftDown, surfaceInRoom);
-        }
-         */
     }
 
     private void switchSelectionStatusIfContains(double x, double y, boolean isShiftDown, Surface surfaceInRoom) {
