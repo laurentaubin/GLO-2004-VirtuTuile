@@ -537,6 +537,14 @@ public class Surface implements Serializable{
 
         return (thisTopLeftPoint.getX() < otherTopLeftPoint.getX());
     }
+
+    public boolean isToTheRight(Surface otherSurface) {
+        Point2D thisRightMostPoint = this.getRightMostPoint();
+        Point2D otherRightMostPoint = otherSurface.getRightMostPoint();
+
+        return (thisRightMostPoint.getX() > otherRightMostPoint.getX());
+    }
+
     public boolean isBeneath(Surface otherSurface) {
         Point2D thisTopLeftPoint = this.getTopLeftPoint();
         Point2D otherTopLeftPoint = otherSurface.getTopLeftPoint();

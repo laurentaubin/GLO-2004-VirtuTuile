@@ -158,6 +158,20 @@ public class SurfaceTab extends JPanel{
             }
         });
 
+        topAlignButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                topAlignSelectedSurfaces();
+            }
+        });
+
+        downButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                bottomAlignSelectedSurfaces();
+            }
+        });
+
         //Align Center icon icon by Icons8
         //Align Bottom icon icon by Icons8
         //Align Top icon icon by Icons8
@@ -228,6 +242,14 @@ public class SurfaceTab extends JPanel{
 
     private void rightAlignSelectedSurfaces() {
         mainWindow.rightAlignSelectedSurfaces();
+    }
+
+    private void topAlignSelectedSurfaces() {
+        mainWindow.topAlignSelectedSurfaces();
+    }
+
+    private void bottomAlignSelectedSurfaces() {
+        mainWindow.bottomAlignSelectedSurfaces();
     }
 
     public void setEnteredWidthSurfaceDimensions(){

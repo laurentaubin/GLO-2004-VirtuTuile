@@ -756,15 +756,15 @@ public class Room implements Serializable{
         if(this.getNumberOfSelectedSurfaces() == 2) {
             ArrayList<Surface> selectedSurfaceList = this.getSurfaceList();
 
-            if (selectedSurfaceList.get(0).isToTheLeft(selectedSurfaceList.get(1))) {
-                Surface leftSurface = selectedSurfaceList.get(0);
-                Surface rightSurface = selectedSurfaceList.get(1);
+            if (selectedSurfaceList.get(0).isToTheRight(selectedSurfaceList.get(1))) {
+                Surface rightSurface = selectedSurfaceList.get(0);
+                Surface leftSurface = selectedSurfaceList.get(1);
                 rightAlign(leftSurface, rightSurface);
 
             }
             else {
-                Surface leftSurface = selectedSurfaceList.get(1);
-                Surface rightSurface = selectedSurfaceList.get(0);
+                Surface rightSurface = selectedSurfaceList.get(1);
+                Surface leftSurface = selectedSurfaceList.get(0);
                 rightAlign(leftSurface, rightSurface);
             }
         }
@@ -777,6 +777,64 @@ public class Room implements Serializable{
 
         leftSurfaceTopLeftPoint.setLocation(leftSurfaceTopLeftPoint.getX() + widthDifference, leftSurfaceTopLeftPoint.getY());
         leftSurface.snapToPoint(leftSurfaceTopLeftPoint);
+    }
+
+    public void topAlignSelectedSurfaces() {
+        if (this.getNumberOfSelectedSurfaces() == 2) {
+            ArrayList<Surface> selectedSurfaceList = this.getSurfaceList();
+
+            if (selectedSurfaceList.get(0).isBeneath(selectedSurfaceList.get(1))) {
+                Surface bottomSurface = selectedSurfaceList.get(0);
+                Surface topSurface = selectedSurfaceList.get(1);
+                topAlign(bottomSurface, topSurface);
+            }
+            else if (selectedSurfaceList.get(1).isBeneath(selectedSurfaceList.get(0))) {
+                Surface bottomSurface = selectedSurfaceList.get(1);
+                Surface topSurface = selectedSurfaceList.get(0);
+                topAlign(bottomSurface, topSurface);
+            }
+            else {
+                return;
+            }
+        }
+    }
+
+    public void topAlign(Surface bottomSurface, Surface topSurface) {
+        Point2D topPos = topSurface.getTopLeftPoint();
+        Point2D bottomSurfaceTopLeftPoint = bottomSurface.getTopLeftPoint();
+        double heightDifference = bottomSurfaceTopLeftPoint.getY() - topPos.getY();
+
+        bottomSurfaceTopLeftPoint.setLocation(bottomSurfaceTopLeftPoint.getX(), bottomSurfaceTopLeftPoint.getY() - heightDifference);
+        bottomSurface.snapToPoint(bottomSurfaceTopLeftPoint);
+    }
+
+    public void bottomAlignSelectedSurfaces() {
+        if (this.getNumberOfSelectedSurfaces() == 2) {
+            ArrayList<Surface> selectedSurfaceList = this.getSurfaceList();
+
+            if (selectedSurfaceList.get(0).isBeneath(selectedSurfaceList.get(1))) {
+                Surface bottomSurface = selectedSurfaceList.get(0);
+                Surface topSurface = selectedSurfaceList.get(1);
+                bottomAlign(bottomSurface, topSurface);
+            }
+            else if (selectedSurfaceList.get(1).isBeneath(selectedSurfaceList.get(0))) {
+                Surface bottomSurface = selectedSurfaceList.get(1);
+                Surface topSurface = selectedSurfaceList.get(0);
+                bottomAlign(bottomSurface, topSurface);
+            }
+            else {
+                return;
+            }
+        }
+    }
+
+    public void bottomAlign(Surface bottomSurface, Surface topSurface) {
+        Point2D bottomPos = bottomSurface.getBottomMostPoint();
+        Point2D topSurfaceTopLeftPoint = topSurface.getTopLeftPoint();
+        double heightDifference = bottomPos.getY() - topSurface.getBottomMostPoint().getY();
+
+        topSurfaceTopLeftPoint.setLocation(topSurfaceTopLeftPoint.getX(), topSurfaceTopLeftPoint.getY() + heightDifference);
+        topSurface.snapToPoint(topSurfaceTopLeftPoint);
     }
 
     private ArrayList<Surface> getSelectedSurfaces() {
