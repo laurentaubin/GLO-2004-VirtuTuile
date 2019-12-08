@@ -236,6 +236,7 @@
             </constraints>
             <properties>
               <text value=""/>
+              <toolTipText value="Aligner à gauche"/>
             </properties>
           </component>
           <component id="9c474" class="javax.swing.JButton" binding="downButton">
@@ -263,6 +264,7 @@
             </constraints>
             <properties>
               <text value=""/>
+              <toolTipText value="Aligner à droite"/>
             </properties>
           </component>
           <component id="93f43" class="javax.swing.JButton" binding="horizontallyAlignButton">

@@ -869,6 +869,11 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
+    public void rightAlignSelectedSurfaces() {
+        controller.rightAlignSelectedSurfaces();
+        drawingPanel.repaint();
+    }
+
     public void undo() {
         this.controller.undo();
         drawingPanel.repaint();

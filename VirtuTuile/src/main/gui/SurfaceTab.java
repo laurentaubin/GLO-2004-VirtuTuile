@@ -151,6 +151,13 @@ public class SurfaceTab extends JPanel{
             }
         });
 
+        rightButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                rightAlignSelectedSurfaces();
+            }
+        });
+
         //Align Center icon icon by Icons8
         //Align Bottom icon icon by Icons8
         //Align Top icon icon by Icons8
@@ -197,7 +204,6 @@ public class SurfaceTab extends JPanel{
         Icon collerHorIcon = new ImageIcon(horizontalAlignImage.getScaledInstance(20, 20, Image.SCALE_DEFAULT));
         horizontallyAlignButton.setIcon(collerHorIcon);
 
-
     }
 
     private void horizontallyCenterSelectedSurfaces() {
@@ -218,6 +224,10 @@ public class SurfaceTab extends JPanel{
 
     private void leftAlignSelectedSurfaces() {
         mainWindow.leftAlignSelectedSurfaces();
+    }
+
+    private void rightAlignSelectedSurfaces() {
+        mainWindow.rightAlignSelectedSurfaces();
     }
 
     public void setEnteredWidthSurfaceDimensions(){
