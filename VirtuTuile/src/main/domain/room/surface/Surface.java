@@ -35,9 +35,9 @@ public class Surface implements Serializable{
     private boolean isHole;
 
     //Attributs tests
-    public double[] xPoints;
-    public double[] yPoints;
-    public int nPoints;
+    private double[] xPoints;
+    private double[] yPoints;
+    private int nPoints;
     private ArrayList<Surface> elementarySurface;
     private double groutWidth;
     private double mismatch = 0.5d;
@@ -50,6 +50,10 @@ public class Surface implements Serializable{
 
     public ArrayList<ElementarySurface> getHoles() {
         return holes;
+    }
+
+    public Surface() {
+        //Constructeur vide
     }
 
     public Surface(double[] xPoints, double[] yPoints, int nbr_points) {
@@ -79,8 +83,10 @@ public class Surface implements Serializable{
         this.yPoints = yPoints;
         this.nPoints = nbr_points;
         this.elementarySurface = new ArrayList<Surface>();
-        this.elementarySurface.add(this);
         this.groutWidth = 0d;
+
+        //TODO fait une copie par référence?
+        //this.elementarySurface.add(this);
     }
 
     public Surface(Point2D.Double point) {
@@ -93,29 +99,24 @@ public class Surface implements Serializable{
         this.color = (Color.WHITE);
     }
 
-    public void updatePolygon() {
-        if (!mergedStatus) {
-            if (wholeSurfaces.isEmpty()) {
-                // C'est un trou
-                this.polygon = new Polygon(
-                        this.getHoles().get(0).xpoints,
-                        this.getHoles().get(0).ypoints,
-                        this.getHoles().get(0).npoints
-                );
-            } else {
-                // C'est une surface pleine
-                this.polygon = new Polygon(
-                        this.getWholeSurfaces().get(0).xpoints,
-                        this.getWholeSurfaces().get(0).ypoints,
-                        this.getWholeSurfaces().get(0).npoints
-                );
-            }
-        }
+    public void addCopy(Surface surface) {
+        double[] x = surface.getxPoints().clone();
+        double[] y = surface.getyPoints().clone();
+        int n = surface.getnPoints();
+        Surface surfaceCopy = new Surface(x, y, n);
+        this.elementarySurface.add(surfaceCopy);
+    }
 
-        this.area = new Area(this.polygon);
-        //En pixel selon le bounding rectangle
-        this.width = this.polygon.getBounds2D().getWidth();
-        this.height = this.polygon.getBounds2D().getHeight();
+    public double[] getxPoints() {
+        return this.xPoints;
+    }
+
+    public double[] getyPoints() {
+        return this.yPoints;
+    }
+
+    public int getnPoints() {
+        return this.nPoints;
     }
 
     public Area getAreaTest() {
@@ -244,10 +245,6 @@ public class Surface implements Serializable{
         return this.position;
     }
 
-    public void setPosition() {
-
-    }
-
     public boolean isHole() {
         return this.isHole;
     }
@@ -277,14 +274,6 @@ public class Surface implements Serializable{
         this.translatePolygon(deltaX, deltaY);
     }
 
-    /*
-    public void translate(double deltaX, double deltaY, double pixelX, double pixelY) {
-        this.translatePolygon(deltaX, deltaY);
-        this.translateArea(pixelX, pixelY);
-    }
-
-     */
-
     private void translatePolygon(double deltaX, double deltaY) {
         if (this.area.getBounds2D().getX() + deltaX >= 0 && this.area.getBounds2D().getY() + deltaY >= 0) {
             //this.polygon.translate((int)deltaX, (int)deltaY);
@@ -303,12 +292,12 @@ public class Surface implements Serializable{
             }
             this.area.transform(at);
             this.position.setLocation(this.position.getX() + deltaX, this.position.getY() + deltaY);
+
             for (int i = 0; i < elementarySurface.size(); i++){
-                if (i != 0) {
-                    elementarySurface.get(i).translate(deltaX, deltaY);
-                }
+                Surface elem = elementarySurface.get(i);
+                elem.translate(deltaX, deltaY);
             }
-            translateInitialPoints(deltaX, deltaY);
+            this.translateInitialPoints(deltaX, deltaY);
         }
     }
 
@@ -323,15 +312,6 @@ public class Surface implements Serializable{
         this.yPoints = newYPosition;
 
     }
-
-    /*
-    private void translateArea(double deltaX, double deltaY) {
-        AffineTransform at = new AffineTransform(1, 0, 0, 1, deltaX, deltaY);
-        this.area.transform(at);
-        this.position.translate((int)deltaX, (int)deltaY);
-    }
-
-     */
 
     public void setWidth(double enteredWidth) {
         double deltaX = enteredWidth / this.width;

@@ -53,8 +53,9 @@ public class PatternTab extends JPanel{
         patternButtonGroup.add(brickPatternButton);
         patternButtonGroup.add(verticalBrickShapeButton);
         patternButtonGroup.add(verticalPatternButton);
-        patternButtonGroup.add(chevronPatternButton);
+        patternButtonGroup.add(chevronButton);
         patternButtonGroup.add(anglePatternButton);
+        patternButtonGroup.add(squarePatternButton);
 
         percentComboBox.addItem(25);
         percentComboBox.addItem(50);

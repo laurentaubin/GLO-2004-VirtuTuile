@@ -41,6 +41,8 @@ public class SurfaceDrawer {
     }
 
     public void drawSurface(Graphics2D g2d, ArrayList<Surface> surfaceList, double zoom, Point currentMousePoint) {
+        AffineTransform at = new AffineTransform();
+        at.setToScale(zoom, zoom);
         for (Surface current_surface : surfaceList) {
             /*
             Path2D.Double path = new Path2D.Double();
@@ -57,12 +59,9 @@ public class SurfaceDrawer {
              */
 
             Area shape = new Area(current_surface.getAreaTest());
-            //Area otherShape = new Area(current_surface.getAreaTest());
-            //AffineTransform tx = new AffineTransform(0.5, 0,0,0.5,0,0);
-            //otherShape.transform(tx);
 
             if (zoom != 1) {
-                AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
+                //AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
                 shape.transform(at);
             }
 
@@ -76,7 +75,7 @@ public class SurfaceDrawer {
                 current_surface.getPattern().generateTiles(current_surface.getBoundingRectangle(), current_surface.getTileType(), current_surface.getAreaTest(), current_surface.getGroutWidth());
                 ArrayList<Tile> array = current_surface.getPattern().getVirtualTileList();
                 for (Tile tile : array) {
-                    AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
+                    //AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
                     tile.transform(at);
                     if (tile.isTooSmall()) {
                         g2d.setColor(tile.getInspecColor());
@@ -101,14 +100,26 @@ public class SurfaceDrawer {
                 g2d.setStroke(new BasicStroke(3));
             }
             g2d.draw(shape);
+            g2d.setColor(Color.RED);
+
+            g2d.setStroke(new BasicStroke(1));
+            for (Surface surface : current_surface.getElementarySurface()) {
+                Area elem = new Area(surface.getAreaTest());
+                //AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
+                elem.transform(at);
+                g2d.draw(elem);
+            }
         }
+
+        g2d.setStroke(new BasicStroke(1));
+        g2d.setColor(Color.BLACK);
 
         ArrayList<Surface> surfaceProjectionList = controller.getSurfaceProjectionList();
         if(!surfaceProjectionList.isEmpty()) {
             Surface rectangularProjection = surfaceProjectionList.get(surfaceProjectionList.size() - 1);
            // g2d.draw(rectangularProjection.getPolygon());
             Area shape = rectangularProjection.getAreaTest();
-            AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
+            //AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
             shape.transform(at);
             g2d.draw(rectangularProjection.getAreaTest());
            //g2d.draw(UnitConverter.convertPolygonToPixel(rectangularProjection.getPolygon(), this.measurementMode));
@@ -116,7 +127,7 @@ public class SurfaceDrawer {
 
         ArrayList<Point> irregularPointList = controller.getPointList();
         if(!irregularPointList.isEmpty()) {
-            AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
+            //AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
             g2d.setColor(Color.RED);
             for (int i = 0; i < irregularPointList.size(); i++) {
                 int currentX;
