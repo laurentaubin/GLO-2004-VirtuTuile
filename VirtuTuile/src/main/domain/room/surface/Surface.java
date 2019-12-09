@@ -99,6 +99,16 @@ public class Surface implements Serializable{
         this.color = (Color.WHITE);
     }
 
+    public Surface(Surface surfaceToCopy, AffineTransform tx) {
+        this.xPoints = surfaceToCopy.xPoints.clone();
+        this.yPoints = surfaceToCopy.yPoints.clone();
+        this.position = new Point2D.Double(this.xPoints[0], this.yPoints[0]);
+        this.area = new Area(surfaceToCopy.getAreaTest());
+        this.width = this.area.getBounds2D().getWidth();
+        this.height = this.area.getBounds2D().getHeight();
+        this.area.transform(tx);
+    }
+
     public void addCopy(Surface surface) {
         double[] x = surface.getxPoints().clone();
         double[] y = surface.getyPoints().clone();
@@ -325,6 +335,10 @@ public class Surface implements Serializable{
 
         AffineTransform atPosition = new AffineTransform(1, 0, 0, 1, -deltaPosition, 0);
         this.area.transform(atPosition);
+
+        for (Surface elem : this.elementarySurface) {
+            elem.setWidth(enteredWidth);
+        }
     }
 
     public void setHeight(double height) {
@@ -536,6 +550,17 @@ public class Surface implements Serializable{
     public void translatePattern(double x, double y) {
         this.tileType.setxOffset(x);
         this.tileType.setyOffset(y);
+    }
+
+    public Point2D getMiddlePoint() {
+        Rectangle rec = new Rectangle(this.area.getBounds());
+        return new Point2D.Double(rec.getCenterX(), rec.getCenterY());
+    }
+
+    public void translatePointsTest(double x, double y) {
+        AffineTransform tx = new AffineTransform();
+        tx.setToTranslation(x, y);
+        this.area.transform(tx);
     }
 }
 
