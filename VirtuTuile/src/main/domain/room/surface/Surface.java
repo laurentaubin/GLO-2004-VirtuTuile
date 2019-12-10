@@ -532,24 +532,56 @@ public class Surface implements Serializable{
     }
 
     public boolean isToTheLeft(Surface otherSurface) {
+        Rectangle thisSurfaceRectangle = this.getBoundingRectangle();
+        Point2D thisMiddlePoint = new Point2D.Double(thisSurfaceRectangle.getCenterX(), thisSurfaceRectangle.getCenterY());
+        Rectangle otherSurfaceRectangle = otherSurface.getBoundingRectangle();
+        Point2D otherMiddlePoint = new Point2D.Double(otherSurfaceRectangle.getCenterX(), otherSurfaceRectangle.getCenterY());
+
+        return (thisMiddlePoint.getX() < otherMiddlePoint.getX());
+    }
+
+    public boolean leftMostCorner(Surface otherSurface) {
         Point2D thisTopLeftPoint = this.getTopLeftPoint();
         Point2D otherTopLeftPoint = otherSurface.getTopLeftPoint();
 
         return (thisTopLeftPoint.getX() < otherTopLeftPoint.getX());
     }
 
-    public boolean isToTheRight(Surface otherSurface) {
-        Point2D thisRightMostPoint = this.getRightMostPoint();
-        Point2D otherRightMostPoint = otherSurface.getRightMostPoint();
+    public boolean rightMostCorner(Surface otherSurface) {
+        Point2D thisBottomRightPoint = this.getRightMostPoint();
+        Point2D otherBottomRightPoint = otherSurface.getRightMostPoint();
 
-        return (thisRightMostPoint.getX() > otherRightMostPoint.getX());
+        return (thisBottomRightPoint.getX() > otherBottomRightPoint.getX());
     }
 
+//    public boolean isToTheRight(Surface otherSurface) {
+//        Point2D thisRightMostPoint = this.getRightMostPoint();
+//        Point2D otherRightMostPoint = otherSurface.getRightMostPoint();
+//
+//        return (thisRightMostPoint.getX() > otherRightMostPoint.getX());
+//    }
+
     public boolean isBeneath(Surface otherSurface) {
+        Rectangle thisSurfaceRectangle = this.getBoundingRectangle();
+        Point2D thisMiddlePoint = new Point2D.Double(thisSurfaceRectangle.getCenterX(), thisSurfaceRectangle.getCenterY());
+        Rectangle otherSurfaceRectangle = otherSurface.getBoundingRectangle();
+        Point2D otherMiddlePoint = new Point2D.Double(otherSurfaceRectangle.getCenterX(), otherSurfaceRectangle.getCenterY());
+
+        return (thisMiddlePoint.getY() > otherMiddlePoint.getY());
+    }
+
+    public boolean topMostCorner(Surface otherSurface) {
         Point2D thisTopLeftPoint = this.getTopLeftPoint();
         Point2D otherTopLeftPoint = otherSurface.getTopLeftPoint();
 
-        return (thisTopLeftPoint.getY() > otherTopLeftPoint.getY());
+        return (thisTopLeftPoint.getY() < otherTopLeftPoint.getY());
+    }
+
+    public boolean bottomMostCorner(Surface otherSurface) {
+        Point2D thisBottomRightPoint = this.getRightMostPoint();
+        Point2D otherBottomRightPoint = otherSurface.getRightMostPoint();
+
+        return (thisBottomRightPoint.getY() > otherBottomRightPoint.getY());
     }
 
     public void setMismatch(double mismatch) {

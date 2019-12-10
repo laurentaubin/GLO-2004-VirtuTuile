@@ -649,28 +649,32 @@ public class Room implements Serializable{
     public void verticallyCenterSelectedSurfaces() {
         if (this.getNumberOfSelectedSurfaces() == 2) {
             ArrayList<Surface> selectedSurfaceList = this.getSelectedSurfaces();
-            if (selectedSurfaceList.get(0).isToTheLeft(selectedSurfaceList.get(1))) {
-                Surface leftSurface = selectedSurfaceList.get(0);
-                Surface rightSurface = selectedSurfaceList.get(1);
+            if (selectedSurfaceList.get(0).isBeneath(selectedSurfaceList.get(1))) {
+                Surface bottomSurface = selectedSurfaceList.get(0);
+                Surface topSurface = selectedSurfaceList.get(1);
 
-                Point2D leftSurfaceMiddlePoint = leftSurface.getLeftMostPoint();
-                leftSurfaceMiddlePoint.setLocation(leftSurfaceMiddlePoint.getX(), leftSurfaceMiddlePoint.getY() + (leftSurface.getHeight() / 2.0));
+                Point2D bottomSurfaceMiddlePoint = bottomSurface.getLeftMostPoint();
+                bottomSurfaceMiddlePoint.setLocation(bottomSurfaceMiddlePoint.getX(), bottomSurfaceMiddlePoint.getY() + (bottomSurface.getHeight() / 2.0));
 
-                Point2D rightSurfaceLeftMostPoint = rightSurface.getLeftMostPoint();
-                rightSurfaceLeftMostPoint.setLocation(rightSurfaceLeftMostPoint.getX(), leftSurfaceMiddlePoint.getY() - (rightSurface.getHeight() / 2.0));
+                Point2D topSurfaceLeftMostPoint = topSurface.getLeftMostPoint();
+                topSurfaceLeftMostPoint.setLocation(topSurfaceLeftMostPoint.getX(), bottomSurfaceMiddlePoint.getY() - (topSurface.getHeight() / 2.0));
 
-                rightSurface.snapToPoint(rightSurfaceLeftMostPoint);
-            } else {
-                Surface rightSurface = selectedSurfaceList.get(0);
-                Surface leftSurface = selectedSurfaceList.get(1);
+                topSurface.snapToPoint(topSurfaceLeftMostPoint);
+            }
+            else if (selectedSurfaceList.get(1).isBeneath(selectedSurfaceList.get(0))){
+                Surface topSurface = selectedSurfaceList.get(0);
+                Surface bottomSurface = selectedSurfaceList.get(1);
 
-                Point2D rightSurfaceMiddlePoint = rightSurface.getLeftMostPoint();
-                rightSurfaceMiddlePoint.setLocation(rightSurfaceMiddlePoint.getX(), rightSurfaceMiddlePoint.getY() + (rightSurface.getHeight() / 2.0));
+                Point2D topSurfaceMiddlePoint = topSurface.getLeftMostPoint();
+                topSurfaceMiddlePoint.setLocation(topSurfaceMiddlePoint.getX(), topSurfaceMiddlePoint.getY() + (topSurface.getHeight() / 2.0));
 
-                Point2D leftSurfaceLeftMostPoint = leftSurface.getLeftMostPoint();
-                leftSurfaceLeftMostPoint.setLocation(leftSurfaceLeftMostPoint.getX(), rightSurfaceMiddlePoint.getY() - (leftSurface.getHeight() / 2.0));
+                Point2D bottomSurfaceLeftMostPoint = bottomSurface.getLeftMostPoint();
+                bottomSurfaceLeftMostPoint.setLocation(bottomSurfaceLeftMostPoint.getX(), topSurfaceMiddlePoint.getY() - (bottomSurface.getHeight() / 2.0));
 
-                leftSurface.snapToPoint(leftSurfaceLeftMostPoint);
+                bottomSurface.snapToPoint(bottomSurfaceLeftMostPoint);
+            }
+            else {
+                return;
             }
         }
     }
@@ -689,7 +693,8 @@ public class Room implements Serializable{
                 rightSurfaceLeftMostPoint.setLocation(leftSurfaceMiddlePoint.getX() - (rightSurface.getWidth() / 2.0), rightSurfaceLeftMostPoint.getY());
 
                 rightSurface.snapToPoint(rightSurfaceLeftMostPoint);
-            } else {
+            }
+            else if (selectedSurfaceList.get(1).isToTheLeft(selectedSurfaceList.get(0))){
                 Surface rightSurface = selectedSurfaceList.get(0);
                 Surface leftSurface = selectedSurfaceList.get(1);
 
@@ -700,6 +705,9 @@ public class Room implements Serializable{
                 leftSurfaceLeftMostPoint.setLocation(rightSurfaceMiddlePoint.getX() - (leftSurface.getWidth() / 2.0), leftSurfaceLeftMostPoint.getY());
 
                 leftSurface.snapToPoint(leftSurfaceLeftMostPoint);
+            }
+            else {
+                return;
             }
         }
     }
@@ -714,10 +722,27 @@ public class Room implements Serializable{
                 leftAlign(leftSurface, rightSurface);
 
             }
-            else {
+            else if (selectedSurfaceList.get(1).isToTheLeft(selectedSurfaceList.get(0))) {
                 Surface leftSurface = selectedSurfaceList.get(1);
                 Surface rightSurface = selectedSurfaceList.get(0);
                 leftAlign(leftSurface, rightSurface);
+            }
+            else {
+                // Les surfaces sont centrées horizontalement
+                // On aligne à la surface ayant le coin supérieur le plus à gauche
+                if (selectedSurfaceList.get(0).leftMostCorner(selectedSurfaceList.get(1))) {
+                    Surface leftSurface = selectedSurfaceList.get(0);
+                    Surface rightSurface = selectedSurfaceList.get(1);
+                    leftAlign(leftSurface, rightSurface);
+                }
+                else if (selectedSurfaceList.get(0).leftMostCorner(selectedSurfaceList.get(1))) {
+                    Surface leftSurface = selectedSurfaceList.get(1);
+                    Surface rightSurface = selectedSurfaceList.get(0);
+                    leftAlign(leftSurface, rightSurface);
+                }
+                else {
+                    return;
+                }
             }
         }
     }
@@ -735,16 +760,33 @@ public class Room implements Serializable{
         if(this.getNumberOfSelectedSurfaces() == 2) {
             ArrayList<Surface> selectedSurfaceList = this.getSurfaceList();
 
-            if (selectedSurfaceList.get(0).isToTheRight(selectedSurfaceList.get(1))) {
-                Surface rightSurface = selectedSurfaceList.get(0);
-                Surface leftSurface = selectedSurfaceList.get(1);
+            if (selectedSurfaceList.get(0).isToTheLeft(selectedSurfaceList.get(1))) {
+                Surface leftSurface = selectedSurfaceList.get(0);
+                Surface rightSurface = selectedSurfaceList.get(1);
                 rightAlign(leftSurface, rightSurface);
 
             }
-            else {
-                Surface rightSurface = selectedSurfaceList.get(1);
-                Surface leftSurface = selectedSurfaceList.get(0);
+            else if (selectedSurfaceList.get(1).isToTheLeft(selectedSurfaceList.get(0))) {
+                Surface leftSurface = selectedSurfaceList.get(1);
+                Surface rightSurface = selectedSurfaceList.get(0);
                 rightAlign(leftSurface, rightSurface);
+            }
+            else {
+                // Les surfaces sont centrées horizontalement
+                // On aligne à la surface ayant le coin inférieur le plus à droite
+                if (selectedSurfaceList.get(0).rightMostCorner(selectedSurfaceList.get(1))) {
+                    Surface rightSurface = selectedSurfaceList.get(0);
+                    Surface leftSurface = selectedSurfaceList.get(1);
+                    rightAlign(leftSurface, rightSurface);
+                }
+                else if (selectedSurfaceList.get(1).rightMostCorner(selectedSurfaceList.get(0))) {
+                    Surface rightSurface = selectedSurfaceList.get(1);
+                    Surface leftSurface = selectedSurfaceList.get(0);
+                    rightAlign(leftSurface, rightSurface);
+                }
+                else {
+                    return;
+                }
             }
         }
     }
@@ -773,7 +815,21 @@ public class Room implements Serializable{
                 topAlign(bottomSurface, topSurface);
             }
             else {
-                return;
+                // Les surfaces sont centrées verticalement
+                // On aligne à la surface ayant le coin supérieur le plus haut
+                if (selectedSurfaceList.get(0).topMostCorner(selectedSurfaceList.get(1))) {
+                    Surface topSurface = selectedSurfaceList.get(0);
+                    Surface bottomSurface = selectedSurfaceList.get(1);
+                    topAlign(bottomSurface, topSurface);
+                }
+                else if (selectedSurfaceList.get(1).topMostCorner(selectedSurfaceList.get(0))) {
+                    Surface topSurface = selectedSurfaceList.get(1);
+                    Surface bottomSurface = selectedSurfaceList.get(0);
+                    topAlign(bottomSurface, topSurface);
+                }
+                else {
+                    return;
+                }
             }
         }
     }
@@ -802,7 +858,21 @@ public class Room implements Serializable{
                 bottomAlign(bottomSurface, topSurface);
             }
             else {
-                return;
+                // Les surfaces sont centrées verticalement
+                // On aligne à la surface ayant le coin inférieur le plus bas
+                if (selectedSurfaceList.get(0).bottomMostCorner(selectedSurfaceList.get(1))) {
+                    Surface bottomSurface = selectedSurfaceList.get(0);
+                    Surface topSurface = selectedSurfaceList.get(1);
+                    bottomAlign(bottomSurface, topSurface);
+                }
+                else if (selectedSurfaceList.get(1).topMostCorner(selectedSurfaceList.get(0))) {
+                    Surface bottomSurface = selectedSurfaceList.get(1);
+                    Surface topSurface = selectedSurfaceList.get(0);
+                    bottomAlign(bottomSurface, topSurface);
+                }
+                else {
+                    return;
+                }
             }
         }
     }
