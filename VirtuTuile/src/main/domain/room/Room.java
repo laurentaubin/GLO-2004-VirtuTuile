@@ -46,24 +46,16 @@ public class Room implements Serializable{
         Surface surface = new Surface(xPoints, yPoints, 4);
         this.addSurfaceToProjectionList(surface);
     }
-    /*
-    public void addRectangularProjection(Point point, int[] xPoints,int[] yPoints) {
-        RectangularSurface rectangularSurfaceProjection = new RectangularSurface(point, xPoints, yPoints);
-        Surface surfaceProjection = new Surface(point);
-        surfaceProjection.addElementaryWholeSurface(rectangularSurfaceProjection);
-        surfaceProjection.updatePolygon();
-        this.addSurfaceToProjectionList(surfaceProjection);
-    }
-
-     */
 
     public void addRectangularSurface(double[] xPoints, double[] yPoints, int number_of_edges) {
         Surface surface = new Surface(xPoints, yPoints, number_of_edges);
+        surface.addCopy(surface);
         this.addSurfaceToList(surface);
     }
 
     public void addRectangularSurfaceOnGrid(double[] xDrawPoints, double[] yDrawPoints, int number_of_edges, double gridGap) {
         Surface surface = new Surface(xDrawPoints, yDrawPoints, number_of_edges);
+        surface.addCopy(surface);
         this.addSurfaceToList(surface);
         this.snapSurfaceToGrid(surface, gridGap);
     }
@@ -78,6 +70,7 @@ public class Room implements Serializable{
             y[i] = pointList.get(i).y;
         }
         Surface surface = new Surface(x, y, n);
+        surface.addCopy(surface);
         this.addSurfaceToList(surface);
     }
 
@@ -106,23 +99,21 @@ public class Room implements Serializable{
         Boolean latestSurfaceSelected = true;
 
         for (int i = surfaceList.size() - 1; i >= 0; i--) {
-
-
             if (surfaceList.get(i).getAreaTest().contains(x, y) && latestSurfaceSelected == true) {
-
                     surfaceList.get(i).switchSelectionStatus();
                     latestSurfaceSelected = false;
 
-            } else {
-                if (!isShiftDown) surfaceList.get(i).unselect();
-
+            }
+            else {
+                if (!isShiftDown) {
+                    surfaceList.get(i).unselect();
+                }
             }
         }
     }
 
     private void switchSelectionStatusIfContains(double x, double y, boolean isShiftDown, Surface surfaceInRoom) {
         Point2D.Double point = new Point2D.Double(x, y);
-        //TODO changer le OR pour une meilleure condition
         if (surfaceInRoom.getAreaTest().contains(point)) {
             surfaceInRoom.switchSelectionStatus();
         } else if (!isShiftDown) {
@@ -137,41 +128,6 @@ public class Room implements Serializable{
             }
         }
     }
-
-    /*
-    public void updateSelectedSurfacesPositions(double deltaX, double deltaY, double pixelX, double pixelY) {
-        for (Surface surfaceInRoom : this.surfaceList) {
-            if (surfaceInRoom.isSelected()) {
-                surfaceInRoom.translate(deltaX, deltaY, pixelX, pixelY);
-            }
-        }
-    }
-
-     */
-    // Refactored par updateSelectedSurfacesPositions() en haut
-
-/*
-    private void updateSurfacePositions(double deltaX, double deltaY, Surface surface) {
-            int[] x = surface.getPolygon().xpoints;
-            int[] y = surface.getPolygon().ypoints;
-
-            for (int i = 0; i < x.length; i++) {
-                x[i] = (int)(x[i] + deltaX);
-                y[i] = (int)(y[i] + deltaY);
-            }
-
-            for (ElementarySurface elementarySurface : surface.getWholeSurfaces()) {
-                int[] xPoints = elementarySurface.xpoints;
-
-                for (int i = 0; i < xPoints.length; i++) {
-                    elementarySurface.xpoints[i] = (int)(x[i] + deltaX);
-                    elementarySurface.ypoints[i] = (int)(y[i] + deltaY);
-                }
-                elementarySurface.updateElementarySurface();
-            }
-            surface.updateSurface();
-    }
-*/
 
     public boolean surfaceSelecte() {
         boolean auMoinsUne = false;
@@ -212,27 +168,6 @@ public class Room implements Serializable{
         }
         return dimensionList;
     }
-
-    /*
-
-    public void setSelectedRectangularSurfaceDimensions(double[] dimensions) {
-        for (Surface surface: this.surfaceList) {
-            if (surface.isSelected()){
-                double deltaW = dimensions[0] - surface.getWidth();
-                double deltaH = dimensions[1] - surface.getHeight();
-
-                surface.getPolygon().xpoints[1] += deltaW;
-                surface.getPolygon().xpoints[2] += deltaW;
-                surface.getPolygon().ypoints[2] += deltaH;
-                surface.getPolygon().ypoints[3] += deltaH;
-
-                surface.updateSurface();
-            }
-        }
-    }
-
-     */
-
 
     public void deleteSurface() {
         for (int i = this.surfaceList.size() - 1; i >= 0; i--) {
@@ -1027,7 +962,8 @@ public class Room implements Serializable{
                     Surface baseSurface = compositeSurface.get(0);
                     for (int i = 0; i < compositeSurface.size(); i++) {
                         if (i == 0) {
-                            Surface newBaseSurface = new Surface(baseSurface.xPoints, baseSurface.yPoints, baseSurface.nPoints);
+                            Surface newBaseSurface = new Surface(baseSurface.getxPoints(), baseSurface.getyPoints(), baseSurface.getnPoints());
+                            newBaseSurface.addCopy(newBaseSurface);
                             newBaseSurface.setTileType(baseSurface.getTileType());
                             newBaseSurface.setColor(baseSurface.getColor());
                             if (baseSurface.isCovered()) {

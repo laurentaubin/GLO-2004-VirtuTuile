@@ -10,6 +10,7 @@ import domain.room.pattern.VerticalBrickPattern;
 import domain.room.surface.Surface;
 import gui.DrawingPanel;
 
+import javafx.scene.transform.Affine;
 import util.UnitConverter;
 import gui.MainWindow;
 import org.w3c.dom.css.Rect;
@@ -41,6 +42,8 @@ public class SurfaceDrawer {
     }
 
     public void drawSurface(Graphics2D g2d, ArrayList<Surface> surfaceList, double zoom, Point currentMousePoint) {
+        AffineTransform at = new AffineTransform();
+        at.setToScale(zoom, zoom);
         for (Surface current_surface : surfaceList) {
             /*
             Path2D.Double path = new Path2D.Double();
@@ -57,12 +60,39 @@ public class SurfaceDrawer {
              */
 
             Area shape = new Area(current_surface.getAreaTest());
-            //Area otherShape = new Area(current_surface.getAreaTest());
-            //AffineTransform tx = new AffineTransform(0.5, 0,0,0.5,0,0);
-            //otherShape.transform(tx);
+            Area otherShape = new Area();
+            ArrayList<Surface> elementarySurface = new ArrayList<>(current_surface.getElementarySurface());
+            ArrayList<Surface> imaginarySurfaces = new ArrayList<>();
+            AffineTransform tx = new AffineTransform();
+            double groutWidth = current_surface.getGroutWidth();
+
+
+            for (Surface es : elementarySurface) {
+                Point2D surfaceMiddlePoint = es.getMiddlePoint();
+                double widthRatio = this.getRatioWidth(es, groutWidth);
+                double heightRatio = this.getRatioHeight(es, groutWidth);
+                tx.scale(widthRatio, heightRatio);
+                Surface imaginarySurface = new Surface(es, tx);
+                Point2D imaginaryMiddle = imaginarySurface.getMiddlePoint();
+                double x = surfaceMiddlePoint.getX() - imaginaryMiddle.getX();
+                double y = surfaceMiddlePoint.getY() - imaginaryMiddle.getY();
+                imaginarySurface.translatePointsTest(x, y);
+                imaginarySurfaces.add(imaginarySurface);
+                tx.setToIdentity();
+            }
+
+            for (Surface scaledSurfaces : imaginarySurfaces) {
+                Area scaledArea = scaledSurfaces.getAreaTest();
+                if (otherShape.isEmpty()) {
+                    otherShape = new Area(scaledArea);
+                }
+                else {
+                    otherShape.add(scaledArea);
+                }
+            }
 
             if (zoom != 1) {
-                AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
+                //AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
                 shape.transform(at);
             }
 
@@ -73,10 +103,14 @@ public class SurfaceDrawer {
 
             if (current_surface.isCovered()) {
                 current_surface.getPattern().getVirtualTileList().clear();
+
+                //TODO avoir du grout autour de la surface ou pas
+                //current_surface.getPattern().generateTiles(current_surface.getBoundingRectangle(), current_surface.getTileType(), otherShape, current_surface.getGroutWidth());
                 current_surface.getPattern().generateTiles(current_surface.getBoundingRectangle(), current_surface.getTileType(), current_surface.getAreaTest(), current_surface.getGroutWidth());
+
                 ArrayList<Tile> array = current_surface.getPattern().getVirtualTileList();
                 for (Tile tile : array) {
-                    AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
+                    //AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
                     tile.transform(at);
                     if (tile.isTooSmall()) {
                         g2d.setColor(tile.getInspecColor());
@@ -101,14 +135,44 @@ public class SurfaceDrawer {
                 g2d.setStroke(new BasicStroke(3));
             }
             g2d.draw(shape);
+            g2d.setColor(Color.RED);
+
+            g2d.setStroke(new BasicStroke(1));
+            for (Surface surface : current_surface.getElementarySurface()) {
+                Area elem = new Area(surface.getAreaTest());
+                //AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
+                elem.transform(at);
+                g2d.draw(elem);
+            }
+
+            g2d.setStroke(new BasicStroke(1));
+            g2d.setColor(Color.GREEN);
+            //g2d.draw(otherShape);
+
+            /*
+            g2d.setStroke(new BasicStroke(1));
+            g2d.setColor(Color.GREEN);
+
+            for (Surface imagine : imaginarySurfaces) {
+                Area bleh = new Area(imagine.getAreaTest());
+                g2d.draw(bleh);
+            }
+
+            g2d.setStroke(new BasicStroke(1));
+            g2d.setColor(Color.BLACK);
+
+             */
         }
+
+        g2d.setStroke(new BasicStroke(1));
+        g2d.setColor(Color.BLACK);
 
         ArrayList<Surface> surfaceProjectionList = controller.getSurfaceProjectionList();
         if(!surfaceProjectionList.isEmpty()) {
             Surface rectangularProjection = surfaceProjectionList.get(surfaceProjectionList.size() - 1);
            // g2d.draw(rectangularProjection.getPolygon());
             Area shape = rectangularProjection.getAreaTest();
-            AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
+            //AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
             shape.transform(at);
             g2d.draw(rectangularProjection.getAreaTest());
            //g2d.draw(UnitConverter.convertPolygonToPixel(rectangularProjection.getPolygon(), this.measurementMode));
@@ -116,7 +180,7 @@ public class SurfaceDrawer {
 
         ArrayList<Point> irregularPointList = controller.getPointList();
         if(!irregularPointList.isEmpty()) {
-            AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
+            //AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
             g2d.setColor(Color.RED);
             for (int i = 0; i < irregularPointList.size(); i++) {
                 int currentX;
@@ -150,5 +214,17 @@ public class SurfaceDrawer {
 
     public void setMeasurementUnitMode(MainWindow.MeasurementUnitMode measurementMode) {
         this.measurementMode = measurementMode;
+    }
+
+    private double getRatioWidth(Surface surface, double groutWidth) {
+        double realWidth = surface.getWidth();
+        double width = realWidth - 2*groutWidth;
+        return width/realWidth;
+    }
+
+    private double getRatioHeight(Surface surface, double groutWidth) {
+        double realHeight = surface.getHeight();
+        double height = realHeight - 2*groutWidth;
+        return height/realHeight;
     }
 }

@@ -680,10 +680,7 @@ public class MainWindow extends JFrame {
 
          */
 
-
-        if (this.currentMeasurementMode == MeasurementUnitMode.IMPERIAL) {
-            mousePosition += ("x= " + xPos + "'' " + ", y= " + yPos + "'' ");
-        }
+        mousePosition += ("x= " + xPos + ", y= " + yPos);
 
 
         if (this.controller.checkIfMouseAboveTile(evt.getX(), evt.getY())) {
