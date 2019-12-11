@@ -6,14 +6,17 @@ import domain.room.surface.RectangularSurface;
 import domain.room.surface.Surface;
 import gui.MainWindow;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 
-public class Room {
+
+public class Room implements Serializable{
 
     private ArrayList<Surface> surfaceList;
     private ArrayList<Surface> surfaceProjectionList;
@@ -43,24 +46,16 @@ public class Room {
         Surface surface = new Surface(xPoints, yPoints, 4);
         this.addSurfaceToProjectionList(surface);
     }
-    /*
-    public void addRectangularProjection(Point point, int[] xPoints,int[] yPoints) {
-        RectangularSurface rectangularSurfaceProjection = new RectangularSurface(point, xPoints, yPoints);
-        Surface surfaceProjection = new Surface(point);
-        surfaceProjection.addElementaryWholeSurface(rectangularSurfaceProjection);
-        surfaceProjection.updatePolygon();
-        this.addSurfaceToProjectionList(surfaceProjection);
-    }
-
-     */
 
     public void addRectangularSurface(double[] xPoints, double[] yPoints, int number_of_edges) {
         Surface surface = new Surface(xPoints, yPoints, number_of_edges);
+        surface.addCopy(surface);
         this.addSurfaceToList(surface);
     }
 
     public void addRectangularSurfaceOnGrid(double[] xDrawPoints, double[] yDrawPoints, int number_of_edges, double gridGap) {
         Surface surface = new Surface(xDrawPoints, yDrawPoints, number_of_edges);
+        surface.addCopy(surface);
         this.addSurfaceToList(surface);
         this.snapSurfaceToGrid(surface, gridGap);
     }
@@ -75,6 +70,7 @@ public class Room {
             y[i] = pointList.get(i).y;
         }
         Surface surface = new Surface(x, y, n);
+        surface.addCopy(surface);
         this.addSurfaceToList(surface);
     }
 
@@ -101,46 +97,23 @@ public class Room {
 
     void switchSelectionStatus(double x, double y, boolean isShiftDown) {
         Boolean latestSurfaceSelected = true;
-        int nbrHole = 0;
+
         for (int i = surfaceList.size() - 1; i >= 0; i--) {
-            if (surfaceList.get(i).isHole()) {
-                nbrHole++;
-                surfaceList.add(surfaceList.get(i));
-                surfaceList.remove(i);
-            }
-
             if (surfaceList.get(i).getAreaTest().contains(x, y) && latestSurfaceSelected == true) {
-                //this.switchSelectionStatusIfContains(x, y, isShiftDown, surfaceList.get(i));
-                //break;
-
-                if (!surfaceList.get(i).isHole()) {
-                    surfaceList.add(surfaceList.size() - (nbrHole), surfaceList.get(i));
-                    surfaceList.remove(i);
-
-
-                    surfaceList.get(surfaceList.size() - (1 + nbrHole)).switchSelectionStatus();
-                    latestSurfaceSelected = false;
-                } else {
                     surfaceList.get(i).switchSelectionStatus();
                     latestSurfaceSelected = false;
+
+            }
+            else {
+                if (!isShiftDown) {
+                    surfaceList.get(i).unselect();
                 }
-
-
-            } else {
-                if (!isShiftDown) surfaceList.get(i).unselect();
-                //surfaceList.get(i).unselect();
             }
         }
-        /*
-        for (Surface surfaceInRoom : this.surfaceList) {
-            this.switchSelectionStatusIfContains(x, y, isShiftDown, surfaceInRoom);
-        }
-         */
     }
 
     private void switchSelectionStatusIfContains(double x, double y, boolean isShiftDown, Surface surfaceInRoom) {
         Point2D.Double point = new Point2D.Double(x, y);
-        //TODO changer le OR pour une meilleure condition
         if (surfaceInRoom.getAreaTest().contains(point)) {
             surfaceInRoom.switchSelectionStatus();
         } else if (!isShiftDown) {
@@ -155,41 +128,6 @@ public class Room {
             }
         }
     }
-
-    /*
-    public void updateSelectedSurfacesPositions(double deltaX, double deltaY, double pixelX, double pixelY) {
-        for (Surface surfaceInRoom : this.surfaceList) {
-            if (surfaceInRoom.isSelected()) {
-                surfaceInRoom.translate(deltaX, deltaY, pixelX, pixelY);
-            }
-        }
-    }
-
-     */
-    // Refactored par updateSelectedSurfacesPositions() en haut
-
-/*
-    private void updateSurfacePositions(double deltaX, double deltaY, Surface surface) {
-            int[] x = surface.getPolygon().xpoints;
-            int[] y = surface.getPolygon().ypoints;
-
-            for (int i = 0; i < x.length; i++) {
-                x[i] = (int)(x[i] + deltaX);
-                y[i] = (int)(y[i] + deltaY);
-            }
-
-            for (ElementarySurface elementarySurface : surface.getWholeSurfaces()) {
-                int[] xPoints = elementarySurface.xpoints;
-
-                for (int i = 0; i < xPoints.length; i++) {
-                    elementarySurface.xpoints[i] = (int)(x[i] + deltaX);
-                    elementarySurface.ypoints[i] = (int)(y[i] + deltaY);
-                }
-                elementarySurface.updateElementarySurface();
-            }
-            surface.updateSurface();
-    }
-*/
 
     public boolean surfaceSelecte() {
         boolean auMoinsUne = false;
@@ -230,27 +168,6 @@ public class Room {
         }
         return dimensionList;
     }
-
-    /*
-
-    public void setSelectedRectangularSurfaceDimensions(double[] dimensions) {
-        for (Surface surface: this.surfaceList) {
-            if (surface.isSelected()){
-                double deltaW = dimensions[0] - surface.getWidth();
-                double deltaH = dimensions[1] - surface.getHeight();
-
-                surface.getPolygon().xpoints[1] += deltaW;
-                surface.getPolygon().xpoints[2] += deltaW;
-                surface.getPolygon().ypoints[2] += deltaH;
-                surface.getPolygon().ypoints[3] += deltaH;
-
-                surface.updateSurface();
-            }
-        }
-    }
-
-     */
-
 
     public void deleteSurface() {
         for (int i = this.surfaceList.size() - 1; i >= 0; i--) {
@@ -503,15 +420,41 @@ public class Room {
         }
     }
 
+
     public void setSquarePatternToSelectedSurface() {
+        boolean incorrect = false;
         for (Surface surface : surfaceList) {
             if (surface.isSelected()) {
-                SquarePattern squarePattern = new SquarePattern();
-                squarePattern.generateTiles(surface.getBoundingRectangle(), surface.getTileType(), surface.getAreaTest(), surface.getGroutWidth());
-                surface.setPattern(squarePattern);
+                if((surface.getTileType().getWidth() / surface.getTileType().getHeight()) == 2) {
+                    SquarePattern squarePattern = new SquarePattern();
+                    squarePattern.generateTiles(surface.getBoundingRectangle(), surface.getTileType(), surface.getAreaTest(), surface.getGroutWidth());
+                    surface.setPattern(squarePattern);
+                }
+                else{
+                    incorrect = true;
+                }
+            }
+        }
+        if (incorrect){
+
+            String[] options = {"Ok"};
+            int indexReponse = JOptionPane.showOptionDialog(null, "Les dimensions des tuiles sont invalides, elles doivent avoir un ratio de 2:1",
+                    "Attention!",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+
+        }
+    }
+
+    public void setChevronPattern() {
+        for (Surface surface : surfaceList) {
+            if (surface.isSelected()) {
+                ChevronPattern chevronPattern = new ChevronPattern();
+                chevronPattern.generateTiles(surface.getBoundingRectangle(), surface.getTileType(), surface.getAreaTest(), surface.getGroutWidth());
+                surface.setPattern(chevronPattern);
             }
         }
     }
+
 
     public void setSelectedSurfaceAsHole() {
         int counter = getNumberOfSelectedSurfaces();
@@ -636,6 +579,246 @@ public class Room {
         rightSurfaceTopLeftPoint.setLocation(rightSurfaceTopLeftPoint.getX() - widthDifference, rightSurfaceTopLeftPoint.getY());
 
         rightSurface.snapToPoint(rightSurfaceTopLeftPoint);
+    }
+
+    public void verticallyCenterSelectedSurfaces() {
+        if (this.getNumberOfSelectedSurfaces() == 2) {
+            ArrayList<Surface> selectedSurfaceList = this.getSelectedSurfaces();
+            if (selectedSurfaceList.get(0).isBeneath(selectedSurfaceList.get(1))) {
+                Surface bottomSurface = selectedSurfaceList.get(0);
+                Surface topSurface = selectedSurfaceList.get(1);
+
+                Point2D bottomSurfaceMiddlePoint = bottomSurface.getLeftMostPoint();
+                bottomSurfaceMiddlePoint.setLocation(bottomSurfaceMiddlePoint.getX(), bottomSurfaceMiddlePoint.getY() + (bottomSurface.getHeight() / 2.0));
+
+                Point2D topSurfaceLeftMostPoint = topSurface.getLeftMostPoint();
+                topSurfaceLeftMostPoint.setLocation(topSurfaceLeftMostPoint.getX(), bottomSurfaceMiddlePoint.getY() - (topSurface.getHeight() / 2.0));
+
+                topSurface.snapToPoint(topSurfaceLeftMostPoint);
+            }
+            else if (selectedSurfaceList.get(1).isBeneath(selectedSurfaceList.get(0))){
+                Surface topSurface = selectedSurfaceList.get(0);
+                Surface bottomSurface = selectedSurfaceList.get(1);
+
+                Point2D topSurfaceMiddlePoint = topSurface.getLeftMostPoint();
+                topSurfaceMiddlePoint.setLocation(topSurfaceMiddlePoint.getX(), topSurfaceMiddlePoint.getY() + (topSurface.getHeight() / 2.0));
+
+                Point2D bottomSurfaceLeftMostPoint = bottomSurface.getLeftMostPoint();
+                bottomSurfaceLeftMostPoint.setLocation(bottomSurfaceLeftMostPoint.getX(), topSurfaceMiddlePoint.getY() - (bottomSurface.getHeight() / 2.0));
+
+                bottomSurface.snapToPoint(bottomSurfaceLeftMostPoint);
+            }
+            else {
+                return;
+            }
+        }
+    }
+
+    public void horizontallyCenterSelectedSurfaces() {
+        if (this.getNumberOfSelectedSurfaces() == 2) {
+            ArrayList<Surface> selectedSurfaceList = this.getSelectedSurfaces();
+            if (selectedSurfaceList.get(0).isToTheLeft(selectedSurfaceList.get(1))) {
+                Surface leftSurface = selectedSurfaceList.get(0);
+                Surface rightSurface = selectedSurfaceList.get(1);
+
+                Point2D leftSurfaceMiddlePoint = leftSurface.getLeftMostPoint();
+                leftSurfaceMiddlePoint.setLocation(leftSurfaceMiddlePoint.getX() + (leftSurface.getWidth() / 2.0), leftSurfaceMiddlePoint.getY());
+
+                Point2D rightSurfaceLeftMostPoint = rightSurface.getLeftMostPoint();
+                rightSurfaceLeftMostPoint.setLocation(leftSurfaceMiddlePoint.getX() - (rightSurface.getWidth() / 2.0), rightSurfaceLeftMostPoint.getY());
+
+                rightSurface.snapToPoint(rightSurfaceLeftMostPoint);
+            }
+            else if (selectedSurfaceList.get(1).isToTheLeft(selectedSurfaceList.get(0))){
+                Surface rightSurface = selectedSurfaceList.get(0);
+                Surface leftSurface = selectedSurfaceList.get(1);
+
+                Point2D rightSurfaceMiddlePoint = rightSurface.getLeftMostPoint();
+                rightSurfaceMiddlePoint.setLocation(rightSurfaceMiddlePoint.getX() + (rightSurface.getWidth() / 2.0), rightSurfaceMiddlePoint.getY());
+
+                Point2D leftSurfaceLeftMostPoint = leftSurface.getLeftMostPoint();
+                leftSurfaceLeftMostPoint.setLocation(rightSurfaceMiddlePoint.getX() - (leftSurface.getWidth() / 2.0), leftSurfaceLeftMostPoint.getY());
+
+                leftSurface.snapToPoint(leftSurfaceLeftMostPoint);
+            }
+            else {
+                return;
+            }
+        }
+    }
+
+    public void leftAlignSelectedSurfaces() {
+        if (this.getNumberOfSelectedSurfaces() == 2) {
+            ArrayList<Surface> selectedSurfaceList = this.getSurfaceList();
+
+            if (selectedSurfaceList.get(0).isToTheLeft(selectedSurfaceList.get(1))) {
+                Surface leftSurface = selectedSurfaceList.get(0);
+                Surface rightSurface = selectedSurfaceList.get(1);
+                leftAlign(leftSurface, rightSurface);
+
+            }
+            else if (selectedSurfaceList.get(1).isToTheLeft(selectedSurfaceList.get(0))) {
+                Surface leftSurface = selectedSurfaceList.get(1);
+                Surface rightSurface = selectedSurfaceList.get(0);
+                leftAlign(leftSurface, rightSurface);
+            }
+            else {
+                // Les surfaces sont centrées horizontalement
+                // On aligne à la surface ayant le coin supérieur le plus à gauche
+                if (selectedSurfaceList.get(0).leftMostCorner(selectedSurfaceList.get(1))) {
+                    Surface leftSurface = selectedSurfaceList.get(0);
+                    Surface rightSurface = selectedSurfaceList.get(1);
+                    leftAlign(leftSurface, rightSurface);
+                }
+                else if (selectedSurfaceList.get(0).leftMostCorner(selectedSurfaceList.get(1))) {
+                    Surface leftSurface = selectedSurfaceList.get(1);
+                    Surface rightSurface = selectedSurfaceList.get(0);
+                    leftAlign(leftSurface, rightSurface);
+                }
+                else {
+                    return;
+                }
+            }
+        }
+    }
+
+    public void leftAlign(Surface leftSurface, Surface rightSurface) {
+        Point2D leftPos = leftSurface.getLeftMostPoint();
+        Point2D rightSurfaceTopLeftPoint = rightSurface.getTopLeftPoint();
+        double widthDifference = rightSurfaceTopLeftPoint.getX() - leftPos.getX();
+
+        rightSurfaceTopLeftPoint.setLocation(rightSurfaceTopLeftPoint.getX() - widthDifference, rightSurfaceTopLeftPoint.getY());
+        rightSurface.snapToPoint(rightSurfaceTopLeftPoint);
+    }
+
+    public void rightAlignSelectedSurfaces(){
+        if(this.getNumberOfSelectedSurfaces() == 2) {
+            ArrayList<Surface> selectedSurfaceList = this.getSurfaceList();
+
+            if (selectedSurfaceList.get(0).isToTheLeft(selectedSurfaceList.get(1))) {
+                Surface leftSurface = selectedSurfaceList.get(0);
+                Surface rightSurface = selectedSurfaceList.get(1);
+                rightAlign(leftSurface, rightSurface);
+
+            }
+            else if (selectedSurfaceList.get(1).isToTheLeft(selectedSurfaceList.get(0))) {
+                Surface leftSurface = selectedSurfaceList.get(1);
+                Surface rightSurface = selectedSurfaceList.get(0);
+                rightAlign(leftSurface, rightSurface);
+            }
+            else {
+                // Les surfaces sont centrées horizontalement
+                // On aligne à la surface ayant le coin inférieur le plus à droite
+                if (selectedSurfaceList.get(0).rightMostCorner(selectedSurfaceList.get(1))) {
+                    Surface rightSurface = selectedSurfaceList.get(0);
+                    Surface leftSurface = selectedSurfaceList.get(1);
+                    rightAlign(leftSurface, rightSurface);
+                }
+                else if (selectedSurfaceList.get(1).rightMostCorner(selectedSurfaceList.get(0))) {
+                    Surface rightSurface = selectedSurfaceList.get(1);
+                    Surface leftSurface = selectedSurfaceList.get(0);
+                    rightAlign(leftSurface, rightSurface);
+                }
+                else {
+                    return;
+                }
+            }
+        }
+    }
+
+    public void rightAlign(Surface leftSurface, Surface rightSurface) {
+        Point2D rightPos = rightSurface.getRightMostPoint();
+        Point2D leftSurfaceTopLeftPoint = leftSurface.getTopLeftPoint();
+        double widthDifference = rightPos.getX() - leftSurface.getRightMostPoint().getX();
+
+        leftSurfaceTopLeftPoint.setLocation(leftSurfaceTopLeftPoint.getX() + widthDifference, leftSurfaceTopLeftPoint.getY());
+        leftSurface.snapToPoint(leftSurfaceTopLeftPoint);
+    }
+
+    public void topAlignSelectedSurfaces() {
+        if (this.getNumberOfSelectedSurfaces() == 2) {
+            ArrayList<Surface> selectedSurfaceList = this.getSurfaceList();
+
+            if (selectedSurfaceList.get(0).isBeneath(selectedSurfaceList.get(1))) {
+                Surface bottomSurface = selectedSurfaceList.get(0);
+                Surface topSurface = selectedSurfaceList.get(1);
+                topAlign(bottomSurface, topSurface);
+            }
+            else if (selectedSurfaceList.get(1).isBeneath(selectedSurfaceList.get(0))) {
+                Surface bottomSurface = selectedSurfaceList.get(1);
+                Surface topSurface = selectedSurfaceList.get(0);
+                topAlign(bottomSurface, topSurface);
+            }
+            else {
+                // Les surfaces sont centrées verticalement
+                // On aligne à la surface ayant le coin supérieur le plus haut
+                if (selectedSurfaceList.get(0).topMostCorner(selectedSurfaceList.get(1))) {
+                    Surface topSurface = selectedSurfaceList.get(0);
+                    Surface bottomSurface = selectedSurfaceList.get(1);
+                    topAlign(bottomSurface, topSurface);
+                }
+                else if (selectedSurfaceList.get(1).topMostCorner(selectedSurfaceList.get(0))) {
+                    Surface topSurface = selectedSurfaceList.get(1);
+                    Surface bottomSurface = selectedSurfaceList.get(0);
+                    topAlign(bottomSurface, topSurface);
+                }
+                else {
+                    return;
+                }
+            }
+        }
+    }
+
+    public void topAlign(Surface bottomSurface, Surface topSurface) {
+        Point2D topPos = topSurface.getTopLeftPoint();
+        Point2D bottomSurfaceTopLeftPoint = bottomSurface.getTopLeftPoint();
+        double heightDifference = bottomSurfaceTopLeftPoint.getY() - topPos.getY();
+
+        bottomSurfaceTopLeftPoint.setLocation(bottomSurfaceTopLeftPoint.getX(), bottomSurfaceTopLeftPoint.getY() - heightDifference);
+        bottomSurface.snapToPoint(bottomSurfaceTopLeftPoint);
+    }
+
+    public void bottomAlignSelectedSurfaces() {
+        if (this.getNumberOfSelectedSurfaces() == 2) {
+            ArrayList<Surface> selectedSurfaceList = this.getSurfaceList();
+
+            if (selectedSurfaceList.get(0).isBeneath(selectedSurfaceList.get(1))) {
+                Surface bottomSurface = selectedSurfaceList.get(0);
+                Surface topSurface = selectedSurfaceList.get(1);
+                bottomAlign(bottomSurface, topSurface);
+            }
+            else if (selectedSurfaceList.get(1).isBeneath(selectedSurfaceList.get(0))) {
+                Surface bottomSurface = selectedSurfaceList.get(1);
+                Surface topSurface = selectedSurfaceList.get(0);
+                bottomAlign(bottomSurface, topSurface);
+            }
+            else {
+                // Les surfaces sont centrées verticalement
+                // On aligne à la surface ayant le coin inférieur le plus bas
+                if (selectedSurfaceList.get(0).bottomMostCorner(selectedSurfaceList.get(1))) {
+                    Surface bottomSurface = selectedSurfaceList.get(0);
+                    Surface topSurface = selectedSurfaceList.get(1);
+                    bottomAlign(bottomSurface, topSurface);
+                }
+                else if (selectedSurfaceList.get(1).topMostCorner(selectedSurfaceList.get(0))) {
+                    Surface bottomSurface = selectedSurfaceList.get(1);
+                    Surface topSurface = selectedSurfaceList.get(0);
+                    bottomAlign(bottomSurface, topSurface);
+                }
+                else {
+                    return;
+                }
+            }
+        }
+    }
+
+    public void bottomAlign(Surface bottomSurface, Surface topSurface) {
+        Point2D bottomPos = bottomSurface.getBottomMostPoint();
+        Point2D topSurfaceTopLeftPoint = topSurface.getTopLeftPoint();
+        double heightDifference = bottomPos.getY() - topSurface.getBottomMostPoint().getY();
+
+        topSurfaceTopLeftPoint.setLocation(topSurfaceTopLeftPoint.getX(), topSurfaceTopLeftPoint.getY() + heightDifference);
+        topSurface.snapToPoint(topSurfaceTopLeftPoint);
     }
 
     private ArrayList<Surface> getSelectedSurfaces() {
@@ -779,7 +962,8 @@ public class Room {
                     Surface baseSurface = compositeSurface.get(0);
                     for (int i = 0; i < compositeSurface.size(); i++) {
                         if (i == 0) {
-                            Surface newBaseSurface = new Surface(baseSurface.xPoints, baseSurface.yPoints, baseSurface.nPoints);
+                            Surface newBaseSurface = new Surface(baseSurface.getxPoints(), baseSurface.getyPoints(), baseSurface.getnPoints());
+                            newBaseSurface.addCopy(newBaseSurface);
                             newBaseSurface.setTileType(baseSurface.getTileType());
                             newBaseSurface.setColor(baseSurface.getColor());
                             if (baseSurface.isCovered()) {
@@ -795,6 +979,7 @@ public class Room {
             }
         }
     }
+
 
     public void setMismatch(double mismatch) {
         int counter = getNumberOfSelectedSurfaces();

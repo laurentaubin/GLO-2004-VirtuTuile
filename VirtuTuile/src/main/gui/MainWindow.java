@@ -2,6 +2,7 @@ package gui;
 
 import domain.room.RoomController;
 import domain.room.TileType;
+import util.UnitConverter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -284,10 +285,23 @@ public class MainWindow extends JFrame {
         viewMenu.add(gridMenuItem);
         gridMenuItem.setText("Afficher/cacher la grille");
         gridMenuItem.setSelected(drawingPanel.getGridlines());
+
         gridMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 gridMenuItemActionPerformed(actionEvent);
+            }
+        });
+        openMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                openMenuItemActionPerform(actionEvent);
+            }
+        });
+        saveAsMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                saveAsMenuItemActionPerformed(actionEvent);
             }
         });
 
@@ -592,6 +606,17 @@ public class MainWindow extends JFrame {
         return drawPoints;
     }
 
+    public void openMenuItemActionPerform(ActionEvent actionEvent){
+        this.controller.openMenuSelected();
+        controller.getSelectedSurfaceGroutWidth();
+        drawingPanel.repaint();
+
+    }
+    public void saveAsMenuItemActionPerformed(ActionEvent actionEvent){
+        this.controller.saveAsSelected();
+    }
+
+
     public void gridMenuItemActionPerformed(ActionEvent actionEvent) {
         drawingPanel.setGridLines();
     }
@@ -647,18 +672,20 @@ public class MainWindow extends JFrame {
         double yPos = evt.getY() / drawingPanel.getZoom();
         //double xPos = UnitConverter.convertPixelToSelectedUnit( evt.getX(), this.currentMeasurementMode);
         //double yPos = UnitConverter.convertPixelToSelectedUnit(evt.getY(), this.currentMeasurementMode);
-/*
+
+        /*
         if (this.currentMeasurementMode == MeasurementUnitMode.METRIC) {
-            mousePosition += ("x= " + xPos + "m " + ", y= " + yPos + "m ");
+            mousePosition += ("x= " + (double)(Math.round(UnitConverter.pixelToMeter(xPos) * 100d) / 100d) + "m " + ", y= " + Math.round(UnitConverter.pixelToMeter(yPos) * 100d) / 100d + "m ");
         }
-        if (this.currentMeasurementMode == MeasurementUnitMode.IMPERIAL) {
-            mousePosition += ("x= " + xPos + "'' " + ", y= " + yPos + "'' ");
-        }
-*/
+
+         */
+
+        mousePosition += ("x= " + xPos + ", y= " + yPos);
+
 
         if (this.controller.checkIfMouseAboveTile(evt.getX(), evt.getY())) {
             ArrayList<Double> tileDimension = this.controller.getTileDimensions(evt.getX(), evt.getY());
-            mousePosition += "Largeur de la tuile = " + tileDimension.get(0) + ", hauteur de la tuile = " + tileDimension.get(1) ;
+            mousePosition += " | Largeur de la tuile = " + tileDimension.get(0) + ", hauteur de la tuile = " + tileDimension.get(1) ;
             setStatusBarText(mousePosition);
         }
 
@@ -762,10 +789,13 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
+    public void setChevronPattern() {
+        controller.setChevronPattern();
+        drawingPanel.repaint();
+    }
 
     //Fait Juste repaint la couleur de la surface de la couleur choisit pour grout
     public void setGroutColor(Color color){
-
         controller.setGroutColor(color);
         drawingPanel.repaint();
     }
@@ -818,6 +848,36 @@ public class MainWindow extends JFrame {
 
     public void verticallyAlignSelectedSurfaces() {
         controller.verticallyAlignSelectedSurfaces();
+        drawingPanel.repaint();
+    }
+
+    public void horizontallyCenterSelectedSurfaces() {
+        controller.horizontallyCenterSelectedSurfaces();
+        drawingPanel.repaint();
+    }
+
+    public void verticallyCenterSelectedSurfaces() {
+        controller.verticallyCenterSelectedSurfaces();
+        drawingPanel.repaint();
+    }
+
+    public void leftAlignSelectedSurfaces() {
+        controller.leftAlignSelectedSurfaces();
+        drawingPanel.repaint();
+    }
+
+    public void rightAlignSelectedSurfaces() {
+        controller.rightAlignSelectedSurfaces();
+        drawingPanel.repaint();
+    }
+
+    public void topAlignSelectedSurfaces() {
+        controller.topAlignSelectedSurfaces();
+        drawingPanel.repaint();
+    }
+
+    public void bottomAlignSelectedSurfaces() {
+        controller.bottomAlignSelectedSurfaces();
         drawingPanel.repaint();
     }
 

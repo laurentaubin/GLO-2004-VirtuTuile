@@ -53,8 +53,9 @@ public class PatternTab extends JPanel{
         patternButtonGroup.add(brickPatternButton);
         patternButtonGroup.add(verticalBrickShapeButton);
         patternButtonGroup.add(verticalPatternButton);
-        patternButtonGroup.add(chevronPatternButton);
+        patternButtonGroup.add(chevronButton);
         patternButtonGroup.add(anglePatternButton);
+        patternButtonGroup.add(squarePatternButton);
 
         percentComboBox.addItem(25);
         percentComboBox.addItem(50);
@@ -95,7 +96,7 @@ public class PatternTab extends JPanel{
         this.squarePatternButton.setIcon(squareIcon);
         squarePatternButton.setMargin(new Insets(10, 0, 10, 0));
 
-        BufferedImage chevronImage = ImageIO.read(this.getClass().getResourceAsStream("/image/chevron.png"));
+        BufferedImage chevronImage = ImageIO.read(this.getClass().getResourceAsStream("/image/Chevron.png"));
         Icon chevronIcon = new ImageIcon(chevronImage.getScaledInstance(120, 100, Image.SCALE_DEFAULT));
         this.chevronButton.setIcon(chevronIcon);
         chevronButton.setMargin(new Insets(10, 0, 10, 0));
@@ -189,6 +190,13 @@ public class PatternTab extends JPanel{
             public void actionPerformed(ActionEvent actionEvent) {
                 applyMismatchActionPerformed();
 
+            }
+        });
+
+        chevronButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                mainWindow.setChevronPattern();
             }
         });
     }

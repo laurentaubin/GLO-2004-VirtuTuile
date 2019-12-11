@@ -3,6 +3,7 @@ package gui;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -88,8 +89,6 @@ public class TopButtonBar extends JPanel{
         BufferedImage saveImage = ImageIO.read(this.getClass().getResourceAsStream("/image/save.png"));
         Icon saveIcon = new ImageIcon(saveImage.getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         this.saveButton.setIcon(saveIcon);
-
-
 
         selectButton.addMouseListener(new MouseAdapter() {
             @Override

@@ -1,17 +1,23 @@
 package domain.room;
 
+
 import domain.drawing.SurfaceDrawer;
 import domain.room.pattern.Pattern;
 import domain.room.surface.Surface;
 import gui.DrawingPanel;
 import gui.MainWindow;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
+import java.io.*;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class RoomController {
+
+public class RoomController implements Serializable{
     private Room room;
     private SurfaceDrawer surfaceDrawer;
 
@@ -44,11 +50,10 @@ public class RoomController {
     }
 
     public void addRoom() {
-        deleteElementsAfterPointer(this.undoRedoPointer);
         Room room = new Room(this.room);
         if (roomList.size() >= 30) {
             this.roomList.remove(0);
-            this.roomList.add(room);
+            this.roomList.add(null);
             this.undoRedoPointer = 29;
         }
         else {
@@ -60,8 +65,11 @@ public class RoomController {
     //https://stackoverflow.com/questions/11530276/how-do-i-implement-a-simple-undo-redo-for-actions-in-java
     private void deleteElementsAfterPointer(int undoRedoPointer)
     {
-        if(roomList.isEmpty()) return;
-        for(int i = roomList.size()-1; i > undoRedoPointer; i--)
+        if(roomList.isEmpty()) {
+            return;
+        }
+
+        for(int i = roomList.size() - 1; i > undoRedoPointer; i--)
         {
             roomList.remove(i);
         }
@@ -83,9 +91,56 @@ public class RoomController {
         setRoom(roomList.get(undoRedoPointer));
     }
 
+
+    public void openMenuSelected() {
+        String path = Paths.get("").toAbsolutePath().toString();
+
+        JFileChooser chooser = new JFileChooser(path);
+        chooser.showSaveDialog(null);
+        File curFile = chooser.getSelectedFile();
+
+        try {
+        FileInputStream inputFile = new FileInputStream(new File(String.valueOf(curFile)));
+        ObjectInputStream inputObject = new ObjectInputStream(inputFile);
+
+        Room openRoom = new Room((Room) inputObject.readObject());
+        this.room = openRoom;
+        System.out.println(openRoom.getSurfaceList().get(0).getWidth());
+
+        }
+        catch (IOException e) {
+            System.out.println(e);
+        }
+        catch (ClassNotFoundException e){
+            System.out.println(e);
+        }
+    }
+
+
+    public void saveAsSelected(){
+        String path = Paths.get("").toAbsolutePath().toString();
+        JFileChooser chooser = new JFileChooser(path);
+        chooser.showSaveDialog(null);
+        File curFile = chooser.getSelectedFile();
+        Room saveRoom = new Room(this.room);
+
+        try {
+            FileOutputStream fileOut = new FileOutputStream(curFile + ".ser");
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+            objectOut.writeObject(saveRoom);
+            objectOut.close();
+            System.out.println("The Object  was succesfully written to a file");
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void draw(Graphics2D g, MainWindow.MeasurementUnitMode measurementUnitMode, DrawingPanel drawingPanel, double zoom, Point currentMousePoint) {
         ArrayList<Surface> surfaceList = getSurfaceList();
-        surfaceDrawer = new SurfaceDrawer(this);
+        if (surfaceDrawer == null) {
+            surfaceDrawer = new SurfaceDrawer(this);
+        }
         surfaceDrawer.setMeasurementUnitMode(measurementUnitMode);
         surfaceDrawer.draw(g, surfaceList, zoom, currentMousePoint);
     }
@@ -95,6 +150,7 @@ public class RoomController {
     }
 
     public void addSurface(Point point, double[] xPoints, double[] yPoints, int number_of_edges) {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         if (number_of_edges == 4) {
             room.addRectangularSurface(xPoints, yPoints, number_of_edges);
         }
@@ -221,6 +277,7 @@ public class RoomController {
 
     public void combineSelectedSurfaces() {
         room.combineSelectedSurface();
+        addRoom();
     }
 
     public void createTileFromUserInput(Color color, float width, float height, String name, int nbrTilesPerBox) {
@@ -259,6 +316,10 @@ public class RoomController {
 
     public void setAnglePattern() {
         room.setAnglePattern();
+    }
+
+    public void setChevronPattern() {
+        room.setChevronPattern();
     }
 
     public void setSelectedSurfaceAsHole() {
@@ -331,6 +392,31 @@ public class RoomController {
     public void horizontallyAlignSelectedSurfaces() {
         room.horizontallyAlignSelectedSurfaces();
     }
+
+    public void verticallyCenterSelectedSurfaces() {
+        room.verticallyCenterSelectedSurfaces();
+    }
+
+    public void horizontallyCenterSelectedSurfaces() {
+        room.horizontallyCenterSelectedSurfaces();
+    }
+
+    public void leftAlignSelectedSurfaces() {
+        room.leftAlignSelectedSurfaces();
+    }
+
+    public void rightAlignSelectedSurfaces() {
+        room.rightAlignSelectedSurfaces();
+    }
+
+    public void topAlignSelectedSurfaces() {
+        room.topAlignSelectedSurfaces();
+    }
+
+    public void bottomAlignSelectedSurfaces() {
+        room.bottomAlignSelectedSurfaces();
+    }
+
     public ArrayList<Point> getPointList() {
         return this.pointList;
     }

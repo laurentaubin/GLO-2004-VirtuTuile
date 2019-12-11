@@ -1,6 +1,8 @@
 import gui.*;
 
+import javax.sound.sampled.Line;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
 import java.awt.*;
@@ -10,13 +12,6 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, IOException {
-        /*
-        MainPanelTest mainPanelTest = new MainPanelTest();
-        mainPanelTest.setExtendedState(mainPanelTest.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-        mainPanelTest.pack();
-        mainPanelTest.setVisible(true);
-
-         */
         UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         Main object = new Main();
         object.setFont(new FontUIResource((new Font("Helvetica Neue", Font.PLAIN, 13))));
@@ -30,17 +25,13 @@ public class Main {
         UIManager.put("ToggleButton.focus", new Color(216, 216, 220));
         UIManager.put("ToggleButton.select", new Color(216, 216, 220));
         UIManager.put("ToggleButton.background", Color.WHITE);
+        //UIManager.put("ToggleButton.border", new LineBorder(null, 1, true));
 
         UIManager.put("Button.background", Color.WHITE);
+        UIManager.put("Button.select", new Color(20,142,255));
+        UIManager.put("Button.focus", new Color(20,142,255));
 
         UIManager.put("CheckBox.select", new Color(0,112,245));
-        //UIManager.put("CheckBox.interiorBackground", new Color(0,112,245));
-
-        //UIManager.put("scrollbar", Color.BLACK);
-        //UIManager.put("Scrollbar.track", Color.RED);
-        //UIManager.put("ScrollBar.thumbHighlight", Color.BLACK);
-        //UIManager.put("ScrollBar.thumbShadow", Color.BLACK);
-        //UIManager.put("ScrollBar.thumbDarkShadow", Color.BLACK);
 
         UIManager.put("ComboBox.selectionBackground", new Color(0,112,245) );
         UIManager.put("ComboBox.selectionForeground", new Color(235, 235, 240));
@@ -49,11 +40,6 @@ public class Main {
 
         UIManager.put("TabbedPane.unselectedTabForeground", new Color(108,108,112));
         UIManager.put("TabbedPane.selected", new Color(0,122,255));
-        //UIManager.put("TabbedPane.selectedForeground", new Color(216, 216, 220));
-        //UIManager.put("TabbedPane.contentAreaColor", Color.LIGHT_GRAY);
-        //UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 0, 0));
-        //UIManager.put("TabbedPane.selectedTabPadInsets", new Insets(0, 20, 20, 0));
-        //UIManager.put("TabbedPane.borderHightlightColor", Color.BLACK);
 
         UIManager.put("Panel.border", Color.BLACK);
 

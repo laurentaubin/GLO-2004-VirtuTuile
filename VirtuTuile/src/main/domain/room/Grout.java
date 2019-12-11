@@ -2,7 +2,8 @@ package domain.room;
 
 import java.awt.*;
 
-public class Grout {
+public class
+Grout {
     private Color color;
     private float width;
 

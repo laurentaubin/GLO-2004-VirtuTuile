@@ -1,5 +1,7 @@
 package gui;
 
+import util.UnitConverter;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -31,6 +33,9 @@ public class SurfaceTab extends JPanel{
     private JButton downButton;
     private JButton topAlignButton;
     private JButton rightButton;
+    private JButton verticallyCenterButton;
+    private JButton horizontallyCenterButton;
+    private JButton centrerHButton;
     private Color surfaceColor;
 
     public SurfaceTab(MainWindow mainWindow) throws IOException {
@@ -125,6 +130,48 @@ public class SurfaceTab extends JPanel{
             }
         });
 
+        verticallyCenterButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                verticallyCenterSelectedSurfaces();
+            }
+        });
+
+        horizontallyCenterButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                horizontallyCenterSelectedSurfaces();
+            }
+        });
+
+        leftAlignButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                leftAlignSelectedSurfaces();
+            }
+        });
+
+        rightButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                rightAlignSelectedSurfaces();
+            }
+        });
+
+        topAlignButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                topAlignSelectedSurfaces();
+            }
+        });
+
+        downButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                bottomAlignSelectedSurfaces();
+            }
+        });
+
         //Align Center icon icon by Icons8
         //Align Bottom icon icon by Icons8
         //Align Top icon icon by Icons8
@@ -171,12 +218,14 @@ public class SurfaceTab extends JPanel{
         Icon collerHorIcon = new ImageIcon(horizontalAlignImage.getScaledInstance(20, 20, Image.SCALE_DEFAULT));
         horizontallyAlignButton.setIcon(collerHorIcon);
 
+    }
 
+    private void horizontallyCenterSelectedSurfaces() {
+        mainWindow.horizontallyCenterSelectedSurfaces();
+    }
 
-
-
-
-
+    private void verticallyCenterSelectedSurfaces() {
+        mainWindow.verticallyCenterSelectedSurfaces();
     }
 
     private void horizontallyAlignSelectedSurfaces() {
@@ -187,13 +236,30 @@ public class SurfaceTab extends JPanel{
         mainWindow.verticallyAlignSelectedSurfaces();
     }
 
+    private void leftAlignSelectedSurfaces() {
+        mainWindow.leftAlignSelectedSurfaces();
+    }
+
+    private void rightAlignSelectedSurfaces() {
+        mainWindow.rightAlignSelectedSurfaces();
+    }
+
+    private void topAlignSelectedSurfaces() {
+        mainWindow.topAlignSelectedSurfaces();
+    }
+
+    private void bottomAlignSelectedSurfaces() {
+        mainWindow.bottomAlignSelectedSurfaces();
+    }
+
     public void setEnteredWidthSurfaceDimensions(){
-        double enteredWidth = (double)widthField.getValue();
+        double enteredWidth = UnitConverter.convertSelectedUnitToPixel((double)widthField.getValue(), mainWindow.getCurrentMeasurementMode());
         this.mainWindow.setSelectedSurfaceWidth(enteredWidth);
     }
 
     public void setEnteredHeightSurfaceDimensions() {
-        double enteredHeight = (double)heightField.getValue();
+        double enteredHeight = UnitConverter.convertSelectedUnitToPixel((double)heightField.getValue(), mainWindow.getCurrentMeasurementMode());
+
         this.mainWindow.setSelectedSurfaceHeight(enteredHeight);
     }
 
@@ -205,7 +271,6 @@ public class SurfaceTab extends JPanel{
         this.surfaceColor = color;
         surfaceColorButton.setBackground(color);
         surfaceColorButton.setOpaque(true);
-
     }
 
     public void setSurfaceColor(Color color){
@@ -217,8 +282,11 @@ public class SurfaceTab extends JPanel{
     }
 
     public void setSurfaceDimensionField(Dimension dimension) {
-        this.widthField.setValue(dimension.getWidth());
-        this.heightField.setValue(dimension.getHeight());
+        MainWindow.MeasurementUnitMode current = mainWindow.getCurrentMeasurementMode();
+        double width = UnitConverter.convertPixelToSelectedUnit(dimension.width, current);
+        double height = UnitConverter.convertPixelToSelectedUnit(dimension.height, current);
+        this.widthField.setValue(width);
+        this.heightField.setValue(height);
     }
 
 
