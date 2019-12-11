@@ -1,14 +1,11 @@
 package domain.room;
 
 import domain.room.pattern.*;
-import domain.room.surface.ElementarySurface;
-import domain.room.surface.RectangularSurface;
 import domain.room.surface.Surface;
 import gui.MainWindow;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.io.*;
 import java.util.ArrayList;
@@ -99,7 +96,7 @@ public class Room implements Serializable{
         Boolean latestSurfaceSelected = true;
 
         for (int i = surfaceList.size() - 1; i >= 0; i--) {
-            if (surfaceList.get(i).getAreaTest().contains(x, y) && latestSurfaceSelected == true) {
+            if (surfaceList.get(i).getArea().contains(x, y) && latestSurfaceSelected == true) {
                     surfaceList.get(i).switchSelectionStatus();
                     latestSurfaceSelected = false;
 
@@ -114,7 +111,7 @@ public class Room implements Serializable{
 
     private void switchSelectionStatusIfContains(double x, double y, boolean isShiftDown, Surface surfaceInRoom) {
         Point2D.Double point = new Point2D.Double(x, y);
-        if (surfaceInRoom.getAreaTest().contains(point)) {
+        if (surfaceInRoom.getArea().contains(point)) {
             surfaceInRoom.switchSelectionStatus();
         } else if (!isShiftDown) {
             surfaceInRoom.unselect();
@@ -294,7 +291,7 @@ public class Room implements Serializable{
         surfacesToCombine.remove(0);
 
         for (Surface surface : surfacesToCombine) {
-            if (!baseSurface.intersect(surface.getAreaTest())) {
+            if (!baseSurface.intersect(surface.getArea())) {
                 areIntersect = false;
             }
         }
@@ -317,7 +314,7 @@ public class Room implements Serializable{
         surfacesToCombine.remove(index);
 
         for (Surface surface : surfacesToCombine) {
-            if (baseSurface.intersect(surface.getAreaTest())) {
+            if (baseSurface.intersect(surface.getArea())) {
                 if (surface.isHole()) {
                     if (baseSurface.isHole()) {
                         baseSurface.merge(surface);
@@ -364,7 +361,7 @@ public class Room implements Serializable{
             }
 
             if (surfaceInRoom.isCovered()) {
-                surfaceInRoom.getPattern().generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest(), surfaceInRoom.getGroutWidth());
+                surfaceInRoom.getPattern().generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getArea(), surfaceInRoom.getGroutWidth());
             }
         }
     }
@@ -373,7 +370,7 @@ public class Room implements Serializable{
         for (Surface surfaceInRoom : surfaceList) {
             if (surfaceInRoom.isSelected() && !surfaceInRoom.isHole()) {
                 StraightPattern straightPattern = new StraightPattern();
-                straightPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest(), surfaceInRoom.getGroutWidth());
+                straightPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getArea(), surfaceInRoom.getGroutWidth());
                 surfaceInRoom.setPattern(straightPattern);
             }
         }
@@ -383,7 +380,7 @@ public class Room implements Serializable{
         for (Surface surfaceInRoom : surfaceList) {
             if (surfaceInRoom.isSelected() && !surfaceInRoom.isHole()) {
                 BrickPattern brickPattern = new BrickPattern(surfaceInRoom.getMismatch());
-                brickPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest(), surfaceInRoom.getGroutWidth());
+                brickPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getArea(), surfaceInRoom.getGroutWidth());
                 surfaceInRoom.setPattern(brickPattern);
             }
         }
@@ -394,7 +391,7 @@ public class Room implements Serializable{
         for (Surface surfaceInRoom : surfaceList) {
             if (surfaceInRoom.isSelected() && !surfaceInRoom.isHole()) {
                 VerticalPattern verticalPattern = new VerticalPattern();
-                verticalPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest(), surfaceInRoom.getGroutWidth());
+                verticalPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getArea(), surfaceInRoom.getGroutWidth());
                 surfaceInRoom.setPattern(verticalPattern);
             }
         }
@@ -404,7 +401,7 @@ public class Room implements Serializable{
         for (Surface surfaceInRoom : surfaceList) {
             if (surfaceInRoom.isSelected() && !surfaceInRoom.isHole()) {
                 VerticalBrickPattern verticalBrickPattern = new VerticalBrickPattern(surfaceInRoom.getMismatch());
-                verticalBrickPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest(), surfaceInRoom.getGroutWidth());
+                verticalBrickPattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getArea(), surfaceInRoom.getGroutWidth());
                 surfaceInRoom.setPattern(verticalBrickPattern);
             }
         }
@@ -414,7 +411,7 @@ public class Room implements Serializable{
         for (Surface surfaceInRoom : surfaceList) {
             if (surfaceInRoom.isSelected()) {
                 InclinePattern inclinePattern = new InclinePattern();
-                inclinePattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getAreaTest(), surfaceInRoom.getGroutWidth());
+                inclinePattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getArea(), surfaceInRoom.getGroutWidth());
                 surfaceInRoom.setPattern(inclinePattern);
             }
         }
@@ -427,7 +424,7 @@ public class Room implements Serializable{
             if (surface.isSelected()) {
                 if((surface.getTileType().getWidth() / surface.getTileType().getHeight()) == 2) {
                     SquarePattern squarePattern = new SquarePattern();
-                    squarePattern.generateTiles(surface.getBoundingRectangle(), surface.getTileType(), surface.getAreaTest(), surface.getGroutWidth());
+                    squarePattern.generateTiles(surface.getBoundingRectangle(), surface.getTileType(), surface.getArea(), surface.getGroutWidth());
                     surface.setPattern(squarePattern);
                 }
                 else{
@@ -449,7 +446,7 @@ public class Room implements Serializable{
         for (Surface surface : surfaceList) {
             if (surface.isSelected()) {
                 ChevronPattern chevronPattern = new ChevronPattern();
-                chevronPattern.generateTiles(surface.getBoundingRectangle(), surface.getTileType(), surface.getAreaTest(), surface.getGroutWidth());
+                chevronPattern.generateTiles(surface.getBoundingRectangle(), surface.getTileType(), surface.getArea(), surface.getGroutWidth());
                 surface.setPattern(chevronPattern);
             }
         }
