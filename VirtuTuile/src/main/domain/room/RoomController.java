@@ -444,5 +444,8 @@ public class RoomController implements Serializable{
         this.room.updateSelectedSurfacesPatternPosition(deltaX, deltaY);
     }
 
+    public void updateTile(TileType tile, double width, double height, String name, int nbrTilesPerBox, Color color) {
+        room.updateTile(tile, width, height, name, nbrTilesPerBox, color);
+    }
 }
 

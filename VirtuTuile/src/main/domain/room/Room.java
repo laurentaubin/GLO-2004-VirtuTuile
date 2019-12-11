@@ -1002,4 +1002,12 @@ public class Room implements Serializable{
             }
         }
     }
+
+    public void updateTile(TileType tile, double width, double height, String name, int nbrTilesPerBox, Color color) {
+        tile.setWidth((float) width);
+        tile.setHeight((float) height);
+        tile.setName(name);
+        tile.setNbrTilesPerBox(nbrTilesPerBox);
+        tile.setColor(color);
+    }
 }

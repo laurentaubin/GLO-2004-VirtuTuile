@@ -23,6 +23,11 @@ public class MainWindow extends JFrame {
     public Point currentMousePoint = new Point();
     public Point initMousePoint = new Point();
 
+    public void updateTile(TileType selectedTileType, float tileWidth, float tileHeight, String tileName, int nbrTilesPerBox, Color tileColor) {
+        controller.updateTile(selectedTileType, tileWidth, tileHeight, tileName, nbrTilesPerBox, tileColor);
+        drawingPanel.repaint();
+    }
+
 
     public enum ApplicationMode {
         SELECT, ADD_RECTANGULAR, ADD_IRREGULAR, MOVE_PATTERN
@@ -750,10 +755,6 @@ public class MainWindow extends JFrame {
         return controller.getTileList();
     }
 
-    public void updateSelectedTile(){
-        drawingPanel.repaint();
-    }
-
     public void setSelectedTileToSelectedSurface(TileType selectedTileType) {
         controller.setSelectedTileToSelectedSurface(selectedTileType);
         drawingPanel.repaint();
@@ -840,7 +841,7 @@ public class MainWindow extends JFrame {
         this.controller.separateSelectedSurface();
         drawingPanel.repaint();
     }
-    
+
     public void horizontallyAlignSelectedSurfaces() {
         controller.horizontallyAlignSelectedSurfaces();
         drawingPanel.repaint();
