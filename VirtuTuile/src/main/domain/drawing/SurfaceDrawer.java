@@ -10,7 +10,6 @@ import domain.room.pattern.VerticalBrickPattern;
 import domain.room.surface.Surface;
 import gui.DrawingPanel;
 
-import javafx.scene.transform.Affine;
 import util.UnitConverter;
 import gui.MainWindow;
 import org.w3c.dom.css.Rect;
@@ -46,28 +45,62 @@ public class SurfaceDrawer {
         at.setToScale(zoom, zoom);
         for (Surface current_surface : surfaceList) {
             /*
+            int nPoints =  current_surface.getnPoints();
+            double[] xPoints = current_surface.getxPoints();
+            double[] yPoints = current_surface.getyPoints();
             Path2D.Double path = new Path2D.Double();
-            for (int i = 0; i < current_surface.nPoints; i++) {
+            for (int i = 0; i < nPoints; i++) {
                 if (i == 0) {
-                    path.moveTo(current_surface.xPoints[i], current_surface.yPoints[i]);
+                    path.moveTo(xPoints[i], yPoints[i]);
                 }
                 else {
-                    path.lineTo(current_surface.xPoints[i], current_surface.yPoints[i]);
+                    path.lineTo(xPoints[i],yPoints[i]);
                 }
             }
             path.closePath();
             Area shape = new Area(path);
+
              */
 
             Area shape = new Area(current_surface.getAreaTest());
             Area otherShape = new Area();
             ArrayList<Surface> elementarySurface = new ArrayList<>(current_surface.getElementarySurface());
             ArrayList<Surface> imaginarySurfaces = new ArrayList<>();
+            ArrayList<Surface> imaginaryHoles = new ArrayList<>();
             AffineTransform tx = new AffineTransform();
             double groutWidth = current_surface.getGroutWidth();
 
 
             for (Surface es : elementarySurface) {
+                if (es.isHole()) {
+                    Point2D surfaceMiddlePoint = es.getMiddlePoint();
+                    double widthRatio = this.getRatioWidth(es, groutWidth);
+                    double heightRatio = this.getRatioHeight(es, groutWidth);
+                    tx.scale(1/widthRatio, 1/heightRatio);
+                    Surface imaginarySurface = new Surface(es, tx);
+                    imaginarySurface.setIsHole();
+                    Point2D imaginaryMiddle = imaginarySurface.getMiddlePoint();
+                    double x = surfaceMiddlePoint.getX() - imaginaryMiddle.getX();
+                    double y = surfaceMiddlePoint.getY() - imaginaryMiddle.getY();
+                    imaginarySurface.translatePointsTest(x, y);
+                    imaginaryHoles.add(imaginarySurface);
+                    tx.setToIdentity();
+                }
+
+                else {
+                    Point2D surfaceMiddlePoint = es.getMiddlePoint();
+                    double widthRatio = this.getRatioWidth(es, groutWidth);
+                    double heightRatio = this.getRatioHeight(es, groutWidth);
+                    tx.scale(widthRatio, heightRatio);
+                    Surface imaginarySurface = new Surface(es, tx);
+                    Point2D imaginaryMiddle = imaginarySurface.getMiddlePoint();
+                    double x = surfaceMiddlePoint.getX() - imaginaryMiddle.getX();
+                    double y = surfaceMiddlePoint.getY() - imaginaryMiddle.getY();
+                    imaginarySurface.translatePointsTest(x, y);
+                    imaginarySurfaces.add(imaginarySurface);
+                    tx.setToIdentity();
+                }
+
                 Point2D surfaceMiddlePoint = es.getMiddlePoint();
                 double widthRatio = this.getRatioWidth(es, groutWidth);
                 double heightRatio = this.getRatioHeight(es, groutWidth);
@@ -91,6 +124,18 @@ public class SurfaceDrawer {
                 }
             }
 
+            for (Surface scaledSurfaces : imaginaryHoles) {
+                Area scaledArea = scaledSurfaces.getAreaTest();
+                if (otherShape.isEmpty()) {
+                    otherShape = new Area(scaledArea);
+                }
+                else {
+                    otherShape.subtract(scaledArea);
+                }
+            }
+
+
+
             if (zoom != 1) {
                 //AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
                 shape.transform(at);
@@ -105,8 +150,8 @@ public class SurfaceDrawer {
                 current_surface.getPattern().getVirtualTileList().clear();
 
                 //TODO avoir du grout autour de la surface ou pas
-                //current_surface.getPattern().generateTiles(current_surface.getBoundingRectangle(), current_surface.getTileType(), otherShape, current_surface.getGroutWidth());
-                current_surface.getPattern().generateTiles(current_surface.getBoundingRectangle(), current_surface.getTileType(), current_surface.getAreaTest(), current_surface.getGroutWidth());
+                current_surface.getPattern().generateTiles(current_surface.getBoundingRectangle(), current_surface.getTileType(), otherShape, current_surface.getGroutWidth());
+                //current_surface.getPattern().generateTiles(current_surface.getBoundingRectangle(), current_surface.getTileType(), current_surface.getAreaTest(), current_surface.getGroutWidth());
 
                 ArrayList<Tile> array = current_surface.getPattern().getVirtualTileList();
                 for (Tile tile : array) {
@@ -145,23 +190,25 @@ public class SurfaceDrawer {
                 g2d.draw(elem);
             }
 
-            g2d.setStroke(new BasicStroke(1));
-            g2d.setColor(Color.GREEN);
-            //g2d.draw(otherShape);
-
             /*
             g2d.setStroke(new BasicStroke(1));
             g2d.setColor(Color.GREEN);
+            otherShape.transform(at);
+            g2d.draw(otherShape);
+            
+             */
 
+            /*
             for (Surface imagine : imaginarySurfaces) {
                 Area bleh = new Area(imagine.getAreaTest());
+                bleh.transform(at);
                 g2d.draw(bleh);
             }
 
+             */
+
             g2d.setStroke(new BasicStroke(1));
             g2d.setColor(Color.BLACK);
-
-             */
         }
 
         g2d.setStroke(new BasicStroke(1));

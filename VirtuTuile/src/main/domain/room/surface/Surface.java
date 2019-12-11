@@ -276,6 +276,10 @@ public class Surface implements Serializable{
         this.isCovered = true;
     }
 
+    public void setNotCovered() {
+        this.isCovered = false;
+    }
+
     public boolean isCovered() {
         return this.isCovered;
     }
@@ -337,7 +341,9 @@ public class Surface implements Serializable{
         this.area.transform(atPosition);
 
         for (Surface elem : this.elementarySurface) {
-            elem.setWidth(enteredWidth);
+            double elemWidth = elem.getWidth();
+            double ratio = enteredWidth/elemWidth;
+            elem.setWidth(ratio);
         }
     }
 
@@ -353,7 +359,6 @@ public class Surface implements Serializable{
 
         AffineTransform atPosition = new AffineTransform(1, 0, 0, 1, 0, -deltaPosition);
         this.area.transform(atPosition);
-
     }
 
     public Dimension getDimensions() {
