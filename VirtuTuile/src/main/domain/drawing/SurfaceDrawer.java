@@ -10,7 +10,6 @@ import domain.room.pattern.VerticalBrickPattern;
 import domain.room.surface.Surface;
 import gui.DrawingPanel;
 
-import javafx.scene.transform.Affine;
 import util.UnitConverter;
 import gui.MainWindow;
 import org.w3c.dom.css.Rect;
