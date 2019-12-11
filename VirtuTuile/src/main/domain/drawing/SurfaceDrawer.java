@@ -52,23 +52,30 @@ public class SurfaceDrawer {
             Area otherShape = new Area();
             ArrayList<Surface> elementarySurface = new ArrayList<>(current_surface.getElementarySurface());
             ArrayList<Surface> imaginarySurfaces = new ArrayList<>();
+            ArrayList<Surface> imaginaryHoles = new ArrayList<>();
             AffineTransform tx = new AffineTransform();
             double groutWidth = current_surface.getGroutWidth();
 
 
             for (Surface es : elementarySurface) {
-                // Point2D surfaceMiddlePoint = es.getMiddlePoint();
                 Point2D surfaceMiddlePoint = es.getCenterOfMass();
                 double widthRatio = this.getRatioWidth(es, groutWidth);
                 double heightRatio = this.getRatioHeight(es, groutWidth);
+                if (es.isHole()) {
+                    widthRatio = 1 / widthRatio;
+                    heightRatio = 1 /heightRatio;
+                }
+
                 tx.scale(widthRatio, heightRatio);
                 Surface imaginarySurface = new Surface(es, tx);
-                // Point2D imaginaryMiddle = imaginarySurface.getMiddlePoint();
                 Point2D imaginaryMiddle = imaginarySurface.getCenterOfMass();
                 double x = surfaceMiddlePoint.getX() - imaginaryMiddle.getX();
                 double y = surfaceMiddlePoint.getY() - imaginaryMiddle.getY();
                 imaginarySurface.translatePointsTest(x, y);
-                imaginarySurfaces.add(imaginarySurface);
+
+                if (es.isHole()) { imaginaryHoles.add(imaginarySurface); }
+                else { imaginarySurfaces.add(imaginarySurface); }
+
                 tx.setToIdentity();
             }
 
@@ -81,6 +88,17 @@ public class SurfaceDrawer {
                     otherShape.add(scaledArea);
                 }
             }
+
+            for (Surface scaledSurfaces : imaginaryHoles) {
+                Area scaledArea = scaledSurfaces.getArea();
+                if (otherShape.isEmpty()) {
+                    otherShape = new Area(scaledArea);
+                }
+                else {
+                    otherShape.subtract(scaledArea);
+                }
+            }
+
 
             if (zoom != 1) {
                 //AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
