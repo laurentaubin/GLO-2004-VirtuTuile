@@ -32,6 +32,7 @@ public class Surface implements Serializable{
     private ArrayList<ElementarySurface> holes;
     private int numberSummit;
     private boolean isHole;
+    private boolean center;
 
     //Attributs tests
     private double[] xPoints;
@@ -76,6 +77,7 @@ public class Surface implements Serializable{
         this.pattern = new StraightPattern();
         this.tileType = TileType.createTileWithDefaultParameters();
         this.color = (Color.WHITE);
+        this.center = false;
 
         //Test
         this.xPoints = xPoints;
@@ -295,6 +297,15 @@ public class Surface implements Serializable{
 
     public boolean isCovered() {
         return this.isCovered;
+    }
+
+
+    public void setCoverCenter(){
+        this.center = !this.center;
+    }
+
+    public boolean getCoverCenter(){
+        return this.center;
     }
 
     public void translate(double deltaX, double deltaY) {

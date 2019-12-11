@@ -40,6 +40,7 @@ public class PatternTab extends JPanel{
     private JToggleButton squarePatternButton;
     private JPanel chevronPattern;
     private JToggleButton chevronButton;
+    private JButton centerTile;
     private Color selectedColor;
 
 
@@ -199,6 +200,13 @@ public class PatternTab extends JPanel{
                 mainWindow.setChevronPattern();
             }
         });
+
+        centerTile.addActionListener((new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                centerTiles();
+            }
+        }));
     }
 
     private void setButtonColor(Color color) {
@@ -258,5 +266,9 @@ public class PatternTab extends JPanel{
             mismatch = mismatch/100;
             mainWindow.setMismatch(mismatch);
         }
+    }
+
+    public void centerTiles(){
+        mainWindow.centerTiles();
     }
 }

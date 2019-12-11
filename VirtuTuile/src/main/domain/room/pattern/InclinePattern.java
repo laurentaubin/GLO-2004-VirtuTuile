@@ -17,7 +17,7 @@ public class InclinePattern extends Pattern {
         super();
     }
 
-    public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth) {
+    public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth, boolean center) {
         double xOffset = tileType.getxOffset();
         double yOffset = tileType.getyOffset();
         double tileWidth = tileType.getWidth();
@@ -77,6 +77,8 @@ public class InclinePattern extends Pattern {
         deleteOutsideTile(area, tileWidth, tileHeight);
         return virtualTileList;
     }
+
+
 
     public void deleteOutsideTile(Area surface, double baseTileWidth, double baseTileHeight) {
         for (Tile tile : virtualTileList) {

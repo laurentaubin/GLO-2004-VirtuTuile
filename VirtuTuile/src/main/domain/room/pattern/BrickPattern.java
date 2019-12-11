@@ -19,32 +19,43 @@ public class BrickPattern extends Pattern {
     public BrickPattern(double xOffset, double yOffset, int angle, double groutWidth, Color groutColor, double mismatch) {
         super(xOffset, yOffset, angle, groutWidth, groutColor);
         this.mismatch = mismatch;
+
     }
 
     public void setMismatch(double mismatch) {
         this.mismatch = mismatch;
     }
 
-    public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth) {
+    public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth, boolean center) {
         double xOffset = tileType.getxOffset();
         double yOffset = tileType.getyOffset();
         double tileWidth = tileType.getWidth();
         double tileHeight = tileType.getHeight();
+        double decalageCenterX = 0;
+        double decalageCenterY = 0;
+
+
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
         Point2D.Double position = new Point2D.Double(boundingRectanglePosition.getX(), boundingRectangle.getY());
+
+        if(center){
+            decalageCenterX = (tileWidth - ((boundingRectangle.getWidth() % (tileWidth + groutWidth)/2)))  + 1.5*groutWidth;
+            decalageCenterY = (tileHeight - ((boundingRectangle.getHeight() % (tileHeight + groutWidth)/2)))  + 1.5*groutWidth;
+        }
+
         if (xOffset <= 0) {
-            position.x = position.x + xOffset;
+            position.x = position.x + xOffset - decalageCenterX;
         }
 
         else {
-            position.x = position.x - tileWidth + (xOffset%tileWidth);
+            position.x = position.x - tileWidth + (xOffset%tileWidth) - decalageCenterX;
         }
 
         if (yOffset <= 0) {
-            position.y = position.y + yOffset;
+            position.y = position.y + yOffset - decalageCenterY;
         }
         else {
-            position.y = position.y - tileHeight + (yOffset%tileHeight);
+            position.y = position.y - tileHeight + (yOffset%tileHeight) - decalageCenterY;
 
         }
         Point2D.Double initPosition = new Point2D.Double(position.getX(), position.getY());
@@ -94,6 +105,7 @@ public class BrickPattern extends Pattern {
         deleteOutsideTile(area);
         return virtualTileList;
     }
+
 
     public void deleteOutsideTile(Area surface) {
         for (Tile tile : virtualTileList) {

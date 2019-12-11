@@ -440,8 +440,16 @@ public class RoomController implements Serializable{
         room.setMismatch(mismatch);
     }
 
+    public void centerTiles(){
+        room.centerTiles();
+    }
+
     public void updateSelectedSurfacesPatternPosition(double deltaX, double deltaY) {
         this.room.updateSelectedSurfacesPatternPosition(deltaX, deltaY);
+    }
+
+    public void dimensionIncorrectPaquet(){
+        room.dimensionIncorrectPaquet();
     }
 
     public void updateTile(TileType tile, double width, double height, String name, int nbrTilesPerBox, Color color) {

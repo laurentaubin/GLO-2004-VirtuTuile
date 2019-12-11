@@ -7,6 +7,7 @@ import domain.room.surface.Surface;
 import gui.MainWindow;
 //import gui.MainWindow;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
 import java.util.ArrayList;
@@ -112,10 +113,15 @@ public class SurfaceDrawer {
 
             if (current_surface.isCovered()) {
                 current_surface.getPattern().getVirtualTileList().clear();
-
                 // TODO avoir du grout autour de la surface ou pas
-                current_surface.getPattern().generateTiles(current_surface.getBoundingRectangle(), current_surface.getTileType(), otherShape, current_surface.getGroutWidth());
-                //  current_surface.getPattern().generateTiles(current_surface.getBoundingRectangle(), current_surface.getTileType(), current_surface.getAreaTest(), current_surface.getGroutWidth());
+                if(current_surface.getPattern().getName() == "Square" && !((current_surface.getTileType().getWidth() / current_surface.getTileType().getHeight()) == 2)){
+                    controller.dimensionIncorrectPaquet();
+                }
+                else {
+                    current_surface.getPattern().generateTiles(current_surface.getBoundingRectangle(), current_surface.getTileType(), otherShape, current_surface.getGroutWidth(), current_surface.getCoverCenter());
+                    //  current_surface.getPattern().generateTiles(current_surface.getBoundingRectangle(), current_surface.getTileType(), current_surface.getAreaTest(), current_surface.getGroutWidth(), current_surface.getCoverCenter());
+                }
+
 
                 ArrayList<Tile> array = current_surface.getPattern().getVirtualTileList();
                 for (Tile tile : array) {

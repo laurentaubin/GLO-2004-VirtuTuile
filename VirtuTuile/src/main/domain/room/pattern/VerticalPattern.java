@@ -16,28 +16,36 @@ public class VerticalPattern extends Pattern {
     }
 
 
-    public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth) {
+    public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth, boolean center) {
         double xOffset = tileType.getxOffset();
         double yOffset = tileType.getyOffset();
-
         double tileWidth = tileType.getWidth();
         double tileHeight = tileType.getHeight();
+        double decalageCenterX = 0;
+        double decalageCenterY = 0;
+
 
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
         Point2D.Double position = new Point2D.Double(boundingRectanglePosition.getX(), boundingRectangle.getY());
+
+        if(center){
+            decalageCenterX = (tileHeight - ((boundingRectangle.getWidth() % (tileHeight + groutWidth)/2))) + 1.5*groutWidth;
+            decalageCenterY = (tileWidth - ((boundingRectangle.getHeight() % (tileWidth + groutWidth)/2))) + 1.5*groutWidth;
+        }
+
         if (xOffset <= 0) {
-            position.x = position.x + xOffset;
+            position.x = position.x + xOffset - decalageCenterX;
         }
 
         else {
-            position.x = position.x - tileHeight+ (xOffset%tileHeight);
+            position.x = position.x - tileHeight+ (xOffset%tileHeight) - decalageCenterX;
         }
 
         if (yOffset <= 0) {
-            position.y = position.y + yOffset;
+            position.y = position.y + yOffset - decalageCenterY;
         }
         else {
-            position.y = position.y - tileWidth + (yOffset%tileWidth);
+            position.y = position.y - tileWidth + (yOffset%tileWidth) - decalageCenterY;
 
         }
         Point2D.Double initPosition = new Point2D.Double(position.getX(), position.getY());
@@ -49,12 +57,12 @@ public class VerticalPattern extends Pattern {
 
         double numberColumn = boundingRectangleWidth / (tileType.getHeight() + groutWidth);
         if (numberColumn / (int)numberColumn != 0) {
-            numberColumn = (int)(numberColumn + 1);
+            numberColumn = (int)(numberColumn + 5);
         }
 
         double numberRow = boundingRectangleHeight / (tileType.getWidth() + groutWidth);
         if(numberRow / (int)numberRow != 0) {
-            numberRow = (int)(numberRow + 2);
+            numberRow = (int)(numberRow + 5);
         }
 
         for (int row = 1; row <= numberRow ; row++) {
@@ -80,6 +88,8 @@ public class VerticalPattern extends Pattern {
         deleteOutsideTile(area);
         return virtualTileList;
     }
+
+
 
     public void deleteOutsideTile(Area surface) {
         for (Tile tile : virtualTileList) {

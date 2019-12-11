@@ -897,6 +897,12 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
+    public void centerTiles(){
+        controller.centerTiles();
+        drawingPanel.repaint();
+    }
+
+
     private ButtonGroup buttonGroup;
 
     private JPanel mainPanel;

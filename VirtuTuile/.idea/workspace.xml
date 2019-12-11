@@ -2,8 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8c246219-cf09-4492-905b-d80bdbddbe18" name="Default Changelist" comment="Undo/redo temporary fixed">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/domain/drawing/SurfaceDrawer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/drawing/SurfaceDrawer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/RoomController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/TileType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/TileType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/BrickPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/BrickPattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/ChevronPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/ChevronPattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/InclinePattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/InclinePattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/Pattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/Pattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/SquarePattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/SquarePattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/StraightPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/StraightPattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/VerticalBrickPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/VerticalBrickPattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/VerticalPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/VerticalPattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/surface/Surface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/surface/Surface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/MainWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/PatternTab.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/PatternTab.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/PatternTab.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/PatternTab.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -41,6 +57,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW" value="true" />
+    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/gui" />
@@ -152,6 +169,7 @@
       <workItem from="1575907235579" duration="170000" />
       <workItem from="1575926924445" duration="232000" />
       <workItem from="1576023160047" duration="139000" />
+      <workItem from="1576093756640" duration="5004000" />
     </task>
     <task id="LOCAL-00001" summary="xml(?)">
       <created>1573883748096</created>
