@@ -300,13 +300,19 @@ public class MainWindow extends JFrame {
         openMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                openMenuItemActionPerform(actionEvent);
+                openMenuItemActionPerform();
             }
         });
         saveAsMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                saveAsMenuItemActionPerformed(actionEvent);
+                saveAsMenuItemActionPerformed();
+            }
+        });
+        saveMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                saveMenuItemActionPerformed();
             }
         });
 
@@ -611,13 +617,18 @@ public class MainWindow extends JFrame {
         return drawPoints;
     }
 
-    public void openMenuItemActionPerform(ActionEvent actionEvent){
+    public void openMenuItemActionPerform(){
         this.controller.openMenuSelected();
         controller.getSelectedSurfaceGroutWidth();
         drawingPanel.repaint();
 
     }
-    public void saveAsMenuItemActionPerformed(ActionEvent actionEvent){
+
+    public void saveMenuItemActionPerformed(){
+        this.controller.saveSelected();
+    }
+
+    public void saveAsMenuItemActionPerformed(){
         this.controller.saveAsSelected();
     }
 

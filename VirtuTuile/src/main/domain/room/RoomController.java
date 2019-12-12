@@ -103,9 +103,10 @@ public class RoomController implements Serializable{
         FileInputStream inputFile = new FileInputStream(new File(String.valueOf(curFile)));
         ObjectInputStream inputObject = new ObjectInputStream(inputFile);
 
-        Room openRoom = new Room((Room) inputObject.readObject());
-        this.room = openRoom;
-        System.out.println(openRoom.getSurfaceList().get(0).getWidth());
+        this.room = (Room) inputObject.readObject();
+        System.out.println(curFile);
+        curFile = new File(String.valueOf(curFile).substring(0, String.valueOf(curFile).lastIndexOf('.')));
+        room.setPath(curFile);
 
         }
         catch (IOException e) {
@@ -117,20 +118,42 @@ public class RoomController implements Serializable{
     }
 
 
+    public void saveSelected(){
+        System.out.println(room.getPath());
+        if(room.getPath() == null){
+            saveAsSelected();
+        }
+        else{
+
+            try {
+                FileOutputStream fileOut = new FileOutputStream(room.getPath() + ".ser");
+                ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+                objectOut.writeObject(this.room);
+                objectOut.close();
+                System.out.println("The Object  was succesfully written to a file");
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
     public void saveAsSelected(){
+
         String path = Paths.get("").toAbsolutePath().toString();
         JFileChooser chooser = new JFileChooser(path);
         int validation = chooser.showSaveDialog(null);
         if (validation == JFileChooser.APPROVE_OPTION) {
-            File curFile = chooser.getSelectedFile();
-            Room saveRoom = new Room(this.room);
+            File pathFile = chooser.getSelectedFile();
 
             try {
-                FileOutputStream fileOut = new FileOutputStream(curFile + ".ser");
+                FileOutputStream fileOut = new FileOutputStream(pathFile + ".ser");
                 ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-                objectOut.writeObject(saveRoom);
+                objectOut.writeObject(this.room);
                 objectOut.close();
                 System.out.println("The Object  was succesfully written to a file");
+                room.setPath(pathFile);
             }
             catch (IOException e) {
                 e.printStackTrace();

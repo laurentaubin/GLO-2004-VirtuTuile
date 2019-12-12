@@ -3,7 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="8c246219-cf09-4492-905b-d80bdbddbe18" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/RoomController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/Tile.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/InclinePattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/InclinePattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/MainWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/TopButtonBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/TopButtonBar.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -154,7 +159,8 @@
       <workItem from="1575926924445" duration="232000" />
       <workItem from="1576023160047" duration="139000" />
       <workItem from="1576093756640" duration="8240000" />
-      <workItem from="1576133064204" duration="6441000" />
+      <workItem from="1576133064204" duration="6630000" />
+      <workItem from="1576167235074" duration="5681000" />
     </task>
     <task id="LOCAL-00001" summary="xml(?)">
       <created>1573883748096</created>
@@ -219,7 +225,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576099060729</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="incliné">
+      <created>1576139580267</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1576139580267</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -253,7 +266,8 @@
     <MESSAGE value="Quick refactor" />
     <MESSAGE value="Undo/redo temporary fixed" />
     <MESSAGE value="centrer tuile + validation taille tuile de paquet" />
-    <option name="LAST_COMMIT_MESSAGE" value="centrer tuile + validation taille tuile de paquet" />
+    <MESSAGE value="incliné" />
+    <option name="LAST_COMMIT_MESSAGE" value="incliné" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -18,17 +18,20 @@ public class Room implements Serializable{
     private ArrayList<Surface> surfaceList;
     private ArrayList<Surface> surfaceProjectionList;
     private ArrayList<TileType> tileTypeList;
+    static File path;
 
     public Room() {
         surfaceList = new ArrayList<Surface>();
         surfaceProjectionList = new ArrayList<Surface>();
         tileTypeList = new ArrayList<TileType>();
+
     }
 
     public Room(Room room) {
         surfaceList = new ArrayList<Surface>(room.getSurfaceList());
         surfaceProjectionList = new ArrayList<Surface>(room.getSurfaceProjectionList());
         tileTypeList = new ArrayList<TileType>(room.getTileList());
+
     }
 
     public void addSurfaceToList(Surface surface) {
@@ -137,8 +140,15 @@ public class Room implements Serializable{
         return auMoinsUne;
     }
 
+    public void setPath(File path){
+        this.path = path;
+    }
 
-    void setPatternToSelectedSurfaces(Pattern pattern) {
+    public File getPath(){
+        return this.path;
+    }
+
+    public void setPatternToSelectedSurfaces(Pattern pattern) {
         for (Surface surface : this.surfaceList) {
             if (surface.isSelected()) {
                 surface.getCover().setPattern(pattern);

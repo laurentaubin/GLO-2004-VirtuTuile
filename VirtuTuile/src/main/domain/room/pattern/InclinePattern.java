@@ -124,6 +124,7 @@ public class InclinePattern extends Pattern {
 
 
                     virtualTileList.add(new Tile(position, xPoints, yPoints, 4));
+
                     if (isInside) {
                         position.setLocation(position.getX() - (tileType.getWidth() + groutWidth) * Math.sin(angle), position.getY() + (tileType.getWidth() + groutWidth) * Math.cos(angle));
                     }
@@ -139,65 +140,25 @@ public class InclinePattern extends Pattern {
         return virtualTileList;
     }
 
-                /*
-        for (int row = 1; row <= numberRow*numberColumn ; row++) {
-
-            isInside = true;
-
-
-
-
-            while(isInside) {
-                count++;
-                int[] xPoints = new int[4];
-                int[] yPoints = new int[4];
-
-                xPoints[0] = (int) (position.getX() + xOffset);
-                xPoints[1] = (int) (position.getX() + xOffset + tileType.getWidth());
-                xPoints[2] = (int) (position.getX() + xOffset + tileType.getWidth());
-                xPoints[3] = (int) (position.getX() + xOffset);
-
-                yPoints[0] = (int) (position.getY() + yOffset);
-                yPoints[1] = (int) (position.getY() + yOffset);
-                yPoints[2] = (int) (position.getY() + yOffset + tileType.getHeight());
-                yPoints[3] = (int) (position.getY() + yOffset + tileType.getHeight());
-
-
-                virtualTileList.add(new Tile(position, xPoints, yPoints, 4));
-
-//                Tile tile = new Tile(position, xPoints, yPoints, 4);
-//                AffineTransform at = new AffineTransform(1, 0, 0, 1, 0, 0);
-//                at.rotate(angle, xPoints[0], yPoints[0]);
-//                tile.transform(at);
-//                virtualTileList.add(tile);
-
-
-                position.setLocation(position.getX() + ((tileType.getWidth() + groutWidth) * Math.cos(Math.toRadians(90) - angle)),
-                        position.getY() +((tileType.getWidth() + groutWidth) * Math.sin(Math.toRadians(90) - angle)));
-
-                isInside = (boundingRectangle.contains(xPoints[0],  yPoints[0]) ||
-                        boundingRectangle.contains(xPoints[1],  yPoints[1]) ||
-                        boundingRectangle.contains(xPoints[2],  yPoints[2]) ||
-                        boundingRectangle.contains(xPoints[3],  yPoints[3])) || count < 2;
-
-
-            }
-            position.setLocation(initPoint.getX() + tileHeight*Math.sin((Math.PI/2) - angle), position.getY() - tileHeight*Math.cos((Math.PI/2) - angle));
-            initPoint = new Point2D.Double(initPoint.getX() + tileHeight/Math.sqrt(2),position.getY() + (tileType.getHeight()/Math.sqrt(2)) );
-        }
-        //deleteOutsideTile(area, tileWidth, tileHeight);
-        return virtualTileList;
-    }
-
-
-*/
     public void deleteOutsideTile(Area surface, double baseTileWidth, double baseTileHeight) {
         for (Tile tile : virtualTileList) {
-            // TODO trouver meilleur facon que bounding pour l'inspecteur car les tuiles sont inclinées
             tile.intersect(surface);
-            if (!tile.isEmpty()) {
-                tile.setWidth(tile.getBounds2D().getWidth());
-                tile.setHeight(tile.getBounds2D().getHeight());
+            int[] xPoints = tile.getXPoints();
+            int[] yPoints = tile.getYPoints();
+            System.out.println(surface.contains(xPoints[0], yPoints[0]));
+            boolean allInside = surface.contains(xPoints[0], yPoints[0]) &&
+                    surface.contains(xPoints[1], yPoints[1]) &&
+                    surface.contains(xPoints[2], yPoints[2]) &&
+                    surface.contains(xPoints[3], yPoints[3]);
+
+            if (!allInside) {
+                tile.setWidth(1);
+                tile.setHeight(1);
+                tile.inspect();
+            }
+            else{
+                tile.setWidth(100);
+                tile.setHeight(100);
                 tile.inspect();
             }
         }
