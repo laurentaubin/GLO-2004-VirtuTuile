@@ -49,7 +49,8 @@ public class SurfaceDrawer {
             Area shape = new Area(path);
              */
 
-            Area shape = new Area(current_surface.getArea());
+            Area shapeTest = new Area(current_surface.getArea());
+            Path2D.Double shape = new Path2D.Double(shapeTest);
             Area otherShape = new Area();
             ArrayList<Surface> elementarySurface = new ArrayList<>(current_surface.getElementarySurface());
             ArrayList<Surface> imaginarySurfaces = new ArrayList<>();
@@ -186,10 +187,11 @@ public class SurfaceDrawer {
         if(!surfaceProjectionList.isEmpty()) {
             Surface rectangularProjection = surfaceProjectionList.get(surfaceProjectionList.size() - 1);
            // g2d.draw(rectangularProjection.getPolygon());
-            Area shape = rectangularProjection.getArea();
+            Area shapeTest = new Area(rectangularProjection.getArea());
+            Path2D.Double shape = new Path2D.Double(shapeTest);
             //AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
             shape.transform(at);
-            g2d.draw(rectangularProjection.getArea());
+            g2d.draw(shape);
            //g2d.draw(UnitConverter.convertPolygonToPixel(rectangularProjection.getPolygon(), this.measurementMode));
         }
 

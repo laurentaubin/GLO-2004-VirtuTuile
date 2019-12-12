@@ -11,9 +11,10 @@ import util.UnitConverter;
 import java.awt.*;
 import java.awt.geom.*;
 import java.io.Serializable;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class Surface implements Serializable{
+public class Surface implements Serializable {
     private Point2D.Double position;
     private Color color;
     private boolean selectionStatus = false;
@@ -25,7 +26,9 @@ public class Surface implements Serializable{
     private boolean haveHole = false;
     private Polygon polygon;
     private MainWindow.MeasurementUnitMode measurementMode;
-    private Area area;
+
+    private Path2D.Double area;
+
     private double width;
     private double height;
     private ArrayList<ElementarySurface> wholeSurfaces;
@@ -68,7 +71,9 @@ public class Surface implements Serializable{
             }
         }
         path.closePath();
-        this.area = new Area(path);
+        Area areaTest = new Area(path);
+        this.area = new Path2D.Double(areaTest);
+        //this.area = new Path2D.Double(areaTest);
         this.width = area.getBounds2D().getWidth();
         this.height = area.getBounds2D().getHeight();
 
@@ -106,7 +111,7 @@ public class Surface implements Serializable{
         this.scaleXPoints(tx.getScaleX());
         this.scaleYPoints(tx.getScaleY());
         this.position = new Point2D.Double(this.xPoints[0], this.yPoints[0]);
-        this.area = new Area(surfaceToCopy.getArea());
+        this.area = new Path2D.Double(new Area(surfaceToCopy.getArea()));
         this.width = this.area.getBounds2D().getWidth();
         this.height = this.area.getBounds2D().getHeight();
         this.area.transform(tx);
@@ -145,7 +150,7 @@ public class Surface implements Serializable{
     }
 
     public Area getArea() {
-        return this.area;
+        return new Area(this.area);
     }
 
     public boolean isMerged() {
@@ -160,7 +165,10 @@ public class Surface implements Serializable{
         this.wholeSurfaces.addAll(wholeSurface);
         this.holes.addAll(holeSurface);
         this.mergedStatus = true;
-        this.area.add(surface.area);
+
+        Area test = new Area(this.area);
+        test.add(new Area(surface.getArea()));
+        this.area = new Path2D.Double(test);
     }
 
     public Shape getShape(){
@@ -399,7 +407,7 @@ public class Surface implements Serializable{
     }
 
     public void setArea(Area area) {
-        this.area = area;
+        this.area = new Path2D.Double(area);
     }
 
     public int getNumberOfSummit() {
@@ -429,7 +437,10 @@ public class Surface implements Serializable{
     public void setHole(Surface surface) {
         this.wholeSurfaces.addAll(surface.getWholeSurfaces());
         this.holes.addAll(surface.getHoles());
-        this.area.subtract(surface.getArea());
+        Area test = new Area(this.area);
+        test.subtract(new Area(surface.getArea()));
+        this.area = new Path2D.Double(test);
+
     }
 
     public void setGroutWidth(double width) {

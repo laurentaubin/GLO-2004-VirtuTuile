@@ -96,7 +96,7 @@ public class RoomController implements Serializable{
         String path = Paths.get("").toAbsolutePath().toString();
 
         JFileChooser chooser = new JFileChooser(path);
-        chooser.showSaveDialog(null);
+        chooser.showOpenDialog(null);
         File curFile = chooser.getSelectedFile();
 
         try {
@@ -120,19 +120,21 @@ public class RoomController implements Serializable{
     public void saveAsSelected(){
         String path = Paths.get("").toAbsolutePath().toString();
         JFileChooser chooser = new JFileChooser(path);
-        chooser.showSaveDialog(null);
-        File curFile = chooser.getSelectedFile();
-        Room saveRoom = new Room(this.room);
+        int validation = chooser.showSaveDialog(null);
+        if (validation == JFileChooser.APPROVE_OPTION) {
+            File curFile = chooser.getSelectedFile();
+            Room saveRoom = new Room(this.room);
 
-        try {
-            FileOutputStream fileOut = new FileOutputStream(curFile + ".ser");
-            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-            objectOut.writeObject(saveRoom);
-            objectOut.close();
-            System.out.println("The Object  was succesfully written to a file");
-        }
-        catch (IOException e) {
-            e.printStackTrace();
+            try {
+                FileOutputStream fileOut = new FileOutputStream(curFile + ".ser");
+                ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+                objectOut.writeObject(saveRoom);
+                objectOut.close();
+                System.out.println("The Object  was succesfully written to a file");
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
