@@ -161,6 +161,18 @@ public class RoomController implements Serializable{
         }
     }
 
+
+    public void newProjectItemActionPerformed(){
+        String[] options = {"Enregistrer", "Continuer"};
+        int choix = JOptionPane.showOptionDialog(null, "Souhaitez-vous enregirtrer votre travail avant ?",
+                "Attention!", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+
+        if(choix == 0){
+            saveSelected();
+        }
+        this.room = new Room();
+    }
+
     public void draw(Graphics2D g, MainWindow.MeasurementUnitMode measurementUnitMode, DrawingPanel drawingPanel, double zoom, Point currentMousePoint) {
         ArrayList<Surface> surfaceList = getSurfaceList();
         if (surfaceDrawer == null) {

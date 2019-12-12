@@ -315,6 +315,12 @@ public class MainWindow extends JFrame {
                 saveMenuItemActionPerformed();
             }
         });
+        newProjectItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                newProjectItemActionPerformed();
+            }
+        });
 
         gridOptionItem.setText("Modifier la grille");
         viewMenu.add(gridOptionItem);
@@ -630,6 +636,11 @@ public class MainWindow extends JFrame {
 
     public void saveAsMenuItemActionPerformed(){
         this.controller.saveAsSelected();
+    }
+
+    public void newProjectItemActionPerformed(){
+        this.controller.newProjectItemActionPerformed();
+        drawingPanel.repaint();
     }
 
 
