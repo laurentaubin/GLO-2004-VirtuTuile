@@ -91,7 +91,7 @@ public class Surface implements Serializable {
         this.measurementMode = surfaceToCopy.measurementMode;
 
         if(surfaceToCopy.area != null) {
-            this.area = new Area(surfaceToCopy.area);
+            this.area = new Path2D.Double(surfaceToCopy.area);
         }
         this.width = new Double(surfaceToCopy.width);
         this.height = new Double(surfaceToCopy.height);
@@ -101,6 +101,7 @@ public class Surface implements Serializable {
         this.holes = surfaceToCopy.holes;
 
         this.isHole = new Boolean(surfaceToCopy.isHole);
+        this.center = new Boolean(surfaceToCopy.center);
 
         if(surfaceToCopy.xPoints != null) {
             this.xPoints = new double[surfaceToCopy.xPoints.length];
