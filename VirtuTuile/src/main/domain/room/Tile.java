@@ -25,6 +25,14 @@ public class Tile extends Area implements Serializable {
         this.inspecColor = new Color(255, 214, 10);
     }
 
+    public Tile(Tile tileToCopy) {
+        this.position = new Point2D.Double(tileToCopy.position.x, tileToCopy.position.y);
+        this.width = new Double(tileToCopy.width);
+        this.height = new Double(tileToCopy.height);
+        this.inspecColor = new Color(tileToCopy.inspecColor.getRGB());
+        this.tooSmall = new Boolean(tileToCopy.tooSmall);
+    }
+
     public double getWidth() {
         return this.width;
     }

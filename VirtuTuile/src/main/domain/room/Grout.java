@@ -13,6 +13,11 @@ Grout {
         this.width = width;
     }
 
+    public Grout(Grout groutToCopy) {
+        this.color = new Color(groutToCopy.color.getRGB());
+        this.width = new Float(groutToCopy.width);
+    }
+
     static Grout createGroutWithDefaultParameters() {
         return new Grout(Color.WHITE, 1);
     }

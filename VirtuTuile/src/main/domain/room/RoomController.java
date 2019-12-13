@@ -50,6 +50,7 @@ public class RoomController implements Serializable{
     }
 
     public void addRoom() {
+//        ArrayList<Surface> surfaceListCopy = new ArrayList<Surface>();
         Room room = new Room(this.room);
         if (roomList.size() >= 30) {
             this.roomList.remove(0);
@@ -57,21 +58,37 @@ public class RoomController implements Serializable{
             this.undoRedoPointer = 29;
         }
         else {
+//            ArrayList<Surface> thisSurfaceList = this.getSurfaceList();
+//            for (int i = 0; i < thisSurfaceList.size(); i++) {
+//                Surface currentSurface = new Surface(thisSurfaceList.get(i));
+//                surfaceListCopy.add(currentSurface);
+//            }
+//            room.setSurfaceList(surfaceListCopy);
+
             this.roomList.add(room);
             undoRedoPointer++;
         }
     }
 
     //https://stackoverflow.com/questions/11530276/how-do-i-implement-a-simple-undo-redo-for-actions-in-java
-    private void deleteElementsAfterPointer(int undoRedoPointer)
+    private void deleteElementsAfterPointer(int undoRedoPointerState)
     {
         if(roomList.isEmpty()) {
             return;
         }
 
-        for(int i = roomList.size() - 1; i > undoRedoPointer; i--)
+        boolean roomRemoved = false;
+        for(int i = roomList.size() - 1; i >= undoRedoPointerState; i--)
         {
-            roomList.remove(i);
+            if(i > undoRedoPointerState) {
+                roomList.remove(i);
+                roomRemoved = true;
+            }
+            else if (i == undoRedoPointerState && roomList.size() > 0 && roomRemoved) {
+                roomList.remove(i);
+                undoRedoPointer--;
+                addRoom();
+            }
         }
     }
 
@@ -161,6 +178,7 @@ public class RoomController implements Serializable{
     }
 
     public void addSurfaceOnGrid(Point position, double[] xDrawPoints, double[] yDrawPoints, int number_of_edges, double gridGap) {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         if (number_of_edges == 4) {
             room.addRectangularSurfaceOnGrid(xDrawPoints, yDrawPoints, number_of_edges, gridGap);
         }
@@ -187,6 +205,7 @@ public class RoomController implements Serializable{
     }
 
     public void deleteSurface(){
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.deleteSurface();
         addRoom();
     }
@@ -276,6 +295,7 @@ public class RoomController implements Serializable{
     }
 
     public void combineSelectedSurfaces() {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.combineSelectedSurface();
         addRoom();
     }

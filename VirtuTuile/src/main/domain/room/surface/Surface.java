@@ -10,7 +10,7 @@ import util.UnitConverter;
 
 import java.awt.*;
 import java.awt.geom.*;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -54,6 +54,82 @@ public class Surface implements Serializable{
 
     public Surface() {
         //Constructeur vide
+    }
+
+    public Surface(Surface surfaceToCopy) {
+        if(surfaceToCopy.position != null) {
+            this.position = new Point2D.Double(surfaceToCopy.position.x, surfaceToCopy.position.y);
+        }
+        if(surfaceToCopy.color != null) {
+            this.color = new Color(surfaceToCopy.color.getRGB());
+        }
+        this.selectionStatus = new Boolean(surfaceToCopy.selectionStatus);
+        if(surfaceToCopy.tileType != null) {
+            this.tileType = new TileType(surfaceToCopy.tileType);
+        }
+        if(surfaceToCopy.cover != null) {
+            this.cover = new Cover(surfaceToCopy.cover);
+        }
+
+        // TODO make pattern class constructor accessible
+        if(surfaceToCopy.pattern != null) {
+            this.pattern = surfaceToCopy.pattern;
+        }
+
+        this.isCovered = new Boolean(surfaceToCopy.isCovered);
+        this.mergedStatus = new Boolean(surfaceToCopy.mergedStatus);
+        this.haveHole = new Boolean(surfaceToCopy.haveHole);
+
+        if(surfaceToCopy.polygon != null) {
+            this.polygon = new Polygon(surfaceToCopy.polygon.xpoints, surfaceToCopy.polygon.ypoints, surfaceToCopy.polygon.npoints);
+        }
+
+        // TODO make MeasurementUnitMode constructor
+        this.measurementMode = surfaceToCopy.measurementMode;
+
+        if(surfaceToCopy.area != null) {
+            this.area = new Area(surfaceToCopy.area);
+        }
+        this.width = new Double(surfaceToCopy.width);
+        this.height = new Double(surfaceToCopy.height);
+
+        // TODO make ElementarySurface class constructor accessible
+        this.wholeSurfaces = surfaceToCopy.wholeSurfaces;
+        this.holes = surfaceToCopy.holes;
+
+        this.isHole = new Boolean(surfaceToCopy.isHole);
+
+        if(surfaceToCopy.xPoints != null) {
+            this.xPoints = new double[surfaceToCopy.xPoints.length];
+            int vectorCounter1 = new Integer(0);
+            for (Double xpoints : surfaceToCopy.xPoints) {
+                Double x = new Double(xpoints);
+                this.xPoints[vectorCounter1] = x;
+                vectorCounter1++;
+            }
+        }
+        if(surfaceToCopy.yPoints != null) {
+            this.yPoints = new double[surfaceToCopy.yPoints.length];
+            int vectorCounter2 = new Integer(0);
+            for (Double ypoints : surfaceToCopy.yPoints) {
+                Double y = new Double(ypoints);
+                this.yPoints[vectorCounter2] = y;
+                vectorCounter2++;
+            }
+        }
+
+        this.nPoints = new Integer(surfaceToCopy.nPoints);
+
+        if(surfaceToCopy.elementarySurface != null) {
+            this.elementarySurface = new ArrayList<>();
+            for (Surface surface : surfaceToCopy.elementarySurface) {
+                Surface elementarySurfaceToCopy = new Surface(surface);
+                this.elementarySurface.add(elementarySurfaceToCopy);
+            }
+        }
+
+        this.groutWidth = new Double(surfaceToCopy.groutWidth);
+        this.mismatch = new Double(surfaceToCopy.mismatch);
     }
 
     public Surface(double[] xPoints, double[] yPoints, int nbr_points) {
