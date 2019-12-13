@@ -140,7 +140,6 @@ public class RoomController implements Serializable{
 
 
     public void saveAsSelected(){
-
         String path = Paths.get("").toAbsolutePath().toString();
         JFileChooser chooser = new JFileChooser(path);
         int validation = chooser.showSaveDialog(null);

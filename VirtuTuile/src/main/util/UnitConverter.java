@@ -5,6 +5,7 @@ package util;
 
 import gui.MainWindow;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class UnitConverter {
     private static final float INCH_TO_METER = (float) 0.0254;
     private static final float METER_TO_INCH = (float) 39.3701;
     private static final float PIXEL_TO_METER = (float) 0.01;
-    private static final float PIXEL_TO_INCH = (float) (0.01 * 3.281);
+    private static final float PIXEL_TO_INCH = (float) (0.01 * 39.37);
 
     //private static final float PIXEL_TO_METER = (float) 0.0002645833;
     //private static final float PIXEL_TO_INCH = (float) 0.0104166667;
@@ -144,5 +145,22 @@ public class UnitConverter {
         int npoints = polygon.npoints;
 
         return new Polygon(xpoints, ypoints, npoints);
+    }
+
+    public static double stringToInch(String[] stringArray) {
+        int feet = Integer.parseInt(stringArray[0]);
+        int inch = Integer.parseInt(stringArray[1]);
+
+        String fraction = stringArray[2];
+
+        int divisionIndex = fraction.indexOf("/");
+        float numerator = Integer.parseInt(fraction.substring(0, divisionIndex));
+        float denominator = Integer.parseInt(fraction.substring(divisionIndex + 1));
+        float division = 0;
+        if (denominator != 0) {
+            division = numerator/denominator;
+        }
+
+        return (feet * 12) + inch + division;
     }
 }
