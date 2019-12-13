@@ -153,12 +153,13 @@ public class TopButtonBar extends JPanel{
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                saveActionPerformed();
+                saveActionPerformed(actionEvent);
             }
         });
+
     }
 
-    public void saveActionPerformed() {
-        return;
+    public void saveActionPerformed(ActionEvent actionEvent) {
+        mainWindow.saveMenuItemActionPerformed();
     }
 }

@@ -9,17 +9,23 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class SquarePattern extends Pattern{
+
+
     public SquarePattern() {
+
         super();
     }
 
-    public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth) {
-        double xOffset = tileType.getxOffset();
-        double yOffset = tileType.getyOffset();
+    public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth, boolean center) {
+
         double tileWidth = tileType.getWidth();
         double tileHeight = tileType.getHeight();
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
         Point2D.Double position = new Point2D.Double(boundingRectanglePosition.getX(), boundingRectangle.getY());
+
+
+        double xOffset = tileType.getxOffset();
+        double yOffset = tileType.getyOffset();
 
         if (xOffset <= 0) {
             position.x = position.x + xOffset;
@@ -123,7 +129,10 @@ public class SquarePattern extends Pattern{
         return virtualTileList;
     }
 
-
+    public String getName(){
+        this.name = "Square";
+        return this.name;
+    }
 
     public void deleteOutsideTile(Area surface) {
         for (Tile tile : virtualTileList) {
@@ -136,4 +145,3 @@ public class SquarePattern extends Pattern{
         }
     }
 }
-

@@ -17,7 +17,7 @@ public abstract class Pattern implements Serializable {
     private double groutWidth;
     private Color groutColor;
     public ArrayList<Tile> virtualTileList;
-
+    public String name;
     public double mismatch;
 
     public Pattern() {
@@ -77,7 +77,12 @@ public abstract class Pattern implements Serializable {
         return this.virtualTileList;
     }
 
-    public abstract ArrayList<Tile> generateTiles(Rectangle boudingRectangle, TileType tileType, Area area, double groutWidth);
+    public String getName(){
+        return this.name;
+    }
+
+
+    public abstract ArrayList<Tile> generateTiles(Rectangle boudingRectangle, TileType tileType, Area area, double groutWidth, boolean center);
 
     public void setMismatch(double mismatch){
         this.mismatch = mismatch;

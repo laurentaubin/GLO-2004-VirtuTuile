@@ -7,7 +7,6 @@ import gui.MainWindow;
 import util.UnitConverter;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -18,34 +17,46 @@ public class StraightPattern extends Pattern {
         super();
     }
 
-    public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth) {
+    public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth, boolean center) {
         double xOffset = tileType.getxOffset();
         double yOffset = tileType.getyOffset();
+        double decalageCenterX = 0;
+        double decalageCenterY = 0;
 
         double tileWidth = tileType.getWidth();
         double tileHeight = tileType.getHeight();
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
         Point2D.Double position = new Point2D.Double(boundingRectanglePosition.getX(), boundingRectangle.getY());
+
+        if(center){
+            decalageCenterX = ((tileWidth - ((boundingRectangle.getWidth() % (tileWidth + groutWidth))/2)) + 1.5*groutWidth);
+            decalageCenterY = ((tileHeight - ((boundingRectangle.getHeight() % (tileHeight + groutWidth))/2)) + 1.5*groutWidth);
+        }
+
         if (xOffset <= 0) {
-            position.x = position.x + xOffset;
+            position.x = position.x + xOffset - decalageCenterX;
         }
 
         else {
-            position.x = position.x - tileWidth + (xOffset%tileWidth);
+            position.x = position.x - tileWidth + (xOffset%tileWidth) - decalageCenterX;
         }
 
         if (yOffset <= 0) {
-            position.y = position.y + yOffset;
+            position.y = position.y + yOffset - decalageCenterY;
         }
         else {
-            position.y = position.y - tileHeight + (yOffset%tileHeight);
+            position.y = position.y - tileHeight + (yOffset%tileHeight) - decalageCenterY;
 
         }
+
+
+
         Point2D.Double initPosition = new Point2D.Double(position.getX(), position.getY());
 
 
         double boundingRectangleWidth = (int)boundingRectangle.getWidth() + Math.abs(xOffset);
         double boundingRectangleHeight = (int)boundingRectangle.getHeight() + Math.abs(yOffset);
+
 
         double numberColumn = boundingRectangleWidth / (tileType.getWidth() + groutWidth);
         if (numberColumn / (int)numberColumn != 0) {
@@ -80,6 +91,8 @@ public class StraightPattern extends Pattern {
         deleteOutsideTile(area, tileWidth, tileHeight);
         return virtualTileList;
     }
+
+
 
     public void deleteOutsideTile(Area surface, double baseTileWidth, double baseTileHeight) {
         for (Tile tile : virtualTileList) {

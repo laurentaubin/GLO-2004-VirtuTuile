@@ -10,11 +10,11 @@ import util.UnitConverter;
 
 import java.awt.*;
 import java.awt.geom.*;
-import java.io.*;
+import java.io.Serializable;
+import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class Surface implements Serializable{
+public class Surface implements Serializable {
     private Point2D.Double position;
     private Color color;
     private boolean selectionStatus = false;
@@ -26,13 +26,16 @@ public class Surface implements Serializable{
     private boolean haveHole = false;
     private Polygon polygon;
     private MainWindow.MeasurementUnitMode measurementMode;
-    private Area area;
+
+    private Path2D.Double area;
+
     private double width;
     private double height;
     private ArrayList<ElementarySurface> wholeSurfaces;
     private ArrayList<ElementarySurface> holes;
     private int numberSummit;
     private boolean isHole;
+    private boolean center;
 
     //Attributs tests
     private double[] xPoints;
@@ -144,7 +147,9 @@ public class Surface implements Serializable{
             }
         }
         path.closePath();
-        this.area = new Area(path);
+        Area areaTest = new Area(path);
+        this.area = new Path2D.Double(areaTest);
+        //this.area = new Path2D.Double(areaTest);
         this.width = area.getBounds2D().getWidth();
         this.height = area.getBounds2D().getHeight();
 
@@ -153,6 +158,7 @@ public class Surface implements Serializable{
         this.pattern = new StraightPattern();
         this.tileType = TileType.createTileWithDefaultParameters();
         this.color = (Color.WHITE);
+        this.center = false;
 
         //Test
         this.xPoints = xPoints;
@@ -178,11 +184,25 @@ public class Surface implements Serializable{
     public Surface(Surface surfaceToCopy, AffineTransform tx) {
         this.xPoints = surfaceToCopy.xPoints.clone();
         this.yPoints = surfaceToCopy.yPoints.clone();
+        this.scaleXPoints(tx.getScaleX());
+        this.scaleYPoints(tx.getScaleY());
         this.position = new Point2D.Double(this.xPoints[0], this.yPoints[0]);
-        this.area = new Area(surfaceToCopy.getAreaTest());
+        this.area = new Path2D.Double(new Area(surfaceToCopy.getArea()));
         this.width = this.area.getBounds2D().getWidth();
         this.height = this.area.getBounds2D().getHeight();
         this.area.transform(tx);
+    }
+
+    private void scaleXPoints(double scaleX) {
+        for (int i = 0; i < this.xPoints.length; i++) {
+            this.xPoints[i] *= scaleX;
+        }
+    }
+
+    private void scaleYPoints(double scaleY) {
+        for (int i = 0; i < this.yPoints.length; i++) {
+            this.yPoints[i] *= scaleY;
+        }
     }
 
     public void addCopy(Surface surface) {
@@ -205,8 +225,8 @@ public class Surface implements Serializable{
         return this.nPoints;
     }
 
-    public Area getAreaTest() {
-        return this.area;
+    public Area getArea() {
+        return new Area(this.area);
     }
 
     public boolean isMerged() {
@@ -221,7 +241,10 @@ public class Surface implements Serializable{
         this.wholeSurfaces.addAll(wholeSurface);
         this.holes.addAll(holeSurface);
         this.mergedStatus = true;
-        this.area.add(surface.area);
+
+        Area test = new Area(this.area);
+        test.add(new Area(surface.getArea()));
+        this.area = new Path2D.Double(test);
     }
 
     public Shape getShape(){
@@ -284,7 +307,7 @@ public class Surface implements Serializable{
         return this.polygon;
     }
 
-    public double getArea() {
+    public double getSurfaceArea() {
         double area = 0d;
         for (ElementarySurface wholeSurface : this.wholeSurfaces) {
             area += wholeSurface.getArea();
@@ -352,8 +375,21 @@ public class Surface implements Serializable{
         this.isCovered = true;
     }
 
+    public void setNotCovered() {
+        this.isCovered = false;
+    }
+
     public boolean isCovered() {
         return this.isCovered;
+    }
+
+
+    public void setCoverCenter(){
+        this.center = !this.center;
+    }
+
+    public boolean getCoverCenter(){
+        return this.center;
     }
 
     public void translate(double deltaX, double deltaY) {
@@ -413,7 +449,9 @@ public class Surface implements Serializable{
         this.area.transform(atPosition);
 
         for (Surface elem : this.elementarySurface) {
-            elem.setWidth(enteredWidth);
+            double elemWidth = elem.getWidth();
+            double ratio = enteredWidth/elemWidth;
+            elem.setWidth(ratio);
         }
     }
 
@@ -429,7 +467,6 @@ public class Surface implements Serializable{
 
         AffineTransform atPosition = new AffineTransform(1, 0, 0, 1, 0, -deltaPosition);
         this.area.transform(atPosition);
-
     }
 
     public Dimension getDimensions() {
@@ -446,7 +483,7 @@ public class Surface implements Serializable{
     }
 
     public void setArea(Area area) {
-        this.area = area;
+        this.area = new Path2D.Double(area);
     }
 
     public int getNumberOfSummit() {
@@ -476,7 +513,10 @@ public class Surface implements Serializable{
     public void setHole(Surface surface) {
         this.wholeSurfaces.addAll(surface.getWholeSurfaces());
         this.holes.addAll(surface.getHoles());
-        this.area.subtract(surface.getAreaTest());
+        Area test = new Area(this.area);
+        test.subtract(new Area(surface.getArea()));
+        this.area = new Path2D.Double(test);
+
     }
 
     public void setGroutWidth(double width) {
@@ -678,5 +718,18 @@ public class Surface implements Serializable{
         tx.setToTranslation(x, y);
         this.area.transform(tx);
     }
+
+    public Point2D getCenterOfMass() {
+        double xCenter = this.getAverage(this.xPoints);
+        double yCenter = this.getAverage(this.yPoints);
+        return new Point2D.Double(xCenter, yCenter);
+    }
+
+    private double getAverage(double[] numbers) {
+        double sum = 0;
+        for (double number : numbers) { sum += number; }
+        return sum / numbers.length;
+    }
 }
+
 

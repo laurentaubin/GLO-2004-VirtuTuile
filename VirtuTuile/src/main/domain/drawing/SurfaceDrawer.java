@@ -2,24 +2,14 @@ package domain.drawing;
 
 import domain.room.RoomController;
 import domain.room.Tile;
-import domain.room.pattern.StraightPattern;
-import domain.room.pattern.VerticalBrickPattern;
-import domain.room.pattern.VerticalPattern;
-import domain.room.pattern.BrickPattern;
-import domain.room.pattern.VerticalBrickPattern;
 import domain.room.surface.Surface;
-import gui.DrawingPanel;
 
-import javafx.scene.transform.Affine;
-import util.UnitConverter;
 import gui.MainWindow;
-import org.w3c.dom.css.Rect;
 //import gui.MainWindow;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -59,30 +49,40 @@ public class SurfaceDrawer {
             Area shape = new Area(path);
              */
 
-            Area shape = new Area(current_surface.getAreaTest());
+            Area shapeTest = new Area(current_surface.getArea());
+            Path2D.Double shape = new Path2D.Double(shapeTest);
             Area otherShape = new Area();
             ArrayList<Surface> elementarySurface = new ArrayList<>(current_surface.getElementarySurface());
             ArrayList<Surface> imaginarySurfaces = new ArrayList<>();
+            ArrayList<Surface> imaginaryHoles = new ArrayList<>();
             AffineTransform tx = new AffineTransform();
             double groutWidth = current_surface.getGroutWidth();
 
 
             for (Surface es : elementarySurface) {
-                Point2D surfaceMiddlePoint = es.getMiddlePoint();
+                Point2D surfaceMiddlePoint = es.getCenterOfMass();
                 double widthRatio = this.getRatioWidth(es, groutWidth);
                 double heightRatio = this.getRatioHeight(es, groutWidth);
+                if (es.isHole()) {
+                    widthRatio = 1 / widthRatio;
+                    heightRatio = 1 /heightRatio;
+                }
+
                 tx.scale(widthRatio, heightRatio);
                 Surface imaginarySurface = new Surface(es, tx);
-                Point2D imaginaryMiddle = imaginarySurface.getMiddlePoint();
+                Point2D imaginaryMiddle = imaginarySurface.getCenterOfMass();
                 double x = surfaceMiddlePoint.getX() - imaginaryMiddle.getX();
                 double y = surfaceMiddlePoint.getY() - imaginaryMiddle.getY();
                 imaginarySurface.translatePointsTest(x, y);
-                imaginarySurfaces.add(imaginarySurface);
+
+                if (es.isHole()) { imaginaryHoles.add(imaginarySurface); }
+                else { imaginarySurfaces.add(imaginarySurface); }
+
                 tx.setToIdentity();
             }
 
             for (Surface scaledSurfaces : imaginarySurfaces) {
-                Area scaledArea = scaledSurfaces.getAreaTest();
+                Area scaledArea = scaledSurfaces.getArea();
                 if (otherShape.isEmpty()) {
                     otherShape = new Area(scaledArea);
                 }
@@ -90,6 +90,17 @@ public class SurfaceDrawer {
                     otherShape.add(scaledArea);
                 }
             }
+
+            for (Surface scaledSurfaces : imaginaryHoles) {
+                Area scaledArea = scaledSurfaces.getArea();
+                if (otherShape.isEmpty()) {
+                    otherShape = new Area(scaledArea);
+                }
+                else {
+                    otherShape.subtract(scaledArea);
+                }
+            }
+
 
             if (zoom != 1) {
                 //AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
@@ -103,10 +114,15 @@ public class SurfaceDrawer {
 
             if (current_surface.isCovered()) {
                 current_surface.getPattern().getVirtualTileList().clear();
+                // TODO avoir du grout autour de la surface ou pas
+                if(current_surface.getPattern().getName() == "Square" && !((current_surface.getTileType().getWidth() / current_surface.getTileType().getHeight()) == 2)){
+                    controller.dimensionIncorrectPaquet();
+                }
+                else {
+                    current_surface.getPattern().generateTiles(current_surface.getBoundingRectangle(), current_surface.getTileType(), otherShape, current_surface.getGroutWidth(), current_surface.getCoverCenter());
+                    //  current_surface.getPattern().generateTiles(current_surface.getBoundingRectangle(), current_surface.getTileType(), current_surface.getAreaTest(), current_surface.getGroutWidth(), current_surface.getCoverCenter());
+                }
 
-                //TODO avoir du grout autour de la surface ou pas
-                //current_surface.getPattern().generateTiles(current_surface.getBoundingRectangle(), current_surface.getTileType(), otherShape, current_surface.getGroutWidth());
-                current_surface.getPattern().generateTiles(current_surface.getBoundingRectangle(), current_surface.getTileType(), current_surface.getAreaTest(), current_surface.getGroutWidth());
 
                 ArrayList<Tile> array = current_surface.getPattern().getVirtualTileList();
                 for (Tile tile : array) {
@@ -139,7 +155,7 @@ public class SurfaceDrawer {
 
             g2d.setStroke(new BasicStroke(1));
             for (Surface surface : current_surface.getElementarySurface()) {
-                Area elem = new Area(surface.getAreaTest());
+                Area elem = new Area(surface.getArea());
                 //AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
                 elem.transform(at);
                 g2d.draw(elem);
@@ -171,10 +187,11 @@ public class SurfaceDrawer {
         if(!surfaceProjectionList.isEmpty()) {
             Surface rectangularProjection = surfaceProjectionList.get(surfaceProjectionList.size() - 1);
            // g2d.draw(rectangularProjection.getPolygon());
-            Area shape = rectangularProjection.getAreaTest();
+            Area shapeTest = new Area(rectangularProjection.getArea());
+            Path2D.Double shape = new Path2D.Double(shapeTest);
             //AffineTransform at = new AffineTransform(zoom, 0,0, zoom, 0,0);
             shape.transform(at);
-            g2d.draw(rectangularProjection.getAreaTest());
+            g2d.draw(shape);
            //g2d.draw(UnitConverter.convertPolygonToPixel(rectangularProjection.getPolygon(), this.measurementMode));
         }
 

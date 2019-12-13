@@ -23,6 +23,11 @@ public class MainWindow extends JFrame {
     public Point currentMousePoint = new Point();
     public Point initMousePoint = new Point();
 
+    public void updateTile(TileType selectedTileType, float tileWidth, float tileHeight, String tileName, int nbrTilesPerBox, Color tileColor) {
+        controller.updateTile(selectedTileType, tileWidth, tileHeight, tileName, nbrTilesPerBox, tileColor);
+        drawingPanel.repaint();
+    }
+
 
     public enum ApplicationMode {
         SELECT, ADD_RECTANGULAR, ADD_IRREGULAR, MOVE_PATTERN
@@ -295,13 +300,25 @@ public class MainWindow extends JFrame {
         openMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                openMenuItemActionPerform(actionEvent);
+                openMenuItemActionPerform();
             }
         });
         saveAsMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                saveAsMenuItemActionPerformed(actionEvent);
+                saveAsMenuItemActionPerformed();
+            }
+        });
+        saveMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                saveMenuItemActionPerformed();
+            }
+        });
+        newProjectItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                newProjectItemActionPerformed();
             }
         });
 
@@ -606,14 +623,24 @@ public class MainWindow extends JFrame {
         return drawPoints;
     }
 
-    public void openMenuItemActionPerform(ActionEvent actionEvent){
+    public void openMenuItemActionPerform(){
         this.controller.openMenuSelected();
         controller.getSelectedSurfaceGroutWidth();
         drawingPanel.repaint();
 
     }
-    public void saveAsMenuItemActionPerformed(ActionEvent actionEvent){
+
+    public void saveMenuItemActionPerformed(){
+        this.controller.saveSelected();
+    }
+
+    public void saveAsMenuItemActionPerformed(){
         this.controller.saveAsSelected();
+    }
+
+    public void newProjectItemActionPerformed(){
+        this.controller.newProjectItemActionPerformed();
+        drawingPanel.repaint();
     }
 
 
@@ -750,10 +777,6 @@ public class MainWindow extends JFrame {
         return controller.getTileList();
     }
 
-    public void updateSelectedTile(){
-        drawingPanel.repaint();
-    }
-
     public void setSelectedTileToSelectedSurface(TileType selectedTileType) {
         controller.setSelectedTileToSelectedSurface(selectedTileType);
         drawingPanel.repaint();
@@ -840,7 +863,7 @@ public class MainWindow extends JFrame {
         this.controller.separateSelectedSurface();
         drawingPanel.repaint();
     }
-    
+
     public void horizontallyAlignSelectedSurfaces() {
         controller.horizontallyAlignSelectedSurfaces();
         drawingPanel.repaint();
@@ -895,6 +918,12 @@ public class MainWindow extends JFrame {
         controller.setMismatch(mismatch);
         drawingPanel.repaint();
     }
+
+    public void centerTiles(){
+        controller.centerTiles();
+        drawingPanel.repaint();
+    }
+
 
     private ButtonGroup buttonGroup;
 

@@ -113,16 +113,17 @@ public class RoomController implements Serializable{
         String path = Paths.get("").toAbsolutePath().toString();
 
         JFileChooser chooser = new JFileChooser(path);
-        chooser.showSaveDialog(null);
+        chooser.showOpenDialog(null);
         File curFile = chooser.getSelectedFile();
 
         try {
         FileInputStream inputFile = new FileInputStream(new File(String.valueOf(curFile)));
         ObjectInputStream inputObject = new ObjectInputStream(inputFile);
 
-        Room openRoom = new Room((Room) inputObject.readObject());
-        this.room = openRoom;
-        System.out.println(openRoom.getSurfaceList().get(0).getWidth());
+        this.room = (Room) inputObject.readObject();
+        System.out.println(curFile);
+        curFile = new File(String.valueOf(curFile).substring(0, String.valueOf(curFile).lastIndexOf('.')));
+        room.setPath(curFile);
 
         }
         catch (IOException e) {
@@ -134,23 +135,59 @@ public class RoomController implements Serializable{
     }
 
 
+    public void saveSelected(){
+        System.out.println(room.getPath());
+        if(room.getPath() == null){
+            saveAsSelected();
+        }
+        else{
+
+            try {
+                FileOutputStream fileOut = new FileOutputStream(room.getPath() + ".ser");
+                ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+                objectOut.writeObject(this.room);
+                objectOut.close();
+                System.out.println("The Object  was succesfully written to a file");
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
     public void saveAsSelected(){
+
         String path = Paths.get("").toAbsolutePath().toString();
         JFileChooser chooser = new JFileChooser(path);
-        chooser.showSaveDialog(null);
-        File curFile = chooser.getSelectedFile();
-        Room saveRoom = new Room(this.room);
+        int validation = chooser.showSaveDialog(null);
+        if (validation == JFileChooser.APPROVE_OPTION) {
+            File pathFile = chooser.getSelectedFile();
 
-        try {
-            FileOutputStream fileOut = new FileOutputStream(curFile + ".ser");
-            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-            objectOut.writeObject(saveRoom);
-            objectOut.close();
-            System.out.println("The Object  was succesfully written to a file");
+            try {
+                FileOutputStream fileOut = new FileOutputStream(pathFile + ".ser");
+                ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+                objectOut.writeObject(this.room);
+                objectOut.close();
+                System.out.println("The Object  was succesfully written to a file");
+                room.setPath(pathFile);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        catch (IOException e) {
-            e.printStackTrace();
+    }
+
+
+    public void newProjectItemActionPerformed(){
+        String[] options = {"Enregistrer", "Continuer"};
+        int choix = JOptionPane.showOptionDialog(null, "Souhaitez-vous enregirtrer votre travail avant ?",
+                "Attention!", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+
+        if(choix == 0){
+            saveSelected();
         }
+        this.room = new Room();
     }
 
     public void draw(Graphics2D g, MainWindow.MeasurementUnitMode measurementUnitMode, DrawingPanel drawingPanel, double zoom, Point currentMousePoint) {
@@ -460,9 +497,20 @@ public class RoomController implements Serializable{
         room.setMismatch(mismatch);
     }
 
+    public void centerTiles(){
+        room.centerTiles();
+    }
+
     public void updateSelectedSurfacesPatternPosition(double deltaX, double deltaY) {
         this.room.updateSelectedSurfacesPatternPosition(deltaX, deltaY);
     }
 
+    public void dimensionIncorrectPaquet(){
+        room.dimensionIncorrectPaquet();
+    }
+
+    public void updateTile(TileType tile, double width, double height, String name, int nbrTilesPerBox, Color color) {
+        room.updateTile(tile, width, height, name, nbrTilesPerBox, color);
+    }
 }
 

@@ -18,9 +18,13 @@ public class Tile extends Area implements Serializable {
     private double height;
     private Color inspecColor;
     private boolean tooSmall = false;
+    private int[] xPoints;
+    private int[] yPoints;
 
     public Tile(Point2D.Double position, int[] xPoints, int[] yPoints, int nPoint) {
         super(new Polygon(xPoints, yPoints, nPoint));
+        this.xPoints = xPoints;
+        this.yPoints = yPoints;
         this.position = position;
         this.inspecColor = new Color(255, 214, 10);
     }
@@ -51,6 +55,14 @@ public class Tile extends Area implements Serializable {
 
     public Color getInspecColor() {
         return this.inspecColor;
+    }
+
+    public int[] getXPoints(){
+        return this.xPoints;
+    }
+
+    public int[] getYPoints(){
+        return this.yPoints;
     }
 
     public boolean isTooSmall() {
