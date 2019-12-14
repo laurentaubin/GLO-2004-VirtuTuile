@@ -259,16 +259,7 @@ public class SurfaceTab extends JPanel{
         if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.IMPERIAL) {
             String value = widthField.getText();
             try {
-                int feetIndex = value.indexOf("\'");
-                String feet = value.substring(0, feetIndex);
-                int inchIndex = value.indexOf("\"");
-                String inch = value.substring(feetIndex + 1, inchIndex);
-                String fraction = value.substring(inchIndex + 1);
-                String[] stringArray = new String[3];
-                stringArray[0] = feet;
-                stringArray[1] = inch;
-                stringArray[2] = fraction;
-                double inchTotal = UnitConverter.stringToInch(stringArray);
+                double inchTotal = UnitConverter.stringToInch(getImperialArray(value));
                 enteredWidth = UnitConverter.convertSelectedUnitToPixel(inchTotal, mainWindow.getCurrentMeasurementMode());
                 this.mainWindow.setSelectedSurfaceWidth(enteredWidth);
             }
@@ -283,8 +274,22 @@ public class SurfaceTab extends JPanel{
     }
 
     public void setEnteredHeightSurfaceDimensions() {
-        double enteredHeight = UnitConverter.convertSelectedUnitToPixel((double)heightField.getValue(), mainWindow.getCurrentMeasurementMode());
-        this.mainWindow.setSelectedSurfaceHeight(enteredHeight);
+        double enteredHeight;
+        if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.IMPERIAL) {
+            String value = heightField.getText();
+            try {
+                double inchTotal = UnitConverter.stringToInch(getImperialArray(value));
+                enteredHeight = UnitConverter.convertSelectedUnitToPixel(inchTotal, mainWindow.getCurrentMeasurementMode());
+                this.mainWindow.setSelectedSurfaceHeight(enteredHeight);
+            }
+            catch (StringIndexOutOfBoundsException e) {
+                System.out.println("Format invalide");
+            }
+        }
+        else if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.METRIC) {
+            enteredHeight = UnitConverter.convertSelectedUnitToPixel((double)heightField.getValue(), mainWindow.getCurrentMeasurementMode());
+            this.mainWindow.setSelectedSurfaceHeight(enteredHeight);
+        }
     }
 
     public void combineSelectedSurface() {
@@ -307,10 +312,6 @@ public class SurfaceTab extends JPanel{
 
     public void setSurfaceDimensionField(Dimension dimension) {
         MainWindow.MeasurementUnitMode currentMeasurementMode = mainWindow.getCurrentMeasurementMode();
-        System.out.println("print dans SurfaceTab.setSurfaceDimesionField");
-        System.out.println("pixel: " + dimension.width);
-        System.out.println("meter: " + UnitConverter.convertPixelToSelectedUnit(dimension.width, MainWindow.MeasurementUnitMode.METRIC));
-        System.out.println("inch : " + UnitConverter.convertPixelToSelectedUnit(dimension.width, MainWindow.MeasurementUnitMode.IMPERIAL));
         double width = UnitConverter.convertPixelToSelectedUnit(dimension.width, currentMeasurementMode);
         double height = UnitConverter.convertPixelToSelectedUnit(dimension.height, currentMeasurementMode);
 
@@ -366,12 +367,27 @@ public class SurfaceTab extends JPanel{
     }
 
     private String getImperialFormat(double value) {
-        int feet = (int)(value / 12);
-        int inch = (int)(value - (feet*12));
-        double fraction = value - ((feet*12) + inch);
+        int inch = (int)(value);
+        double fraction = value - inch;
         BigDecimal bd = BigDecimal.valueOf(fraction);
-        bd = bd.setScale(2, RoundingMode.HALF_UP);
-        String imperialString = Integer.toString(feet) + "\'" + Integer.toString(inch) + "\"" + Double.toString(bd.doubleValue());
+        System.out.println(bd);
+        bd = bd.setScale(1, RoundingMode.HALF_DOWN);
+        String imperialString = Integer.toString(inch) + "\"" + Double.toString(bd.doubleValue());
         return imperialString;
+    }
+
+    private String[] getImperialArray(String value) {
+        String[] stringArray = new String[2];
+        try {
+            int inchIndex = value.indexOf("\"");
+            String inch = value.substring(0, inchIndex);
+            String fraction = value.substring(inchIndex + 1);
+            stringArray[0] = inch;
+            stringArray[1] = fraction;
+            return stringArray;
+        } catch (StringIndexOutOfBoundsException e) {
+            System.out.println("Format invalide");
+        }
+        return stringArray;
     }
 }

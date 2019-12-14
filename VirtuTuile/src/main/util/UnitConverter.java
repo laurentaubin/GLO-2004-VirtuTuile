@@ -148,10 +148,9 @@ public class UnitConverter {
     }
 
     public static double stringToInch(String[] stringArray) {
-        int feet = Integer.parseInt(stringArray[0]);
-        int inch = Integer.parseInt(stringArray[1]);
+        int inch = Integer.parseInt(stringArray[0]);
 
-        String fraction = stringArray[2];
+        String fraction = stringArray[1];
 
         int divisionIndex = fraction.indexOf("/");
         float numerator = Integer.parseInt(fraction.substring(0, divisionIndex));
@@ -160,7 +159,6 @@ public class UnitConverter {
         if (denominator != 0) {
             division = numerator/denominator;
         }
-
-        return (feet * 12) + inch + division;
+        return inch + division;
     }
 }

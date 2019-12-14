@@ -220,7 +220,7 @@ public class TileTab extends JPanel {
 
     public void createTileButtonActionPerformed(){
 
-        CreateTileDialog createTileDialog = new CreateTileDialog(this);
+        CreateTileDialog createTileDialog = new CreateTileDialog(this, mainWindow.getCurrentMeasurementMode());
         createTileDialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
         createTileDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         createTileDialog.setLocationRelativeTo(mainWindow);
@@ -245,8 +245,8 @@ public class TileTab extends JPanel {
 
 
 
-    public void createTileFromUserInput(Color color, float width, float height, String name, int nbrTilesPerBox) {
-        mainWindow.createTileFromUserInput(color, width, height, name, nbrTilesPerBox);
+    public void createTileFromUserInput(Color color, double width, double height, String name, int nbrTilesPerBox) {
+        mainWindow.createTileFromUserInput(color, (float)width, (float)height, name, nbrTilesPerBox);
         updateTileComboBox();
     }
 
@@ -307,26 +307,22 @@ public class TileTab extends JPanel {
     }
 
     private String getImperialFormat(double value) {
-        int feet = (int)(value / 12);
-        int inch = (int)(value - (feet*12));
-        double fraction = value - ((feet*12) + inch);
+        int inch = (int)(value);
+        double fraction = value - inch;
         BigDecimal bd = BigDecimal.valueOf(fraction);
         bd = bd.setScale(2, RoundingMode.HALF_UP);
-        String imperialString = Integer.toString(feet) + "\'" + Integer.toString(inch) + "\"" + Double.toString(bd.doubleValue());
+        String imperialString = Integer.toString(inch) + "\"" + Double.toString(bd.doubleValue());
         return imperialString;
     }
 
     private String[] getImperialArray(String value) {
-        String[] stringArray = new String[3];
+        String[] stringArray = new String[2];
         try {
-            int feetIndex = value.indexOf("\'");
-            String feet = value.substring(0, feetIndex);
             int inchIndex = value.indexOf("\"");
-            String inch = value.substring(feetIndex + 1, inchIndex);
+            String inch = value.substring(0, inchIndex);
             String fraction = value.substring(inchIndex + 1);
-            stringArray[0] = feet;
-            stringArray[1] = inch;
-            stringArray[2] = fraction;
+            stringArray[0] = inch;
+            stringArray[1] = fraction;
             return stringArray;
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("Format invalide");
