@@ -21,6 +21,18 @@ public class Cover {
         this.startsWithFullTile = startsWithFullTile;
     }
 
+    public Cover(Cover coverToCopy) {
+        this.shiftX = new Integer(coverToCopy.shiftX);
+        this.shiftY = new Integer(coverToCopy.shiftY);
+
+        // TODO make pattern class constructor accessible
+        this.pattern = coverToCopy.pattern;
+
+        this.tileType = new TileType(coverToCopy.tileType);
+        this.grout = new Grout(coverToCopy.grout);
+        this.startsWithFullTile = new Boolean(coverToCopy.startsWithFullTile);
+    }
+
     /*
     public static Cover createCoverWithDefaultParameters()
     {

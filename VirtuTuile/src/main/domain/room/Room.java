@@ -27,11 +27,31 @@ public class Room implements Serializable{
 
     }
 
-    public Room(Room room) {
-        surfaceList = new ArrayList<Surface>(room.getSurfaceList());
-        surfaceProjectionList = new ArrayList<Surface>(room.getSurfaceProjectionList());
-        tileTypeList = new ArrayList<TileType>(room.getTileList());
-
+    public Room(Room roomToCopy) {
+//        surfaceList = new ArrayList<Surface>(room.getSurfaceList());
+//        surfaceProjectionList = new ArrayList<Surface>(room.getSurfaceProjectionList());
+//        tileTypeList = new ArrayList<TileType>(room.getTileList());
+        if(roomToCopy.surfaceList != null) {
+            this.surfaceList = new ArrayList<>();
+            for (Surface surface : roomToCopy.surfaceList) {
+                Surface surfaceToCopy = new Surface(surface);
+                this.surfaceList.add(surfaceToCopy);
+            }
+        }
+        if(roomToCopy.surfaceProjectionList != null) {
+            this.surfaceProjectionList = new ArrayList<>();
+            for (Surface surfaceProjection : roomToCopy.surfaceProjectionList) {
+                Surface surfaceProjectionToCopy = new Surface(surfaceProjection);
+                this.surfaceProjectionList.add(surfaceProjectionToCopy);
+            }
+        }
+        if(roomToCopy.tileTypeList != null) {
+            this.tileTypeList = new ArrayList<>();
+            for (TileType tileType : roomToCopy.tileTypeList) {
+                TileType tileTypeToCopy = new TileType(tileType);
+                this.tileTypeList.add(tileTypeToCopy);
+            }
+        }
     }
 
     public void addSurfaceToList(Surface surface) {
@@ -660,7 +680,7 @@ public class Room implements Serializable{
 
     public void leftAlignSelectedSurfaces() {
         if (this.getNumberOfSelectedSurfaces() == 2) {
-            ArrayList<Surface> selectedSurfaceList = this.getSurfaceList();
+            ArrayList<Surface> selectedSurfaceList = this.getSelectedSurfaces();
 
             if (selectedSurfaceList.get(0).isToTheLeft(selectedSurfaceList.get(1))) {
                 Surface leftSurface = selectedSurfaceList.get(0);
@@ -704,7 +724,7 @@ public class Room implements Serializable{
 
     public void rightAlignSelectedSurfaces(){
         if(this.getNumberOfSelectedSurfaces() == 2) {
-            ArrayList<Surface> selectedSurfaceList = this.getSurfaceList();
+            ArrayList<Surface> selectedSurfaceList = this.getSelectedSurfaces();
 
             if (selectedSurfaceList.get(0).isToTheLeft(selectedSurfaceList.get(1))) {
                 Surface leftSurface = selectedSurfaceList.get(0);
@@ -748,7 +768,7 @@ public class Room implements Serializable{
 
     public void topAlignSelectedSurfaces() {
         if (this.getNumberOfSelectedSurfaces() == 2) {
-            ArrayList<Surface> selectedSurfaceList = this.getSurfaceList();
+            ArrayList<Surface> selectedSurfaceList = this.getSelectedSurfaces();
 
             if (selectedSurfaceList.get(0).isBeneath(selectedSurfaceList.get(1))) {
                 Surface bottomSurface = selectedSurfaceList.get(0);
@@ -791,7 +811,7 @@ public class Room implements Serializable{
 
     public void bottomAlignSelectedSurfaces() {
         if (this.getNumberOfSelectedSurfaces() == 2) {
-            ArrayList<Surface> selectedSurfaceList = this.getSurfaceList();
+            ArrayList<Surface> selectedSurfaceList = this.getSelectedSurfaces();
 
             if (selectedSurfaceList.get(0).isBeneath(selectedSurfaceList.get(1))) {
                 Surface bottomSurface = selectedSurfaceList.get(0);
