@@ -14,6 +14,10 @@ public abstract class ElementarySurface extends Polygon {
         super(xPoints, yPoints, numberOfEdges);
     }
 
+    public ElementarySurface(ElementarySurface elementarySurfaceToCopy) {
+        this.isHole = new Boolean(elementarySurfaceToCopy.isHole);
+    }
+
     public int[] getxCoord(){
         return this.xpoints;
     }

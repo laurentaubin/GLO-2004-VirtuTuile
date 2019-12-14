@@ -37,6 +37,19 @@ public abstract class Pattern implements Serializable {
         this.virtualTileList = new ArrayList<Tile>();
     }
 
+    public Pattern(Pattern patternToCopy) {
+        this.xOffset = new Double(patternToCopy.xOffset);
+        this.yOffset = new Double(patternToCopy.yOffset);
+        this.angle = new Integer(patternToCopy.angle);
+        this.groutWidth = new Double(patternToCopy.groutWidth);
+        this.groutColor = new Color(patternToCopy.groutColor.getRGB());
+
+        for(Tile tile: patternToCopy.virtualTileList) {
+            Tile tileToCopy = new Tile(tile);
+            this.virtualTileList.add(tileToCopy);
+        }
+    }
+
     public double getxOffset() {
         return this.xOffset;
     }

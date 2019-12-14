@@ -24,6 +24,16 @@ public class TileType extends Polygon{
         this.yOffset = 0;
     }
 
+    public TileType(TileType tileTypeToCopy) {
+        this.color = new Color(tileTypeToCopy.color.getRGB());
+        this.height = new Float(tileTypeToCopy.height);
+        this.width = new Float(tileTypeToCopy.width);
+        this.name = new String(tileTypeToCopy.name);
+        this.nbrTilesPerBox = new Integer(tileTypeToCopy.nbrTilesPerBox);
+        this.xOffset = new Double(tileTypeToCopy.xOffset);
+        this.yOffset = new Double(tileTypeToCopy.yOffset);
+    }
+
     public static TileType createTileWithDefaultParameters() {
         return new TileType(Color.WHITE, 100, 50, "Default", 100);
     }
