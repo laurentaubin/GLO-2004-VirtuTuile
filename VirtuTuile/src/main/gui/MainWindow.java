@@ -751,6 +751,16 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
+    public void setSelectedSurfacesWidthDistance(double enteredWidth) {
+        controller.setSelectedSurfacesWidthDistance(enteredWidth);
+        drawingPanel.repaint();
+    }
+
+    public void setSelectedSurfacesHeightDistance(double enteredHeight) {
+        controller.setSelectedSurfacesHeightDistance(enteredHeight);
+        drawingPanel.repaint();
+    }
+
     public void combineSelectedSurfaces() {
         if(controller.getNumberOfSurfaces() < 2){
             String[] options = {"Ok"};

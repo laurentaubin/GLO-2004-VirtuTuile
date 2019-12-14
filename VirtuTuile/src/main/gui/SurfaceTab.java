@@ -177,6 +177,20 @@ public class SurfaceTab extends JPanel{
             }
         });
 
+        widthDistanceField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                setEnteredWidthSurfacesDistance();
+            }
+        });
+
+        heightDistanceField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                setEnteredHeightSurfacesDistance();
+            }
+        });
+
         //Align Center icon icon by Icons8
         //Align Bottom icon icon by Icons8
         //Align Top icon icon by Icons8
@@ -266,6 +280,16 @@ public class SurfaceTab extends JPanel{
         double enteredHeight = UnitConverter.convertSelectedUnitToPixel((double)heightField.getValue(), mainWindow.getCurrentMeasurementMode());
 
         this.mainWindow.setSelectedSurfaceHeight(enteredHeight);
+    }
+
+    public void setEnteredWidthSurfacesDistance() {
+        double enteredWidthDifference = UnitConverter.convertSelectedUnitToPixel((double)widthDistanceField.getValue(), mainWindow.getCurrentMeasurementMode());
+        this.mainWindow.setSelectedSurfacesWidthDistance(enteredWidthDifference);
+    }
+
+    public void setEnteredHeightSurfacesDistance() {
+        double enteredHeightDifference = UnitConverter.convertSelectedUnitToPixel((double)heightDistanceField.getValue(), mainWindow.getCurrentMeasurementMode());
+        this.mainWindow.setSelectedSurfacesHeightDistance(enteredHeightDifference);
     }
 
     public void combineSelectedSurface() {

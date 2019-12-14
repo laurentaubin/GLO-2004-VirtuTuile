@@ -331,6 +331,14 @@ public class RoomController implements Serializable{
         return room.getSelectedSurfaceDimensions();
     }
 
+    public void setSelectedSurfacesWidthDistance(double widthDifference) {
+        room.setSelectedSurfacesWidthDistance(widthDifference);
+    }
+
+    public void setSelectedSurfacesHeightDistance(double heightDifference) {
+        room.setSelectedSurfacesHeightDistance(heightDifference);
+    }
+
     public Dimension getSelectedSurfacesDistances() {
         return room.getSelectedSurfacesDistances();
     }
