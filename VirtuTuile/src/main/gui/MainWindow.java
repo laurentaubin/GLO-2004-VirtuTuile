@@ -777,6 +777,7 @@ public class MainWindow extends JFrame {
                     "Attention!",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
         }
+        rightPanel.updateSurfaceTabDistances(controller.getSelectedSurfacesDistances());
         drawingPanel.repaint();
     }
 
@@ -877,41 +878,49 @@ public class MainWindow extends JFrame {
 
     public void horizontallyAlignSelectedSurfaces() {
         controller.horizontallyAlignSelectedSurfaces();
+        rightPanel.updateSurfaceTabDistances(controller.getSelectedSurfacesDistances());
         drawingPanel.repaint();
     }
 
     public void verticallyAlignSelectedSurfaces() {
         controller.verticallyAlignSelectedSurfaces();
+        rightPanel.updateSurfaceTabDistances(controller.getSelectedSurfacesDistances());
         drawingPanel.repaint();
     }
 
     public void horizontallyCenterSelectedSurfaces() {
         controller.horizontallyCenterSelectedSurfaces();
+        rightPanel.updateSurfaceTabDistances(controller.getSelectedSurfacesDistances());
         drawingPanel.repaint();
     }
 
     public void verticallyCenterSelectedSurfaces() {
         controller.verticallyCenterSelectedSurfaces();
+        rightPanel.updateSurfaceTabDistances(controller.getSelectedSurfacesDistances());
         drawingPanel.repaint();
     }
 
     public void leftAlignSelectedSurfaces() {
         controller.leftAlignSelectedSurfaces();
+        rightPanel.updateSurfaceTabDistances(controller.getSelectedSurfacesDistances());
         drawingPanel.repaint();
     }
 
     public void rightAlignSelectedSurfaces() {
         controller.rightAlignSelectedSurfaces();
+        rightPanel.updateSurfaceTabDistances(controller.getSelectedSurfacesDistances());
         drawingPanel.repaint();
     }
 
     public void topAlignSelectedSurfaces() {
         controller.topAlignSelectedSurfaces();
+        rightPanel.updateSurfaceTabDistances(controller.getSelectedSurfacesDistances());
         drawingPanel.repaint();
     }
 
     public void bottomAlignSelectedSurfaces() {
         controller.bottomAlignSelectedSurfaces();
+        rightPanel.updateSurfaceTabDistances(controller.getSelectedSurfacesDistances());
         drawingPanel.repaint();
     }
 

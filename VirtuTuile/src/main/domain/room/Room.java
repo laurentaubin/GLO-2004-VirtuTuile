@@ -306,28 +306,6 @@ public class Room implements Serializable{
         return dimension;
     }
 
-//    public void setSelectedSurfacesWidthDistance(double widthDifference) {
-//        if (getNumberOfSelectedSurfaces() == 2) {
-//            ArrayList<Surface> selectedSurfaceList = this.getSelectedSurfaces();
-//            Surface firstSurface = selectedSurfaceList.get(0);
-//            Surface secondSurface = selectedSurfaceList.get(1);
-//
-//            if (firstSurface.getTopLeftPoint().getX() <= secondSurface.getTopLeftPoint().getX()) {
-//                Point2D firstSurfacePos = firstSurface.getTopLeftPoint();
-//                Point2D secondSurfacePos = secondSurface.getTopLeftPoint();
-//
-//                secondSurfacePos.setLocation(firstSurfacePos.getX() + widthDifference, secondSurfacePos.getY());
-//                secondSurface.snapToPoint(secondSurfacePos);
-//            }
-//            else {
-//                Point2D firstSurfacePos = firstSurface.getTopLeftPoint();
-//                Point2D secondSurfacePos = secondSurface.getTopLeftPoint();
-//
-//                firstSurfacePos.setLocation(secondSurfacePos.getX() + widthDifference, firstSurfacePos.getY());
-//                firstSurface.snapToPoint(firstSurfacePos);
-//            }
-//        }
-//    }
 public void setSelectedSurfacesWidthDistance(double widthDifference) {
     if (getNumberOfSelectedSurfaces() == 2) {
         ArrayList<Surface> selectedSurfaceList = this.getSelectedSurfaces();
@@ -347,28 +325,6 @@ public void setSelectedSurfacesWidthDistance(double widthDifference) {
     }
 }
 
-//    public void setSelectedSurfacesHeightDistance(double heightDifference) {
-//        if (getNumberOfSelectedSurfaces() == 2) {
-//            ArrayList<Surface> selectedSurfaceList = this.getSelectedSurfaces();
-//            Surface firstSurface = selectedSurfaceList.get(0);
-//            Surface secondSurface = selectedSurfaceList.get(1);
-//
-//            if (firstSurface.getTopLeftPoint().getY() <= secondSurface.getTopLeftPoint().getY()) {
-//                Point2D firstSurfacePos = firstSurface.getTopLeftPoint();
-//                Point2D secondSurfacePos = secondSurface.getTopLeftPoint();
-//
-//                secondSurfacePos.setLocation(secondSurfacePos.getX(), firstSurfacePos.getY() + heightDifference);
-//                secondSurface.snapToPoint(secondSurfacePos);
-//            }
-//            else {
-//                Point2D firstSurfacePos = firstSurface.getTopLeftPoint();
-//                Point2D secondSurfacePos = secondSurface.getTopLeftPoint();
-//
-//                firstSurfacePos.setLocation(firstSurfacePos.getX(), secondSurfacePos.getY() + heightDifference);
-//                firstSurface.snapToPoint(firstSurfacePos);
-//            }
-//        }
-//    }
 public void setSelectedSurfacesHeightDistance(double heightDifference) {
     if (getNumberOfSelectedSurfaces() == 2) {
         ArrayList<Surface> selectedSurfaceList = this.getSelectedSurfaces();
