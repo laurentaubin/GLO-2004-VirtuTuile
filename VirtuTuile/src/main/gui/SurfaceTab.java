@@ -255,31 +255,31 @@ public class SurfaceTab extends JPanel{
     }
 
     public void setEnteredWidthSurfaceDimensions(){
+        double enteredWidth;
         if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.IMPERIAL) {
             String value = widthField.getText();
             try {
                 int feetIndex = value.indexOf("\'");
                 String feet = value.substring(0, feetIndex);
-                System.out.println("feet: " + feet);
                 int inchIndex = value.indexOf("\"");
                 String inch = value.substring(feetIndex + 1, inchIndex);
-                System.out.println("inch: " + inch);
                 String fraction = value.substring(inchIndex + 1);
-                System.out.println("fraction: " + fraction);
                 String[] stringArray = new String[3];
                 stringArray[0] = feet;
                 stringArray[1] = inch;
                 stringArray[2] = fraction;
                 double inchTotal = UnitConverter.stringToInch(stringArray);
-                System.out.println("total inch: " + inchTotal);
+                enteredWidth = UnitConverter.convertSelectedUnitToPixel(inchTotal, mainWindow.getCurrentMeasurementMode());
+                this.mainWindow.setSelectedSurfaceWidth(enteredWidth);
             }
             catch (StringIndexOutOfBoundsException e) {
                 System.out.println("Format invalide");
             }
-            return;
         }
-        double enteredWidth = UnitConverter.convertSelectedUnitToPixel((double)widthField.getValue(), mainWindow.getCurrentMeasurementMode());
-        this.mainWindow.setSelectedSurfaceWidth(enteredWidth);
+        else if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.METRIC) {
+            enteredWidth = UnitConverter.convertSelectedUnitToPixel((double)widthField.getValue(), mainWindow.getCurrentMeasurementMode());
+            this.mainWindow.setSelectedSurfaceWidth(enteredWidth);
+        }
     }
 
     public void setEnteredHeightSurfaceDimensions() {
@@ -307,8 +307,13 @@ public class SurfaceTab extends JPanel{
 
     public void setSurfaceDimensionField(Dimension dimension) {
         MainWindow.MeasurementUnitMode currentMeasurementMode = mainWindow.getCurrentMeasurementMode();
+        System.out.println("print dans SurfaceTab.setSurfaceDimesionField");
+        System.out.println("pixel: " + dimension.width);
+        System.out.println("meter: " + UnitConverter.convertPixelToSelectedUnit(dimension.width, MainWindow.MeasurementUnitMode.METRIC));
+        System.out.println("inch : " + UnitConverter.convertPixelToSelectedUnit(dimension.width, MainWindow.MeasurementUnitMode.IMPERIAL));
         double width = UnitConverter.convertPixelToSelectedUnit(dimension.width, currentMeasurementMode);
         double height = UnitConverter.convertPixelToSelectedUnit(dimension.height, currentMeasurementMode);
+
         if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.IMPERIAL) {
             String widthImperial = getImperialFormat(width);
             this.widthField.setText(widthImperial);
@@ -316,8 +321,15 @@ public class SurfaceTab extends JPanel{
             this.heightField.setText(heightImperial);
         }
         else if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.METRIC) {
-            this.widthField.setValue(width);
-            this.heightField.setValue(height);
+            BigDecimal bdWidth = BigDecimal.valueOf(width);
+            bdWidth = bdWidth.setScale(2, RoundingMode.HALF_UP);
+            String widthString = Double.toString(bdWidth.doubleValue());
+            this.widthField.setText(widthString + "m");
+
+            BigDecimal bdHeight = BigDecimal.valueOf(height);
+            bdHeight = bdHeight.setScale(2, RoundingMode.HALF_UP);
+            String heightString = Double.toString(bdHeight.doubleValue());
+            this.heightField.setText(heightString + "m");
         }
     }
 
