@@ -648,6 +648,7 @@ public class MainWindow extends JFrame {
         drawingPanel.setGridLines();
     }
 
+
     public void gridOptionItemActionPerformed(ActionEvent actionEvent) {
 
         JPanel fields = new JPanel(new GridLayout(1, 2));
