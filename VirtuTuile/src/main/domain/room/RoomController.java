@@ -331,6 +331,10 @@ public class RoomController implements Serializable{
         return room.getSelectedSurfaceDimensions();
     }
 
+    public Dimension getSelectedSurfacesDistances() {
+        return room.getSelectedSurfacesDistances();
+    }
+
     public void combineSelectedSurfaces() {
         deleteElementsAfterPointer(this.undoRedoPointer);
         room.combineSelectedSurface();

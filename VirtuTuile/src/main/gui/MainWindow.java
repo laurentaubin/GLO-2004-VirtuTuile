@@ -448,6 +448,7 @@ public class MainWindow extends JFrame {
                                         controller.getCurrentNameTile(),
                                         controller.getSelectedSurfaceColor(),
                                         controller.getCurrentTilePerBox());
+            rightPanel.updateSurfaceTabDistances(this.controller.getSelectedSurfacesDistances());
         }
 
         if (this.currentApplicationMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {

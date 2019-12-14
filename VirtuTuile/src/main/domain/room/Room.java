@@ -306,6 +306,41 @@ public class Room implements Serializable{
         return dimension;
     }
 
+    public Dimension getSelectedSurfacesDistances() {
+        Dimension dimension = new Dimension(0, 0);
+        Double widthDifference = new Double(0);
+        Double heightDifference = new Double(0);
+        if (getNumberOfSelectedSurfaces() == 2) {
+            ArrayList<Surface> selectedSurfaceList = this.getSelectedSurfaces();
+            Surface firstSurface = selectedSurfaceList.get(0);
+            Surface secondSurface = selectedSurfaceList.get(1);
+
+            if (firstSurface.getTopLeftPoint().getX() > secondSurface.getTopLeftPoint().getX()) {
+                widthDifference = firstSurface.getTopLeftPoint().getX() - secondSurface.getTopLeftPoint().getX();
+            }
+            else if (firstSurface.getTopLeftPoint().getX() < secondSurface.getTopLeftPoint().getX()) {
+                widthDifference = secondSurface.getTopLeftPoint().getX() - firstSurface.getTopLeftPoint().getX();
+            }
+            else {
+                // Les surfaces sont alignées horizontalement (selon leur coin supérieur gauche)
+                widthDifference = 0.0;
+            }
+
+            if (firstSurface.getTopLeftPoint().getY() > secondSurface.getTopLeftPoint().getY()) {
+                heightDifference = firstSurface.getTopLeftPoint().getY() - secondSurface.getTopLeftPoint().getY();
+            }
+            else if (firstSurface.getTopLeftPoint().getY() < secondSurface.getTopLeftPoint().getY()) {
+                heightDifference = secondSurface.getTopLeftPoint().getY() - firstSurface.getTopLeftPoint().getY();
+            }
+            else {
+                // Les surfaces sont alignées verticalement (selon leur coin supérieur gauche)
+                widthDifference = 0.0;
+            }
+            dimension.setSize(widthDifference, heightDifference);
+        }
+        return dimension;
+    }
+
     public int getNumberOfSelectedSurfaces() {
         int count = 0;
         for (Surface surface : surfaceList) {
