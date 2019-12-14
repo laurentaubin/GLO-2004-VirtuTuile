@@ -608,6 +608,20 @@ public class Surface implements Serializable {
         return points;
     }
 
+    public void boundingRectangleSnapToPoint(Point2D closestCorner) {
+        double[] deltaArray = boundingRectangleDeltasFromPoint(closestCorner);
+        this.translatePolygon(deltaArray[0], deltaArray[1]);
+    }
+
+    private double[] boundingRectangleDeltasFromPoint(Point2D closestCorner) {
+        Point2D topLeftPoint = getTopLeftPoint();
+
+        double deltaX = closestCorner.getX() - getBoundingRectangle().getMinX();
+        double deltaY = closestCorner.getY() - getBoundingRectangle().getMinY();
+
+        return new double[]{deltaX, deltaY};
+    }
+
     public void snapToPoint(Point2D closestCorner) {
         double[] deltaArray = getDeltasFromPoint(closestCorner);
         this.translatePolygon(deltaArray[0], deltaArray[1]);
