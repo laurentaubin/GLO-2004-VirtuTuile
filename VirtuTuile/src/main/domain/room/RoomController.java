@@ -157,7 +157,6 @@ public class RoomController implements Serializable{
 
 
     public void saveAsSelected(){
-
         String path = Paths.get("").toAbsolutePath().toString();
         JFileChooser chooser = new JFileChooser(path);
         int validation = chooser.showSaveDialog(null);
@@ -523,6 +522,26 @@ public class RoomController implements Serializable{
 
     public void updateTile(TileType tile, double width, double height, String name, int nbrTilesPerBox, Color color) {
         room.updateTile(tile, width, height, name, nbrTilesPerBox, color);
+    }
+
+    public void updateTileWidth(TileType selectedTileType, float tileWidth) {
+        room.updateTileWidth(selectedTileType, tileWidth);
+    }
+
+    public void updateTileHeight(TileType tileType, float height) {
+        room.updateTileHeight(tileType, height);
+    }
+
+    public void updateTileColor(TileType tileType, Color color) {
+        room.updateTileColor(tileType, color);
+    }
+
+    public void updateTileName(TileType tileType, String name) {
+        room.updateTileName(tileType, name);
+    }
+
+    public void updateNumberPerBox(TileType tileType, int numberPerBox) {
+        room.updateTileNumberPerBox(tileType, numberPerBox);
     }
 }
 

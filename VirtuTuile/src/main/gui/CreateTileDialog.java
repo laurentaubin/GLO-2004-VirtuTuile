@@ -1,5 +1,8 @@
 package gui;
 
+import com.sun.tools.javac.Main;
+import util.UnitConverter;
+
 import javax.swing.*;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
@@ -11,6 +14,7 @@ import java.text.NumberFormat;
 
 public class CreateTileDialog extends JDialog {
     private TileTab tileTab;
+    private MainWindow.MeasurementUnitMode measurementUnitMode;
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -31,8 +35,9 @@ public class CreateTileDialog extends JDialog {
     private Color color;
     private int numberOfTilePerBox;
 
-    public CreateTileDialog(TileTab tileTab) {
+    public CreateTileDialog(TileTab tileTab, MainWindow.MeasurementUnitMode measurementUnitMode) {
         this.tileTab = tileTab;
+        this.measurementUnitMode = measurementUnitMode;
         this.name = "";
         this.widthField.setValue(0d);
         this.heightField.setValue(0d);
@@ -116,7 +121,7 @@ public class CreateTileDialog extends JDialog {
         setTileHeight();
         setNumberOfTilePerBox();
         if (validateInputs()) {
-            tileTab.createTileFromUserInput(this.color, (float)this.width, (float)this.height, this.name, this.numberOfTilePerBox);
+            tileTab.createTileFromUserInput(this.color, this.width, this.height, this.name, this.numberOfTilePerBox);
             dispose();
         }
         else {
@@ -135,11 +140,11 @@ public class CreateTileDialog extends JDialog {
             areValid = false;
             JOptionPane.showMessageDialog(this, "Identifiant de la tuile ne peut être vide");
         }
-        else if (this.width == 0d) {
+        else if (this.width == 0) {
             areValid = false;
             JOptionPane.showMessageDialog(this, "La largeur ne peut pas être nulle");
         }
-        else if (this.height == 0d) {
+        else if (this.height == 0) {
             areValid = false;
             JOptionPane.showMessageDialog(this, "La hauteur ne peut pas être nulle");
         }

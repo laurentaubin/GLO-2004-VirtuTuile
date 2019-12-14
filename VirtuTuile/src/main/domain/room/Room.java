@@ -1125,4 +1125,26 @@ public void setSelectedSurfacesHeightDistance(double heightDifference) {
         tile.setNbrTilesPerBox(nbrTilesPerBox);
         tile.setColor(color);
     }
+
+    public void updateTileWidth(TileType tileType, double width) {
+        tileType.setWidth((float)width);
+    }
+
+    public void updateTileHeight(TileType tileType, double height) {
+        tileType.setHeight((float)height);
+    }
+
+    public void updateTileName(TileType tileType, String name) {
+        tileType.setName(name);
+    }
+
+    public void updateTileNumberPerBox(TileType tileType, int num) {
+        tileType.setNbrTilesPerBox(num);
+    }
+
+    public void updateTileColor(TileType tileType, Color color) {
+        tileType.setColor(color);
+    }
+
+
 }

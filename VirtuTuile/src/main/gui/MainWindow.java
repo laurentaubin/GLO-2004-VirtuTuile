@@ -28,6 +28,29 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
+    public void updateTileWidth(TileType selectedTileType, float tileWidth) {
+        controller.updateTileWidth(selectedTileType, tileWidth);
+        drawingPanel.repaint();
+    }
+
+    public void updateTileHeight(TileType tileType, float height) {
+        controller.updateTileHeight(tileType, height);
+        drawingPanel.repaint();
+    }
+
+    public void updateTileColor(TileType tileType, Color color) {
+        controller.updateTileColor(tileType, color);
+        drawingPanel.repaint();
+    }
+
+    public void updateTileName(TileType tileType, String name) {
+        controller.updateTileName(tileType, name);
+    }
+
+    public void updateNumberPerBox(TileType tileType, int numberPerBox) {
+        controller.updateNumberPerBox(tileType, numberPerBox);
+    }
+
 
     public enum ApplicationMode {
         SELECT, ADD_RECTANGULAR, ADD_IRREGULAR, MOVE_PATTERN
