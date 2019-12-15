@@ -55,14 +55,14 @@ public class BrickPattern extends Pattern {
         }
 
         else {
-            position.x = position.x - tileWidth + (xOffset%tileWidth) - decalageCenterX;
+            position.x = position.x - tileWidth + (xOffset%tileHeight) - decalageCenterX;
         }
 
         if (yOffset <= 0) {
             position.y = position.y + yOffset - decalageCenterY;
         }
         else {
-            position.y = position.y - tileHeight + (yOffset%tileHeight) - decalageCenterY;
+            position.y = position.y - tileHeight + (yOffset%tileWidth) - decalageCenterY;
 
         }
 

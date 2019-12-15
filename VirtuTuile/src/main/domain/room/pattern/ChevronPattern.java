@@ -21,12 +21,11 @@ public class ChevronPattern extends Pattern {
 
     public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth, boolean center) {
 
-        double xOffset = tileType.getxOffset();
-        double yOffset = tileType.getyOffset();
+        double xOffset = this.getxOffset();
+        double yOffset = this.getyOffset();
 
         double tileWidth = tileType.getWidth();
         double tileHeight = tileType.getHeight();
-
 
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
         Point2D.Double position = new Point2D.Double(boundingRectanglePosition.getX(), boundingRectangle.getY());
