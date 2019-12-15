@@ -79,7 +79,7 @@ public class RightPanel extends JTabbedPane implements Serializable {
         tileTabPanel.setCurrentTileInfo(width, height, name, color, nbrTilesPerBox);
     }
 
-    public void updateSurfaceInformation(int nbTile, double nbBox) {
+    public void updateSurfaceInformation(int nbTile, int nbBox) {
         surfaceTabPanel.updateSurfaceInformation(nbTile, nbBox);
     }
 
@@ -105,7 +105,7 @@ public class RightPanel extends JTabbedPane implements Serializable {
         this.surfaceTabPanel.showSurfaceInformation();
     }
 
-    public void hideSurfaceInformation() {
-        this.surfaceTabPanel.hideSurfaceInformation();
+    public void showProjectInformation() {
+        this.surfaceTabPanel.showProjetInformation();
     }
 }

@@ -45,6 +45,7 @@ public class SurfaceTab extends JPanel{
     private JLabel distanceLabel;
     private JFormattedTextField widthDistanceField;
     private JFormattedTextField heightDistanceField;
+    private JLabel informationTabTitleLabel;
     private JButton centrerHButton;
     private Color surfaceColor;
 
@@ -55,7 +56,6 @@ public class SurfaceTab extends JPanel{
         heightField.setValue(0d);
         surfaceTitle.setFont(new Font("Helvetica Neue", Font.BOLD, 13));
         holeCheckBox.setFocusPainted(true);
-        informationPanel.hide();
 
         Dimension tabButtonDimesion = new Dimension(20,20);
 
@@ -433,25 +433,27 @@ public class SurfaceTab extends JPanel{
     }
 
     public void updateNbTileLabel(int nbTile) {
-        String label = nbTile + " tuiles";
+        String label = nbTile + " tuile";
+        if (nbTile > 1) { label += "s"; }
         nbTileLabel.setText(label);
     }
 
-    public void updateNbBoxLabel(double nbBox) {
-        String label = nbBox + " boîtes ";
+    public void updateNbBoxLabel(int nbBox) {
+        String label = nbBox + " boîte";
+        if (nbBox > 1) { label += "s"; }
         nbBoxLabel.setText(label);
     }
 
-    public void updateSurfaceInformation(int nbTile, double nbBox) {
+    public void updateSurfaceInformation(int nbTile, int nbBox) {
         updateNbTileLabel(nbTile);
         updateNbBoxLabel(nbBox);
     }
 
     public void showSurfaceInformation() {
-        this.informationPanel.show();
+        this.informationTabTitleLabel.setText("Information sur la surface");
     }
 
-    public void hideSurfaceInformation() {
-        this.informationPanel.hide();
+    public void showProjetInformation() {
+        this.informationTabTitleLabel.setText("Information sur le projet");
     }
 }

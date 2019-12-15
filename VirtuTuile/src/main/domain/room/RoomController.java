@@ -548,8 +548,16 @@ public class RoomController implements Serializable{
         return this.room.getSelectedSurfaceNbTile();
     }
 
-    public double getSelectedSurfaceNbBox() {
+    public int getSelectedSurfaceNbBox() {
         return this.room.getSelectedSurfaceNbBox();
+    }
+
+    public int getAllSurfaceNbTile() {
+        return this.room.getAllSurfaceNbTile();
+    }
+
+    public int getAllSurfaceNbBox() {
+        return this.room.getAllSurfaceNbBox();
     }
 }
 
