@@ -17,6 +17,12 @@ public class ChevronPattern extends Pattern {
 
     public ChevronPattern() {
         super();
+        this.name = "Chevron";
+    }
+
+    public ChevronPattern(Pattern patterToCopy) {
+        super(patterToCopy);
+        this.name = "Chevron";
     }
 
     public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth, boolean center) {

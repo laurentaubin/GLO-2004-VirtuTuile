@@ -125,18 +125,19 @@ public class SurfaceDrawer {
 
 
                 ArrayList<Tile> array = current_surface.getPattern().getVirtualTileList();
-                for (Tile tile : array) {
-                    tile.transform(at);
-                    if (tile.isTooSmall() && current_surface.getTileType().getEtatInspector()) {
-                        g2d.setColor(tile.getInspecColor());
-                    }
-                    else {
-                        g2d.setColor(current_surface.getTileType().getColor());
-                    }
-                    g2d.fill(tile);
+                if (array != null) {
+                    for (Tile tile : array) {
+                        tile.transform(at);
+                        if (tile.isTooSmall() && current_surface.getTileType().getEtatInspector()) {
+                            g2d.setColor(tile.getInspecColor());
+                        } else {
+                            g2d.setColor(current_surface.getTileType().getColor());
+                        }
+                        g2d.fill(tile);
 
-                    g2d.setColor(Color.BLACK);
-                    g2d.draw(tile);
+                        g2d.setColor(Color.BLACK);
+                        g2d.draw(tile);
+                    }
                 }
             }
 

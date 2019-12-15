@@ -50,7 +50,6 @@ public class RoomController implements Serializable{
     }
 
     public void addRoom() {
-//        ArrayList<Surface> surfaceListCopy = new ArrayList<Surface>();
         Room room = new Room(this.room);
         if (roomList.size() >= 30) {
             this.roomList.remove(0);
@@ -58,13 +57,6 @@ public class RoomController implements Serializable{
             this.undoRedoPointer = 29;
         }
         else {
-//            ArrayList<Surface> thisSurfaceList = this.getSurfaceList();
-//            for (int i = 0; i < thisSurfaceList.size(); i++) {
-//                Surface currentSurface = new Surface(thisSurfaceList.get(i));
-//                surfaceListCopy.add(currentSurface);
-//            }
-//            room.setSurfaceList(surfaceListCopy);
-
             this.roomList.add(room);
             undoRedoPointer++;
         }
@@ -236,6 +228,12 @@ public class RoomController implements Serializable{
         //room.addIrregularSurface(point, xPoints, yPoints, number_of_edges);
     }
 
+    public void addIrregularSurface(ArrayList<Point> summitOfSurface) {
+        deleteElementsAfterPointer(this.undoRedoPointer);
+        room.addIrregularSurface(summitOfSurface);
+        addRoom();
+    }
+
     public ArrayList<Surface> getSurfaceList() {
         return room.getSurfaceList();
     }
@@ -267,6 +265,7 @@ public class RoomController implements Serializable{
         room.switchSelectionStatus(x, y, isShiftDown);
     }
 
+    // TODO Undo/Redo for final positions of surfaces
     public void updateSelectedSurfacesPositions(double deltaX, double deltaY) {
         room.updateSelectedSurfacesPositions(deltaX, deltaY);
     }
@@ -314,12 +313,15 @@ public class RoomController implements Serializable{
     }
 
     public void setGroutColor(Color color){
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.setGroutColor(color);
+        addRoom();
     }
 
     public void setSelectedSurfaceColor(Color color){
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.setSelectedSurfaceColor(color);
-
+        addRoom();
     }
 
     public Color getSelectedSurfaceColor() {
@@ -327,11 +329,15 @@ public class RoomController implements Serializable{
     }
 
     public void setSelectedSurfaceWidth(double enteredWidth) {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.setSelectedSurfaceWidth(enteredWidth);
+        addRoom();
     }
 
     public void setSelectedSurfaceHeight(double height) {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.setSelectedSurfaceHeight(height);
+        addRoom();
     }
 
     public Dimension getSelectedSurfaceDimensions() {
@@ -339,11 +345,15 @@ public class RoomController implements Serializable{
     }
 
     public void setSelectedSurfacesWidthDistance(double widthDifference) {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.setSelectedSurfacesWidthDistance(widthDifference);
+        addRoom();
     }
 
     public void setSelectedSurfacesHeightDistance(double heightDifference) {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.setSelectedSurfacesHeightDistance(heightDifference);
+        addRoom();
     }
 
     public Dimension getSelectedSurfacesDistances() {
@@ -364,47 +374,64 @@ public class RoomController implements Serializable{
         return room.getTileList();
     }
 
-
-
     public void setSelectedTileToSelectedSurface(TileType selectedTileType) {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.setSelectedTileToSelectedSurface(selectedTileType);
+        addRoom();
     }
 
     public void setStraightPatternToSelectedSurface() {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.setStraightPatternToSelectedSurface();
+        addRoom();
     }
 
     public void setHorizontalPatternToSelectedSurface() {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.setHorizontalPatternToSelectedSurface();
+        addRoom();
     }
 
     public void setVerticalPatternToSelectedSurface() {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.setVerticalPatternToSelectedSurface();
+        addRoom();
     }
 
     public void setVerticalBrickPatternToSelectedSurface() {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.setVerticalBrickPatternToSelectedSurface();
+        addRoom();
     }
 
     public void setSquarePatternToSelectedSurface() {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.setSquarePatternToSelectedSurface();
+        addRoom();
     }
 
     public void setAnglePattern() {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.setAnglePattern();
+        addRoom();
     }
 
     public void setChevronPattern() {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.setChevronPattern();
+        addRoom();
     }
 
     public void setSelectedSurfaceAsHole() {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.setSelectedSurfaceAsHole();
+        addRoom();
     }
 
     public void setSelectedSurfaceAsWhole() {
         room.setSelectedSurfaceAsWhole();
     }
+
     public boolean getIfSelectedSurfaceIsAHole() {
         return room.getIfSelectedSurfaceIsAHole();
     }
@@ -422,7 +449,9 @@ public class RoomController implements Serializable{
     }
 
     public void setSelectedSurfaceGroutWidth(double width) {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.setSelectedSurfaceGroutWidth(width);
+        addRoom();
     }
 
     public double getSelectedSurfaceGroutWidth() {
@@ -458,39 +487,57 @@ public class RoomController implements Serializable{
     }
 
     public void separateSelectedSurface() {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.separateSelectedSurface();
+        addRoom();
     }
 
     public void verticallyAlignSelectedSurfaces() {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.verticallyAlignSelectedSurfaces();
+        addRoom();
     }
 
     public void horizontallyAlignSelectedSurfaces() {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.horizontallyAlignSelectedSurfaces();
+        addRoom();
     }
 
     public void verticallyCenterSelectedSurfaces() {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.verticallyCenterSelectedSurfaces();
+        addRoom();
     }
 
     public void horizontallyCenterSelectedSurfaces() {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.horizontallyCenterSelectedSurfaces();
+        addRoom();
     }
 
     public void leftAlignSelectedSurfaces() {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.leftAlignSelectedSurfaces();
+        addRoom();
     }
 
     public void rightAlignSelectedSurfaces() {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.rightAlignSelectedSurfaces();
+        addRoom();
     }
 
     public void topAlignSelectedSurfaces() {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.topAlignSelectedSurfaces();
+        addRoom();
     }
 
     public void bottomAlignSelectedSurfaces() {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.bottomAlignSelectedSurfaces();
+        addRoom();
     }
 
     public ArrayList<Point> getPointList() {
@@ -500,7 +547,7 @@ public class RoomController implements Serializable{
     public void addPoint(Point point, double zoom) {
         if (!this.pointList.isEmpty()) {
             if (Math.abs(point.x - this.pointList.get(0).x) <= (5/zoom) && Math.abs(point.y - this.pointList.get(0).y) <= (5/zoom)) {
-                room.addIrregularSurface(this.pointList);
+                addIrregularSurface(this.pointList);
                 clearPointList();
                 return;
             }
@@ -513,13 +560,18 @@ public class RoomController implements Serializable{
     }
 
     public void setMismatch(double mismatch) {
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.setMismatch(mismatch);
+        addRoom();
     }
 
     public void centerTiles(){
+        deleteElementsAfterPointer(this.undoRedoPointer);
         room.centerTiles();
+        addRoom();
     }
 
+    // TODO Undo/Redo for final positions of pattern
     public void updateSelectedSurfacesPatternPosition(double deltaX, double deltaY) {
         this.room.updateSelectedSurfacesPatternPosition(deltaX, deltaY);
     }

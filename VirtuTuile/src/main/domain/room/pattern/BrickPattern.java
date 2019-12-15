@@ -14,12 +14,19 @@ public class BrickPattern extends Pattern {
     public BrickPattern(double mismatch) {
         super();
         this.mismatch = mismatch;
+        this.name = "Brick";
     }
 
     public BrickPattern(double xOffset, double yOffset, int angle, double groutWidth, Color groutColor, double mismatch) {
         super(xOffset, yOffset, angle, groutWidth, groutColor);
         this.mismatch = mismatch;
+        this.name = "Brick";
+    }
 
+    public BrickPattern(Pattern patternToCopy) {
+        super(patternToCopy);
+        this.mismatch = new Double(patternToCopy.mismatch);
+        this.name = "Brick";
     }
 
     public void setMismatch(double mismatch) {

@@ -608,9 +608,11 @@ public void setSelectedSurfacesHeightDistance(double heightDifference) {
     public boolean checkIfMouseAboveTile(int xPos, int yPos) {
         boolean mouseIsAboveTile = false;
         for (Surface surface : surfaceList) {
-            for (Tile tile : surface.getPattern().getVirtualTileList()) {
-                if (tile.contains(xPos, yPos)) {
-                    mouseIsAboveTile = true;
+            if (surface.getPattern().getVirtualTileList() != null) {
+                for (Tile tile : surface.getPattern().getVirtualTileList()) {
+                    if (tile.contains(xPos, yPos)) {
+                        mouseIsAboveTile = true;
+                    }
                 }
             }
         }
@@ -620,10 +622,12 @@ public void setSelectedSurfacesHeightDistance(double heightDifference) {
     public ArrayList<Double> getTileDimensions(int xPos, int yPos) {
         ArrayList<Double> array = new ArrayList<Double>();
         for (Surface surface : surfaceList) {
-            for (Tile tile : surface.getPattern().getVirtualTileList()) {
-                if (tile.contains(xPos, yPos)) {
-                    array.add(0, tile.getWidth());
-                    array.add(1, tile.getHeight());
+            if (surface.getPattern().getVirtualTileList() != null) {
+                for (Tile tile : surface.getPattern().getVirtualTileList()) {
+                    if (tile.contains(xPos, yPos)) {
+                        array.add(0, tile.getWidth());
+                        array.add(1, tile.getHeight());
+                    }
                 }
             }
         }
