@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8c246219-cf09-4492-905b-d80bdbddbe18" name="Default Changelist" comment="">
+    <list default="true" id="8c246219-cf09-4492-905b-d80bdbddbe18" name="Default Changelist" comment="Undo/redo temporary fixed">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/drawing/SurfaceDrawer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/drawing/SurfaceDrawer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/RoomController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/TileType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/TileType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/ChevronPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/ChevronPattern.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/domain/room/pattern/SquarePattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/pattern/SquarePattern.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/gui/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/MainWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/gui/TopButtonBar.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/TopButtonBar.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/gui/TopButtonBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/TopButtonBar.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,7 +41,6 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW" value="true" />
-    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/gui" />
@@ -154,19 +144,32 @@
       <workItem from="1575658216500" duration="9149000" />
       <workItem from="1575668915330" duration="109000" />
       <workItem from="1575676797017" duration="5278000" />
-      <workItem from="1575809418330" duration="3672000" />
-      <workItem from="1575818645889" duration="506000" />
-      <workItem from="1575838955828" duration="379000" />
-      <workItem from="1575845406387" duration="8244000" />
-      <workItem from="1575902668277" duration="1069000" />
-      <workItem from="1575907235579" duration="170000" />
-      <workItem from="1575926924445" duration="232000" />
-      <workItem from="1576023160047" duration="139000" />
-      <workItem from="1576093756640" duration="8240000" />
-      <workItem from="1576133064204" duration="6630000" />
-      <workItem from="1576167235074" duration="6660000" />
-      <workItem from="1576353175628" duration="454000" />
-      <workItem from="1576373167988" duration="2101000" />
+      <workItem from="1575682216794" duration="4050000" />
+      <workItem from="1575782332963" duration="3577000" />
+      <workItem from="1575820165427" duration="7236000" />
+      <workItem from="1575832673114" duration="47000" />
+      <workItem from="1575834325259" duration="269000" />
+      <workItem from="1575985037785" duration="12273000" />
+      <workItem from="1575998890226" duration="58000" />
+      <workItem from="1576024673579" duration="8000000" />
+      <workItem from="1576035374485" duration="12000" />
+      <workItem from="1576184929730" duration="11940000" />
+      <workItem from="1576202144421" duration="1942000" />
+      <workItem from="1576204417170" duration="47000" />
+      <workItem from="1576205473799" duration="60000" />
+      <workItem from="1576210725710" duration="102000" />
+      <workItem from="1576265841373" duration="920000" />
+      <workItem from="1576278665542" duration="321000" />
+      <workItem from="1576343353173" duration="7713000" />
+      <workItem from="1576354497049" duration="3163000" />
+      <workItem from="1576357774728" duration="3815000" />
+      <workItem from="1576362207650" duration="378000" />
+      <workItem from="1576362616719" duration="134000" />
+      <workItem from="1576362838546" duration="127000" />
+      <workItem from="1576367777653" duration="127000" />
+      <workItem from="1576368141104" duration="1731000" />
+      <workItem from="1576369941741" duration="80000" />
+      <workItem from="1576370064184" duration="24000" />
     </task>
     <task id="LOCAL-00001" summary="xml(?)">
       <created>1573883748096</created>
@@ -224,35 +227,7 @@
       <option name="project" value="LOCAL" />
       <updated>1575501548912</updated>
     </task>
-    <task id="LOCAL-00009" summary="centrer tuile + validation taille tuile de paquet">
-      <created>1576099060729</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1576099060729</updated>
-    </task>
-    <task id="LOCAL-00010" summary="incliné">
-      <created>1576139580267</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1576139580267</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Save">
-      <created>1576177998554</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1576177998554</updated>
-    </task>
-    <task id="LOCAL-00012" summary="New project">
-      <created>1576179975351</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1576179975351</updated>
-    </task>
-    <option name="localTasksCounter" value="13" />
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -285,31 +260,27 @@
     <MESSAGE value="switchSelectionStatus really fixed" />
     <MESSAGE value="Quick refactor" />
     <MESSAGE value="Undo/redo temporary fixed" />
-    <MESSAGE value="centrer tuile + validation taille tuile de paquet" />
-    <MESSAGE value="incliné" />
-    <MESSAGE value="Save" />
-    <MESSAGE value="New project" />
-    <option name="LAST_COMMIT_MESSAGE" value="New project" />
+    <option name="LAST_COMMIT_MESSAGE" value="Undo/redo temporary fixed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/gui/TileTab.java</url>
-          <line>160</line>
+          <line>156</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/gui/TileTab.java</url>
-          <line>156</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/gui/TileTab.java</url>
-          <line>254</line>
+          <line>253</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="this.room.tileTypeList" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

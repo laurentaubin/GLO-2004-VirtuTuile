@@ -654,15 +654,15 @@ public class Surface implements Serializable {
     }
 
     public boolean leftMostCorner(Surface otherSurface) {
-        Point2D thisTopLeftPoint = this.getTopLeftPoint();
-        Point2D otherTopLeftPoint = otherSurface.getTopLeftPoint();
+        Point2D thisTopLeftPoint = new Point2D.Double(this.getBoundingRectangle().getMinX(), this.getBoundingRectangle().getMinY());
+        Point2D otherTopLeftPoint = new Point2D.Double(otherSurface.getBoundingRectangle().getMinX(), otherSurface.getBoundingRectangle().getMinY());
 
         return (thisTopLeftPoint.getX() < otherTopLeftPoint.getX());
     }
 
     public boolean rightMostCorner(Surface otherSurface) {
-        Point2D thisBottomRightPoint = this.getRightMostPoint();
-        Point2D otherBottomRightPoint = otherSurface.getRightMostPoint();
+        Point2D thisBottomRightPoint = new Point2D.Double(this.getBoundingRectangle().getMaxX(), this.getBoundingRectangle().getMaxY());
+        Point2D otherBottomRightPoint = new Point2D.Double(otherSurface.getBoundingRectangle().getMaxX(), otherSurface.getBoundingRectangle().getMaxY());
 
         return (thisBottomRightPoint.getX() > otherBottomRightPoint.getX());
     }
@@ -684,15 +684,15 @@ public class Surface implements Serializable {
     }
 
     public boolean topMostCorner(Surface otherSurface) {
-        Point2D thisTopLeftPoint = this.getTopLeftPoint();
-        Point2D otherTopLeftPoint = otherSurface.getTopLeftPoint();
+        Point2D thisTopLeftPoint = new Point2D.Double(this.getBoundingRectangle().getMinX(), this.getBoundingRectangle().getMinY());
+        Point2D otherTopLeftPoint = new Point2D.Double(otherSurface.getBoundingRectangle().getMinX(), otherSurface.getBoundingRectangle().getMinY());
 
         return (thisTopLeftPoint.getY() < otherTopLeftPoint.getY());
     }
 
     public boolean bottomMostCorner(Surface otherSurface) {
-        Point2D thisBottomRightPoint = this.getRightMostPoint();
-        Point2D otherBottomRightPoint = otherSurface.getRightMostPoint();
+        Point2D thisBottomRightPoint = new Point2D.Double(this.getBoundingRectangle().getMaxX(), this.getBoundingRectangle().getMaxY());
+        Point2D otherBottomRightPoint = new Point2D.Double(otherSurface.getBoundingRectangle().getMaxX(), otherSurface.getBoundingRectangle().getMaxY());
 
         return (thisBottomRightPoint.getY() > otherBottomRightPoint.getY());
     }

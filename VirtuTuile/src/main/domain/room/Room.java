@@ -704,25 +704,19 @@ public void setSelectedSurfacesHeightDistance(double heightDifference) {
                 Surface bottomSurface = selectedSurfaceList.get(0);
                 Surface topSurface = selectedSurfaceList.get(1);
 
-                Point2D bottomSurfaceMiddlePoint = bottomSurface.getLeftMostPoint();
-                bottomSurfaceMiddlePoint.setLocation(bottomSurfaceMiddlePoint.getX(), bottomSurfaceMiddlePoint.getY() + (bottomSurface.getHeight() / 2.0));
+                double bottomSurfacePos = bottomSurface.getBoundingRectangle().getCenterY();
+                Point2D topSurfacePos = new Point2D.Double(topSurface.getBoundingRectangle().getMinX(), bottomSurfacePos - (topSurface.getBoundingRectangle().getHeight() / 2.0));
 
-                Point2D topSurfaceLeftMostPoint = topSurface.getLeftMostPoint();
-                topSurfaceLeftMostPoint.setLocation(topSurfaceLeftMostPoint.getX(), bottomSurfaceMiddlePoint.getY() - (topSurface.getHeight() / 2.0));
-
-                topSurface.snapToPoint(topSurfaceLeftMostPoint);
+                topSurface.boundingRectangleSnapToPoint(topSurfacePos);
             }
             else if (selectedSurfaceList.get(1).isBeneath(selectedSurfaceList.get(0))){
                 Surface topSurface = selectedSurfaceList.get(0);
                 Surface bottomSurface = selectedSurfaceList.get(1);
 
-                Point2D topSurfaceMiddlePoint = topSurface.getLeftMostPoint();
-                topSurfaceMiddlePoint.setLocation(topSurfaceMiddlePoint.getX(), topSurfaceMiddlePoint.getY() + (topSurface.getHeight() / 2.0));
+                double topSurfacePos = topSurface.getBoundingRectangle().getCenterY();
+                Point2D bottomSurfacePos = new Point2D.Double(bottomSurface.getBoundingRectangle().getMinX(), topSurfacePos - (bottomSurface.getBoundingRectangle().getHeight() / 2.0));
 
-                Point2D bottomSurfaceLeftMostPoint = bottomSurface.getLeftMostPoint();
-                bottomSurfaceLeftMostPoint.setLocation(bottomSurfaceLeftMostPoint.getX(), topSurfaceMiddlePoint.getY() - (bottomSurface.getHeight() / 2.0));
-
-                bottomSurface.snapToPoint(bottomSurfaceLeftMostPoint);
+                bottomSurface.boundingRectangleSnapToPoint(bottomSurfacePos);
             }
             else {
                 return;
@@ -737,25 +731,19 @@ public void setSelectedSurfacesHeightDistance(double heightDifference) {
                 Surface leftSurface = selectedSurfaceList.get(0);
                 Surface rightSurface = selectedSurfaceList.get(1);
 
-                Point2D leftSurfaceMiddlePoint = leftSurface.getLeftMostPoint();
-                leftSurfaceMiddlePoint.setLocation(leftSurfaceMiddlePoint.getX() + (leftSurface.getWidth() / 2.0), leftSurfaceMiddlePoint.getY());
+                double leftSurfacePos = leftSurface.getBoundingRectangle().getCenterX();
+                Point2D rightSurfacePos = new Point2D.Double(leftSurfacePos - (rightSurface.getBoundingRectangle().getWidth() / 2.0), rightSurface.getBoundingRectangle().getMinY());
 
-                Point2D rightSurfaceLeftMostPoint = rightSurface.getLeftMostPoint();
-                rightSurfaceLeftMostPoint.setLocation(leftSurfaceMiddlePoint.getX() - (rightSurface.getWidth() / 2.0), rightSurfaceLeftMostPoint.getY());
-
-                rightSurface.snapToPoint(rightSurfaceLeftMostPoint);
+                rightSurface.boundingRectangleSnapToPoint(rightSurfacePos);
             }
             else if (selectedSurfaceList.get(1).isToTheLeft(selectedSurfaceList.get(0))){
                 Surface rightSurface = selectedSurfaceList.get(0);
                 Surface leftSurface = selectedSurfaceList.get(1);
 
-                Point2D rightSurfaceMiddlePoint = rightSurface.getLeftMostPoint();
-                rightSurfaceMiddlePoint.setLocation(rightSurfaceMiddlePoint.getX() + (rightSurface.getWidth() / 2.0), rightSurfaceMiddlePoint.getY());
+                double rightSurfacePos = rightSurface.getBoundingRectangle().getCenterX();
+                Point2D leftSurfacePos = new Point2D.Double(rightSurfacePos - (leftSurface.getBoundingRectangle().getWidth() / 2.0), leftSurface.getBoundingRectangle().getMinY());
 
-                Point2D leftSurfaceLeftMostPoint = leftSurface.getLeftMostPoint();
-                leftSurfaceLeftMostPoint.setLocation(rightSurfaceMiddlePoint.getX() - (leftSurface.getWidth() / 2.0), leftSurfaceLeftMostPoint.getY());
-
-                leftSurface.snapToPoint(leftSurfaceLeftMostPoint);
+                leftSurface.boundingRectangleSnapToPoint(leftSurfacePos);
             }
             else {
                 return;
@@ -799,12 +787,12 @@ public void setSelectedSurfacesHeightDistance(double heightDifference) {
     }
 
     public void leftAlign(Surface leftSurface, Surface rightSurface) {
-        Point2D leftPos = leftSurface.getLeftMostPoint();
-        Point2D rightSurfaceTopLeftPoint = rightSurface.getTopLeftPoint();
-        double widthDifference = rightSurfaceTopLeftPoint.getX() - leftPos.getX();
+        double leftPos = leftSurface.getBoundingRectangle().getMinX();
+        Point2D rightSurfaceTopLeftPoint = new Point2D.Double(rightSurface.getBoundingRectangle().getMinX(), rightSurface.getBoundingRectangle().getMinY());
+        double widthDifference = rightSurfaceTopLeftPoint.getX() - leftPos;
 
         rightSurfaceTopLeftPoint.setLocation(rightSurfaceTopLeftPoint.getX() - widthDifference, rightSurfaceTopLeftPoint.getY());
-        rightSurface.snapToPoint(rightSurfaceTopLeftPoint);
+        rightSurface.boundingRectangleSnapToPoint(rightSurfaceTopLeftPoint);
     }
 
     public void rightAlignSelectedSurfaces(){
@@ -843,12 +831,12 @@ public void setSelectedSurfacesHeightDistance(double heightDifference) {
     }
 
     public void rightAlign(Surface leftSurface, Surface rightSurface) {
-        Point2D rightPos = rightSurface.getRightMostPoint();
-        Point2D leftSurfaceTopLeftPoint = leftSurface.getTopLeftPoint();
-        double widthDifference = rightPos.getX() - leftSurface.getRightMostPoint().getX();
+        double rightPos = rightSurface.getBoundingRectangle().getMaxX();
+        Point2D leftSurfaceTopLeftPoint = new Point2D.Double(leftSurface.getBoundingRectangle().getMinX(), leftSurface.getBoundingRectangle().getMinY());
+        double widthDifference = rightPos - leftSurface.getBoundingRectangle().getMaxX();
 
         leftSurfaceTopLeftPoint.setLocation(leftSurfaceTopLeftPoint.getX() + widthDifference, leftSurfaceTopLeftPoint.getY());
-        leftSurface.snapToPoint(leftSurfaceTopLeftPoint);
+        leftSurface.boundingRectangleSnapToPoint(leftSurfaceTopLeftPoint);
     }
 
     public void topAlignSelectedSurfaces() {
@@ -886,12 +874,12 @@ public void setSelectedSurfacesHeightDistance(double heightDifference) {
     }
 
     public void topAlign(Surface bottomSurface, Surface topSurface) {
-        Point2D topPos = topSurface.getTopLeftPoint();
-        Point2D bottomSurfaceTopLeftPoint = bottomSurface.getTopLeftPoint();
-        double heightDifference = bottomSurfaceTopLeftPoint.getY() - topPos.getY();
+        double topPos = topSurface.getBoundingRectangle().getMinY();
+        Point2D bottomSurfaceTopLeftPoint = new Point2D.Double(bottomSurface.getBoundingRectangle().getMinX(), bottomSurface.getBoundingRectangle().getMinY());
+        double heightDifference = bottomSurfaceTopLeftPoint.getY() - topPos;
 
         bottomSurfaceTopLeftPoint.setLocation(bottomSurfaceTopLeftPoint.getX(), bottomSurfaceTopLeftPoint.getY() - heightDifference);
-        bottomSurface.snapToPoint(bottomSurfaceTopLeftPoint);
+        bottomSurface.boundingRectangleSnapToPoint(bottomSurfaceTopLeftPoint);
     }
 
     public void bottomAlignSelectedSurfaces() {
@@ -929,12 +917,12 @@ public void setSelectedSurfacesHeightDistance(double heightDifference) {
     }
 
     public void bottomAlign(Surface bottomSurface, Surface topSurface) {
-        Point2D bottomPos = bottomSurface.getBottomMostPoint();
-        Point2D topSurfaceTopLeftPoint = topSurface.getTopLeftPoint();
-        double heightDifference = bottomPos.getY() - topSurface.getBottomMostPoint().getY();
+        double bottomPos = bottomSurface.getBoundingRectangle().getMaxY();
+        Point2D topSurfaceTopLeftPoint = new Point2D.Double(topSurface.getBoundingRectangle().getMinX(), topSurface.getBoundingRectangle().getMinY());
+        double heightDifference = bottomPos - topSurface.getBoundingRectangle().getMaxY();
 
         topSurfaceTopLeftPoint.setLocation(topSurfaceTopLeftPoint.getX(), topSurfaceTopLeftPoint.getY() + heightDifference);
-        topSurface.snapToPoint(topSurfaceTopLeftPoint);
+        topSurface.boundingRectangleSnapToPoint(topSurfaceTopLeftPoint);
     }
 
     private ArrayList<Surface> getSelectedSurfaces() {
