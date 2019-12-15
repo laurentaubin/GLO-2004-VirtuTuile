@@ -23,22 +23,22 @@ public class SquarePattern extends Pattern{
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
         Point2D.Double position = new Point2D.Double(boundingRectanglePosition.getX(), boundingRectangle.getY());
 
-        double xOffset = tileType.getxOffset();
-        double yOffset = tileType.getyOffset();
+        double xOffset = this.getxOffset();
+        double yOffset = this.getyOffset();
 
         if (xOffset <= 0) {
             position.x = position.x + xOffset;
         }
 
         else {
-            position.x = position.x - tileWidth + (xOffset%tileWidth);
+            position.x = position.x - tileWidth + (xOffset%2*tileWidth);
         }
 
         if (yOffset <= 0) {
             position.y = position.y + yOffset;
         }
         else {
-            position.y = position.y - tileHeight + (yOffset%tileHeight);
+            position.y = position.y - tileHeight + (yOffset%2*tileHeight);
 
         }
         Point2D.Double initPosition = new Point2D.Double(position.getX(), position.getY());
