@@ -39,8 +39,8 @@ public class StraightPattern extends Pattern {
             this.initOffset();
             decalageCenterX = (tileWidth - moduloWidth) / 2.0d;
             decalageCenterY = (tileHeight - moduloHeight) / 2.0d;
-
         }
+
         double xOffset = this.getxOffset();
         double yOffset = this.getyOffset();
 
