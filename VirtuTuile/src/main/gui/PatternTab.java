@@ -297,6 +297,7 @@ public class PatternTab extends JPanel{
     }
 
     public void startPatternWithFullTile() {
+        mainWindow.startWithFullTile();
 
     }
 }

@@ -1198,4 +1198,12 @@ public void setSelectedSurfacesHeightDistance(double heightDifference) {
         }
         return centerStatus;
     }
+
+    public void startWithFullTile() {
+        for (Surface surface : surfaceList) {
+            if (surface.isSelected()) {
+                surface.startWithFullTile();
+            }
+        }
+    }
 }

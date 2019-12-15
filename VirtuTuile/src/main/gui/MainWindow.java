@@ -1011,6 +1011,12 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
+    public void startWithFullTile() {
+        controller.startWithFullTile();
+        rightPanel.updateCenterStatus(false);
+        drawingPanel.repaint();
+    }
+
     private ButtonGroup buttonGroup;
 
     private JPanel mainPanel;

@@ -787,6 +787,10 @@ public class Surface implements Serializable {
         return this.center;
     }
 
+    public void startWithFullTile() {
+        this.center = false;
+        this.pattern.initOffset();
+    }
 }
 
 
