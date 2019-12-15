@@ -145,7 +145,6 @@ public class InclinePattern extends Pattern {
             tile.intersect(surface);
             int[] xPoints = tile.getXPoints();
             int[] yPoints = tile.getYPoints();
-            System.out.println(surface.contains(xPoints[0], yPoints[0]));
             boolean allInside = surface.contains(xPoints[0], yPoints[0]) &&
                     surface.contains(xPoints[1], yPoints[1]) &&
                     surface.contains(xPoints[2], yPoints[2]) &&

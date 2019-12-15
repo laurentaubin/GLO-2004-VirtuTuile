@@ -38,7 +38,7 @@ public class VerticalPattern extends Pattern {
         }
 
         else {
-            position.x = position.x - tileHeight+ (xOffset%tileHeight) - decalageCenterX;
+            position.x = position.x - tileHeight + (xOffset%tileHeight) - decalageCenterX;
         }
 
         if (yOffset <= 0) {
@@ -49,8 +49,6 @@ public class VerticalPattern extends Pattern {
 
         }
         Point2D.Double initPosition = new Point2D.Double(position.getX(), position.getY());
-
-
 
         double boundingRectangleWidth = (int)boundingRectangle.getWidth() + Math.abs(xOffset);
         double boundingRectangleHeight = (int)boundingRectangle.getHeight() + Math.abs(yOffset);
