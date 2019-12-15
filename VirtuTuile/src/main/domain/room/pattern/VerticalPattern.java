@@ -13,8 +13,13 @@ public class VerticalPattern extends Pattern {
 
     public VerticalPattern(){
         super();
+        this.name = "Vertical";
     }
 
+    public VerticalPattern(Pattern patternToCopy) {
+        super(patternToCopy);
+        this.name = "Vertical";
+    }
 
     public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth, boolean center) {
         double xOffset = this.getxOffset();

@@ -12,8 +12,13 @@ public class SquarePattern extends Pattern{
 
 
     public SquarePattern() {
-
         super();
+        this.name = "Square";
+    }
+
+    public SquarePattern(Pattern patternToCopy) {
+        super(patternToCopy);
+        this.name = "Square";
     }
 
     public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth, boolean center) {

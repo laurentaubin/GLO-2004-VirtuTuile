@@ -44,9 +44,12 @@ public abstract class Pattern implements Serializable {
         this.groutWidth = new Double(patternToCopy.groutWidth);
         this.groutColor = new Color(patternToCopy.groutColor.getRGB());
 
-        for(Tile tile: patternToCopy.virtualTileList) {
-            Tile tileToCopy = new Tile(tile);
-            this.virtualTileList.add(tileToCopy);
+        if(patternToCopy.getVirtualTileList() != null) {
+            this.virtualTileList = new ArrayList<>();
+            for (Tile tile : patternToCopy.virtualTileList) {
+                Tile tileToCopy = new Tile(tile);
+                this.virtualTileList.add(tileToCopy);
+            }
         }
     }
 

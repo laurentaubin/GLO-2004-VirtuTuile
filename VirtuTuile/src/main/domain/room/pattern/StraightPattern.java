@@ -15,6 +15,12 @@ public class StraightPattern extends Pattern {
 
     public StraightPattern() {
         super();
+        this.name = "Straight";
+    }
+
+    public StraightPattern(Pattern patternToCopy) {
+        super(patternToCopy);
+        this.name = "Straight";
     }
 
     public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth, boolean center) {

@@ -3,8 +3,7 @@ package domain.room.surface;
 import domain.room.Cover;
 import domain.room.Tile;
 import domain.room.TileType;
-import domain.room.pattern.Pattern;
-import domain.room.pattern.StraightPattern;
+import domain.room.pattern.*;
 import gui.MainWindow;
 import util.UnitConverter;
 
@@ -63,44 +62,74 @@ public class Surface implements Serializable {
         if(surfaceToCopy.position != null) {
             this.position = new Point2D.Double(surfaceToCopy.position.x, surfaceToCopy.position.y);
         }
+
         if(surfaceToCopy.color != null) {
             this.color = new Color(surfaceToCopy.color.getRGB());
         }
+
         this.selectionStatus = new Boolean(surfaceToCopy.selectionStatus);
+
         if(surfaceToCopy.tileType != null) {
             this.tileType = new TileType(surfaceToCopy.tileType);
         }
+
         if(surfaceToCopy.cover != null) {
             this.cover = new Cover(surfaceToCopy.cover);
         }
 
         // TODO make pattern class constructor accessible
         if(surfaceToCopy.pattern != null) {
-            this.pattern = surfaceToCopy.pattern;
+            if(surfaceToCopy.pattern.name == "Brick") {
+                this.pattern = new BrickPattern(surfaceToCopy.pattern);
+            }
+            else if(surfaceToCopy.pattern.name == "Chevron") {
+                this.pattern = new ChevronPattern(surfaceToCopy.pattern);
+            }
+            else if(surfaceToCopy.pattern.name == "Incline") {
+                this.pattern = new InclinePattern(surfaceToCopy.pattern);
+            }
+            else if(surfaceToCopy.pattern.name == "Square") {
+                this.pattern = new SquarePattern(surfaceToCopy.pattern);
+            }
+            else if(surfaceToCopy.pattern.name == "Straight") {
+                this.pattern = new StraightPattern(surfaceToCopy.pattern);
+            }
+            else if(surfaceToCopy.pattern.name == "VerticalBrick") {
+                this.pattern = new VerticalBrickPattern(surfaceToCopy.pattern);
+            }
+            else if(surfaceToCopy.pattern.name == "Vertical") {
+                this.pattern = new VerticalPattern(surfaceToCopy.pattern);
+            }
+
         }
 
         this.isCovered = new Boolean(surfaceToCopy.isCovered);
+
         this.mergedStatus = new Boolean(surfaceToCopy.mergedStatus);
+
         this.haveHole = new Boolean(surfaceToCopy.haveHole);
 
         if(surfaceToCopy.polygon != null) {
             this.polygon = new Polygon(surfaceToCopy.polygon.xpoints, surfaceToCopy.polygon.ypoints, surfaceToCopy.polygon.npoints);
         }
 
-        // TODO make MeasurementUnitMode constructor
-        this.measurementMode = surfaceToCopy.measurementMode;
+//        Comment out because measurementMode is never used
+//        this.measurementMode = surfaceToCopy.measurementMode;
 
         if(surfaceToCopy.area != null) {
             this.area = new Path2D.Double(surfaceToCopy.area);
         }
+
         this.width = new Double(surfaceToCopy.width);
+
         this.height = new Double(surfaceToCopy.height);
 
-        // TODO make ElementarySurface class constructor accessible
+//        Comment out wholeSurfaces and holes because ElementarySurface is never used
         this.wholeSurfaces = surfaceToCopy.wholeSurfaces;
         this.holes = surfaceToCopy.holes;
 
         this.isHole = new Boolean(surfaceToCopy.isHole);
+
         this.center = new Boolean(surfaceToCopy.center);
 
         if(surfaceToCopy.xPoints != null) {
@@ -133,6 +162,7 @@ public class Surface implements Serializable {
         }
 
         this.groutWidth = new Double(surfaceToCopy.groutWidth);
+
         this.mismatch = new Double(surfaceToCopy.mismatch);
     }
 
@@ -400,8 +430,10 @@ public class Surface implements Serializable {
                 holeSurface.translate(deltaX, deltaY);
             }
 
-            for (Tile tile : getPattern().getVirtualTileList()) {
-                tile.transform(at);
+            if(getPattern().getVirtualTileList() != null) {
+                for (Tile tile : getPattern().getVirtualTileList()) {
+                    tile.transform(at);
+                }
             }
             this.area.transform(at);
             this.position.setLocation(this.position.getX() + deltaX, this.position.getY() + deltaY);
@@ -737,9 +769,11 @@ public class Surface implements Serializable {
 
     public int getNumberOfTiles() {
         int sum = 0;
-        for (Tile tile : this.getPattern().getVirtualTileList()) {
-            if (!tile.isEmpty()) {
-                sum++;
+        if (this.getPattern().getVirtualTileList() != null) {
+            for (Tile tile : this.getPattern().getVirtualTileList()) {
+                if (!tile.isEmpty()) {
+                    sum++;
+                }
             }
         }
         return sum;

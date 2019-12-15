@@ -15,6 +15,12 @@ public class InclinePattern extends Pattern {
 
     public InclinePattern() {
         super();
+        this.name = "Incline";
+    }
+
+    public InclinePattern(Pattern patternToCopy) {
+        super(patternToCopy);
+        this.name = "Incline";
     }
 
     public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth, boolean center) {
