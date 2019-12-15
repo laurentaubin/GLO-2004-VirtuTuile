@@ -20,6 +20,8 @@ public class SquarePattern extends Pattern{
 
         double tileWidth = tileType.getWidth();
         double tileHeight = tileType.getHeight();
+        double decalageCenterX = 0;
+        double decalageCenterY = 0;
 
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
         Point2D.Double position = new Point2D.Double(boundingRectanglePosition.getX(), boundingRectangle.getY());
@@ -27,21 +29,35 @@ public class SquarePattern extends Pattern{
         double xOffset = this.getxOffset();
         double yOffset = this.getyOffset();
 
+        double x = tileWidth + groutWidth;
+        double moduloWidth = boundingRectangle.getWidth() % x;
+
+        double y = tileWidth + groutWidth;
+        double moduloHeight = boundingRectangle.getHeight() % y;
+
+        if(center){
+            this.initOffset();
+            decalageCenterX = (tileWidth - moduloWidth) / 2.0d;
+            decalageCenterY = (tileWidth - moduloHeight) / 2.0d;
+        }
+
+
         if (xOffset <= 0) {
-            position.x = position.x + xOffset;
+            position.x = position.x + xOffset - decalageCenterX;
         }
 
         else {
-            position.x = position.x - tileWidth + (xOffset%2*tileWidth);
+            position.x = position.x - tileWidth + (xOffset%2*tileWidth) - decalageCenterX;
         }
 
         if (yOffset <= 0) {
-            position.y = position.y + yOffset;
+            position.y = position.y + yOffset - decalageCenterY;
         }
         else {
-            position.y = position.y - tileHeight + (yOffset%2*tileHeight);
+            position.y = position.y - tileHeight + (yOffset%2*tileHeight) - decalageCenterY;
 
         }
+
         Point2D.Double initPosition = new Point2D.Double(position.getX(), position.getY());
 
 
@@ -68,6 +84,7 @@ public class SquarePattern extends Pattern{
                 if ((column % 2 != 0 && row % 2 != 0) || (column % 2 == 0 && row % 2 == 0)) {
 
                     for(int i = 0; i < 2; i++) {
+
                         xPoints[0] = (int) (position.getX());
                         yPoints[0] = (int) (position.getY());
 
@@ -104,17 +121,15 @@ public class SquarePattern extends Pattern{
 
                         virtualTileList.add(new Tile(position, xPoints, yPoints, 4));
                         position.setLocation(position.getX(), position.getY() + tileType.getHeight());
+
                     }
-
                     position.setLocation(position.getX() + tileType.getWidth() + groutWidth, position.getY() - (2*tileType.getHeight()));
-
                 }
 
             }
-            position.setLocation(boundingRectanglePosition.getX(), position.getY() + tileType.getWidth() + (groutWidth));
+            position.setLocation(boundingRectangle.getX() + getxOffset() - decalageCenterX, position.getY() + tileType.getWidth() + (groutWidth));
+            initPosition.setLocation(position.getX(), position.getY());
 
-
-            position.setLocation(position.getX(), position.getY());
         }
         deleteOutsideTile(area);
         return virtualTileList;
