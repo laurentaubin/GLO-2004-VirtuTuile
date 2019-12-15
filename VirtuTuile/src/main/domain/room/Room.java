@@ -54,6 +54,18 @@ public class Room implements Serializable{
         }
     }
 
+    public void desactivateInspectorMode(){
+        for (Surface surface : surfaceList){
+            surface.getTileType().setEtatInspector(false);
+        }
+    }
+
+    public void activateInspectorMode(){
+        for (Surface surface : surfaceList){
+            surface.getTileType().setEtatInspector(true);
+        }
+    }
+
     public void addSurfaceToList(Surface surface) {
         this.surfaceList.add(surface);
     }

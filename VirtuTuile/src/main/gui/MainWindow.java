@@ -690,6 +690,16 @@ public class MainWindow extends JFrame {
         this.controller.saveSelected();
     }
 
+    public void desactivateInspectorMode(){
+        this.controller.desactivateInspectorMode();
+        drawingPanel.repaint();
+    }
+    public void activateInspectorMode(){
+        this.controller.activateInspectorMode();
+        drawingPanel.repaint();
+    }
+
+
     public void saveAsMenuItemActionPerformed(){
         this.controller.saveAsSelected();
     }

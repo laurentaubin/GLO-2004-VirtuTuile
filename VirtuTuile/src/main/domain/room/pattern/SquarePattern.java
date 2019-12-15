@@ -20,6 +20,7 @@ public class SquarePattern extends Pattern{
 
         double tileWidth = tileType.getWidth();
         double tileHeight = tileType.getHeight();
+
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
         Point2D.Double position = new Point2D.Double(boundingRectanglePosition.getX(), boundingRectangle.getY());
 
@@ -48,22 +49,24 @@ public class SquarePattern extends Pattern{
         double boundingRectangleHeight = (int)boundingRectangle.getHeight() + Math.abs(yOffset);
 
 
-        double numberColumn = boundingRectangleWidth / (tileType.getHeight() + groutWidth);
+        double numberColumn = boundingRectangleWidth / (tileType.getWidth() + groutWidth);
 
-        numberColumn = (int)(numberColumn + 2);
+        numberColumn = (int)(numberColumn+2);
 
 
         double numberRow = boundingRectangleHeight / (tileType.getWidth() + groutWidth);
 
-        numberRow = (int)(numberRow + 2);
+        numberRow = (int)(numberRow+2);
 
 
 
         for (int row = 1; row <= numberRow; row++) {
             for (int column = 1; column <= numberColumn; column++) {
+
                 int[] xPoints = new int[4];
                 int[] yPoints = new int[4];
                 if ((column % 2 != 0 && row % 2 != 0) || (column % 2 == 0 && row % 2 == 0)) {
+
                     for(int i = 0; i < 2; i++) {
                         xPoints[0] = (int) (position.getX());
                         yPoints[0] = (int) (position.getY());
@@ -107,19 +110,11 @@ public class SquarePattern extends Pattern{
 
                 }
 
-
-
-                if(position.getX() > boundingRectanglePosition.getX() + boundingRectangleWidth) {
-                    break;
-                }
             }
             position.setLocation(boundingRectanglePosition.getX(), position.getY() + tileType.getWidth() + (groutWidth));
 
-            if(position.getY() > boundingRectangleWidth){
-                break;
-            }
 
-            position.setLocation(initPosition.getX(), position.getY());
+            position.setLocation(position.getX(), position.getY());
         }
         deleteOutsideTile(area);
         return virtualTileList;

@@ -12,6 +12,8 @@ public class TileType extends Polygon{
 
     private double xOffset;
     private double yOffset;
+    private boolean etatInspector;
+
 
     public TileType(Color color, float width, float height, String name, int nbrTilesPerBox) {
         this.color = color;
@@ -32,6 +34,7 @@ public class TileType extends Polygon{
         this.nbrTilesPerBox = new Integer(tileTypeToCopy.nbrTilesPerBox);
         this.xOffset = new Double(tileTypeToCopy.xOffset);
         this.yOffset = new Double(tileTypeToCopy.yOffset);
+
     }
 
     public static TileType createTileWithDefaultParameters() {
@@ -101,6 +104,13 @@ public class TileType extends Polygon{
     @Override
     public String toString() {
         return getName();
+    }
+
+    public void setEtatInspector(boolean etat){
+        this.etatInspector = etat;
+    }
+    public boolean getEtatInspector(){
+        return this.etatInspector;
     }
 }
 

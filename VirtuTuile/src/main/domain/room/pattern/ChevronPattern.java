@@ -55,11 +55,17 @@ public class ChevronPattern extends Pattern {
             nbHeight = (int)(nbHeight + 5);
         }
 
+        double nbWidth = boundingRectangleWidth / (tileType.getWidth() + groutWidth);
+        if (nbWidth / (int)nbWidth != 0) {
+            nbWidth = (int)(nbWidth + 5);
+        }
+
+
         int count = 0;
 
         boolean isInside;
 
-        for (int i = 1; i <= (nbHeight*2); i++){
+        for (int i = 1; i <= (nbHeight*nbWidth); i++){
             int[] xPoints = new int[4];
             int[] yPoints = new int[4];
 

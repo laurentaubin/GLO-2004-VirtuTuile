@@ -156,6 +156,14 @@ public class RoomController implements Serializable{
     }
 
 
+    public void desactivateInspectorMode(){
+        room.desactivateInspectorMode();
+    }
+    public void activateInspectorMode(){
+        room.activateInspectorMode();
+    }
+
+
     public void saveAsSelected(){
         String path = Paths.get("").toAbsolutePath().toString();
         JFileChooser chooser = new JFileChooser(path);

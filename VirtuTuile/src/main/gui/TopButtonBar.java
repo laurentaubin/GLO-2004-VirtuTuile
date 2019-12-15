@@ -25,6 +25,8 @@ public class TopButtonBar extends JPanel{
     private JButton undoButton;
     private JButton redoButton;
     private JButton saveButton;
+    private JButton inspectorButton;
+    private JLabel inspector;
     private ImageIcon selectIcon;
     private Color initColor;
     private Border oldBorder;
@@ -153,13 +155,32 @@ public class TopButtonBar extends JPanel{
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                saveActionPerformed(actionEvent);
+                saveActionPerformed();
+            }
+        });
+
+        inspectorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                inspectorButtonActionPerformed();
+
             }
         });
 
     }
 
-    public void saveActionPerformed(ActionEvent actionEvent) {
+    public void saveActionPerformed() {
         mainWindow.saveMenuItemActionPerformed();
+    }
+
+    public void inspectorButtonActionPerformed(){
+        if(inspectorButton.getText() == "Désactiver"){
+            inspectorButton.setText("Activer");
+            mainWindow.desactivateInspectorMode();
+        }
+        else{
+            inspectorButton.setText("Désactiver");
+            mainWindow.activateInspectorMode();
+        }
     }
 }

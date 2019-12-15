@@ -2,6 +2,7 @@ package domain.drawing;
 
 import domain.room.RoomController;
 import domain.room.Tile;
+import domain.room.TileType;
 import domain.room.surface.Surface;
 
 import gui.MainWindow;
@@ -126,7 +127,7 @@ public class SurfaceDrawer {
                 ArrayList<Tile> array = current_surface.getPattern().getVirtualTileList();
                 for (Tile tile : array) {
                     tile.transform(at);
-                    if (tile.isTooSmall()) {
+                    if (tile.isTooSmall() && current_surface.getTileType().getEtatInspector()) {
                         g2d.setColor(tile.getInspecColor());
                     }
                     else {
