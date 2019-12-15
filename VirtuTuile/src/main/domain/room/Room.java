@@ -1155,12 +1155,28 @@ public void setSelectedSurfacesHeightDistance(double heightDifference) {
         return 0;
     }
 
-    public double getSelectedSurfaceNbBox() {
+    public int getSelectedSurfaceNbBox() {
         for (Surface surface : this.surfaceList) {
             if (surface.isSelected()) {
-                return surface.getNumberOfBoxes();
+                return (int) Math.ceil(surface.getNumberOfBoxes());
             }
         }
         return 0;
+    }
+
+    public int getAllSurfaceNbTile() {
+        int sum = 0;
+        for (Surface surface : this.surfaceList) {
+            sum += surface.getNumberOfTiles();
+        }
+        return sum;
+    }
+
+    public int getAllSurfaceNbBox() {
+        double sum = 0;
+        for (Surface surface : this.surfaceList) {
+            sum += surface.getNumberOfBoxes();
+        }
+        return (int) Math.ceil(sum);
     }
 }

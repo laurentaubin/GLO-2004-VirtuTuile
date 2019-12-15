@@ -402,7 +402,12 @@ public class MainWindow extends JFrame {
     }
 
     private void rightPanelTabChanged(ChangeEvent actionEvent) {
-        rightPanel.updateSurfaceInformation(this.controller.getSelectedSurfaceNbTile(), this.controller.getSelectedSurfaceNbBox());
+        if (this.controller.getNumberOfSelectedSurfaces() == 1) {
+            rightPanel.updateSurfaceInformation(this.controller.getSelectedSurfaceNbTile(), this.controller.getSelectedSurfaceNbBox());
+        }
+        else {
+            rightPanel.updateSurfaceInformation(this.controller.getAllSurfaceNbTile(), this.controller.getAllSurfaceNbBox());
+        }
     }
 
     public void selectButtonActionPerformed(ActionEvent actionEvent){
@@ -476,6 +481,7 @@ public class MainWindow extends JFrame {
 
             rightPanel.updateSurfaceTabDimensions(this.controller.getSelectedSurfaceDimensions());
             rightPanel.updateSurfaceInformation(this.controller.getSelectedSurfaceNbTile(), this.controller.getSelectedSurfaceNbBox());
+            rightPanel.showSurfaceInformation();
             rightPanel.updateSurfaceTabColor(this.controller.getSelectedSurfaceColor());
             rightPanel.updateIfSelectedSurfaceIsAHole(this.controller.getIfSelectedSurfaceIsAHole(), this.controller.getNumberOfSelectedSurfaces());
             rightPanel.updatePatternTab(this.controller.getSelectedSurfaceGroutWidth(), this.controller.getNumberOfSelectedSurfaces());
@@ -500,8 +506,10 @@ public class MainWindow extends JFrame {
             drawingPanel.repaint();
         }
 
-
-
+        if (this.controller.getNumberOfSelectedSurfaces() != 1) {
+            rightPanel.updateSurfaceInformation(this.controller.getAllSurfaceNbTile(), this.controller.getAllSurfaceNbBox());
+            rightPanel.showProjectInformation();;
+        }
 
         drawingPanel.repaint();
     }
@@ -511,7 +519,7 @@ public class MainWindow extends JFrame {
             rightPanel.showSurfaceInformation();
         }
         else {
-            rightPanel.hideSurfaceInformation();
+            rightPanel.showProjectInformation();
         }
     }
 

@@ -45,6 +45,7 @@ public class SurfaceTab extends JPanel{
     private JLabel distanceLabel;
     private JFormattedTextField widthDistanceField;
     private JFormattedTextField heightDistanceField;
+    private JLabel informationTabTitleLabel;
     private JButton centrerHButton;
     private Color surfaceColor;
 
@@ -55,7 +56,6 @@ public class SurfaceTab extends JPanel{
         heightField.setValue(0d);
         surfaceTitle.setFont(new Font("Helvetica Neue", Font.BOLD, 13));
         holeCheckBox.setFocusPainted(true);
-        informationPanel.hide();
 
         Dimension tabButtonDimesion = new Dimension(20,20);
 
@@ -316,13 +316,41 @@ public class SurfaceTab extends JPanel{
     }
 
     public void setEnteredWidthSurfacesDistance() {
-        double enteredWidthDifference = UnitConverter.convertSelectedUnitToPixel((double)widthDistanceField.getValue(), mainWindow.getCurrentMeasurementMode());
-        this.mainWindow.setSelectedSurfacesWidthDistance(enteredWidthDifference);
+        double enteredWidth;
+        if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.IMPERIAL) {
+            String value = widthDistanceField.getText();
+            try {
+                double inchTotal = UnitConverter.stringToInch(getImperialArray(value));
+                enteredWidth = UnitConverter.convertSelectedUnitToPixel(inchTotal, mainWindow.getCurrentMeasurementMode());
+                this.mainWindow.setSelectedSurfacesWidthDistance(enteredWidth);
+            }
+            catch (StringIndexOutOfBoundsException e) {
+                System.out.println("Format invalide");
+            }
+        }
+        else if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.METRIC) {
+            enteredWidth = UnitConverter.convertSelectedUnitToPixel(Double.parseDouble(widthDistanceField.getText()), mainWindow.getCurrentMeasurementMode());
+            this.mainWindow.setSelectedSurfacesWidthDistance(enteredWidth);
+        }
     }
 
     public void setEnteredHeightSurfacesDistance() {
-        double enteredHeightDifference = UnitConverter.convertSelectedUnitToPixel((double)heightDistanceField.getValue(), mainWindow.getCurrentMeasurementMode());
-        this.mainWindow.setSelectedSurfacesHeightDistance(enteredHeightDifference);
+        double enteredHeight;
+        if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.IMPERIAL) {
+            String value = heightDistanceField.getText();
+            try {
+                double inchTotal = UnitConverter.stringToInch(getImperialArray(value));
+                enteredHeight = UnitConverter.convertSelectedUnitToPixel(inchTotal, mainWindow.getCurrentMeasurementMode());
+                this.mainWindow.setSelectedSurfacesHeightDistance(enteredHeight);
+            }
+            catch (StringIndexOutOfBoundsException e) {
+                System.out.println("Format invalide");
+            }
+        }
+        else if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.METRIC) {
+            enteredHeight = UnitConverter.convertSelectedUnitToPixel(Double.parseDouble(heightDistanceField.getText()), mainWindow.getCurrentMeasurementMode());
+            this.mainWindow.setSelectedSurfacesHeightDistance(enteredHeight);
+        }
     }
 
     public void combineSelectedSurface() {
@@ -371,8 +399,25 @@ public class SurfaceTab extends JPanel{
         MainWindow.MeasurementUnitMode current = mainWindow.getCurrentMeasurementMode();
         double width = UnitConverter.convertPixelToSelectedUnit(dimension.width, current);
         double height = UnitConverter.convertPixelToSelectedUnit(dimension.height, current);
-        this.widthDistanceField.setValue(width);
-        this.heightDistanceField.setValue(height);
+
+        if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.IMPERIAL) {
+            String widthImperial = getImperialFormat(width);
+            this.widthDistanceField.setText(widthImperial);
+            String heightImperial = getImperialFormat(height);
+            this.heightDistanceField.setText(heightImperial);
+        }
+
+        else if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.METRIC) {
+            BigDecimal bdWidth = BigDecimal.valueOf(width);
+            bdWidth = bdWidth.setScale(2, RoundingMode.HALF_UP);
+            String widthString = Double.toString(bdWidth.doubleValue());
+            this.widthDistanceField.setText(widthString + "m");
+
+            BigDecimal bdHeight = BigDecimal.valueOf(height);
+            bdHeight = bdHeight.setScale(2, RoundingMode.HALF_UP);
+            String heightString = Double.toString(bdHeight.doubleValue());
+            this.heightDistanceField.setText(heightString + "m");
+        }
     }
 
 
@@ -433,25 +478,27 @@ public class SurfaceTab extends JPanel{
     }
 
     public void updateNbTileLabel(int nbTile) {
-        String label = nbTile + " tuiles";
+        String label = nbTile + " tuile";
+        if (nbTile > 1) { label += "s"; }
         nbTileLabel.setText(label);
     }
 
-    public void updateNbBoxLabel(double nbBox) {
-        String label = nbBox + " boîtes ";
+    public void updateNbBoxLabel(int nbBox) {
+        String label = nbBox + " boîte";
+        if (nbBox > 1) { label += "s"; }
         nbBoxLabel.setText(label);
     }
 
-    public void updateSurfaceInformation(int nbTile, double nbBox) {
+    public void updateSurfaceInformation(int nbTile, int nbBox) {
         updateNbTileLabel(nbTile);
         updateNbBoxLabel(nbBox);
     }
 
     public void showSurfaceInformation() {
-        this.informationPanel.show();
+        this.informationTabTitleLabel.setText("Information sur la surface");
     }
 
-    public void hideSurfaceInformation() {
-        this.informationPanel.hide();
+    public void showProjetInformation() {
+        this.informationTabTitleLabel.setText("Information sur le projet");
     }
 }
