@@ -5,6 +5,8 @@ import domain.room.TileType;
 import util.UnitConverter;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -28,6 +30,29 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
+    public void updateTileWidth(TileType selectedTileType, float tileWidth) {
+        controller.updateTileWidth(selectedTileType, tileWidth);
+        drawingPanel.repaint();
+    }
+
+    public void updateTileHeight(TileType tileType, float height) {
+        controller.updateTileHeight(tileType, height);
+        drawingPanel.repaint();
+    }
+
+    public void updateTileColor(TileType tileType, Color color) {
+        controller.updateTileColor(tileType, color);
+        drawingPanel.repaint();
+    }
+
+    public void updateTileName(TileType tileType, String name) {
+        controller.updateTileName(tileType, name);
+    }
+
+    public void updateNumberPerBox(TileType tileType, int numberPerBox) {
+        controller.updateNumberPerBox(tileType, numberPerBox);
+    }
+
 
     public enum ApplicationMode {
         SELECT, ADD_RECTANGULAR, ADD_IRREGULAR, MOVE_PATTERN
@@ -38,6 +63,7 @@ public class MainWindow extends JFrame {
     }
 
     private boolean mouseWasDragged;
+    private int numberOfSelectedSurfaces;
 
 
     public MainWindow() throws IOException {
@@ -124,6 +150,12 @@ public class MainWindow extends JFrame {
         selectButton.setSelected(true);
 
         this.setApplicationMode(ApplicationMode.SELECT);
+
+        rightPanel.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent actionEvent) {
+                rightPanelTabChanged(actionEvent);
+            }
+        });
 
         selectButton.addActionListener(new ActionListener() {
             @Override
@@ -369,6 +401,10 @@ public class MainWindow extends JFrame {
         pack();
     }
 
+    private void rightPanelTabChanged(ChangeEvent actionEvent) {
+        rightPanel.updateSurfaceInformation(this.controller.getSelectedSurfaceNbTile(), this.controller.getSelectedSurfaceNbBox());
+    }
+
     public void selectButtonActionPerformed(ActionEvent actionEvent){
         this.setApplicationMode(ApplicationMode.SELECT);
     }
@@ -439,6 +475,7 @@ public class MainWindow extends JFrame {
             this.controller.switchSelectionStatus(xPos, yPos, mouseEvent.isShiftDown());
 
             rightPanel.updateSurfaceTabDimensions(this.controller.getSelectedSurfaceDimensions());
+            rightPanel.updateSurfaceInformation(this.controller.getSelectedSurfaceNbTile(), this.controller.getSelectedSurfaceNbBox());
             rightPanel.updateSurfaceTabColor(this.controller.getSelectedSurfaceColor());
             rightPanel.updateIfSelectedSurfaceIsAHole(this.controller.getIfSelectedSurfaceIsAHole(), this.controller.getNumberOfSelectedSurfaces());
             rightPanel.updatePatternTab(this.controller.getSelectedSurfaceGroutWidth(), this.controller.getNumberOfSelectedSurfaces());
@@ -448,6 +485,8 @@ public class MainWindow extends JFrame {
                                         controller.getCurrentNameTile(),
                                         controller.getSelectedSurfaceColor(),
                                         controller.getCurrentTilePerBox());
+            changeInformationPanelState();
+            rightPanel.updateSurfaceTabDistances(this.controller.getSelectedSurfacesDistances());
         }
 
         if (this.currentApplicationMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
@@ -465,6 +504,15 @@ public class MainWindow extends JFrame {
 
 
         drawingPanel.repaint();
+    }
+
+    private void changeInformationPanelState() {
+        if (this.controller.getNumberOfSelectedSurfaces() == 1) {
+            rightPanel.showSurfaceInformation();
+        }
+        else {
+            rightPanel.hideSurfaceInformation();
+        }
     }
 
     public void drawingPanelMouseReleased(MouseEvent mouseEvent){
@@ -751,6 +799,16 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
+    public void setSelectedSurfacesWidthDistance(double enteredWidth) {
+        controller.setSelectedSurfacesWidthDistance(enteredWidth);
+        drawingPanel.repaint();
+    }
+
+    public void setSelectedSurfacesHeightDistance(double enteredHeight) {
+        controller.setSelectedSurfacesHeightDistance(enteredHeight);
+        drawingPanel.repaint();
+    }
+
     public void combineSelectedSurfaces() {
         if(controller.getNumberOfSurfaces() < 2){
             String[] options = {"Ok"};
@@ -767,6 +825,7 @@ public class MainWindow extends JFrame {
                     "Attention!",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
         }
+        rightPanel.updateSurfaceTabDistances(controller.getSelectedSurfacesDistances());
         drawingPanel.repaint();
     }
 
@@ -867,41 +926,49 @@ public class MainWindow extends JFrame {
 
     public void horizontallyAlignSelectedSurfaces() {
         controller.horizontallyAlignSelectedSurfaces();
+        rightPanel.updateSurfaceTabDistances(controller.getSelectedSurfacesDistances());
         drawingPanel.repaint();
     }
 
     public void verticallyAlignSelectedSurfaces() {
         controller.verticallyAlignSelectedSurfaces();
+        rightPanel.updateSurfaceTabDistances(controller.getSelectedSurfacesDistances());
         drawingPanel.repaint();
     }
 
     public void horizontallyCenterSelectedSurfaces() {
         controller.horizontallyCenterSelectedSurfaces();
+        rightPanel.updateSurfaceTabDistances(controller.getSelectedSurfacesDistances());
         drawingPanel.repaint();
     }
 
     public void verticallyCenterSelectedSurfaces() {
         controller.verticallyCenterSelectedSurfaces();
+        rightPanel.updateSurfaceTabDistances(controller.getSelectedSurfacesDistances());
         drawingPanel.repaint();
     }
 
     public void leftAlignSelectedSurfaces() {
         controller.leftAlignSelectedSurfaces();
+        rightPanel.updateSurfaceTabDistances(controller.getSelectedSurfacesDistances());
         drawingPanel.repaint();
     }
 
     public void rightAlignSelectedSurfaces() {
         controller.rightAlignSelectedSurfaces();
+        rightPanel.updateSurfaceTabDistances(controller.getSelectedSurfacesDistances());
         drawingPanel.repaint();
     }
 
     public void topAlignSelectedSurfaces() {
         controller.topAlignSelectedSurfaces();
+        rightPanel.updateSurfaceTabDistances(controller.getSelectedSurfacesDistances());
         drawingPanel.repaint();
     }
 
     public void bottomAlignSelectedSurfaces() {
         controller.bottomAlignSelectedSurfaces();
+        rightPanel.updateSurfaceTabDistances(controller.getSelectedSurfacesDistances());
         drawingPanel.repaint();
     }
 
@@ -924,7 +991,6 @@ public class MainWindow extends JFrame {
         controller.centerTiles();
         drawingPanel.repaint();
     }
-
 
     private ButtonGroup buttonGroup;
 

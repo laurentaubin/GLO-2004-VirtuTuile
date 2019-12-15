@@ -246,6 +246,8 @@ public class Surface implements Serializable {
         Area test = new Area(this.area);
         test.add(new Area(surface.getArea()));
         this.area = new Path2D.Double(test);
+        this.width = this.area.getBounds2D().getWidth();
+        this.height = this.area.getBounds2D().getHeight();
     }
 
     public Shape getShape(){
@@ -306,18 +308,6 @@ public class Surface implements Serializable {
 
     public Polygon getPolygon() {
         return this.polygon;
-    }
-
-    public double getSurfaceArea() {
-        double area = 0d;
-        for (ElementarySurface wholeSurface : this.wholeSurfaces) {
-            area += wholeSurface.getArea();
-        }
-        for (ElementarySurface hole : this.holes) {
-            area -= hole.getArea();
-        }
-
-        return area;
     }
 
     public void setMeasurementMode(MainWindow.MeasurementUnitMode mode) {
@@ -450,9 +440,7 @@ public class Surface implements Serializable {
         this.area.transform(atPosition);
 
         for (Surface elem : this.elementarySurface) {
-            double elemWidth = elem.getWidth();
-            double ratio = enteredWidth/elemWidth;
-            elem.setWidth(ratio);
+            elem.setWidth(enteredWidth);
         }
     }
 
@@ -608,6 +596,20 @@ public class Surface implements Serializable {
         return points;
     }
 
+    public void boundingRectangleSnapToPoint(Point2D closestCorner) {
+        double[] deltaArray = boundingRectangleDeltasFromPoint(closestCorner);
+        this.translatePolygon(deltaArray[0], deltaArray[1]);
+    }
+
+    private double[] boundingRectangleDeltasFromPoint(Point2D closestCorner) {
+        Point2D topLeftPoint = getTopLeftPoint();
+
+        double deltaX = closestCorner.getX() - getBoundingRectangle().getMinX();
+        double deltaY = closestCorner.getY() - getBoundingRectangle().getMinY();
+
+        return new double[]{deltaX, deltaY};
+    }
+
     public void snapToPoint(Point2D closestCorner) {
         double[] deltaArray = getDeltasFromPoint(closestCorner);
         this.translatePolygon(deltaArray[0], deltaArray[1]);
@@ -705,6 +707,7 @@ public class Surface implements Serializable {
     }
 
     public void translatePattern(double x, double y) {
+        this.pattern.setOffset(x, y);
         this.tileType.setxOffset(x);
         this.tileType.setyOffset(y);
     }
@@ -730,6 +733,20 @@ public class Surface implements Serializable {
         double sum = 0;
         for (double number : numbers) { sum += number; }
         return sum / numbers.length;
+    }
+
+    public int getNumberOfTiles() {
+        int sum = 0;
+        for (Tile tile : this.getPattern().getVirtualTileList()) {
+            if (!tile.isEmpty()) {
+                sum++;
+            }
+        }
+        return sum;
+    }
+
+    public double getNumberOfBoxes() {
+        return (double) getNumberOfTiles() / getTileType().getNbrTilesPerBox();
     }
 }
 

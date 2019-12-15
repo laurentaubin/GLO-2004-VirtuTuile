@@ -55,6 +55,8 @@ public class RightPanel extends JTabbedPane implements Serializable {
         tileTabScrollpane.setViewportView(tileTabPanel);
         this.addTab("", tileTabIcon, tileTabScrollpane, "" );
         this.setSelectedIndex(0);
+
+
     }
 
     public void updateSurfaceTabDimensions(Dimension dimension) {
@@ -77,9 +79,18 @@ public class RightPanel extends JTabbedPane implements Serializable {
         tileTabPanel.setCurrentTileInfo(width, height, name, color, nbrTilesPerBox);
     }
 
+    public void updateSurfaceInformation(int nbTile, double nbBox) {
+        surfaceTabPanel.updateSurfaceInformation(nbTile, nbBox);
+    }
+
+    public void updateSurfaceTabDistances(Dimension dimension) {
+        this.surfaceTabPanel.setSurfacesDistancesField(dimension);
+    }
+
     public MainWindow getMainWindow() {
         return this.mainWindow;
     }
+
 
     private SurfaceTab surfaceTabPanel;
     private PatternTab patternTabPanel;
@@ -88,4 +99,13 @@ public class RightPanel extends JTabbedPane implements Serializable {
     private JScrollPane patternTabScrollpane;
     private JScrollPane surfaceTabScrollpane;
     private JScrollPane tileTabScrollpane;
+
+
+    public void showSurfaceInformation() {
+        this.surfaceTabPanel.showSurfaceInformation();
+    }
+
+    public void hideSurfaceInformation() {
+        this.surfaceTabPanel.hideSurfaceInformation();
+    }
 }
