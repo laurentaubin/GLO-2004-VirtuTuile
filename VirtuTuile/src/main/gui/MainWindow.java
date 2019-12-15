@@ -493,6 +493,7 @@ public class MainWindow extends JFrame {
                                         controller.getCurrentTilePerBox());
             changeInformationPanelState();
             rightPanel.updateSurfaceTabDistances(this.controller.getSelectedSurfacesDistances());
+            rightPanel.updateCenterStatus(this.controller.getCenterStatus());
         }
 
         if (this.currentApplicationMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
@@ -1005,8 +1006,8 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
-    public void centerTiles(){
-        controller.centerTiles();
+    public void centerTiles(boolean bool){
+        controller.centerTiles(bool);
         drawingPanel.repaint();
     }
 

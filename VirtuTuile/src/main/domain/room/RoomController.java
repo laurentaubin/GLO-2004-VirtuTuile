@@ -516,8 +516,8 @@ public class RoomController implements Serializable{
         room.setMismatch(mismatch);
     }
 
-    public void centerTiles(){
-        room.centerTiles();
+    public void centerTiles(boolean bool){
+        room.centerTiles(bool);
     }
 
     public void updateSelectedSurfacesPatternPosition(double deltaX, double deltaY) {
@@ -566,6 +566,10 @@ public class RoomController implements Serializable{
 
     public int getAllSurfaceNbBox() {
         return this.room.getAllSurfaceNbBox();
+    }
+
+    public boolean getCenterStatus() {
+        return this.room.getCenterStatus();
     }
 }
 

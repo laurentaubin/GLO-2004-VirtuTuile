@@ -1097,10 +1097,10 @@ public void setSelectedSurfacesHeightDistance(double heightDifference) {
     }
 
 
-    public void centerTiles(){
+    public void centerTiles(boolean bool){
         for(Surface surface : surfaceList){
             if(surface.isSelected()){
-                surface.setCoverCenter();
+                surface.setCoverCenter(bool);
             }
 
         }
@@ -1178,5 +1178,20 @@ public void setSelectedSurfacesHeightDistance(double heightDifference) {
             sum += surface.getNumberOfBoxes();
         }
         return (int) Math.ceil(sum);
+    }
+
+    public boolean getCenterStatus() {
+        boolean centerStatus = false;
+        if (getNumberOfSelectedSurfaces() == 0 || getNumberOfSelectedSurfaces() > 1) {
+            return false;
+        }
+        else {
+            for (Surface surface : surfaceList) {
+                if (surface.isSelected()) {
+                    centerStatus = surface.getIsCenter();
+                }
+            }
+        }
+        return centerStatus;
     }
 }

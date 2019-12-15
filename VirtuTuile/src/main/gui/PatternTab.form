@@ -397,14 +397,39 @@
         </constraints>
         <properties/>
       </component>
-      <component id="ed54f" class="javax.swing.JButton" binding="centerTile">
+      <grid id="fd745" layout-manager="GridBagLayout">
         <constraints>
-          <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties>
-          <text value="Centrer les tuiles"/>
-        </properties>
-      </component>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="2cdbe" class="javax.swing.JButton" binding="startFullTileButton">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag top="5" left="0" bottom="5" right="0" weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Début avec tuile pleine"/>
+            </properties>
+          </component>
+          <hspacer id="a414">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+          </hspacer>
+          <component id="3d6aa" class="javax.swing.JToggleButton" binding="centerToggleButton">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag top="0" left="0" bottom="10" right="0" weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Centrer les tuiles"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
     </children>
   </grid>
 </form>

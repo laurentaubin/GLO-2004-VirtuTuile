@@ -87,6 +87,10 @@ public class RightPanel extends JTabbedPane implements Serializable {
         this.surfaceTabPanel.setSurfacesDistancesField(dimension);
     }
 
+    public void updateCenterStatus(boolean bool) {
+        this.patternTabPanel.setCenterTileButtonState(bool);
+    }
+
     public MainWindow getMainWindow() {
         return this.mainWindow;
     }

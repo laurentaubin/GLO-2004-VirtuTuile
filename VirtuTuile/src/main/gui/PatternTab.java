@@ -41,6 +41,8 @@ public class PatternTab extends JPanel{
     private JPanel chevronPattern;
     private JToggleButton chevronButton;
     private JButton centerTile;
+    private JToggleButton centerToggleButton;
+    private JButton startFullTileButton;
     private Color selectedColor;
 
 
@@ -201,12 +203,20 @@ public class PatternTab extends JPanel{
             }
         });
 
-        centerTile.addActionListener((new ActionListener() {
+        centerToggleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 centerTiles();
             }
-        }));
+        });
+
+        startFullTileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                startPatternWithFullTile();
+
+            }
+        });
     }
 
     private void setButtonColor(Color color) {
@@ -269,6 +279,24 @@ public class PatternTab extends JPanel{
     }
 
     public void centerTiles(){
-        mainWindow.centerTiles();
+        if (centerToggleButton.isSelected()) {
+            mainWindow.centerTiles(true);
+        }
+        else {
+            mainWindow.centerTiles(false);
+        }
+    }
+
+    public void setCenterTileButtonState(boolean bool) {
+        if (bool) {
+            centerToggleButton.setSelected(true);
+        }
+        else {
+            centerToggleButton.setSelected(false);
+        }
+    }
+
+    public void startPatternWithFullTile() {
+
     }
 }
