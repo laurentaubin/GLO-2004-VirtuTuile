@@ -308,18 +308,6 @@ public class Surface implements Serializable {
         return this.polygon;
     }
 
-    public double getSurfaceArea() {
-        double area = 0d;
-        for (ElementarySurface wholeSurface : this.wholeSurfaces) {
-            area += wholeSurface.getArea();
-        }
-        for (ElementarySurface hole : this.holes) {
-            area -= hole.getArea();
-        }
-
-        return area;
-    }
-
     public void setMeasurementMode(MainWindow.MeasurementUnitMode mode) {
         // C'est batard en maudit mais c'est pour éviter un bug quand on crée un surface et qu'on switch
         // Live le bug est dans on switch à la même unité (on crée une surface en mode métrique pis on reselectionne
@@ -730,6 +718,20 @@ public class Surface implements Serializable {
         double sum = 0;
         for (double number : numbers) { sum += number; }
         return sum / numbers.length;
+    }
+
+    public int getNumberOfTiles() {
+        int sum = 0;
+        for (Tile tile : this.getPattern().getVirtualTileList()) {
+            if (!tile.isEmpty()) {
+                sum++;
+            }
+        }
+        return sum;
+    }
+
+    public double getNumberOfBoxes() {
+        return (double) getNumberOfTiles() / getTileType().getNbrTilesPerBox();
     }
 }
 

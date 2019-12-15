@@ -5,6 +5,8 @@ import domain.room.TileType;
 import util.UnitConverter;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -61,6 +63,7 @@ public class MainWindow extends JFrame {
     }
 
     private boolean mouseWasDragged;
+    private int numberOfSelectedSurfaces;
 
 
     public MainWindow() throws IOException {
@@ -147,6 +150,12 @@ public class MainWindow extends JFrame {
         selectButton.setSelected(true);
 
         this.setApplicationMode(ApplicationMode.SELECT);
+
+        rightPanel.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent actionEvent) {
+                rightPanelTabChanged(actionEvent);
+            }
+        });
 
         selectButton.addActionListener(new ActionListener() {
             @Override
@@ -392,6 +401,10 @@ public class MainWindow extends JFrame {
         pack();
     }
 
+    private void rightPanelTabChanged(ChangeEvent actionEvent) {
+        rightPanel.updateSurfaceInformation(this.controller.getSelectedSurfaceNbTile(), this.controller.getSelectedSurfaceNbBox());
+    }
+
     public void selectButtonActionPerformed(ActionEvent actionEvent){
         this.setApplicationMode(ApplicationMode.SELECT);
     }
@@ -462,6 +475,7 @@ public class MainWindow extends JFrame {
             this.controller.switchSelectionStatus(xPos, yPos, mouseEvent.isShiftDown());
 
             rightPanel.updateSurfaceTabDimensions(this.controller.getSelectedSurfaceDimensions());
+            rightPanel.updateSurfaceInformation(this.controller.getSelectedSurfaceNbTile(), this.controller.getSelectedSurfaceNbBox());
             rightPanel.updateSurfaceTabColor(this.controller.getSelectedSurfaceColor());
             rightPanel.updateIfSelectedSurfaceIsAHole(this.controller.getIfSelectedSurfaceIsAHole(), this.controller.getNumberOfSelectedSurfaces());
             rightPanel.updatePatternTab(this.controller.getSelectedSurfaceGroutWidth(), this.controller.getNumberOfSelectedSurfaces());
@@ -471,6 +485,7 @@ public class MainWindow extends JFrame {
                                         controller.getCurrentNameTile(),
                                         controller.getSelectedSurfaceColor(),
                                         controller.getCurrentTilePerBox());
+            changeInformationPanelState();
         }
 
         if (this.currentApplicationMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
@@ -488,6 +503,15 @@ public class MainWindow extends JFrame {
 
 
         drawingPanel.repaint();
+    }
+
+    private void changeInformationPanelState() {
+        if (this.controller.getNumberOfSelectedSurfaces() == 1) {
+            rightPanel.showSurfaceInformation();
+        }
+        else {
+            rightPanel.hideSurfaceInformation();
+        }
     }
 
     public void drawingPanelMouseReleased(MouseEvent mouseEvent){
@@ -946,7 +970,6 @@ public class MainWindow extends JFrame {
         controller.centerTiles();
         drawingPanel.repaint();
     }
-
 
     private ButtonGroup buttonGroup;
 

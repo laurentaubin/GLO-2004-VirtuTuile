@@ -37,6 +37,9 @@ public class SurfaceTab extends JPanel{
     private JButton rightButton;
     private JButton verticallyCenterButton;
     private JButton horizontallyCenterButton;
+    private JLabel nbTileLabel;
+    private JLabel nbBoxLabel;
+    private JPanel informationPanel;
     private JButton centrerHButton;
     private Color surfaceColor;
 
@@ -47,6 +50,7 @@ public class SurfaceTab extends JPanel{
         heightField.setValue(0d);
         surfaceTitle.setFont(new Font("Helvetica Neue", Font.BOLD, 13));
         holeCheckBox.setFocusPainted(true);
+        informationPanel.hide();
 
         Dimension tabButtonDimesion = new Dimension(20,20);
 
@@ -389,5 +393,28 @@ public class SurfaceTab extends JPanel{
             System.out.println("Format invalide");
         }
         return stringArray;
+    }
+
+    public void updateNbTileLabel(int nbTile) {
+        String label = nbTile + " tuiles";
+        nbTileLabel.setText(label);
+    }
+
+    public void updateNbBoxLabel(double nbBox) {
+        String label = nbBox + " boîtes ";
+        nbBoxLabel.setText(label);
+    }
+
+    public void updateSurfaceInformation(int nbTile, double nbBox) {
+        updateNbTileLabel(nbTile);
+        updateNbBoxLabel(nbBox);
+    }
+
+    public void showSurfaceInformation() {
+        this.informationPanel.show();
+    }
+
+    public void hideSurfaceInformation() {
+        this.informationPanel.hide();
     }
 }

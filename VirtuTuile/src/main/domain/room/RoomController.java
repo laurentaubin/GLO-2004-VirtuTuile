@@ -531,5 +531,13 @@ public class RoomController implements Serializable{
     public void updateNumberPerBox(TileType tileType, int numberPerBox) {
         room.updateTileNumberPerBox(tileType, numberPerBox);
     }
+
+    public int getSelectedSurfaceNbTile() {
+        return this.room.getSelectedSurfaceNbTile();
+    }
+
+    public double getSelectedSurfaceNbBox() {
+        return this.room.getSelectedSurfaceNbBox();
+    }
 }
 

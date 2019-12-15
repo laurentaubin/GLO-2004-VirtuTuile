@@ -1073,5 +1073,21 @@ public class Room implements Serializable{
         tileType.setColor(color);
     }
 
+    public int getSelectedSurfaceNbTile() {
+        for (Surface surface : this.surfaceList) {
+            if (surface.isSelected()) {
+                return surface.getNumberOfTiles();
+            }
+        }
+        return 0;
+    }
 
+    public double getSelectedSurfaceNbBox() {
+        for (Surface surface : this.surfaceList) {
+            if (surface.isSelected()) {
+                return surface.getNumberOfBoxes();
+            }
+        }
+        return 0;
+    }
 }
