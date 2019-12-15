@@ -246,6 +246,8 @@ public class Surface implements Serializable {
         Area test = new Area(this.area);
         test.add(new Area(surface.getArea()));
         this.area = new Path2D.Double(test);
+        this.width = this.area.getBounds2D().getWidth();
+        this.height = this.area.getBounds2D().getHeight();
     }
 
     public Shape getShape(){
@@ -450,9 +452,7 @@ public class Surface implements Serializable {
         this.area.transform(atPosition);
 
         for (Surface elem : this.elementarySurface) {
-            double elemWidth = elem.getWidth();
-            double ratio = enteredWidth/elemWidth;
-            elem.setWidth(ratio);
+            elem.setWidth(enteredWidth);
         }
     }
 
@@ -719,6 +719,7 @@ public class Surface implements Serializable {
     }
 
     public void translatePattern(double x, double y) {
+        this.pattern.setOffset(x, y);
         this.tileType.setxOffset(x);
         this.tileType.setyOffset(y);
     }

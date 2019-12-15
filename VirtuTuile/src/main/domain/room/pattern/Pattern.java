@@ -11,8 +11,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public abstract class Pattern implements Serializable {
-    private double xOffset;
-    private double yOffset;
+    private double xOffset = 0;
+    private double yOffset = 0;
     private int angle;
     private double groutWidth;
     private Color groutColor;
@@ -87,4 +87,15 @@ public abstract class Pattern implements Serializable {
     public void setMismatch(double mismatch){
         this.mismatch = mismatch;
     }
+
+    public void setOffset(double x, double y) {
+        this.xOffset += x;
+        this.yOffset += y;
+    }
+
+    public void initOffset() {
+        this.xOffset = 0;
+        this.yOffset = 0;
+    }
+
 }
