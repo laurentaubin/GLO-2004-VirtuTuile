@@ -23,7 +23,6 @@ public class SquarePattern extends Pattern{
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
         Point2D.Double position = new Point2D.Double(boundingRectanglePosition.getX(), boundingRectangle.getY());
 
-
         double xOffset = tileType.getxOffset();
         double yOffset = tileType.getyOffset();
 
@@ -65,9 +64,6 @@ public class SquarePattern extends Pattern{
                 int[] xPoints = new int[4];
                 int[] yPoints = new int[4];
                 if ((column % 2 != 0 && row % 2 != 0) || (column % 2 == 0 && row % 2 == 0)) {
-
-
-
                     for(int i = 0; i < 2; i++) {
                         xPoints[0] = (int) (position.getX());
                         yPoints[0] = (int) (position.getY());

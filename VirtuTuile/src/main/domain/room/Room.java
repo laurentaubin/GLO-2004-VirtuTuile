@@ -306,6 +306,79 @@ public class Room implements Serializable{
         return dimension;
     }
 
+public void setSelectedSurfacesWidthDistance(double widthDifference) {
+    if (getNumberOfSelectedSurfaces() == 2) {
+        ArrayList<Surface> selectedSurfaceList = this.getSelectedSurfaces();
+        Surface firstSurface = selectedSurfaceList.get(0);
+        Surface secondSurface = selectedSurfaceList.get(1);
+
+        if (firstSurface.getBoundingRectangle().getMinX() <= secondSurface.getBoundingRectangle().getMinX()) {
+            double firstSurfacePos = firstSurface.getBoundingRectangle().getMinX();
+            Point2D secondSurfacePos = new Point2D.Double(firstSurfacePos + widthDifference, secondSurface.getBoundingRectangle().getMinY());
+            secondSurface.boundingRectangleSnapToPoint(secondSurfacePos);
+        }
+        else {
+            double secondSurfacePos = secondSurface.getBoundingRectangle().getMinX();
+            Point2D firstSurfacePos = new Point2D.Double(secondSurfacePos + widthDifference, firstSurface.getBoundingRectangle().getMinY());
+            firstSurface.boundingRectangleSnapToPoint(firstSurfacePos);
+        }
+    }
+}
+
+public void setSelectedSurfacesHeightDistance(double heightDifference) {
+    if (getNumberOfSelectedSurfaces() == 2) {
+        ArrayList<Surface> selectedSurfaceList = this.getSelectedSurfaces();
+        Surface firstSurface = selectedSurfaceList.get(0);
+        Surface secondSurface = selectedSurfaceList.get(1);
+
+        if (firstSurface.getBoundingRectangle().getMinY() <= secondSurface.getBoundingRectangle().getMinY()) {
+            double firstSurfacePos = firstSurface.getBoundingRectangle().getMinY();
+            Point2D secondSurfacePos = new Point2D.Double(secondSurface.getBoundingRectangle().getMinX(), firstSurfacePos + heightDifference);
+            secondSurface.boundingRectangleSnapToPoint(secondSurfacePos);
+        }
+        else {
+            double secondSurfacePos = secondSurface.getBoundingRectangle().getMinY();
+            Point2D firstSurfacePos = new Point2D.Double(firstSurface.getBoundingRectangle().getMinX(), secondSurfacePos + heightDifference);
+            firstSurface.boundingRectangleSnapToPoint(firstSurfacePos);
+        }
+    }
+}
+
+    public Dimension getSelectedSurfacesDistances() {
+        Dimension dimension = new Dimension(0, 0);
+        double widthDifference = 0.0;
+        double heightDifference = 0.0;
+        if (getNumberOfSelectedSurfaces() == 2) {
+            ArrayList<Surface> selectedSurfaceList = this.getSelectedSurfaces();
+            Surface firstSurface = selectedSurfaceList.get(0);
+            Surface secondSurface = selectedSurfaceList.get(1);
+
+            if (firstSurface.getBoundingRectangle().getMinX() > secondSurface.getBoundingRectangle().getMinX()) {
+                widthDifference = firstSurface.getBoundingRectangle().getMinX() - secondSurface.getBoundingRectangle().getMinX();
+            }
+            else if (firstSurface.getBoundingRectangle().getMinX() < secondSurface.getBoundingRectangle().getMinX()) {
+                widthDifference = secondSurface.getBoundingRectangle().getMinX() - firstSurface.getBoundingRectangle().getMinX();
+            }
+            else {
+                // Les surfaces sont alignées horizontalement (selon leur coin supérieur gauche)
+                widthDifference = 0.0;
+            }
+
+            if (firstSurface.getBoundingRectangle().getMinY() > secondSurface.getBoundingRectangle().getMinY()) {
+                heightDifference = firstSurface.getBoundingRectangle().getMinY() - secondSurface.getBoundingRectangle().getMinY();
+            }
+            else if (firstSurface.getBoundingRectangle().getMinY() < secondSurface.getBoundingRectangle().getMinY()) {
+                heightDifference = secondSurface.getBoundingRectangle().getMinY() - firstSurface.getBoundingRectangle().getMinY();
+            }
+            else {
+                // Les surfaces sont alignées verticalement (selon leur coin supérieur gauche)
+                heightDifference = 0.0;
+            }
+            dimension.setSize(widthDifference, heightDifference);
+        }
+        return dimension;
+    }
+
     public int getNumberOfSelectedSurfaces() {
         int count = 0;
         for (Surface surface : surfaceList) {

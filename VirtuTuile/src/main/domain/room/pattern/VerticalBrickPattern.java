@@ -18,8 +18,8 @@ public class VerticalBrickPattern extends Pattern {
 
 
     public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth, boolean center) {
-        double xOffset = tileType.getxOffset();
-        double yOffset = tileType.getyOffset();
+        double xOffset = this.getxOffset();
+        double yOffset = this.getyOffset();
         double decalageCenterX = 0;
         double decalageCenterY = 0;
 

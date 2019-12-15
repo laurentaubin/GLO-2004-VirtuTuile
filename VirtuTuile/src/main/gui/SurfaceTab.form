@@ -168,6 +168,13 @@
               <toolTipText value="Sélectionner pour définir la surface comme étant un trou"/>
             </properties>
           </component>
+          <component id="1a4f7" class="javax.swing.JSeparator">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties/>
+          </component>
         </children>
       </grid>
       <component id="e2a96" class="javax.swing.JSeparator">
@@ -371,6 +378,63 @@
             <properties>
               <text value="0 boîtes"/>
             </properties>
+          </component>
+        </children>
+      </grid>
+
+      <grid id="ace65" binding="distancePanel" layout-manager="GridBagLayout">
+        <constraints>
+          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <gridbag top="0" left="0" bottom="10" right="0" weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="7903b" class="javax.swing.JLabel" binding="distanceLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag top="10" left="0" bottom="5" right="0" weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <font style="1"/>
+              <text value="Distances"/>
+            </properties>
+          </component>
+          <component id="82743" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag top="5" left="0" bottom="5" right="0" weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <text value="Largeur"/>
+            </properties>
+          </component>
+          <component id="d121a" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag top="5" left="0" bottom="10" right="0" weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <text value="Hauteur"/>
+            </properties>
+          </component>
+          <component id="1c39c" class="javax.swing.JFormattedTextField" binding="widthDistanceField">
+            <constraints>
+              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="b708f" class="javax.swing.JFormattedTextField" binding="heightDistanceField">
+            <constraints>
+              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties/>
           </component>
         </children>
       </grid>

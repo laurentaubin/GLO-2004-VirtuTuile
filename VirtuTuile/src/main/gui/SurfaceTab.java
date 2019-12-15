@@ -4,6 +4,7 @@ import util.UnitConverter;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.xml.crypto.dsig.spec.DigestMethodParameterSpec;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,6 +41,10 @@ public class SurfaceTab extends JPanel{
     private JLabel nbTileLabel;
     private JLabel nbBoxLabel;
     private JPanel informationPanel;
+    private JPanel distancePanel;
+    private JLabel distanceLabel;
+    private JFormattedTextField widthDistanceField;
+    private JFormattedTextField heightDistanceField;
     private JButton centrerHButton;
     private Color surfaceColor;
 
@@ -178,6 +183,20 @@ public class SurfaceTab extends JPanel{
             }
         });
 
+        widthDistanceField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                setEnteredWidthSurfacesDistance();
+            }
+        });
+
+        heightDistanceField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                setEnteredHeightSurfacesDistance();
+            }
+        });
+
         //Align Center icon icon by Icons8
         //Align Bottom icon icon by Icons8
         //Align Top icon icon by Icons8
@@ -296,6 +315,16 @@ public class SurfaceTab extends JPanel{
         }
     }
 
+    public void setEnteredWidthSurfacesDistance() {
+        double enteredWidthDifference = UnitConverter.convertSelectedUnitToPixel((double)widthDistanceField.getValue(), mainWindow.getCurrentMeasurementMode());
+        this.mainWindow.setSelectedSurfacesWidthDistance(enteredWidthDifference);
+    }
+
+    public void setEnteredHeightSurfacesDistance() {
+        double enteredHeightDifference = UnitConverter.convertSelectedUnitToPixel((double)heightDistanceField.getValue(), mainWindow.getCurrentMeasurementMode());
+        this.mainWindow.setSelectedSurfacesHeightDistance(enteredHeightDifference);
+    }
+
     public void combineSelectedSurface() {
         this.mainWindow.combineSelectedSurfaces();
     }
@@ -336,6 +365,14 @@ public class SurfaceTab extends JPanel{
             String heightString = Double.toString(bdHeight.doubleValue());
             this.heightField.setText(heightString + "m");
         }
+    }
+
+    public void setSurfacesDistancesField(Dimension dimension) {
+        MainWindow.MeasurementUnitMode current = mainWindow.getCurrentMeasurementMode();
+        double width = UnitConverter.convertPixelToSelectedUnit(dimension.width, current);
+        double height = UnitConverter.convertPixelToSelectedUnit(dimension.height, current);
+        this.widthDistanceField.setValue(width);
+        this.heightDistanceField.setValue(height);
     }
 
 

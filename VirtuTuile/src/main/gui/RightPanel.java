@@ -83,6 +83,10 @@ public class RightPanel extends JTabbedPane implements Serializable {
         surfaceTabPanel.updateSurfaceInformation(nbTile, nbBox);
     }
 
+    public void updateSurfaceTabDistances(Dimension dimension) {
+        this.surfaceTabPanel.setSurfacesDistancesField(dimension);
+    }
+
     public MainWindow getMainWindow() {
         return this.mainWindow;
     }
