@@ -255,9 +255,18 @@ public class RoomController implements Serializable {
         room.switchSelectionStatus(x, y, isShiftDown);
     }
 
-    // TODO Undo/Redo for final positions of surfaces
     public void updateSelectedSurfacesPositions(double deltaX, double deltaY) {
         room.updateSelectedSurfacesPositions(deltaX, deltaY);
+    }
+
+    public void deletePreviousStatesIfRequired() {
+        deleteElementsAfterPointer(this.undoRedoPointer);
+    }
+
+    public void replaceCurrentState() {
+        this.roomList.remove(this.roomList.size() - 1);
+        undoRedoPointer--;
+        addRoom();
     }
 
     /*
