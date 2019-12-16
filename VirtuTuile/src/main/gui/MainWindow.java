@@ -62,6 +62,8 @@ public class MainWindow extends JFrame {
         METRIC, IMPERIAL
     }
 
+    private boolean surfaceReadyToMove;
+    private boolean redoApplied;
     private boolean mouseWasDragged;
     private int numberOfSelectedSurfaces;
 
@@ -479,6 +481,10 @@ public class MainWindow extends JFrame {
 
             this.controller.switchSelectionStatus(xPos, yPos, mouseEvent.isShiftDown());
 
+            if (controller.numberOfSelectedSurfaces() > 0) {
+                this.surfaceReadyToMove = true;
+            }
+
             rightPanel.updateSurfaceTabDimensions(this.controller.getSelectedSurfaceDimensions());
             rightPanel.updateSurfaceInformation(this.controller.getSelectedSurfaceNbTile(), this.controller.getSelectedSurfaceNbBox());
             rightPanel.showSurfaceInformation();
@@ -561,6 +567,10 @@ public class MainWindow extends JFrame {
             if (drawingPanel.getGridlines()) {
                 controller.snapSelectedSurfaceToGrid(drawingPanel.getGridGap());
             }
+            if (controller.numberOfSelectedSurfaces() > 0) {
+                controller.addRoom();
+                this.surfaceReadyToMove = true;
+            }
         }
         this.mouseWasDragged = false;
         drawingPanel.repaint();
@@ -580,6 +590,14 @@ public class MainWindow extends JFrame {
             double deltaY = UnitConverter.convertPixelToSelectedUnit(pixelY, this.currentMeasurementMode);
 
              */
+            if (controller.numberOfSelectedSurfaces() > 0 && surfaceReadyToMove) {
+                controller.deletePreviousStatesIfRequired();
+                this.surfaceReadyToMove = false;
+                if(redoApplied) {
+                    controller.replaceCurrentState();
+                    this.redoApplied = false;
+                }
+            }
 
             this.controller.updateSelectedSurfacesPositions(deltaX, deltaY);
             //this.controller.updateSelectedSurfacesPositions(deltaX, deltaY, pixelX, pixelY);
@@ -997,6 +1015,7 @@ public class MainWindow extends JFrame {
 
     public void redo() {
         this.controller.redo();
+        this.redoApplied = true;
         drawingPanel.repaint();
     }
 
