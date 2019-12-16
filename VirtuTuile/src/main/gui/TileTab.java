@@ -94,7 +94,7 @@ public class TileTab extends JPanel {
         tileComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                //setTileInformation();
+                setTileInformation();
             }
         });
 
@@ -242,6 +242,9 @@ public class TileTab extends JPanel {
         TileType selectedTileType = (TileType)tileComboBox.getSelectedItem();
         double width = selectedTileType.getWidth();
         double height = selectedTileType.getHeight();
+
+        width = UnitConverter.convertPixelToSelectedUnit(width, MainWindow.MeasurementUnitMode.METRIC);
+        height = UnitConverter.convertPixelToSelectedUnit(height, MainWindow.MeasurementUnitMode.METRIC);
 
         BigDecimal bdWidth = BigDecimal.valueOf(width);
         bdWidth = bdWidth.setScale(2, RoundingMode.HALF_UP);
