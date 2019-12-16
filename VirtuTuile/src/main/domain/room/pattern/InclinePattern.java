@@ -54,11 +54,13 @@ public class InclinePattern extends Pattern {
             numberRow = (int) (numberRow + 1);
         }
         int maxCount;
-        if(numberRow > numberColumn){
-            maxCount = (int)(2*numberRow);
+
+
+        if((boundingRectangleHeight / tileType.getHeight()) > (boundingRectangleWidth / tileType.getHeight())){
+            maxCount = (int)(2*(boundingRectangleHeight / tileType.getHeight()));
         }
         else{
-            maxCount = (int)(2*numberColumn);
+            maxCount = (int)(2*(boundingRectangleWidth / tileType.getHeight()));
         }
         int count = 0;
         boolean isInside;
@@ -117,7 +119,9 @@ public class InclinePattern extends Pattern {
                 position.setLocation(position.getX() + (tileType.getHeight() + groutWidth) * Math.cos(angleCalcule), position.getY() + (tileType.getHeight() + groutWidth) * Math.sin(angleCalcule));
 
             } else {
-                count = 0;
+                position.setLocation(position.getX() + (tileType.getWidth() + groutWidth) * Math.sin(angleCalcule), position.getY() - (tileType.getWidth() + groutWidth) * Math.cos(angleCalcule));
+                position.setLocation(position.getX() + (tileType.getWidth() + groutWidth) * Math.sin(angleCalcule), position.getY() - (tileType.getWidth() + groutWidth) * Math.cos(angleCalcule));
+
 
                 if(decalage != 0){
                     System.out.println(decalage/100);
@@ -178,9 +182,6 @@ public class InclinePattern extends Pattern {
         this.angle = angle;
     }
 
-    public int getAngle(){
-        return this.angle;
-    }
 
     public void deleteOutsideTile(Area surface, double baseTileWidth, double baseTileHeight) {
         for (Tile tile : virtualTileList) {
