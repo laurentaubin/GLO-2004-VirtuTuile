@@ -12,10 +12,12 @@ import java.util.ArrayList;
 
 
 public class InclinePattern extends Pattern {
+    private int angle;
 
     public InclinePattern() {
         super();
         this.name = "Incline";
+
     }
 
     public InclinePattern(Pattern patternToCopy) {
@@ -31,11 +33,11 @@ public class InclinePattern extends Pattern {
         //TODO mettre une case decalage comme pour brick et si pas égale a zéro ça applique le décalage
         double decalage = 0;
 
-        double angle = 30;
-        angle = Math.toRadians(90 - angle);
+
+        double angleCalcule = Math.toRadians(90 - this.angle);
 
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
-        Point2D.Double position = new Point2D.Double(boundingRectanglePosition.getX() - tileHeight * Math.cos(angle), boundingRectangle.getY() - tileHeight * Math.sin(angle));
+        Point2D.Double position = new Point2D.Double(boundingRectanglePosition.getX() - tileHeight * Math.cos(angleCalcule), boundingRectangle.getY() - tileHeight * Math.sin(angleCalcule));
 
         Point2D.Double initPoint = new Point2D.Double(boundingRectangle.getX() + groutWidth, boundingRectangle.getY() + groutWidth);
 
@@ -51,23 +53,31 @@ public class InclinePattern extends Pattern {
         if (numberRow / (int) numberRow != 0) {
             numberRow = (int) (numberRow + 1);
         }
-
+        int maxCount;
+        if(numberRow > numberColumn){
+            maxCount = (int)(2*numberRow);
+        }
+        else{
+            maxCount = (int)(2*numberColumn);
+        }
         int count = 0;
         boolean isInside;
+        boolean outside;
 
 
-        for (int i = 1; i <= numberColumn*numberRow; i++) {
+        for (int i = 1; i <= (numberColumn*numberRow)/2; i++) {
             int[] xPoints = new int[4];
             int[] yPoints = new int[4];
 
+            outside = true;
 
             if ((i % 2 == 1)) {
                 count = 0;
 
                 if(decalage != 0 && i > 1){
                     System.out.println(decalage/100);
-                    position.setLocation(position.getX() + (decalage/100 * tileType.getWidth()) * Math.sin(angle),
-                            position.getY() - (decalage/100 * tileType.getWidth()) * Math.cos(angle));
+                    position.setLocation(position.getX() + (decalage/100 * tileType.getWidth()) * Math.sin(angleCalcule),
+                            position.getY() - (decalage/100 * tileType.getWidth()) * Math.cos(angleCalcule));
                 }
 
                 do {
@@ -75,38 +85,44 @@ public class InclinePattern extends Pattern {
                     xPoints[0] = (int) Math.ceil(position.getX());
                     yPoints[0] = (int) Math.ceil(position.getY());
 
-                    xPoints[1] = (int) Math.ceil(position.getX() + tileType.getWidth() * Math.sin(angle));
-                    yPoints[1] = (int) Math.ceil(position.getY() - tileType.getWidth() * Math.cos(angle));
+                    xPoints[1] = (int) Math.ceil(position.getX() + tileType.getWidth() * Math.sin(angleCalcule));
+                    yPoints[1] = (int) Math.ceil(position.getY() - tileType.getWidth() * Math.cos(angleCalcule));
 
-                    xPoints[2] = (int) Math.ceil(xPoints[1] + tileType.getHeight() * Math.cos(angle));
-                    yPoints[2] = (int) Math.ceil(yPoints[1] + tileType.getHeight() * Math.sin(angle));
+                    xPoints[2] = (int) Math.ceil(xPoints[1] + tileType.getHeight() * Math.cos(angleCalcule));
+                    yPoints[2] = (int) Math.ceil(yPoints[1] + tileType.getHeight() * Math.sin(angleCalcule));
 
-                    xPoints[3] = (int) Math.ceil(position.getX() + tileType.getHeight() * Math.cos(angle));
-                    yPoints[3] = (int) Math.ceil(position.getY() + tileType.getHeight() * Math.sin(angle));
+                    xPoints[3] = (int) Math.ceil(position.getX() + tileType.getHeight() * Math.cos(angleCalcule));
+                    yPoints[3] = (int) Math.ceil(position.getY() + tileType.getHeight() * Math.sin(angleCalcule));
 
                     isInside = (boundingRectangle.contains(xPoints[0], yPoints[0]) ||
                             boundingRectangle.contains(xPoints[1], yPoints[1]) ||
                             boundingRectangle.contains(xPoints[2], yPoints[2]) ||
-                            boundingRectangle.contains(xPoints[3], yPoints[3])) || count < 3;
+                            boundingRectangle.contains(xPoints[3], yPoints[3]));
 
-
+                    if(count > maxCount){
+                        break;
+                    }
                     virtualTileList.add(new Tile(position, xPoints, yPoints, 4));
-                    if (isInside) {
-                        position.setLocation(position.getX() + (tileType.getWidth() + groutWidth) * Math.sin(angle), position.getY() - (tileType.getWidth() + groutWidth) * Math.cos(angle));
+                    if(isInside){
+                        outside = false;
+                    }
+                    if (isInside || outside) {
+                        position.setLocation(position.getX() + (tileType.getWidth() + groutWidth) * Math.sin(angleCalcule), position.getY() - (tileType.getWidth() + groutWidth) * Math.cos(angleCalcule));
                     }
 
-                }
-                while (isInside);
 
-                position.setLocation(position.getX() + (tileType.getHeight() + groutWidth) * Math.cos(angle), position.getY() + (tileType.getHeight() + groutWidth) * Math.sin(angle));
+                }
+                while (isInside || outside);
+
+                position.setLocation(position.getX() + (tileType.getHeight() + groutWidth) * Math.cos(angleCalcule), position.getY() + (tileType.getHeight() + groutWidth) * Math.sin(angleCalcule));
 
             } else {
                 count = 0;
 
                 if(decalage != 0){
                     System.out.println(decalage/100);
-                    position.setLocation(position.getX() - (decalage/100 * tileType.getWidth()) * Math.sin(angle),
-                            position.getY() + (decalage/100 * tileType.getWidth()) * Math.cos(angle));
+                    position.setLocation(position.getX() - (decalage/100 * tileType.getWidth()) * Math.sin(angleCalcule),
+                            position.getY() + (decalage/100 * tileType.getWidth()) * Math.cos(angleCalcule));
                 }
 
                 do {
@@ -114,36 +130,56 @@ public class InclinePattern extends Pattern {
                     xPoints[0] = (int) Math.ceil(position.getX());
                     yPoints[0] = (int) Math.ceil(position.getY());
 
-                    xPoints[1] = (int) Math.ceil(position.getX() + tileType.getWidth() * Math.sin(angle));
-                    yPoints[1] = (int) Math.ceil(position.getY() - tileType.getWidth() * Math.cos(angle));
+                    xPoints[1] = (int) Math.ceil(position.getX() + tileType.getWidth() * Math.sin(angleCalcule));
+                    yPoints[1] = (int) Math.ceil(position.getY() - tileType.getWidth() * Math.cos(angleCalcule));
 
-                    xPoints[2] = (int) Math.ceil(xPoints[1] + tileType.getHeight() * Math.cos(angle));
-                    yPoints[2] = (int) Math.ceil(yPoints[1] + tileType.getHeight() * Math.sin(angle));
+                    xPoints[2] = (int) Math.ceil(xPoints[1] + tileType.getHeight() * Math.cos(angleCalcule));
+                    yPoints[2] = (int) Math.ceil(yPoints[1] + tileType.getHeight() * Math.sin(angleCalcule));
 
-                    xPoints[3] = (int) Math.ceil(position.getX() + tileType.getHeight() * Math.cos(angle));
-                    yPoints[3] = (int) Math.ceil(position.getY() + tileType.getHeight() * Math.sin(angle));
+                    xPoints[3] = (int) Math.ceil(position.getX() + tileType.getHeight() * Math.cos(angleCalcule));
+                    yPoints[3] = (int) Math.ceil(position.getY() + tileType.getHeight() * Math.sin(angleCalcule));
 
                     isInside = (boundingRectangle.contains(xPoints[0], yPoints[0]) ||
                             boundingRectangle.contains(xPoints[1], yPoints[1]) ||
                             boundingRectangle.contains(xPoints[2], yPoints[2]) ||
-                            boundingRectangle.contains(xPoints[3], yPoints[3])) || count < 3;
+                            boundingRectangle.contains(xPoints[3], yPoints[3]));
 
+                    if(count > maxCount){
+                        break;
+                    }
 
                     virtualTileList.add(new Tile(position, xPoints, yPoints, 4));
 
-                    if (isInside) {
-                        position.setLocation(position.getX() - (tileType.getWidth() + groutWidth) * Math.sin(angle), position.getY() + (tileType.getWidth() + groutWidth) * Math.cos(angle));
+                    if(isInside){
+                        outside = false;
                     }
 
-                }
-                while (isInside);
+                    if (isInside || outside) {
+                        position.setLocation(position.getX() - (tileType.getWidth() + groutWidth) * Math.sin(angleCalcule), position.getY() + (tileType.getWidth() + groutWidth) * Math.cos(angleCalcule));
+                    }
 
-                position.setLocation(position.getX() + (tileType.getHeight() + groutWidth) * Math.cos(angle), position.getY() + (tileType.getHeight() + groutWidth) * Math.sin(angle));
+
+                }
+                while (isInside || outside);
+                if(count > maxCount){
+                    break;
+                }
+
+                position.setLocation(position.getX() + (tileType.getHeight() + groutWidth) * Math.cos(angleCalcule), position.getY() + (tileType.getHeight() + groutWidth) * Math.sin(angleCalcule));
 
             }
         }
         deleteOutsideTile(area, tileWidth, tileHeight);
         return virtualTileList;
+    }
+
+
+    public void setAngle(int angle){
+        this.angle = angle;
+    }
+
+    public int getAngle(){
+        return this.angle;
     }
 
     public void deleteOutsideTile(Area surface, double baseTileWidth, double baseTileHeight) {

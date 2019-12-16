@@ -47,14 +47,19 @@ public class PatternTab extends JPanel{
     private JButton centerTile;
     private JToggleButton centerToggleButton;
     private JButton startFullTileButton;
+    private JTextField angleInputField;
+    private JPanel angleJPanel;
+    private JLabel Angle;
     private Color selectedColor;
 
 
     public PatternTab(MainWindow mainWindow) throws IOException {
         this.mainWindow = mainWindow;
         this.groutWidthField.setValue(0);
+        this.angleInputField.setText("30");
         this.selectedColor = Color.WHITE;
         this.mismatchPanel.setVisible(false);
+        this.angleJPanel.setVisible(false);
         patternButtonGroup = new ButtonGroup();
         patternButtonGroup.add(straightPatternButton);
         patternButtonGroup.add(brickPatternButton);
@@ -136,6 +141,8 @@ public class PatternTab extends JPanel{
             public void actionPerformed(ActionEvent actionEvent) {
                 straightPatternButtonActionPerformed();
                 mismatchPanel.setVisible(false);
+                angleJPanel.setVisible(false);
+
             }
         });
 
@@ -144,6 +151,7 @@ public class PatternTab extends JPanel{
             public void actionPerformed(ActionEvent actionEvent) {
                 horizontalBrickButtonActionPerformed();
                 mismatchPanel.setVisible(true);
+                angleJPanel.setVisible(false);
             }
         });
 
@@ -152,6 +160,7 @@ public class PatternTab extends JPanel{
             public void actionPerformed(ActionEvent actionEvent) {
                 verticalPatternButtonActionPerformed();
                 mismatchPanel.setVisible(false);
+                angleJPanel.setVisible(false);
             }
         });
 
@@ -160,6 +169,7 @@ public class PatternTab extends JPanel{
             public void actionPerformed(ActionEvent actionEvent) {
                 verticalBrickButtonActionPerformed();
                 mismatchPanel.setVisible(true);
+                angleJPanel.setVisible(false);
             }
         });
 
@@ -182,6 +192,8 @@ public class PatternTab extends JPanel{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 anglePatternButtonActionPerformed();
+                mismatchPanel.setVisible(false);
+                angleJPanel.setVisible(true);
             }
         });
 
@@ -189,6 +201,9 @@ public class PatternTab extends JPanel{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 squarePatternButtonActionPerformed();
+                mismatchLabel.setVisible(false);
+                angleJPanel.setVisible(false);
+
             }
         });
 
@@ -204,6 +219,8 @@ public class PatternTab extends JPanel{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 mainWindow.setChevronPattern();
+                mismatchLabel.setVisible(false);
+                angleJPanel.setVisible(false);
             }
         });
 
@@ -219,6 +236,13 @@ public class PatternTab extends JPanel{
             public void actionPerformed(ActionEvent actionEvent) {
                 startPatternWithFullTile();
 
+            }
+        });
+
+        angleInputField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                setAngle();
             }
         });
     }
@@ -250,7 +274,7 @@ public class PatternTab extends JPanel{
     }
 
     private void anglePatternButtonActionPerformed() {
-        mainWindow.setAnglePattern();;
+        mainWindow.setAnglePattern(30);;
     }
 
     private void squarePatternButtonActionPerformed() {
@@ -314,6 +338,13 @@ public class PatternTab extends JPanel{
         }
     }
 
+    public void setAngle(){
+        int angle = Integer.parseInt(angleInputField.getText());
+        if(angle >= 10 && angle <= 80){
+            mainWindow.setAnglePattern(angle);
+        }
+    }
+
     public void centerTiles(){
         if (centerToggleButton.isSelected()) {
             mainWindow.centerTiles(true);
@@ -359,5 +390,9 @@ public class PatternTab extends JPanel{
             stringArray[0] = "format invalide";
         }
         return stringArray;
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }

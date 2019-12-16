@@ -400,9 +400,9 @@ public class RoomController implements Serializable {
         addRoom();
     }
 
-    public void setAnglePattern() {
+    public void setAnglePattern(int angle) {
         deleteElementsAfterPointer(this.undoRedoPointer);
-        room.setAnglePattern();
+        room.setAnglePattern(angle);
         addRoom();
     }
 

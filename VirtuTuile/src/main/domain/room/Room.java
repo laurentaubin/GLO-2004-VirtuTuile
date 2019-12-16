@@ -520,10 +520,11 @@ public void setSelectedSurfacesHeightDistance(double heightDifference) {
         }
     }
 
-    public void setAnglePattern() {
+    public void setAnglePattern(int angle) {
         for (Surface surfaceInRoom : surfaceList) {
             if (surfaceInRoom.isSelected()) {
                 InclinePattern inclinePattern = new InclinePattern();
+                inclinePattern.setAngle(angle);
                 inclinePattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getArea(), surfaceInRoom.getGroutWidth(),surfaceInRoom.getCoverCenter());
                 surfaceInRoom.setPattern(inclinePattern);
             }
@@ -1207,3 +1208,5 @@ public void setSelectedSurfacesHeightDistance(double heightDifference) {
         }
     }
 }
+
+

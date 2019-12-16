@@ -28,6 +28,8 @@ public class SquarePattern extends Pattern{
         double decalageCenterX = 0;
         double decalageCenterY = 0;
 
+
+
         Point2D.Double boundingRectanglePosition = new Point2D.Double(boundingRectangle.getX(), boundingRectangle.getY());
         Point2D.Double position = new Point2D.Double(boundingRectanglePosition.getX(), boundingRectangle.getY());
 

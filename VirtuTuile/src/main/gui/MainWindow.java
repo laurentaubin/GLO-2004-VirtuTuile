@@ -883,8 +883,8 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
-    public void setAnglePattern() {
-        controller.setAnglePattern();
+    public void setAnglePattern(int angle) {
+        controller.setAnglePattern(angle);
         drawingPanel.repaint();
     }
 
