@@ -73,6 +73,7 @@ public class RightPanel extends JTabbedPane implements Serializable {
 
     public void updatePatternTab(double groutWidth, int number) {
         this.patternTabPanel.setGroutWidth(groutWidth, number);
+        this.patternTabPanel.getAngle();
     }
 
     public void updateTileTab(float width, float height, String name, Color color, int nbrTilesPerBox) {

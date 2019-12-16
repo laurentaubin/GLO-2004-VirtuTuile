@@ -23,6 +23,7 @@ public class SquarePattern extends Pattern{
 
     public ArrayList<Tile> generateTiles(Rectangle boundingRectangle, TileType tileType, Area area, double groutWidth, boolean center) {
 
+        System.out.println("HELLO");
         double tileWidth = tileType.getWidth();
         double tileHeight = tileType.getHeight();
         double decalageCenterX = 0;

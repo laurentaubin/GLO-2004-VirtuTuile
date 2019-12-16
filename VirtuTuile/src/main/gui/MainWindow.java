@@ -923,6 +923,14 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
+    public void setAngle(int angle){
+        controller.setAngle(angle);
+    }
+
+    public int getAnglePattern(){
+        return this.controller.getAnglePattern();
+    }
+
     public void setSquarePattern() {
         controller.setSquarePatternToSelectedSurface();
         drawingPanel.repaint();

@@ -13,17 +13,16 @@ import java.util.ArrayList;
 public abstract class Pattern implements Serializable {
     private double xOffset = 0;
     private double yOffset = 0;
-    private int angle;
     private double groutWidth;
     private Color groutColor;
     public ArrayList<Tile> virtualTileList;
     public String name;
+    public int angle;
     public double mismatch;
 
     public Pattern() {
         this.virtualTileList = new ArrayList<Tile>();
         this.groutWidth = 0d;
-        this.angle = 0;
         this.groutColor = Color.GRAY;
 
     }
@@ -90,6 +89,11 @@ public abstract class Pattern implements Serializable {
     public void setMismatch(double mismatch){
         this.mismatch = mismatch;
     }
+
+    public void setAngle(int angle){
+        this.angle = angle;
+    }
+
 
     public void setOffset(double x, double y) {
         this.xOffset += x;

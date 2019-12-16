@@ -19,7 +19,7 @@ public class VerticalBrickPattern extends Pattern {
 
     public VerticalBrickPattern(Pattern patternToCopy) {
         super(patternToCopy);
-        this.mismatch = new Double(patternToCopy.mismatch);
+        this.mismatch = patternToCopy.mismatch;
         this.name = "VerticalBrick";
     }
 
