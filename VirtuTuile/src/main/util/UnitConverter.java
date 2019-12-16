@@ -17,8 +17,15 @@ public class UnitConverter {
 
     private static final float INCH_TO_METER = (float) 0.0254;
     private static final float METER_TO_INCH = (float) 39.3701;
+    /*
+    private static final float PIXEL_TO_METER = (float) 0.2f/39.37f;
+    private static final float PIXEL_TO_INCH = (float) (0.2);
+
+     */
     private static final float PIXEL_TO_METER = (float) 0.01;
     private static final float PIXEL_TO_INCH = (float) (0.01 * 39.37);
+
+
 
     //private static final float PIXEL_TO_METER = (float) 0.0002645833;
     //private static final float PIXEL_TO_INCH = (float) 0.0104166667;

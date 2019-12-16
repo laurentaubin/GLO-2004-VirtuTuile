@@ -1,5 +1,7 @@
 package gui;
 
+import util.UnitConverter;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -7,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class PatternTab extends JPanel{
 
@@ -255,14 +259,46 @@ public class PatternTab extends JPanel{
 
 
     private void setEnteredGroutWidth() {
-        double width = Double.parseDouble(groutWidthField.getValue().toString());
-        this.mainWindow.setEnteredGroutWidtht(width);
+        if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.IMPERIAL) {
+            String inchGrout = groutWidthField.getText();
+            String[] inchArray = getImperialArray(inchGrout);
+            if (inchArray[0] == "format invalide") {
+                JOptionPane.showMessageDialog(null, "Le format doit être 0\"0/0");
+                return;
+            }
+            double inchTotal = UnitConverter.stringToInch(getImperialArray(inchGrout));
+            double enteredGrout = UnitConverter.convertSelectedUnitToPixel(inchTotal, mainWindow.getCurrentMeasurementMode());
+            this.mainWindow.setEnteredGroutWidtht(enteredGrout);
+        }
+        else if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.METRIC) {
+            String enteredWidthString = groutWidthField.getText();
+            double enteredGrout;
+            try {
+                enteredGrout = Double.parseDouble(enteredWidthString);
+            }
+           catch (Exception e) {
+               JOptionPane.showMessageDialog(null, "La valeur entrée n'est pas dans le bon format. Veuillez recommencer.");
+               return;
+           }
+            enteredGrout = UnitConverter.convertSelectedUnitToPixel(enteredGrout, MainWindow.MeasurementUnitMode.METRIC);
+            this.mainWindow.setEnteredGroutWidtht(enteredGrout);
+        }
     }
 
-    public void setGroutWidth(double width, int number) {
+    public void setGroutWidth(double widthGrout, int number) {
+        double width = UnitConverter.convertPixelToSelectedUnit(widthGrout, mainWindow.getCurrentMeasurementMode());
         if (number == 1) {
             this.groutWidthField.setEnabled(true);
-            this.groutWidthField.setValue(width);
+            if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.IMPERIAL) {
+                String groutWidth = getImperialFormat(width);
+                this.groutWidthField.setText(groutWidth);
+            }
+           else if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.METRIC) {
+                BigDecimal bdWidth = BigDecimal.valueOf(width);
+                bdWidth = bdWidth.setScale(2, RoundingMode.HALF_UP);
+                String widthString = Double.toString(bdWidth.doubleValue());
+                this.groutWidthField.setText(widthString + "m");
+            }
         }
         else {
             this.groutWidthField.setValue(0);
@@ -298,6 +334,30 @@ public class PatternTab extends JPanel{
 
     public void startPatternWithFullTile() {
         mainWindow.startWithFullTile();
+    }
 
+    private String getImperialFormat(double value) {
+        int inch = (int)(value);
+        double fraction = value - inch;
+        BigDecimal bd = BigDecimal.valueOf(fraction);
+        bd = bd.setScale(1, RoundingMode.HALF_DOWN);
+        String imperialString = Integer.toString(inch) + "\"" + Double.toString(bd.doubleValue());
+        return imperialString;
+    }
+
+
+    private String[] getImperialArray(String value) {
+        String[] stringArray = new String[2];
+        try {
+            int inchIndex = value.indexOf("\"");
+            String inch = value.substring(0, inchIndex);
+            String fraction = value.substring(inchIndex + 1);
+            stringArray[0] = inch;
+            stringArray[1] = fraction;
+            return stringArray;
+        } catch (StringIndexOutOfBoundsException e) {
+            stringArray[0] = "format invalide";
+        }
+        return stringArray;
     }
 }
