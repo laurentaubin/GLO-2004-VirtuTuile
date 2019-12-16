@@ -106,6 +106,10 @@ public class TileType extends Polygon{
         return getName();
     }
 
+    public boolean equals(TileType other) {
+        return this.getName().equals(other.getName());
+    }
+
     public void setEtatInspector(boolean etat){
         this.etatInspector = etat;
     }

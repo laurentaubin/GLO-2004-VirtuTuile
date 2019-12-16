@@ -46,6 +46,7 @@ public class SurfaceTab extends JPanel{
     private JFormattedTextField widthDistanceField;
     private JFormattedTextField heightDistanceField;
     private JLabel informationTabTitleLabel;
+    private JLabel nbSurfaceLabel;
     private JButton centrerHButton;
     private Color surfaceColor;
 
@@ -497,6 +498,12 @@ public class SurfaceTab extends JPanel{
         return stringArray;
     }
 
+    private void updateNbSurfaceLabel(int nbSurface) {
+        String label = nbSurface + " surface";
+        if (nbSurface > 1) {label += "s"; }
+        nbSurfaceLabel.setText(label);
+    }
+
     public void updateNbTileLabel(int nbTile) {
         String label = nbTile + " tuile";
         if (nbTile > 1) { label += "s"; }
@@ -509,16 +516,22 @@ public class SurfaceTab extends JPanel{
         nbBoxLabel.setText(label);
     }
 
-    public void updateSurfaceInformation(int nbTile, int nbBox) {
+    public void updateSurfaceInformation(int nbSurface, int nbTile, int nbBox) {
+        updateNbSurfaceLabel(nbSurface);
         updateNbTileLabel(nbTile);
         updateNbBoxLabel(nbBox);
     }
+
 
     public void showSurfaceInformation() {
         this.informationTabTitleLabel.setText("Information sur la surface");
     }
 
-    public void showProjetInformation() {
+    public void showProjectInformation() {
         this.informationTabTitleLabel.setText("Information sur le projet");
+    }
+
+    public void showMultipleSurfacesInformation() {
+        this.informationTabTitleLabel.setText("Information sur les surfaces");
     }
 }

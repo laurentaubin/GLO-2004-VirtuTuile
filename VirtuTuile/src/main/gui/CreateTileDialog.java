@@ -1,7 +1,6 @@
 package gui;
 
 import com.sun.tools.javac.Main;
-import javafx.beans.binding.DoubleExpression;
 import util.UnitConverter;
 
 import javax.swing.*;

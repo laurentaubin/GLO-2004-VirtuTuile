@@ -37,6 +37,11 @@ public class TileTab extends JPanel {
     private JButton applySelectedTile;
     private JComboBox tileComboBox;
     private JButton chromaticButton;
+    private JPanel informationPanel;
+    private JLabel informationTabTitleLabel;
+    private JLabel nbTileLabel;
+    private JLabel nbBoxLabel;
+    private JLabel nbSurfaceLabel;
 
     private Color tileColor;
     private Color updateColor;
@@ -87,6 +92,7 @@ public class TileTab extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 setSelectedTileToSelectedSurface();
+                mainWindow.updateTileInformation((TileType)tileComboBox.getSelectedItem());
             }
         });
 
@@ -110,6 +116,7 @@ public class TileTab extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 updateTileWidth();
+                mainWindow.updateTileInformation((TileType)tileComboBox.getSelectedItem());
             }
         });
 
@@ -117,6 +124,7 @@ public class TileTab extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 updateTileHeight();
+                mainWindow.updateTileInformation((TileType)tileComboBox.getSelectedItem());
             }
         });
 
@@ -131,6 +139,7 @@ public class TileTab extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 updateNumberPerBox();
+                mainWindow.updateTileInformation((TileType)tileComboBox.getSelectedItem());
             }
         });
     }
@@ -263,6 +272,9 @@ public class TileTab extends JPanel {
         this.tileColorButton.setOpaque(true);
         this.tileColorButton.setBorderPainted(false);
         this.tileNumberPerBoxField.setValue(selectedTileType.getNbrTilesPerBox());
+
+        this.mainWindow.updateTileInformation(selectedTileType);
+        this.mainWindow.setCurrentSelectedTileType(selectedTileType);
     }
 
 
@@ -355,5 +367,30 @@ public class TileTab extends JPanel {
         }
         return stringArray;
     }
+
+    public void updateNbTileLabel(int nbTile) {
+        String label = nbTile + " tuile";
+        if (nbTile > 1) { label += "s"; }
+        nbTileLabel.setText(label);
+    }
+
+    public void updateNbBoxLabel(int nbBox) {
+        String label = nbBox + " boîte";
+        if (nbBox > 1) { label += "s"; }
+        nbBoxLabel.setText(label);
+    }
+
+    private void updateNbSurfaceLabel(int nbSurface) {
+        String label = nbSurface + " surface";
+        if (nbSurface > 1) { label += "s"; }
+        nbSurfaceLabel.setText(label);
+    }
+
+    public void updateTileInformation(int nbSurface, int nbTile, int nbBox) {
+        updateNbSurfaceLabel(nbSurface);
+        updateNbTileLabel(nbTile);
+        updateNbBoxLabel(nbBox);
+    }
+
 }
 
