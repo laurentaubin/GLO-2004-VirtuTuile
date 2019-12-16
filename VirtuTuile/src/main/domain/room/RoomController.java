@@ -583,11 +583,11 @@ public class RoomController implements Serializable {
         room.updateTile(tile, width, height, name, nbrTilesPerBox, color);
     }
 
-    public void updateTileWidth(TileType selectedTileType, float tileWidth) {
+    public void updateTileWidth(TileType selectedTileType, double tileWidth) {
         room.updateTileWidth(selectedTileType, tileWidth);
     }
 
-    public void updateTileHeight(TileType tileType, float height) {
+    public void updateTileHeight(TileType tileType, double height) {
         room.updateTileHeight(tileType, height);
     }
 
@@ -603,20 +603,12 @@ public class RoomController implements Serializable {
         room.updateTileNumberPerBox(tileType, numberPerBox);
     }
 
-    public int getSelectedSurfaceNbTile() {
-        return this.room.getSelectedSurfaceNbTile();
+    public int[] getSelectedSurfaceInformation() {
+        return this.room.getSelectedSurfaceInformation();
     }
 
-    public int getSelectedSurfaceNbBox() {
-        return this.room.getSelectedSurfaceNbBox();
-    }
-
-    public int getAllSurfaceNbTile() {
-        return this.room.getAllSurfaceNbTile();
-    }
-
-    public int getAllSurfaceNbBox() {
-        return this.room.getAllSurfaceNbBox();
+    public int[] getProjectInformation() {
+        return this.room.getProjectInformation();
     }
 
     public boolean getCenterStatus() {
@@ -626,5 +618,10 @@ public class RoomController implements Serializable {
     public void startWithFullTile() {
         this.room.startWithFullTile();
     }
+
+    public int[] getTileInformation(TileType selectedTileType) {
+        return this.room.getTileInformation(selectedTileType);
+    }
+
 }
 

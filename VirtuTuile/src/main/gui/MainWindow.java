@@ -2,6 +2,7 @@ package gui;
 
 import domain.room.RoomController;
 import domain.room.TileType;
+import domain.room.surface.Surface;
 import util.UnitConverter;
 
 import javax.swing.*;
@@ -10,6 +11,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -25,17 +27,17 @@ public class MainWindow extends JFrame {
     public Point currentMousePoint = new Point();
     public Point initMousePoint = new Point();
 
-    public void updateTile(TileType selectedTileType, float tileWidth, float tileHeight, String tileName, int nbrTilesPerBox, Color tileColor) {
+    public void updateTile(TileType selectedTileType, double tileWidth, double tileHeight, String tileName, int nbrTilesPerBox, Color tileColor) {
         controller.updateTile(selectedTileType, tileWidth, tileHeight, tileName, nbrTilesPerBox, tileColor);
         drawingPanel.repaint();
     }
 
-    public void updateTileWidth(TileType selectedTileType, float tileWidth) {
+    public void updateTileWidth(TileType selectedTileType, double tileWidth) {
         controller.updateTileWidth(selectedTileType, tileWidth);
         drawingPanel.repaint();
     }
 
-    public void updateTileHeight(TileType tileType, float height) {
+    public void updateTileHeight(TileType tileType, double height) {
         controller.updateTileHeight(tileType, height);
         drawingPanel.repaint();
     }
@@ -53,6 +55,15 @@ public class MainWindow extends JFrame {
         controller.updateNumberPerBox(tileType, numberPerBox);
     }
 
+    public void updateTileInformation(TileType selectedTileType) {
+        int[] tileInformation = this.controller.getTileInformation(selectedTileType);
+        this.rightPanel.updateTileInformation(tileInformation[0], tileInformation[1], tileInformation[2]);
+    }
+
+    public void setCurrentSelectedTileType(TileType currentSelectedTileType) {
+        this.currentSelectedTileType = currentSelectedTileType;
+    }
+
 
     public enum ApplicationMode {
         SELECT, ADD_RECTANGULAR, ADD_IRREGULAR, MOVE_PATTERN
@@ -65,7 +76,7 @@ public class MainWindow extends JFrame {
     private boolean surfaceReadyToMove;
     private boolean redoApplied;
     private boolean mouseWasDragged;
-    private int numberOfSelectedSurfaces;
+    private TileType currentSelectedTileType = TileType.createTileWithDefaultParameters();
 
 
     public MainWindow() throws IOException {
@@ -404,12 +415,13 @@ public class MainWindow extends JFrame {
     }
 
     private void rightPanelTabChanged(ChangeEvent actionEvent) {
-        if (this.controller.getNumberOfSelectedSurfaces() == 1) {
-            rightPanel.updateSurfaceInformation(this.controller.getSelectedSurfaceNbTile(), this.controller.getSelectedSurfaceNbBox());
+        if (this.controller.getNumberOfSelectedSurfaces() == 0) {
+            updateProjectInformation();
         }
         else {
-            rightPanel.updateSurfaceInformation(this.controller.getAllSurfaceNbTile(), this.controller.getAllSurfaceNbBox());
+            updateSurfaceInformation();
         }
+        updateTileInformation(this.currentSelectedTileType);
     }
 
     public void selectButtonActionPerformed(ActionEvent actionEvent){
@@ -486,17 +498,22 @@ public class MainWindow extends JFrame {
             }
 
             rightPanel.updateSurfaceTabDimensions(this.controller.getSelectedSurfaceDimensions());
-            rightPanel.updateSurfaceInformation(this.controller.getSelectedSurfaceNbTile(), this.controller.getSelectedSurfaceNbBox());
             rightPanel.showSurfaceInformation();
+            updateSurfaceInformation();
+            updateTileInformation(this.currentSelectedTileType);
+            changeInformationPanelState();
             rightPanel.updateSurfaceTabColor(this.controller.getSelectedSurfaceColor());
             rightPanel.updateIfSelectedSurfaceIsAHole(this.controller.getIfSelectedSurfaceIsAHole(), this.controller.getNumberOfSelectedSurfaces());
             rightPanel.updatePatternTab(this.controller.getSelectedSurfaceGroutWidth(), this.controller.getNumberOfSelectedSurfaces());
 
+            /*
             rightPanel.updateTileTab(   controller.getCurrentTileWidth(),
                                         controller.getCurrentTileHeight(),
                                         controller.getCurrentNameTile(),
                                         controller.getSelectedSurfaceColor(),
                                         controller.getCurrentTilePerBox());
+
+             */
             changeInformationPanelState();
             rightPanel.updateSurfaceTabDistances(this.controller.getSelectedSurfacesDistances());
             rightPanel.updateCenterStatus(this.controller.getCenterStatus());
@@ -513,20 +530,38 @@ public class MainWindow extends JFrame {
             drawingPanel.repaint();
         }
 
-        if (this.controller.getNumberOfSelectedSurfaces() != 1) {
-            rightPanel.updateSurfaceInformation(this.controller.getAllSurfaceNbTile(), this.controller.getAllSurfaceNbBox());
-            rightPanel.showProjectInformation();;
+        if (this.controller.getNumberOfSelectedSurfaces() == 0) {
+            updateProjectInformation();
+        }
+        else {
+            updateSurfaceInformation();
         }
 
         drawingPanel.repaint();
     }
 
+    private void updateSurfaceInformation() {
+        int[] surfaceInformation = this.controller.getSelectedSurfaceInformation();
+        rightPanel.updateSurfaceInformation(surfaceInformation[0], surfaceInformation[1], surfaceInformation[2]);
+    }
+
+    private void updateProjectInformation() {
+        int[] projectInformation = this.controller.getProjectInformation();
+        rightPanel.updateSurfaceInformation(projectInformation[0], projectInformation[1], projectInformation[2]);
+    }
+
     private void changeInformationPanelState() {
-        if (this.controller.getNumberOfSelectedSurfaces() == 1) {
-            rightPanel.showSurfaceInformation();
-        }
-        else {
-            rightPanel.showProjectInformation();
+        int numberOfSelectedSurfaces = this.controller.getNumberOfSelectedSurfaces();
+
+        switch (numberOfSelectedSurfaces) {
+            case 0:
+                rightPanel.showProjectInformation();
+                break;
+            case 1:
+                rightPanel.showSurfaceInformation();
+                break;
+            default:
+                rightPanel.showMultipleSurfacesInformation();
         }
     }
 

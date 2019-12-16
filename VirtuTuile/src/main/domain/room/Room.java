@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -1151,40 +1152,6 @@ public void setSelectedSurfacesHeightDistance(double heightDifference) {
         tileType.setColor(color);
     }
 
-    public int getSelectedSurfaceNbTile() {
-        for (Surface surface : this.surfaceList) {
-            if (surface.isSelected()) {
-                return surface.getNumberOfTiles();
-            }
-        }
-        return 0;
-    }
-
-    public int getSelectedSurfaceNbBox() {
-        for (Surface surface : this.surfaceList) {
-            if (surface.isSelected()) {
-                return (int) Math.ceil(surface.getNumberOfBoxes());
-            }
-        }
-        return 0;
-    }
-
-    public int getAllSurfaceNbTile() {
-        int sum = 0;
-        for (Surface surface : this.surfaceList) {
-            sum += surface.getNumberOfTiles();
-        }
-        return sum;
-    }
-
-    public int getAllSurfaceNbBox() {
-        double sum = 0;
-        for (Surface surface : this.surfaceList) {
-            sum += surface.getNumberOfBoxes();
-        }
-        return (int) Math.ceil(sum);
-    }
-
     public boolean getCenterStatus() {
         boolean centerStatus = false;
         if (getNumberOfSelectedSurfaces() == 0 || getNumberOfSelectedSurfaces() > 1) {
@@ -1206,6 +1173,62 @@ public void setSelectedSurfacesHeightDistance(double heightDifference) {
                 surface.startWithFullTile();
             }
         }
+    }
+
+    public int[] getTileInformation(TileType selectedTileType) {
+        ArrayList<Surface> surfacesWithTile = getSurfacesWithTile(selectedTileType);
+        int[] tileInformation = new int[3];
+        tileInformation[0] = surfacesWithTile.size();
+        tileInformation[1] = getNumberOfTilesUsed(surfacesWithTile);
+        tileInformation[2] = getNumberOfBoxesUsed(surfacesWithTile);
+        return tileInformation;
+    }
+
+    private int getNumberOfBoxesUsed(ArrayList<Surface> surfacesWithTile) {
+        double sum = 0;
+        for (Surface surface : surfacesWithTile) {
+            sum += surface.getNumberOfBoxes();
+        }
+        return (int) Math.ceil(sum);
+    }
+
+    private int getNumberOfTilesUsed(ArrayList<Surface> surfacesWithTile) {
+        int sum = 0;
+        for (Surface surface : surfacesWithTile) {
+            sum += surface.getNumberOfTiles();
+        }
+        return sum;
+    }
+
+    private ArrayList<Surface> getSurfacesWithTile(TileType selectedTileType) {
+        ArrayList<Surface> surfacesWithTile = new ArrayList<>();
+
+        for (Surface surface : this.surfaceList) {
+            if (surface.getTileType().equals(selectedTileType)) {
+                surfacesWithTile.add(surface);
+            }
+        }
+        return surfacesWithTile;
+    }
+
+    public int[] getSelectedSurfaceInformation() {
+        ArrayList<Surface> selectedSurfaces = getSelectedSurfaces();
+        int[] surfaceInformation = new int[3];
+        surfaceInformation[0] = selectedSurfaces.size();
+        surfaceInformation[1] = getNumberOfTilesUsed(selectedSurfaces);
+        surfaceInformation[2] = getNumberOfBoxesUsed(selectedSurfaces);
+
+        return surfaceInformation;
+
+    }
+
+    public int[] getProjectInformation() {
+        int[] projectInformation = new int[3];
+        projectInformation[0] = this.surfaceList.size();
+        projectInformation[1] = getNumberOfTilesUsed(this.surfaceList);
+        projectInformation[2] = getNumberOfBoxesUsed(this.surfaceList);
+
+        return projectInformation;
     }
 }
 
