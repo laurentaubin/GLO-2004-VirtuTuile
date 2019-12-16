@@ -166,14 +166,18 @@ public class TileTab extends JPanel {
     public void updateTileWidth() {
         TileType selectedTileType = (TileType)tileComboBox.getSelectedItem();
         float tileWidth = 0f;
+        String widthString = tileWidthField.getText();
         if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.IMPERIAL) {
-            String widthValue = tileWidthField.getText();
-            String[] widthStringArray = getImperialArray(widthValue);
-            double widthInchTotal = UnitConverter.stringToInch(widthStringArray);
+            String[] inchArray = getImperialArray(widthString);
+            if (inchArray[0].equals("Format invalide")) {
+                JOptionPane.showMessageDialog(null, "Le format doit être 0\"0/0");
+                return;
+            }
+            double widthInchTotal = UnitConverter.stringToInch(inchArray);
             tileWidth = UnitConverter.convertSelectedUnitToPixel(widthInchTotal, mainWindow.getCurrentMeasurementMode());
         }
         else {
-            tileWidth = UnitConverter.convertSelectedUnitToPixel(((Number) this.tileWidthField.getValue()).floatValue(), mainWindow.getCurrentMeasurementMode());
+            tileWidth = UnitConverter.convertSelectedUnitToPixel(Double.parseDouble(widthString), mainWindow.getCurrentMeasurementMode());
         }
         mainWindow.updateTileWidth(selectedTileType, tileWidth);
     }
@@ -181,14 +185,18 @@ public class TileTab extends JPanel {
     public void updateTileHeight() {
         TileType selectedTileType = (TileType)tileComboBox.getSelectedItem();
         float tileHeight = 0f;
+        String heightString = tileHeightField.getText();
         if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.IMPERIAL) {
-            String heightValue = tileWidthField.getText();
-            String[] heightStringArray = getImperialArray(heightValue);
-            double heightInchTotal = UnitConverter.stringToInch(heightStringArray);
+            String[] inchArray = getImperialArray(heightString);
+            if (inchArray[0].equals("Format invalide")) {
+                JOptionPane.showMessageDialog(null, "Le format doit être 0\"0/0");
+                return;
+            }
+            double heightInchTotal = UnitConverter.stringToInch(inchArray);
             tileHeight = UnitConverter.convertSelectedUnitToPixel(heightInchTotal, mainWindow.getCurrentMeasurementMode());
         }
         else {
-            tileHeight = UnitConverter.convertSelectedUnitToPixel(((Number) this.tileHeightField.getValue()).floatValue(), mainWindow.getCurrentMeasurementMode());
+            tileHeight = UnitConverter.convertSelectedUnitToPixel(Double.parseDouble(heightString), mainWindow.getCurrentMeasurementMode());
         }
         mainWindow.updateTileHeight(selectedTileType, tileHeight);
     }
@@ -232,8 +240,22 @@ public class TileTab extends JPanel {
 
     public void setTileInformation() {
         TileType selectedTileType = (TileType)tileComboBox.getSelectedItem();
-        this.tileWidthField.setValue(selectedTileType.getWidth());
-        this.tileHeightField.setValue(selectedTileType.getHeight());
+        double width = selectedTileType.getWidth();
+        double height = selectedTileType.getHeight();
+
+        width = UnitConverter.convertPixelToSelectedUnit(width, MainWindow.MeasurementUnitMode.METRIC);
+        height = UnitConverter.convertPixelToSelectedUnit(height, MainWindow.MeasurementUnitMode.METRIC);
+
+        BigDecimal bdWidth = BigDecimal.valueOf(width);
+        bdWidth = bdWidth.setScale(2, RoundingMode.HALF_UP);
+        String widthString = Double.toString(bdWidth.doubleValue());
+        this.tileWidthField.setText(widthString + "m");
+
+        BigDecimal bdHeight = BigDecimal.valueOf(height);
+        bdHeight = bdHeight.setScale(2, RoundingMode.HALF_UP);
+        String heightString = Double.toString(bdHeight.doubleValue());
+        this.tileHeightField.setText(heightString + "m");
+
         this.tileNameField.setText(selectedTileType.getName());
         this.tileColorButton.setBackground(selectedTileType.getColor());
         this.updateColor =  selectedTileType.getColor();
@@ -277,7 +299,10 @@ public class TileTab extends JPanel {
             this.tileWidthField.setText(getImperialFormat(width));
         }
         else {
-            this.tileWidthField.setValue(width);
+            BigDecimal bdWidth = BigDecimal.valueOf(width);
+            bdWidth = bdWidth.setScale(3, RoundingMode.HALF_UP);
+            String heightString = Double.toString(bdWidth.doubleValue());
+            this.tileWidthField.setText(heightString + "m");
         }
     }
 
@@ -286,9 +311,10 @@ public class TileTab extends JPanel {
             this.tileHeightField.setText(getImperialFormat(height));
         }
         else {
-
-
-            this.tileHeightField.setValue(height);
+            BigDecimal bdHeight = BigDecimal.valueOf(height);
+            bdHeight = bdHeight.setScale(3, RoundingMode.HALF_UP);
+            String heightString = Double.toString(bdHeight.doubleValue());
+            this.tileHeightField.setText(heightString + "m");
         }
     }
 
@@ -325,7 +351,7 @@ public class TileTab extends JPanel {
             stringArray[1] = fraction;
             return stringArray;
         } catch (StringIndexOutOfBoundsException e) {
-            System.out.println("Format invalide");
+            stringArray[0] = "Format invalide";
         }
         return stringArray;
     }

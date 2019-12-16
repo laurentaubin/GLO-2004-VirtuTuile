@@ -282,7 +282,12 @@ public class SurfaceTab extends JPanel{
         if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.IMPERIAL) {
             String value = widthField.getText();
             try {
-                double inchTotal = UnitConverter.stringToInch(getImperialArray(value));
+                String[] inchArray = getImperialArray(value);
+                if (inchArray[0].equals("Format invalide")) {
+                    JOptionPane.showMessageDialog(null, "Le format doit être 0\"0/0");
+                    return;
+                }
+                double inchTotal = UnitConverter.stringToInch(inchArray);
                 enteredWidth = UnitConverter.convertSelectedUnitToPixel(inchTotal, mainWindow.getCurrentMeasurementMode());
                 this.mainWindow.setSelectedSurfaceWidth(enteredWidth);
             }
@@ -291,7 +296,7 @@ public class SurfaceTab extends JPanel{
             }
         }
         else if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.METRIC) {
-            enteredWidth = UnitConverter.convertSelectedUnitToPixel((double)widthField.getValue(), mainWindow.getCurrentMeasurementMode());
+            enteredWidth = UnitConverter.convertSelectedUnitToPixel(Double.parseDouble(widthField.getText()), mainWindow.getCurrentMeasurementMode());
             this.mainWindow.setSelectedSurfaceWidth(enteredWidth);
         }
     }
@@ -301,7 +306,12 @@ public class SurfaceTab extends JPanel{
         if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.IMPERIAL) {
             String value = heightField.getText();
             try {
-                double inchTotal = UnitConverter.stringToInch(getImperialArray(value));
+                String[] inchArray = getImperialArray(value);
+                if (inchArray[0].equals("Format invalide")) {
+                    JOptionPane.showMessageDialog(null, "Le format doit être 0\"0/0");
+                    return;
+                }
+                double inchTotal = UnitConverter.stringToInch(inchArray);
                 enteredHeight = UnitConverter.convertSelectedUnitToPixel(inchTotal, mainWindow.getCurrentMeasurementMode());
                 this.mainWindow.setSelectedSurfaceHeight(enteredHeight);
             }
@@ -310,7 +320,7 @@ public class SurfaceTab extends JPanel{
             }
         }
         else if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.METRIC) {
-            enteredHeight = UnitConverter.convertSelectedUnitToPixel((double)heightField.getValue(), mainWindow.getCurrentMeasurementMode());
+            enteredHeight = UnitConverter.convertSelectedUnitToPixel(Double.parseDouble(heightField.getText()), mainWindow.getCurrentMeasurementMode());
             this.mainWindow.setSelectedSurfaceHeight(enteredHeight);
         }
     }
@@ -320,7 +330,12 @@ public class SurfaceTab extends JPanel{
         if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.IMPERIAL) {
             String value = widthDistanceField.getText();
             try {
-                double inchTotal = UnitConverter.stringToInch(getImperialArray(value));
+                String[] inchArray = getImperialArray(value);
+                if (inchArray[0].equals("Format invalide")) {
+                    JOptionPane.showMessageDialog(null, "Le format doit être 0\"0/0");
+                    return;
+                }
+                double inchTotal = UnitConverter.stringToInch(inchArray);
                 enteredWidth = UnitConverter.convertSelectedUnitToPixel(inchTotal, mainWindow.getCurrentMeasurementMode());
                 this.mainWindow.setSelectedSurfacesWidthDistance(enteredWidth);
             }
@@ -339,7 +354,12 @@ public class SurfaceTab extends JPanel{
         if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.IMPERIAL) {
             String value = heightDistanceField.getText();
             try {
-                double inchTotal = UnitConverter.stringToInch(getImperialArray(value));
+                String[] inchArray = getImperialArray(value);
+                if (inchArray[0].equals("Format invalide")) {
+                    JOptionPane.showMessageDialog(null, "Le format doit être 0\"0/0");
+                    return;
+                }
+                double inchTotal = UnitConverter.stringToInch(inchArray);
                 enteredHeight = UnitConverter.convertSelectedUnitToPixel(inchTotal, mainWindow.getCurrentMeasurementMode());
                 this.mainWindow.setSelectedSurfacesHeightDistance(enteredHeight);
             }
@@ -456,7 +476,6 @@ public class SurfaceTab extends JPanel{
         int inch = (int)(value);
         double fraction = value - inch;
         BigDecimal bd = BigDecimal.valueOf(fraction);
-        System.out.println(bd);
         bd = bd.setScale(1, RoundingMode.HALF_DOWN);
         String imperialString = Integer.toString(inch) + "\"" + Double.toString(bd.doubleValue());
         return imperialString;
@@ -473,6 +492,7 @@ public class SurfaceTab extends JPanel{
             return stringArray;
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("Format invalide");
+            stringArray[0] = "Format invalide";
         }
         return stringArray;
     }

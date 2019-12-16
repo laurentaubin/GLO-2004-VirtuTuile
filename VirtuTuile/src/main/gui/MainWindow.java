@@ -499,6 +499,7 @@ public class MainWindow extends JFrame {
                                         controller.getCurrentTilePerBox());
             changeInformationPanelState();
             rightPanel.updateSurfaceTabDistances(this.controller.getSelectedSurfacesDistances());
+            rightPanel.updateCenterStatus(this.controller.getCenterStatus());
         }
 
         if (this.currentApplicationMode == ApplicationMode.ADD_RECTANGULAR && SwingUtilities.isLeftMouseButton(mouseEvent)) {
@@ -759,10 +760,12 @@ public class MainWindow extends JFrame {
             switch(comboBox.getSelectedIndex()) {
                 case 0:
                     // TODO ajouter la conversion d'unité Mètre -> Pixel
+                    newGridGap = UnitConverter.convertSelectedUnitToPixel(newGridGap, MeasurementUnitMode.METRIC);
                     this.drawingPanel.setGridGap(newGridGap);
                     break;
                 case 1:
                     // TODO ajouter la conversion d'unité Pouce -> Pixel
+                    newGridGap = UnitConverter.convertSelectedUnitToPixel(newGridGap, MeasurementUnitMode.IMPERIAL);
                     this.drawingPanel.setGridGap(newGridGap);
                     break;
             }
@@ -898,8 +901,8 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
-    public void setAnglePattern() {
-        controller.setAnglePattern();
+    public void setAnglePattern(int angle) {
+        controller.setAnglePattern(angle);
         drawingPanel.repaint();
     }
 
@@ -1024,9 +1027,30 @@ public class MainWindow extends JFrame {
         drawingPanel.repaint();
     }
 
-    public void centerTiles(){
-        controller.centerTiles();
+    public void centerTiles(boolean bool){
+        controller.centerTiles(bool);
         drawingPanel.repaint();
+    }
+
+    public void startWithFullTile() {
+        controller.startWithFullTile();
+        rightPanel.updateCenterStatus(false);
+        drawingPanel.repaint();
+    }
+
+    private String[] getImperialArray(String value) {
+        String[] stringArray = new String[2];
+        try {
+            int inchIndex = value.indexOf("\"");
+            String inch = value.substring(0, inchIndex);
+            String fraction = value.substring(inchIndex + 1);
+            stringArray[0] = inch;
+            stringArray[1] = fraction;
+            return stringArray;
+        } catch (StringIndexOutOfBoundsException e) {
+            System.out.println("Format invalide");
+        }
+        return stringArray;
     }
 
     private ButtonGroup buttonGroup;

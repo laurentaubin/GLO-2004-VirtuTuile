@@ -405,8 +405,8 @@ public class Surface implements Serializable {
     }
 
 
-    public void setCoverCenter(){
-        this.center = !this.center;
+    public void setCoverCenter(boolean bool){
+        this.center = bool;
     }
 
     public boolean getCoverCenter(){
@@ -781,6 +781,15 @@ public class Surface implements Serializable {
 
     public double getNumberOfBoxes() {
         return (double) getNumberOfTiles() / getTileType().getNbrTilesPerBox();
+    }
+
+    public boolean getIsCenter() {
+        return this.center;
+    }
+
+    public void startWithFullTile() {
+        this.center = false;
+        this.pattern.initOffset();
     }
 }
 

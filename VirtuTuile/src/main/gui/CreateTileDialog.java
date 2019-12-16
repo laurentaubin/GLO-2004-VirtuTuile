@@ -1,6 +1,7 @@
 package gui;
 
 import com.sun.tools.javac.Main;
+import javafx.beans.binding.DoubleExpression;
 import util.UnitConverter;
 
 import javax.swing.*;
@@ -30,8 +31,8 @@ public class CreateTileDialog extends JDialog {
     private JLabel numberLabel;
 
     private String name;
-    private double width;
-    private double height;
+    private String width;
+    private String height;
     private Color color;
     private int numberOfTilePerBox;
 
@@ -39,8 +40,6 @@ public class CreateTileDialog extends JDialog {
         this.tileTab = tileTab;
         this.measurementUnitMode = measurementUnitMode;
         this.name = "";
-        this.widthField.setValue(0d);
-        this.heightField.setValue(0d);
         this.color = Color.WHITE;
         this.numberTilesField.setValue(0);
 
@@ -87,21 +86,29 @@ public class CreateTileDialog extends JDialog {
 
     private void setTileName() {
         if (nameField.getText().length() == 0) {
-            System.out.println("Allo");
             this.name = "";
         }
         else {
-
             this.name += nameField.getText();
         }
     }
 
     private void setTileWidth() {
-        this.width = ((Number)widthField.getValue()).doubleValue();
+        if (widthField.getText().length() == 0) {
+            this.width = "";
+        }
+        else {
+            this.width = widthField.getText();
+        }
     }
 
     private void setTileHeight() {
-        this.height = (double)heightField.getValue();
+        if (heightField.getText().length() == 0) {
+            this.height = "";
+        }
+        else {
+            this.height = heightField.getText();
+        }
     }
 
     private void setTileColor() {
@@ -121,7 +128,24 @@ public class CreateTileDialog extends JDialog {
         setTileHeight();
         setNumberOfTilePerBox();
         if (validateInputs()) {
-            tileTab.createTileFromUserInput(this.color, this.width, this.height, this.name, this.numberOfTilePerBox);
+            double width = 0d;
+            double height = 0d;
+            if (measurementUnitMode == MainWindow.MeasurementUnitMode.IMPERIAL) {
+                String[] widthArray = getImperialArray(this.width);
+                double inchTotal = UnitConverter.stringToInch(widthArray);
+                width = UnitConverter.convertSelectedUnitToPixel(inchTotal, MainWindow.MeasurementUnitMode.IMPERIAL);
+
+                String[] heightArray = getImperialArray(this.height);
+                inchTotal = UnitConverter.stringToInch(heightArray);
+                height = UnitConverter.convertSelectedUnitToPixel(inchTotal, MainWindow.MeasurementUnitMode.IMPERIAL);
+            }
+
+            else if (measurementUnitMode == MainWindow.MeasurementUnitMode.METRIC) {
+                width = UnitConverter.convertSelectedUnitToPixel(Double.parseDouble(this.width), MainWindow.MeasurementUnitMode.METRIC);
+                height = UnitConverter.convertSelectedUnitToPixel(Double.parseDouble(this.height), MainWindow.MeasurementUnitMode.METRIC);
+            }
+
+            tileTab.createTileFromUserInput(this.color, width, height, this.name, this.numberOfTilePerBox);
             dispose();
         }
         else {
@@ -140,13 +164,52 @@ public class CreateTileDialog extends JDialog {
             areValid = false;
             JOptionPane.showMessageDialog(this, "Identifiant de la tuile ne peut être vide");
         }
-        else if (this.width == 0) {
+        else if (this.width.isEmpty()) {
             areValid = false;
             JOptionPane.showMessageDialog(this, "La largeur ne peut pas être nulle");
         }
-        else if (this.height == 0) {
+
+        else if (!this.width.isEmpty()) {
+            if (measurementUnitMode == MainWindow.MeasurementUnitMode.IMPERIAL) {
+                String[] inchArray = getImperialArray(this.width);
+                if (inchArray[0] == "format invalide") {
+                    JOptionPane.showMessageDialog(null, "Le format doit être 0\"0/0");
+                    areValid = false;
+                }
+            }
+            else if (measurementUnitMode == MainWindow.MeasurementUnitMode.METRIC) {
+                try {
+                    double width = Double.parseDouble(this.width);
+                }
+                catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Format de la largeur invalide");
+                    areValid = false;
+                }
+            }
+        }
+
+        else if (this.height.isEmpty()) {
             areValid = false;
             JOptionPane.showMessageDialog(this, "La hauteur ne peut pas être nulle");
+        }
+
+        else if (!this.height.isEmpty()) {
+            if (measurementUnitMode == MainWindow.MeasurementUnitMode.IMPERIAL) {
+                String[] inchArray = getImperialArray(this.height);
+                if (inchArray[0] == "format invalide") {
+                    JOptionPane.showMessageDialog(null, "Le format doit être 0\"0/0");
+                    areValid = false;
+                }
+            }
+            else if (measurementUnitMode == MainWindow.MeasurementUnitMode.METRIC) {
+                try {
+                    double height = Double.parseDouble(this.height);
+                }
+                catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Format de la hauteur invalide");
+                    areValid = false;
+                }
+            }
         }
 
         else if (numberOfTilePerBox == 0) {
@@ -154,5 +217,20 @@ public class CreateTileDialog extends JDialog {
             JOptionPane.showMessageDialog(this, "Le nombre de tuiles par boîte ne peut pas être nulle");
         }
         return areValid;
+    }
+
+    private String[] getImperialArray(String value) {
+        String[] stringArray = new String[2];
+        try {
+            int inchIndex = value.indexOf("\"");
+            String inch = value.substring(0, inchIndex);
+            String fraction = value.substring(inchIndex + 1);
+            stringArray[0] = inch;
+            stringArray[1] = fraction;
+            return stringArray;
+        } catch (StringIndexOutOfBoundsException e) {
+            stringArray[0] = "format invalide";
+        }
+        return stringArray;
     }
 }

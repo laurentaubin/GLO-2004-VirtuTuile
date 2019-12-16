@@ -520,10 +520,11 @@ public void setSelectedSurfacesHeightDistance(double heightDifference) {
         }
     }
 
-    public void setAnglePattern() {
+    public void setAnglePattern(int angle) {
         for (Surface surfaceInRoom : surfaceList) {
             if (surfaceInRoom.isSelected()) {
                 InclinePattern inclinePattern = new InclinePattern();
+                inclinePattern.setAngle(angle);
                 inclinePattern.generateTiles(surfaceInRoom.getBoundingRectangle(), surfaceInRoom.getTileType(), surfaceInRoom.getArea(), surfaceInRoom.getGroutWidth(),surfaceInRoom.getCoverCenter());
                 surfaceInRoom.setPattern(inclinePattern);
             }
@@ -1101,10 +1102,10 @@ public void setSelectedSurfacesHeightDistance(double heightDifference) {
     }
 
 
-    public void centerTiles(){
+    public void centerTiles(boolean bool){
         for(Surface surface : surfaceList){
             if(surface.isSelected()){
-                surface.setCoverCenter();
+                surface.setCoverCenter(bool);
             }
 
         }
@@ -1183,4 +1184,29 @@ public void setSelectedSurfacesHeightDistance(double heightDifference) {
         }
         return (int) Math.ceil(sum);
     }
+
+    public boolean getCenterStatus() {
+        boolean centerStatus = false;
+        if (getNumberOfSelectedSurfaces() == 0 || getNumberOfSelectedSurfaces() > 1) {
+            return false;
+        }
+        else {
+            for (Surface surface : surfaceList) {
+                if (surface.isSelected()) {
+                    centerStatus = surface.getIsCenter();
+                }
+            }
+        }
+        return centerStatus;
+    }
+
+    public void startWithFullTile() {
+        for (Surface surface : surfaceList) {
+            if (surface.isSelected()) {
+                surface.startWithFullTile();
+            }
+        }
+    }
 }
+
+

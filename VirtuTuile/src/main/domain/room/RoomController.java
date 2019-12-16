@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 
-public class RoomController implements Serializable{
+public class RoomController implements Serializable {
     private Room room;
     private SurfaceDrawer surfaceDrawer;
 
@@ -33,7 +33,7 @@ public class RoomController implements Serializable{
         addRoom();
     }
 
-    public RoomController(){
+    public RoomController() {
         room = new Room();
         roomList = new ArrayList<Room>();
 
@@ -55,28 +55,24 @@ public class RoomController implements Serializable{
             this.roomList.remove(0);
             this.roomList.add(null);
             this.undoRedoPointer = 29;
-        }
-        else {
+        } else {
             this.roomList.add(room);
             undoRedoPointer++;
         }
     }
 
     //https://stackoverflow.com/questions/11530276/how-do-i-implement-a-simple-undo-redo-for-actions-in-java
-    private void deleteElementsAfterPointer(int undoRedoPointerState)
-    {
-        if(roomList.isEmpty()) {
+    private void deleteElementsAfterPointer(int undoRedoPointerState) {
+        if (roomList.isEmpty()) {
             return;
         }
 
         boolean roomRemoved = false;
-        for(int i = roomList.size() - 1; i >= undoRedoPointerState; i--)
-        {
-            if(i > undoRedoPointerState) {
+        for (int i = roomList.size() - 1; i >= undoRedoPointerState; i--) {
+            if (i > undoRedoPointerState) {
                 roomList.remove(i);
                 roomRemoved = true;
-            }
-            else if (i == undoRedoPointerState && roomList.size() > 0 && roomRemoved) {
+            } else if (i == undoRedoPointerState && roomList.size() > 0 && roomRemoved) {
                 roomList.remove(i);
                 undoRedoPointer--;
                 addRoom();
@@ -109,30 +105,27 @@ public class RoomController implements Serializable{
         File curFile = chooser.getSelectedFile();
 
         try {
-        FileInputStream inputFile = new FileInputStream(new File(String.valueOf(curFile)));
-        ObjectInputStream inputObject = new ObjectInputStream(inputFile);
+            FileInputStream inputFile = new FileInputStream(new File(String.valueOf(curFile)));
+            ObjectInputStream inputObject = new ObjectInputStream(inputFile);
 
-        this.room = (Room) inputObject.readObject();
-        System.out.println(curFile);
-        curFile = new File(String.valueOf(curFile).substring(0, String.valueOf(curFile).lastIndexOf('.')));
-        room.setPath(curFile);
+            this.room = (Room) inputObject.readObject();
+            System.out.println(curFile);
+            curFile = new File(String.valueOf(curFile).substring(0, String.valueOf(curFile).lastIndexOf('.')));
+            room.setPath(curFile);
 
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.out.println(e);
-        }
-        catch (ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             System.out.println(e);
         }
     }
 
 
-    public void saveSelected(){
+    public void saveSelected() {
         System.out.println(room.getPath());
-        if(room.getPath() == null){
+        if (room.getPath() == null) {
             saveAsSelected();
-        }
-        else{
+        } else {
 
             try {
                 FileOutputStream fileOut = new FileOutputStream(room.getPath() + ".ser");
@@ -140,23 +133,23 @@ public class RoomController implements Serializable{
                 objectOut.writeObject(this.room);
                 objectOut.close();
                 System.out.println("The Object  was succesfully written to a file");
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
 
-    public void desactivateInspectorMode(){
+    public void desactivateInspectorMode() {
         room.desactivateInspectorMode();
     }
-    public void activateInspectorMode(){
+
+    public void activateInspectorMode() {
         room.activateInspectorMode();
     }
 
 
-    public void saveAsSelected(){
+    public void saveAsSelected() {
         String path = Paths.get("").toAbsolutePath().toString();
         JFileChooser chooser = new JFileChooser(path);
         int validation = chooser.showSaveDialog(null);
@@ -170,20 +163,19 @@ public class RoomController implements Serializable{
                 objectOut.close();
                 System.out.println("The Object  was succesfully written to a file");
                 room.setPath(pathFile);
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
 
-    public void newProjectItemActionPerformed(){
+    public void newProjectItemActionPerformed() {
         String[] options = {"Enregistrer", "Continuer"};
         int choix = JOptionPane.showOptionDialog(null, "Souhaitez-vous enregirtrer votre travail avant ?",
                 "Attention!", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 
-        if(choix == 0){
+        if (choix == 0) {
             saveSelected();
         }
         this.room = new Room();
@@ -206,8 +198,7 @@ public class RoomController implements Serializable{
         deleteElementsAfterPointer(this.undoRedoPointer);
         if (number_of_edges == 4) {
             room.addRectangularSurface(xPoints, yPoints, number_of_edges);
-        }
-        else {
+        } else {
             //room.addIrregularSurface(point, xPoints, yPoints, number_of_edges);
         }
         addRoom();
@@ -217,8 +208,7 @@ public class RoomController implements Serializable{
         deleteElementsAfterPointer(this.undoRedoPointer);
         if (number_of_edges == 4) {
             room.addRectangularSurfaceOnGrid(xDrawPoints, yDrawPoints, number_of_edges, gridGap);
-        }
-        else {
+        } else {
             // room.addIrregularSurfaceOnGrid(point, xPoints, yPoints, number_of_edges, gridGap);
         }
         addRoom();
@@ -246,7 +236,7 @@ public class RoomController implements Serializable{
         room.clearSurfaceProjectionList();
     }
 
-    public void deleteSurface(){
+    public void deleteSurface() {
         deleteElementsAfterPointer(this.undoRedoPointer);
         room.deleteSurface();
         addRoom();
@@ -257,7 +247,7 @@ public class RoomController implements Serializable{
         return room.getNumberOfSurfaces();
     }
 
-    public boolean surfaceSelecte(){
+    public boolean surfaceSelecte() {
         return room.surfaceSelecte();
     }
 
@@ -303,7 +293,7 @@ public class RoomController implements Serializable{
     }
 
 
-    public double[] getSelectedRectangularSurfaceDimensions(){
+    public double[] getSelectedRectangularSurfaceDimensions() {
         return room.getSelectedRectangularSurfaceDimensions();
     }
 
@@ -313,21 +303,21 @@ public class RoomController implements Serializable{
     }
      */
 
-    public boolean doesSelectedSurfacesIntersect(){
+    public boolean doesSelectedSurfacesIntersect() {
         return room.surfaceInTouch();
     }
 
-    public int numberOfSelectedSurfaces(){
+    public int numberOfSelectedSurfaces() {
         return room.getNumberOfSelectedSurfaces();
     }
 
-    public void setGroutColor(Color color){
+    public void setGroutColor(Color color) {
         deleteElementsAfterPointer(this.undoRedoPointer);
         room.setGroutColor(color);
         addRoom();
     }
 
-    public void setSelectedSurfaceColor(Color color){
+    public void setSelectedSurfaceColor(Color color) {
         deleteElementsAfterPointer(this.undoRedoPointer);
         room.setSelectedSurfaceColor(color);
         addRoom();
@@ -419,9 +409,9 @@ public class RoomController implements Serializable{
         addRoom();
     }
 
-    public void setAnglePattern() {
+    public void setAnglePattern(int angle) {
         deleteElementsAfterPointer(this.undoRedoPointer);
-        room.setAnglePattern();
+        room.setAnglePattern(angle);
         addRoom();
     }
 
@@ -555,7 +545,7 @@ public class RoomController implements Serializable{
 
     public void addPoint(Point point, double zoom) {
         if (!this.pointList.isEmpty()) {
-            if (Math.abs(point.x - this.pointList.get(0).x) <= (5/zoom) && Math.abs(point.y - this.pointList.get(0).y) <= (5/zoom)) {
+            if (Math.abs(point.x - this.pointList.get(0).x) <= (5 / zoom) && Math.abs(point.y - this.pointList.get(0).y) <= (5 / zoom)) {
                 addIrregularSurface(this.pointList);
                 clearPointList();
                 return;
@@ -574,9 +564,9 @@ public class RoomController implements Serializable{
         addRoom();
     }
 
-    public void centerTiles(){
+    public void centerTiles(boolean bool) {
         deleteElementsAfterPointer(this.undoRedoPointer);
-        room.centerTiles();
+        room.centerTiles(bool);
         addRoom();
     }
 
@@ -585,7 +575,7 @@ public class RoomController implements Serializable{
         this.room.updateSelectedSurfacesPatternPosition(deltaX, deltaY);
     }
 
-    public void dimensionIncorrectPaquet(){
+    public void dimensionIncorrectPaquet() {
         room.dimensionIncorrectPaquet();
     }
 
@@ -627,6 +617,14 @@ public class RoomController implements Serializable{
 
     public int getAllSurfaceNbBox() {
         return this.room.getAllSurfaceNbBox();
+    }
+
+    public boolean getCenterStatus() {
+        return this.room.getCenterStatus();
+    }
+
+    public void startWithFullTile() {
+        this.room.startWithFullTile();
     }
 }
 
