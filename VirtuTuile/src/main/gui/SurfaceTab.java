@@ -477,7 +477,7 @@ public class SurfaceTab extends JPanel{
         int inch = (int)(value);
         double fraction = value - inch;
         BigDecimal bd = BigDecimal.valueOf(fraction);
-        bd = bd.setScale(1, RoundingMode.HALF_DOWN);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
         String imperialString = Integer.toString(inch) + "\"" + Double.toString(bd.doubleValue());
         return imperialString;
     }

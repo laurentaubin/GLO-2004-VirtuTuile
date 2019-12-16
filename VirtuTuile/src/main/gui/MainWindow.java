@@ -27,17 +27,17 @@ public class MainWindow extends JFrame {
     public Point currentMousePoint = new Point();
     public Point initMousePoint = new Point();
 
-    public void updateTile(TileType selectedTileType, float tileWidth, float tileHeight, String tileName, int nbrTilesPerBox, Color tileColor) {
+    public void updateTile(TileType selectedTileType, double tileWidth, double tileHeight, String tileName, int nbrTilesPerBox, Color tileColor) {
         controller.updateTile(selectedTileType, tileWidth, tileHeight, tileName, nbrTilesPerBox, tileColor);
         drawingPanel.repaint();
     }
 
-    public void updateTileWidth(TileType selectedTileType, float tileWidth) {
+    public void updateTileWidth(TileType selectedTileType, double tileWidth) {
         controller.updateTileWidth(selectedTileType, tileWidth);
         drawingPanel.repaint();
     }
 
-    public void updateTileHeight(TileType tileType, float height) {
+    public void updateTileHeight(TileType tileType, double height) {
         controller.updateTileHeight(tileType, height);
         drawingPanel.repaint();
     }
@@ -500,11 +500,15 @@ public class MainWindow extends JFrame {
             rightPanel.updateIfSelectedSurfaceIsAHole(this.controller.getIfSelectedSurfaceIsAHole(), this.controller.getNumberOfSelectedSurfaces());
             rightPanel.updatePatternTab(this.controller.getSelectedSurfaceGroutWidth(), this.controller.getNumberOfSelectedSurfaces());
 
+            /*
             rightPanel.updateTileTab(   controller.getCurrentTileWidth(),
                                         controller.getCurrentTileHeight(),
                                         controller.getCurrentNameTile(),
                                         controller.getSelectedSurfaceColor(),
                                         controller.getCurrentTilePerBox());
+
+             */
+            changeInformationPanelState();
             rightPanel.updateSurfaceTabDistances(this.controller.getSelectedSurfacesDistances());
             rightPanel.updateCenterStatus(this.controller.getCenterStatus());
         }

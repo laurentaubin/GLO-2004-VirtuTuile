@@ -146,8 +146,8 @@ public class TileTab extends JPanel {
 
     private void modifySelectedTile(){
         if (tileComboBox.getItemCount() != 0) {
-            float tileWidth = 0;
-            float tileHeight = 0;
+            double tileWidth = 0;
+            double tileHeight = 0;
             if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.IMPERIAL) {
                 String widthValue = tileWidthField.getText();
                 String heightValue = tileHeightField.getText();
@@ -174,7 +174,7 @@ public class TileTab extends JPanel {
 
     public void updateTileWidth() {
         TileType selectedTileType = (TileType)tileComboBox.getSelectedItem();
-        float tileWidth = 0f;
+        double tileWidth = 0;
         String widthString = tileWidthField.getText();
         if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.IMPERIAL) {
             String[] inchArray = getImperialArray(widthString);
@@ -193,7 +193,7 @@ public class TileTab extends JPanel {
 
     public void updateTileHeight() {
         TileType selectedTileType = (TileType)tileComboBox.getSelectedItem();
-        float tileHeight = 0f;
+        double tileHeight = 0d;
         String heightString = tileHeightField.getText();
         if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.IMPERIAL) {
             String[] inchArray = getImperialArray(heightString);
@@ -252,18 +252,27 @@ public class TileTab extends JPanel {
         double width = selectedTileType.getWidth();
         double height = selectedTileType.getHeight();
 
-        width = UnitConverter.convertPixelToSelectedUnit(width, MainWindow.MeasurementUnitMode.METRIC);
-        height = UnitConverter.convertPixelToSelectedUnit(height, MainWindow.MeasurementUnitMode.METRIC);
+        width = UnitConverter.convertPixelToSelectedUnit(width, mainWindow.getCurrentMeasurementMode());
+        height = UnitConverter.convertPixelToSelectedUnit(height, mainWindow.getCurrentMeasurementMode());
 
-        BigDecimal bdWidth = BigDecimal.valueOf(width);
-        bdWidth = bdWidth.setScale(2, RoundingMode.HALF_UP);
-        String widthString = Double.toString(bdWidth.doubleValue());
-        this.tileWidthField.setText(widthString + "m");
+        if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.METRIC) {
+            BigDecimal bdWidth = BigDecimal.valueOf(width);
+            bdWidth = bdWidth.setScale(2, RoundingMode.HALF_UP);
+            String widthString = Double.toString(bdWidth.doubleValue());
+            this.tileWidthField.setText(widthString + "m");
 
-        BigDecimal bdHeight = BigDecimal.valueOf(height);
-        bdHeight = bdHeight.setScale(2, RoundingMode.HALF_UP);
-        String heightString = Double.toString(bdHeight.doubleValue());
-        this.tileHeightField.setText(heightString + "m");
+            BigDecimal bdHeight = BigDecimal.valueOf(height);
+            bdHeight = bdHeight.setScale(2, RoundingMode.HALF_UP);
+            String heightString = Double.toString(bdHeight.doubleValue());
+            this.tileHeightField.setText(heightString + "m");
+        }
+
+        else if (mainWindow.getCurrentMeasurementMode() == MainWindow.MeasurementUnitMode.IMPERIAL) {
+            String widthImperial = getImperialFormat(width);
+            this.tileWidthField.setText(widthImperial);
+            String heightImperial = getImperialFormat(height);
+            this.tileHeightField.setText(heightImperial);
+        }
 
         this.tileNameField.setText(selectedTileType.getName());
         this.tileColorButton.setBackground(selectedTileType.getColor());

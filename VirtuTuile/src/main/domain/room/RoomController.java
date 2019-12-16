@@ -574,11 +574,11 @@ public class RoomController implements Serializable {
         room.updateTile(tile, width, height, name, nbrTilesPerBox, color);
     }
 
-    public void updateTileWidth(TileType selectedTileType, float tileWidth) {
+    public void updateTileWidth(TileType selectedTileType, double tileWidth) {
         room.updateTileWidth(selectedTileType, tileWidth);
     }
 
-    public void updateTileHeight(TileType tileType, float height) {
+    public void updateTileHeight(TileType tileType, double height) {
         room.updateTileHeight(tileType, height);
     }
 

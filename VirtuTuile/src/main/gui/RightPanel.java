@@ -120,4 +120,8 @@ public class RightPanel extends JTabbedPane implements Serializable {
     public void showMultipleSurfacesInformation() {
         this.surfaceTabPanel.showMultipleSurfacesInformation();
     }
+
+    public void updateTileInfos() {
+        this.tileTabPanel.setTileInformation();
+    }
 }

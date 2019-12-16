@@ -3,6 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="8c246219-cf09-4492-905b-d80bdbddbe18" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/domain/room/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/domain/room/RoomController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/MainWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/SurfaceTab.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/SurfaceTab.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/TileTab.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/TileTab.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/util/UnitConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/util/UnitConverter.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -159,6 +164,7 @@
       <workItem from="1576353175628" duration="454000" />
       <workItem from="1576373167988" duration="7158000" />
       <workItem from="1576472120509" duration="5754000" />
+      <workItem from="1576520756417" duration="2159000" />
     </task>
     <task id="LOCAL-00001" summary="xml(?)">
       <created>1573883748096</created>
@@ -306,21 +312,5 @@
     <MESSAGE value="Centrer Square" />
     <MESSAGE value="Modifier angle incline" />
     <option name="LAST_COMMIT_MESSAGE" value="Modifier angle incline" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/gui/TileTab.java</url>
-          <line>160</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/gui/TileTab.java</url>
-          <line>276</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

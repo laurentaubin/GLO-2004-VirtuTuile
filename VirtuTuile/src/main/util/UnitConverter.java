@@ -22,8 +22,8 @@ public class UnitConverter {
     private static final float PIXEL_TO_INCH = (float) (0.2);
 
      */
-    private static final float PIXEL_TO_METER = (float) 0.01;
-    private static final float PIXEL_TO_INCH = (float) (0.01 * 39.37);
+    private static final float PIXEL_TO_METER = (float) 0.005;
+    private static final float PIXEL_TO_INCH = (float) (0.005 * 39.37);
 
 
 
@@ -45,12 +45,12 @@ public class UnitConverter {
         return pixel * PIXEL_TO_METER;
     }
 
-    private static int inchToPixel(double inch) {
-        return (int) (inch / PIXEL_TO_INCH);
+    private static double inchToPixel(double inch) {
+        return inch / PIXEL_TO_INCH;
     }
 
-    private static int meterToPixel(double meter) {
-        return (int) (meter / PIXEL_TO_METER);
+    private static double meterToPixel(double meter) {
+        return meter / PIXEL_TO_METER;
     }
 
     public static double meterToInch(double meter) {
@@ -71,14 +71,14 @@ public class UnitConverter {
         return pixel;
     }
 
-    public static int convertSelectedUnitToPixel(double unit, MainWindow.MeasurementUnitMode mode) {
+    public static double convertSelectedUnitToPixel(double unit, MainWindow.MeasurementUnitMode mode) {
         switch (mode) {
             case METRIC:
                 return UnitConverter.meterToPixel(unit);
             case IMPERIAL:
                 return UnitConverter.inchToPixel(unit);
         }
-        return (int) unit;
+        return unit;
     }
 
     private static int[] convertMeterListToInch(int[] meterList) {
@@ -112,10 +112,10 @@ public class UnitConverter {
         return convertedList;
     }
 
-    public static int[] convertSelectedUnitListToPixel(int[] unitList, MainWindow.MeasurementUnitMode mode) {
+    public static double[] convertSelectedUnitListToPixel(int[] unitList, MainWindow.MeasurementUnitMode mode) {
         // TODO trouver comment convertir un nombre indéterminé de points.
         // TODO checker comment ArrayLyst.toArray() marche
-        int[] convertedList = new int[unitList.length];
+        double[] convertedList = new double[unitList.length];
         for (int i = 0; i < unitList.length; i++) {
             convertedList[i] = (UnitConverter.convertSelectedUnitToPixel(unitList[i], mode));
         }
@@ -130,6 +130,7 @@ public class UnitConverter {
         return new Polygon(xpoints, ypoints, npoints);
     }
 
+    /*
     public static Polygon convertPolygonToPixel(Polygon polygon, MainWindow.MeasurementUnitMode mode) {
         int[] xpoints = UnitConverter.convertSelectedUnitListToPixel(polygon.xpoints, mode);
         int[] ypoints = UnitConverter.convertSelectedUnitListToPixel(polygon.ypoints, mode);
@@ -137,6 +138,8 @@ public class UnitConverter {
 
         return new Polygon(xpoints, ypoints, npoints);
     }
+
+     */
 
     public static Polygon convertPolygonFromMeterToInch(Polygon polygon) {
         int[] xpoints = UnitConverter.convertMeterListToInch(polygon.xpoints);
