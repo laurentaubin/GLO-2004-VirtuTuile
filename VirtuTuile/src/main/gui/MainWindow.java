@@ -12,6 +12,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 
@@ -805,26 +807,42 @@ public class MainWindow extends JFrame {
 
         double xPos = evt.getX() / drawingPanel.getZoom();
         double yPos = evt.getY() / drawingPanel.getZoom();
-        //double xPos = UnitConverter.convertPixelToSelectedUnit( evt.getX(), this.currentMeasurementMode);
-        //double yPos = UnitConverter.convertPixelToSelectedUnit(evt.getY(), this.currentMeasurementMode);
-
-        /*
-        if (this.currentMeasurementMode == MeasurementUnitMode.METRIC) {
-            mousePosition += ("x= " + (double)(Math.round(UnitConverter.pixelToMeter(xPos) * 100d) / 100d) + "m " + ", y= " + Math.round(UnitConverter.pixelToMeter(yPos) * 100d) / 100d + "m ");
-        }
-
-         */
-
-        mousePosition += ("x= " + xPos + ", y= " + yPos);
 
 
         if (this.controller.checkIfMouseAboveTile(evt.getX(), evt.getY())) {
             ArrayList<Double> tileDimension = this.controller.getTileDimensions(evt.getX(), evt.getY());
-            mousePosition += " | Largeur de la tuile = " + tileDimension.get(0) + ", hauteur de la tuile = " + tileDimension.get(1) ;
+            double width = UnitConverter.convertPixelToSelectedUnit(tileDimension.get(0), getCurrentMeasurementMode());
+            double height = UnitConverter.convertPixelToSelectedUnit(tileDimension.get(1), getCurrentMeasurementMode());
+            if (getCurrentMeasurementMode() == MeasurementUnitMode.IMPERIAL) {
+                String tileWidth = getImperialFormat(width);
+                String tileHeight = getImperialFormat(height);
+                mousePosition += "Largeur de la tuile = " + tileWidth + ", hauteur de la tuile = " + tileHeight ;
+            }
+            else if (getCurrentMeasurementMode() == MeasurementUnitMode.METRIC) {
+                BigDecimal bdWidth = BigDecimal.valueOf(width);
+                bdWidth = bdWidth.setScale(2, RoundingMode.HALF_UP);
+                String widthString = Double.toString(bdWidth.doubleValue());
+
+                BigDecimal bdHeight = BigDecimal.valueOf(height);
+                bdHeight = bdHeight.setScale(2, RoundingMode.HALF_UP);
+                String heightString = Double.toString(bdHeight.doubleValue());
+                mousePosition += "Largeur de la tuile = " + widthString + ", hauteur de la tuile = " + heightString;
+
+
+            }
             setStatusBarText(mousePosition);
         }
 
         setStatusBarText(mousePosition);
+    }
+
+    private String getImperialFormat(double value) {
+        int inch = (int)(value);
+        double fraction = value - inch;
+        BigDecimal bd = BigDecimal.valueOf(fraction);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        String imperialString = Integer.toString(inch) + "\"" + Double.toString(bd.doubleValue());
+        return imperialString;
     }
 
     public void setStatusBarText(String statusBarText) {
