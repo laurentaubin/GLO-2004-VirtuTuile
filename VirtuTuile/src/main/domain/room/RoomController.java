@@ -21,7 +21,7 @@ public class RoomController implements Serializable {
     private Room room;
     private SurfaceDrawer surfaceDrawer;
 
-    private final int roomListLimit = 30;
+    private final int roomListLimit = 50;
     private ArrayList<Room> roomList;
     private int undoRedoPointer = -1;
 
@@ -51,9 +51,9 @@ public class RoomController implements Serializable {
 
     public void addRoom() {
         Room room = new Room(this.room);
-        if (roomList.size() >= 30) {
+        if (roomList.size() >= 50) {
             this.roomList.remove(0);
-            this.roomList.add(null);
+            this.roomList.add(room);
             this.undoRedoPointer = 29;
         } else {
             this.roomList.add(room);
@@ -67,17 +67,19 @@ public class RoomController implements Serializable {
             return;
         }
 
-        boolean roomRemoved = false;
-        for (int i = roomList.size() - 1; i >= undoRedoPointerState; i--) {
+//        boolean roomRemoved = false;
+        for (int i = roomList.size() - 1; i > undoRedoPointerState; i--) {
             if (i > undoRedoPointerState) {
                 roomList.remove(i);
-                roomRemoved = true;
-            } else if (i == undoRedoPointerState && roomList.size() > 0 && roomRemoved) {
-                roomList.remove(i);
-                undoRedoPointer--;
-                addRoom();
+//                roomRemoved = true;
             }
+//            else if (i == undoRedoPointerState && roomList.size() > 0 && roomRemoved) {
+//                roomList.remove(i);
+//                undoRedoPointer--;
+//                addRoom();
+//            }
         }
+        replaceCurrentState();
     }
 
     public void undo() {
@@ -264,9 +266,11 @@ public class RoomController implements Serializable {
     }
 
     public void replaceCurrentState() {
-        this.roomList.remove(this.roomList.size() - 1);
-        undoRedoPointer--;
-        addRoom();
+        if(this.roomList.size() > 0) {
+            this.roomList.remove(this.roomList.size() - 1);
+            undoRedoPointer--;
+            addRoom();
+        }
     }
 
     /*
