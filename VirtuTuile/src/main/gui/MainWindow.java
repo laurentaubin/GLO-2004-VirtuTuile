@@ -74,7 +74,7 @@ public class MainWindow extends JFrame {
     }
 
     private boolean surfaceReadyToMove;
-    private boolean redoApplied;
+//    private boolean redoApplied;
     private boolean mouseWasDragged;
     private TileType currentSelectedTileType = TileType.createTileWithDefaultParameters();
 
@@ -611,10 +611,10 @@ public class MainWindow extends JFrame {
             if (controller.numberOfSelectedSurfaces() > 0 && surfaceReadyToMove) {
                 controller.deletePreviousStatesIfRequired();
                 this.surfaceReadyToMove = false;
-                if(redoApplied) {
-                    controller.replaceCurrentState();
-                    this.redoApplied = false;
-                }
+//                if(redoApplied) {
+//                    controller.replaceCurrentState();
+//                    this.redoApplied = false;
+//                }
             }
 
             this.controller.updateSelectedSurfacesPositions(deltaX, deltaY);
@@ -629,6 +629,11 @@ public class MainWindow extends JFrame {
                     (int)(mouseEvent.getX() / drawingPanel.getZoom()) - (int)(this.currentMousePoint.getX()));
             double deltaY = (
                     (int)(mouseEvent.getY() / drawingPanel.getZoom()) - (int)(this.currentMousePoint.getY()));
+
+            if (controller.numberOfSelectedSurfaces() > 0 && surfaceReadyToMove) {
+                controller.deletePreviousStatesIfRequired();
+                this.surfaceReadyToMove = false;
+            }
 
             this.controller.updateSelectedSurfacesPatternPosition(deltaX, deltaY);
             this.currentMousePoint = new Point(
@@ -1041,7 +1046,7 @@ public class MainWindow extends JFrame {
 
     public void redo() {
         this.controller.redo();
-        this.redoApplied = true;
+//        this.redoApplied = true;
         drawingPanel.repaint();
     }
 
