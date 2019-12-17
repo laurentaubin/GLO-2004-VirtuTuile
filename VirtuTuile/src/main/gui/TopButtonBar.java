@@ -25,7 +25,7 @@ public class TopButtonBar extends JPanel{
     private JButton undoButton;
     private JButton redoButton;
     private JButton saveButton;
-    private JButton inspectorButton;
+    private JToggleButton inspectorButton;
     private JLabel inspector;
     private ImageIcon selectIcon;
     private Color initColor;
@@ -59,6 +59,7 @@ public class TopButtonBar extends JPanel{
         this.createRecSurfaceButton.setPreferredSize(mainButtonDimension);
         this.createIrrSurfaceButton.setPreferredSize(mainButtonDimension);
         this.saveButton.setPreferredSize(mainButtonDimension);
+        this.inspectorButton.setPreferredSize(mainButtonDimension);
 
         Dimension smallButtonDimension = new Dimension(25, 25);
 
@@ -91,6 +92,12 @@ public class TopButtonBar extends JPanel{
         BufferedImage saveImage = ImageIO.read(this.getClass().getResourceAsStream("/image/save.png"));
         Icon saveIcon = new ImageIcon(saveImage.getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         this.saveButton.setIcon(saveIcon);
+
+        //Google Web Search icon icon by Icons8
+        BufferedImage inspectorImage = ImageIO.read(this.getClass().getResourceAsStream("/image/inspector.png"));
+        Icon inspectorIcon = new ImageIcon(inspectorImage.getScaledInstance(40, 40, Image.SCALE_DEFAULT));
+        this.inspectorButton.setIcon(inspectorIcon);
+
 
         selectButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -174,13 +181,11 @@ public class TopButtonBar extends JPanel{
     }
 
     public void inspectorButtonActionPerformed(){
-        if(inspectorButton.getText() == "Désactiver"){
-            inspectorButton.setText("Activer");
-            mainWindow.desactivateInspectorMode();
+        if(inspectorButton.isSelected()){
+            mainWindow.activateInspectorMode();
         }
         else{
-            inspectorButton.setText("Désactiver");
-            mainWindow.activateInspectorMode();
+            mainWindow.desactivateInspectorMode();
         }
     }
 }

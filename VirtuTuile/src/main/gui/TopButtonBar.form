@@ -45,8 +45,8 @@
           </component>
           <component id="ac1ad" class="javax.swing.JComboBox" binding="measurementUnitComboBox">
             <constraints>
-              <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-              <gridbag top="0" left="10" bottom="0" right="5" weightx="0.0" weighty="0.0" ipadx="100"/>
+              <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag top="0" left="10" bottom="0" right="10" weightx="0.0" weighty="0.0" ipadx="100"/>
             </constraints>
             <properties/>
           </component>
@@ -80,7 +80,7 @@
           </component>
           <component id="2ce5c" class="javax.swing.JLabel">
             <constraints>
-              <grid row="1" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag top="0" left="10" bottom="0" right="5" weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
@@ -143,23 +143,39 @@
               <toolTipText value="Sauvegarder"/>
             </properties>
           </component>
-          <component id="81312" class="javax.swing.JButton" binding="inspectorButton">
-            <constraints>
-              <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <text value="Activer"/>
-            </properties>
-          </component>
           <component id="e5ec" class="javax.swing.JLabel" binding="inspector">
             <constraints>
-              <grid row="1" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="9" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
-              <text value="Mode Inspecteur"/>
+              <text value="Inspecter"/>
             </properties>
+          </component>
+          <component id="caf99" class="javax.swing.JSeparator">
+            <constraints>
+              <grid row="0" column="6" row-span="3" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <orientation value="1"/>
+            </properties>
+          </component>
+          <component id="70c2c" class="javax.swing.JSeparator">
+            <constraints>
+              <grid row="0" column="8" row-span="3" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <orientation value="1"/>
+            </properties>
+          </component>
+          <component id="29779" class="javax.swing.JToggleButton" binding="inspectorButton">
+            <constraints>
+              <grid row="0" column="9" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag top="0" left="10" bottom="0" right="10" weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties/>
           </component>
         </children>
       </grid>
