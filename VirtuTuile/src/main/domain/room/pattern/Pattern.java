@@ -100,6 +100,14 @@ public abstract class Pattern implements Serializable {
         this.yOffset += y;
     }
 
+    public void initX() {
+        this.xOffset = 0;
+    }
+
+    public void initY() {
+        this.yOffset = 0;
+    }
+
     public void initOffset() {
         this.xOffset = 0;
         this.yOffset = 0;

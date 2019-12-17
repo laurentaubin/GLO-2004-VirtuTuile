@@ -475,6 +475,12 @@ public void setSelectedSurfacesHeightDistance(double heightDifference) {
     public void setSelectedTileToSelectedSurface(TileType selectedTileType) {
         for (Surface surfaceInRoom : surfaceList) {
             if (surfaceInRoom.isSelected()) {
+                if (surfaceInRoom.getPattern().getName() == "Square") {
+                    if (selectedTileType.getWidth() / selectedTileType.getHeight() != 2) {
+                        dimensionIncorrectPaquet();
+                        return;
+                    }
+                }
                 surfaceInRoom.setTileType(selectedTileType);
             }
         }
@@ -552,26 +558,16 @@ public void setSelectedSurfacesHeightDistance(double heightDifference) {
 
 
     public void setSquarePatternToSelectedSurface() {
-        boolean incorrect = false;
         for (Surface surface : surfaceList) {
             if (surface.isSelected()) {
-                if((surface.getTileType().getWidth() / surface.getTileType().getHeight()) == 2) {
-                    SquarePattern squarePattern = new SquarePattern();
-                    squarePattern.generateTiles(surface.getBoundingRectangle(), surface.getTileType(), surface.getArea(), surface.getGroutWidth(), surface.getCoverCenter());
-                    surface.setPattern(squarePattern);
-                }
-                else{
-                    incorrect = true;
+                Pattern oldPattern = surface.getPattern();
+                SquarePattern squarePattern = new SquarePattern();
+                surface.setPattern(squarePattern);
+                if((surface.getTileType().getWidth() / surface.getTileType().getHeight()) != 2) {
+                    dimensionIncorrectPaquet();
+                    surface.setPattern(oldPattern);
                 }
             }
-        }
-        if (incorrect){
-
-//            String[] options = {"Ok"};
-//            int indexReponse = JOptionPane.showOptionDialog(null, "Les dimensions des tuiles sont invalides, elles doivent avoir un ratio de 2:1",
-//                    "Attention!",
-//                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
-            dimensionIncorrectPaquet();
         }
     }
 
