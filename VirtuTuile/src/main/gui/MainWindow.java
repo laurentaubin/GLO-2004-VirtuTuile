@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class MainWindow extends JFrame {
 
     public RoomController controller;
+    public boolean modeBeta = false;
 
     private ApplicationMode currentApplicationMode = ApplicationMode.SELECT;
     private MeasurementUnitMode currentMeasurementMode = MeasurementUnitMode.METRIC;
@@ -63,7 +64,6 @@ public class MainWindow extends JFrame {
     public void setCurrentSelectedTileType(TileType currentSelectedTileType) {
         this.currentSelectedTileType = currentSelectedTileType;
     }
-
 
     public enum ApplicationMode {
         SELECT, ADD_RECTANGULAR, ADD_IRREGULAR, MOVE_PATTERN
@@ -487,10 +487,6 @@ public class MainWindow extends JFrame {
             double xPos = this.initMousePoint.getX();
             double yPos = this.initMousePoint.getY();
 
-
-            //double xPos = UnitConverter.convertPixelToSelectedUnit((int) this.initMousePoint.getX(), this.currentMeasurementMode);
-            //double yPos = UnitConverter.convertPixelToSelectedUnit((int) this.initMousePoint.getY(), this.currentMeasurementMode);
-
             this.controller.switchSelectionStatus(xPos, yPos, mouseEvent.isShiftDown());
 
             if (controller.numberOfSelectedSurfaces() > 0) {
@@ -506,14 +502,6 @@ public class MainWindow extends JFrame {
             rightPanel.updateIfSelectedSurfaceIsAHole(this.controller.getIfSelectedSurfaceIsAHole(), this.controller.getNumberOfSelectedSurfaces());
             rightPanel.updatePatternTab(this.controller.getSelectedSurfaceGroutWidth(), this.controller.getNumberOfSelectedSurfaces());
 
-            /*
-            rightPanel.updateTileTab(   controller.getCurrentTileWidth(),
-                                        controller.getCurrentTileHeight(),
-                                        controller.getCurrentNameTile(),
-                                        controller.getSelectedSurfaceColor(),
-                                        controller.getCurrentTilePerBox());
-
-             */
             changeInformationPanelState();
             rightPanel.updateSurfaceTabDistances(this.controller.getSelectedSurfacesDistances());
             rightPanel.updateCenterStatus(this.controller.getCenterStatus());
@@ -619,13 +607,7 @@ public class MainWindow extends JFrame {
                     (int)(mouseEvent.getX() / drawingPanel.getZoom()) - (int)(this.currentMousePoint.getX()));
             double deltaY = (
                     (int)(mouseEvent.getY() / drawingPanel.getZoom()) - (int)(this.currentMousePoint.getY()));
-            /*
-            double pixelX = (int) (mouseEvent.getX() - this.currentMousePoint.getX());
-            double pixelY = (int) (mouseEvent.getY() - this.currentMousePoint.getY());
-            double deltaX = UnitConverter.convertPixelToSelectedUnit(pixelX, this.currentMeasurementMode);
-            double deltaY = UnitConverter.convertPixelToSelectedUnit(pixelY, this.currentMeasurementMode);
 
-             */
             if (controller.numberOfSelectedSurfaces() > 0 && surfaceReadyToMove) {
                 controller.deletePreviousStatesIfRequired();
                 this.surfaceReadyToMove = false;
@@ -636,8 +618,6 @@ public class MainWindow extends JFrame {
             }
 
             this.controller.updateSelectedSurfacesPositions(deltaX, deltaY);
-            //this.controller.updateSelectedSurfacesPositions(deltaX, deltaY, pixelX, pixelY);
-            //this.currentMousePoint.setLocation(mouseEvent.getX() / drawingPanel.getZoom(), mouseEvent.getY() / drawingPanel.getZoom());
             this.currentMousePoint = new Point(
                     (int)(mouseEvent.getX() / drawingPanel.getZoom()),
                     (int)(mouseEvent.getY() / drawingPanel.getZoom())
@@ -944,6 +924,14 @@ public class MainWindow extends JFrame {
     public void setAnglePattern(int angle) {
         controller.setAnglePattern(angle);
         drawingPanel.repaint();
+    }
+
+    public void setAngle(int angle){
+        controller.setAngle(angle);
+    }
+
+    public int getAnglePattern(){
+        return this.controller.getAnglePattern();
     }
 
     public void setSquarePattern() {

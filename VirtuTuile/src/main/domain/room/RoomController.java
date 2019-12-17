@@ -419,6 +419,13 @@ public class RoomController implements Serializable {
         addRoom();
     }
 
+
+
+    public int getAnglePattern(){
+        return room.getAnglePattern();
+
+    }
+
     public void setChevronPattern() {
         deleteElementsAfterPointer(this.undoRedoPointer);
         room.setChevronPattern();
@@ -565,6 +572,12 @@ public class RoomController implements Serializable {
     public void setMismatch(double mismatch) {
         deleteElementsAfterPointer(this.undoRedoPointer);
         room.setMismatch(mismatch);
+        addRoom();
+    }
+
+    public void setAngle(int angle){
+        deleteElementsAfterPointer(this.undoRedoPointer);
+        room.setAngle(angle);
         addRoom();
     }
 

@@ -36,20 +36,6 @@ public class SurfaceDrawer {
         AffineTransform at = new AffineTransform();
         at.setToScale(zoom, zoom);
         for (Surface current_surface : surfaceList) {
-            /*
-            Path2D.Double path = new Path2D.Double();
-            for (int i = 0; i < current_surface.nPoints; i++) {
-                if (i == 0) {
-                    path.moveTo(current_surface.xPoints[i], current_surface.yPoints[i]);
-                }
-                else {
-                    path.lineTo(current_surface.xPoints[i], current_surface.yPoints[i]);
-                }
-            }
-            path.closePath();
-            Area shape = new Area(path);
-             */
-
             Area shapeTest = new Area(current_surface.getArea());
             Path2D.Double shape = new Path2D.Double(shapeTest);
             Area otherShape = new Area();
@@ -115,13 +101,8 @@ public class SurfaceDrawer {
             if (current_surface.isCovered()) {
                 current_surface.getPattern().getVirtualTileList().clear();
                 // TODO avoir du grout autour de la surface ou pas
-                if(current_surface.getPattern().getName() == "Square" && !((current_surface.getTileType().getWidth() / current_surface.getTileType().getHeight()) == 2)){
-                    controller.dimensionIncorrectPaquet();
-                }
-                else {
-                    //current_surface.getPattern().generateTiles(current_surface.getBoundingRectangle(), current_surface.getTileType(), otherShape, current_surface.getGroutWidth(), current_surface.getCoverCenter());
-                    current_surface.getPattern().generateTiles(current_surface.getBoundingRectangle(), current_surface.getTileType(), current_surface.getArea(), current_surface.getGroutWidth(), current_surface.getCoverCenter());
-                }
+                //current_surface.getPattern().generateTiles(current_surface.getBoundingRectangle(), current_surface.getTileType(), otherShape, current_surface.getGroutWidth(), current_surface.getCoverCenter());
+                current_surface.getPattern().generateTiles(current_surface.getBoundingRectangle(), current_surface.getTileType(), current_surface.getArea(), current_surface.getGroutWidth(), current_surface.getCoverCenter());
 
 
                 ArrayList<Tile> array = current_surface.getPattern().getVirtualTileList();

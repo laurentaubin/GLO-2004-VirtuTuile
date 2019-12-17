@@ -493,6 +493,7 @@ public class SurfaceTab extends JPanel{
             return stringArray;
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("Format invalide");
+
             stringArray[0] = "Format invalide";
         }
         return stringArray;

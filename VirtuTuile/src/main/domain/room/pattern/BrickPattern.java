@@ -54,23 +54,29 @@ public class BrickPattern extends Pattern {
             this.initOffset();
             decalageCenterX = (tileWidth - moduloWidth) / 2.0d;
             decalageCenterY = (tileHeight - moduloHeight) / 2.0d;
+            position.x = position.x - decalageCenterX;
+            position.y = position.y - decalageCenterY;
 
-        }
-
-        if (xOffset <= 0) {
-            position.x = position.x + xOffset - decalageCenterX;
         }
 
         else {
-            position.x = position.x - tileWidth + (xOffset%tileHeight) - decalageCenterX;
-        }
+            if (xOffset <= 0) {
+                position.x = position.x + xOffset - decalageCenterX;
+            }
 
-        if (yOffset <= 0) {
-            position.y = position.y + yOffset - decalageCenterY;
-        }
-        else {
-            position.y = position.y - tileHeight + (yOffset%tileWidth) - decalageCenterY;
+            else {
+                this.initX();
+                //position.x = position.x - tileWidth + (xOffset%tileHeight) - decalageCenterX;
+            }
 
+            if (yOffset < 0) {
+                position.y = position.y + yOffset - decalageCenterY;
+            }
+            else {
+                this.initY();
+                //position.y = position.y - tileHeight + (yOffset%tileWidth) - decalageCenterY;
+
+            }
         }
 
         Point2D.Double initPosition = new Point2D.Double(position.getX(), position.getY());

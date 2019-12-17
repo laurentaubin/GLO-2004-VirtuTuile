@@ -19,7 +19,7 @@ public class VerticalBrickPattern extends Pattern {
 
     public VerticalBrickPattern(Pattern patternToCopy) {
         super(patternToCopy);
-        this.mismatch = new Double(patternToCopy.mismatch);
+        this.mismatch = patternToCopy.mismatch;
         this.name = "VerticalBrick";
     }
 
@@ -53,7 +53,8 @@ public class VerticalBrickPattern extends Pattern {
         }
 
         if (xOffset <= 0) {
-            position.x = position.x + xOffset - decalageCenterX;
+            this.initX();
+            //position.x = position.x + xOffset - decalageCenterX;
         }
 
         else {
@@ -61,7 +62,8 @@ public class VerticalBrickPattern extends Pattern {
         }
 
         if (yOffset <= 0) {
-            position.y = position.y + yOffset - decalageCenterY;
+            initY();
+            //position.y = position.y + yOffset - decalageCenterY;
         }
         else {
             position.y = position.y - tileWidth + (yOffset%tileWidth) - decalageCenterY;

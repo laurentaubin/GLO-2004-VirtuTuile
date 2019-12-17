@@ -56,7 +56,6 @@ public class PatternTab extends JPanel{
     public PatternTab(MainWindow mainWindow) throws IOException {
         this.mainWindow = mainWindow;
         this.groutWidthField.setValue(0);
-        this.angleInputField.setText("30");
         this.selectedColor = Color.WHITE;
         this.mismatchPanel.setVisible(false);
         this.angleJPanel.setVisible(false);
@@ -194,6 +193,9 @@ public class PatternTab extends JPanel{
                 anglePatternButtonActionPerformed();
                 mismatchPanel.setVisible(false);
                 angleJPanel.setVisible(true);
+                angleInputField.setText("30");
+
+
             }
         });
 
@@ -274,7 +276,8 @@ public class PatternTab extends JPanel{
     }
 
     private void anglePatternButtonActionPerformed() {
-        mainWindow.setAnglePattern(30);;
+        mainWindow.setAnglePattern(30);
+        setAngle();
     }
 
     private void squarePatternButtonActionPerformed() {
@@ -342,7 +345,13 @@ public class PatternTab extends JPanel{
         int angle = Integer.parseInt(angleInputField.getText());
         if(angle >= 10 && angle <= 80){
             mainWindow.setAnglePattern(angle);
+            this.angleInputField.setText(Integer.toString(angle));
         }
+    }
+
+    public void getAngle(){
+        this.angleInputField.setText(Integer.toString(mainWindow.getAnglePattern()));
+
     }
 
     public void centerTiles(){

@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Tile extends Area implements Serializable {
-    final public double MIN_LENGTH = 20;
+    final public double MIN_LENGTH = 5;
     private Point2D.Double position;
     private double width;
     private double height;

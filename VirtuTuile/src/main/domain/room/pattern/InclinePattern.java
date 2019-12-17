@@ -4,7 +4,6 @@ import domain.room.Tile;
 import domain.room.TileType;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -14,14 +13,16 @@ import java.util.ArrayList;
 public class InclinePattern extends Pattern {
     private int angle;
 
-    public InclinePattern() {
+    public InclinePattern(int angle) {
         super();
         this.name = "Incline";
+        this.angle = angle;
 
     }
 
     public InclinePattern(Pattern patternToCopy) {
         super(patternToCopy);
+        this.angle = patternToCopy.angle;
         this.name = "Incline";
     }
 
@@ -33,6 +34,7 @@ public class InclinePattern extends Pattern {
         //TODO mettre une case decalage comme pour brick et si pas égale a zéro ça applique le décalage
         double decalage = 0;
 
+        System.out.println(angle);
 
         double angleCalcule = Math.toRadians(90 - this.angle);
 
@@ -57,27 +59,55 @@ public class InclinePattern extends Pattern {
 
 
         if((boundingRectangleHeight / tileType.getHeight()) > (boundingRectangleWidth / tileType.getHeight())){
-            maxCount = (int)(2*(boundingRectangleHeight / tileType.getHeight()));
+            maxCount = (int)(2*(boundingRectangleHeight / tileType.getHeight()) + 3);
         }
         else{
-            maxCount = (int)(2*(boundingRectangleWidth / tileType.getHeight()));
+            maxCount = (int)(2*(boundingRectangleWidth / tileType.getHeight()) + 3);
         }
+
         int count = 0;
         boolean isInside;
         boolean outside;
+        int diagonal;
+
+        if(tileType.getWidth() < tileType.getHeight()){
+            diagonal = (int)Math.sqrt(Math.pow(numberColumn, 2) + Math.pow((boundingRectangleHeight / (tileType.getWidth() + groutWidth)), 2)) + 2;
+
+            if(boundingRectangleHeight > boundingRectangleWidth){
+                maxCount = (int)(2*(boundingRectangleHeight / tileType.getWidth()) + 2);
+            }
+
+            else{
+                maxCount = (int)(2*(boundingRectangleWidth / tileType.getWidth()) + 2);
+            }
+        }
+        else{
+            diagonal = (int)Math.sqrt(Math.pow((boundingRectangleWidth / (tileType.getHeight() + groutWidth)), 2) + Math.pow(numberRow, 2)) + 2;
+            if(boundingRectangleHeight > boundingRectangleWidth){
+                maxCount = (int)(2*(boundingRectangleHeight / tileType.getHeight()) + 2);
+            }
+
+            else{
+                maxCount = (int)(2*(boundingRectangleWidth / tileType.getHeight()) + 2);
+            }
+
+        }
 
 
-        for (int i = 1; i <= (numberColumn*numberRow)/2; i++) {
+        for (int i = 1; i <= diagonal; i++) {
             int[] xPoints = new int[4];
             int[] yPoints = new int[4];
 
             outside = true;
+            count = 0;
 
             if ((i % 2 == 1)) {
-                count = 0;
+
+                position.setLocation(position.getX() - (tileType.getWidth() + groutWidth) * Math.sin(angleCalcule), position.getY() + (tileType.getWidth() + groutWidth) * Math.cos(angleCalcule));
+                position.setLocation(position.getX() - (tileType.getWidth() + groutWidth) * Math.sin(angleCalcule), position.getY() + (tileType.getWidth() + groutWidth) * Math.cos(angleCalcule));
+
 
                 if(decalage != 0 && i > 1){
-                    System.out.println(decalage/100);
                     position.setLocation(position.getX() + (decalage/100 * tileType.getWidth()) * Math.sin(angleCalcule),
                             position.getY() - (decalage/100 * tileType.getWidth()) * Math.cos(angleCalcule));
                 }
@@ -124,7 +154,6 @@ public class InclinePattern extends Pattern {
 
 
                 if(decalage != 0){
-                    System.out.println(decalage/100);
                     position.setLocation(position.getX() - (decalage/100 * tileType.getWidth()) * Math.sin(angleCalcule),
                             position.getY() + (decalage/100 * tileType.getWidth()) * Math.cos(angleCalcule));
                 }
@@ -165,9 +194,8 @@ public class InclinePattern extends Pattern {
 
                 }
                 while (isInside || outside);
-                if(count > maxCount){
-                    break;
-                }
+
+
 
                 position.setLocation(position.getX() + (tileType.getHeight() + groutWidth) * Math.cos(angleCalcule), position.getY() + (tileType.getHeight() + groutWidth) * Math.sin(angleCalcule));
 
@@ -178,9 +206,11 @@ public class InclinePattern extends Pattern {
     }
 
 
-    public void setAngle(int angle){
-        this.angle = angle;
+
+    public int getAngle(){
+        return this.angle;
     }
+
 
 
     public void deleteOutsideTile(Area surface, double baseTileWidth, double baseTileHeight) {
